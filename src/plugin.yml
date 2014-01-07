@@ -1,0 +1,6 @@
+name: RedstoneWorldManager
+version: 1.0-SNAPSHOT
+main: me.lobnews.bukkit.Main
+author: lobnews, Blockhaus2000
+
+# Commands and Permissions are not here, sorry ;)
