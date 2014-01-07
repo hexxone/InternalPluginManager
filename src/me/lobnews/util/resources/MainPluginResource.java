@@ -10,7 +10,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import me.lobnews.bukkit.Main;
+import me.lobnews.rwm.bukkit.Main;
 
 /**
  * If you annotate a field with this, the field have to be of the type

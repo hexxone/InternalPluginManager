@@ -2,7 +2,7 @@
  * This file is part of RedstoneWorldManager
  * 
  */
-package me.lobnews.bukkit;
+package me.lobnews.rwm.bukkit;
 
 import java.lang.reflect.Field;
 

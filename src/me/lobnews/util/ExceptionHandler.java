@@ -4,7 +4,7 @@
  */
 package me.lobnews.util;
 
-import me.lobnews.bukkit.Main;
+import me.lobnews.rwm.bukkit.Main;
 import me.lobnews.util.resources.MainPluginResource;
 
 /**
