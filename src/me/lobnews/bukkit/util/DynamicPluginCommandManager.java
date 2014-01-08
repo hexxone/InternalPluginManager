@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import me.lobnews.minecraft.util.command.Command;
 import me.lobnews.util.OutputStream;
 import me.lobnews.util.ReflectionUtil;
-import me.lobnews.util.command.CommandSyntax;
+import me.lobnews.util.command.CommandInfo;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
@@ -37,15 +37,15 @@ public class DynamicPluginCommandManager {
         this(plugin, plugin);
     }
 
-    public boolean registerCommands(List<CommandSyntax> registered) {
+    public boolean registerCommands(List<CommandInfo> registered) {
         CommandMap commandMap = getCommandMap();
 
         if (commandMap == null || registered == null || registered.size() == 0) {
             return false;
         }
 
-        for (CommandSyntax target : registered) {
-            Command cmdAnot = target.getCommand();
+        for (CommandInfo target : registered) {
+            Command cmdAnot = target.getCommandAnot();
 
             DynamicPluginCommand cmd = new DynamicPluginCommand(cmdAnot.aliases(), cmdAnot.desc(), cmdAnot.usage(), executor,
                     plugin);
@@ -62,8 +62,8 @@ public class DynamicPluginCommandManager {
         if (commandMap == null) {
             if (fallbackCommandMap != null) {
                 OutputStream.log(Level.SEVERE, "Could not retrieve server CommandMap, using fallback instead!");
-                Bukkit.getServer().getPluginManager().registerEvents(new PlayerCommandPreprocessListener(commandMap), plugin);
                 commandMap = fallbackCommandMap = new SimpleCommandMap(Bukkit.getServer());
+                Bukkit.getServer().getPluginManager().registerEvents(new PlayerCommandPreprocessListener(commandMap), plugin);
             }
         }
 

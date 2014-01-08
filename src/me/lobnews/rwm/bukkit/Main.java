@@ -4,8 +4,9 @@
  */
 package me.lobnews.rwm.bukkit;
 
+import me.lobnews.minecraft.util.command.CommandManager;
+import me.lobnews.rwm.test.TestCommand;
 import me.lobnews.util.ExceptionHandler;
-import me.lobnews.util.PluginUtil;
 import me.lobnews.util.resources.MainPluginResource;
 import me.lobnews.util.resources.ResourceManager;
 
@@ -27,10 +28,12 @@ public class Main extends JavaPlugin {
      */
     public void onEnable() {
         try {
-            ResourceManager.initializeResources(new PluginUtil());
+            ResourceManager.initializeResources(new ExceptionHandler());
         } catch (IllegalArgumentException | IllegalAccessException ex) {
             ExceptionHandler.handle(ex, true);
         }
+
+        CommandManager.getInstance().register(new TestCommand());
     }
 
     /**

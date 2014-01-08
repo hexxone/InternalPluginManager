@@ -20,7 +20,8 @@ public class DynamicPluginCommand extends Command implements PluginIdentifiableC
     private final CommandExecutor executor;
     private final Plugin plugin;
 
-    public DynamicPluginCommand(String[] aliases, String desc, String usage, CommandExecutor executor, Plugin plugin) {
+    public DynamicPluginCommand(final String[] aliases, final String desc, final String usage, final CommandExecutor executor,
+            final Plugin plugin) {
         super(aliases[0], desc, usage, Arrays.asList(aliases));
         this.executor = executor;
         this.plugin = plugin;

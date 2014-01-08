@@ -22,7 +22,7 @@ import me.lobnews.rwm.bukkit.Main;
  * 
  * @author Blockhaus2000
  */
-public class ResourceManager {
+public class ResourceManager { // FIXME
     /**
      * Initializes the resources from the given {@link Object} that are marked
      * with a resource-annotation (fro example, {@link MainPluginResource}).

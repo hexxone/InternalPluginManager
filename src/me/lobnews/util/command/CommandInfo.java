@@ -12,21 +12,21 @@ import me.lobnews.minecraft.util.command.Command;
  * 
  * @author Blockhaus2000
  */
-public class CommandSyntax implements Comparable<CommandSyntax> {
-    private Command command;
+public class CommandInfo implements Comparable<CommandInfo> {
+    private Command commandAnot;
     private Class<?> clazz;
     private Object object;
     private Method method;
 
-    public CommandSyntax(final Command command, final Class<?> clazz, final Object object, final Method method) {
-        this.command = command;
+    public CommandInfo(final Command command, final Class<?> clazz, final Object object, final Method method) {
+        this.commandAnot = command;
         this.clazz = clazz;
         this.object = object;
         this.method = method;
     }
 
-    public Command getCommand() {
-        return command;
+    public Command getCommandAnot() {
+        return commandAnot;
     }
 
     public Class<?> getClazz() {
@@ -42,9 +42,9 @@ public class CommandSyntax implements Comparable<CommandSyntax> {
     }
 
     @Override
-    public int compareTo(CommandSyntax that) {
-        final int levelThis = this.getCommand().priority().getLevel();
-        final int levelThat = that.getCommand().priority().getLevel();
+    public int compareTo(CommandInfo that) {
+        final int levelThis = this.getCommandAnot().priority().getLevel();
+        final int levelThat = that.getCommandAnot().priority().getLevel();
 
         if (levelThis == levelThat) {
             return 0;
