@@ -4,11 +4,10 @@
  */
 package me.lobnews.rwm.bukkit;
 
-import java.lang.reflect.Field;
-
 import me.lobnews.util.ExceptionHandler;
 import me.lobnews.util.PluginUtil;
 import me.lobnews.util.resources.MainPluginResource;
+import me.lobnews.util.resources.ResourceManager;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -19,21 +18,34 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Main extends JavaPlugin {
     private static Main instance;
 
+    public Main() {
+        instance = this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public void onEnable() {
         try {
-            initializeResources(new PluginUtil());
+            ResourceManager.initializeResources(new PluginUtil());
         } catch (IllegalArgumentException | IllegalAccessException ex) {
             ExceptionHandler.handle(ex, true);
         }
     }
 
-    public static void initializeResources(final Object obj) throws IllegalArgumentException, IllegalAccessException {
-        Class<?> clazz = obj.getClass();
-
-        for (Field target : clazz.getFields()) {
-            if (target.isAnnotationPresent(MainPluginResource.class)) {
-                target.set(obj, instance);
-            }
+    /**
+     * Returns you an instance from the {@link Main} class.
+     * 
+     * @deprecated Use the annotation {@link MainPluginResource} and call
+     *             {@link ResourceManager#initializeResources(Object)} instead!
+     * @return An instance from the {@link Main} class.
+     */
+    @Deprecated
+    public static Main getInstance() {
+        if (instance == null) {
+            return instance = new Main();
         }
+
+        return instance;
     }
 }
