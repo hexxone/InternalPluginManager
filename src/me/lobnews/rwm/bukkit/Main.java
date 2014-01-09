@@ -4,13 +4,12 @@
  */
 package me.lobnews.rwm.bukkit;
 
-import me.lobnews.minecraft.util.command.CommandManager;
-import me.lobnews.rwm.test.TestCommand;
-import me.lobnews.util.ExceptionHandler;
-import me.lobnews.util.resources.MainPluginResource;
-import me.lobnews.util.resources.ResourceManager;
-
 import org.bukkit.plugin.java.JavaPlugin;
+
+import com.blockhaus2000.util.ExceptionHandler;
+import com.blockhaus2000.util.PluginUtil;
+import com.blockhaus2000.util.resources.MainPluginResource;
+import com.blockhaus2000.util.resources.ResourceManager;
 
 /**
  * 
@@ -20,6 +19,10 @@ public class Main extends JavaPlugin {
     private static Main instance;
 
     public Main() {
+        if (instance != null) {
+            throw new IllegalStateException("Only bukkit initialize a new main plugin!");
+        }
+
         instance = this;
     }
 
@@ -28,12 +31,11 @@ public class Main extends JavaPlugin {
      */
     public void onEnable() {
         try {
-            ResourceManager.initializeResources(new ExceptionHandler());
+            ResourceManager.initializeResources(ExceptionHandler.class);
         } catch (IllegalArgumentException | IllegalAccessException ex) {
-            ExceptionHandler.handle(ex, true);
+            ExceptionHandler.handle(ex);
+            PluginUtil.disable(this);
         }
-
-        CommandManager.getInstance().register(new TestCommand());
     }
 
     /**
