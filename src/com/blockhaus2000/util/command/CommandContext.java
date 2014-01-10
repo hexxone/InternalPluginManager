@@ -5,6 +5,7 @@
 package com.blockhaus2000.util.command;
 
 import java.util.List;
+import java.util.Map;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -21,10 +22,10 @@ public class CommandContext extends CommandInfo {
     private final String[] rawArgs;
     private final String label;
     private final List<Tag<?>> args;
-    private final List<Tag<?>> flags;
+    private final Map<Character, Tag<?>> flags;
 
     public CommandContext(final CommandInfo syntax, final Command command, final CommandSender sender, final String[] rawArgs,
-            final String label, final List<Tag<?>> args, final List<Tag<?>> flags) {
+            final String label, final List<Tag<?>> args, final Map<Character, Tag<?>> flags) {
         super(syntax.getCommandAnot(), syntax.getClass(), syntax.getObject(), syntax.getMethod());
         this.command = command;
         this.sender = sender;
@@ -54,7 +55,7 @@ public class CommandContext extends CommandInfo {
         return args;
     }
 
-    public List<Tag<?>> getFlags() {
+    public Map<Character, Tag<?>> getFlags() {
         return flags;
     }
 }

@@ -14,12 +14,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import com.blockhaus2000.util.Tag;
 import com.blockhaus2000.util.command.CommandContext;
 import com.blockhaus2000.util.command.CommandInfo;
+import com.blockhaus2000.util.command.ContextData;
 
 /**
  * 
@@ -28,7 +30,8 @@ import com.blockhaus2000.util.command.CommandInfo;
 public class CommandManager implements CommandExecutor {
     private static CommandManager instance;
 
-    private final Map<String, ArrayList<CommandInfo>> cmds = new HashMap<>();
+    private final String flagRegex = "[a-zA-Z]:?";
+    private final Map<String, ArrayList<CommandInfo>> cmds = new HashMap<String, ArrayList<CommandInfo>>();
 
     private CommandManager() {
         // Nothing to do (only to provide singleton pattern)
@@ -47,6 +50,16 @@ public class CommandManager implements CommandExecutor {
             if (!targetMethod.getParameterTypes().equals(new Class<?>[] { CommandContext.class })) {
                 throw new CommandException("The arguments of the method " + targetMethod
                         + " ar not correct. They only argument has to be \"CommandContext\"");
+            }
+
+            String[] flags = targetMethod.getAnnotation(Command.class).flags();
+            if (flags.length != 0) {
+                for (String targetFlag : flags) {
+                    if (!targetFlag.matches(flagRegex)) {
+                        throw new CommandException("The flag \"" + targetFlag + "\" does not match the regex \"" + flagRegex
+                                + "\"!");
+                    }
+                }
             }
 
             for (String targetAlias : targetMethod.getAnnotation(Command.class).aliases()) {
@@ -81,11 +94,10 @@ public class CommandManager implements CommandExecutor {
         boolean executed = false;
 
         for (CommandInfo target : cmds.get(label)) {
-            Map<ContextDataType, ArrayList<Tag<?>>> contextData = parseCommandArguments(bArgs);
-            List<Tag<?>> args = contextData.get(ContextDataType.ARGS);
-            List<Tag<?>> flags = contextData.get(ContextDataType.FLAGS);
+            ContextData contextData = parseCommandArguments(target, bArgs);
 
-            CommandContext context = new CommandContext(target, cmd, sender, bArgs, label, args, flags);
+            CommandContext context = new CommandContext(target, cmd, sender, bArgs, label, contextData.getArgs(),
+                    contextData.getFlags());
 
             try {
                 target.getMethod().invoke(target.getObject(), context);
@@ -98,12 +110,55 @@ public class CommandManager implements CommandExecutor {
         return executed;
     }
 
-    private Map<ContextDataType, ArrayList<Tag<?>>> parseCommandArguments(final List<String> args) {
-        return null; // TODO
+    private ContextData parseCommandArguments(final CommandInfo cmd, final List<String> rawArgs) {
+        Validate.notNull(cmd, "Cmd cannot be null!");
+        Validate.notNull(rawArgs, "RawArgs cannot be null!");
+
+        Map<Character, Tag<?>> flags = null;
+
+        flags = new HashMap<Character, Tag<?>>();
+
+        for (String target : cmd.getCommandAnot().flags()) {
+            boolean found = false;
+
+            char flagIndex = target.charAt(0);
+            String argFlag = "-" + flagIndex;
+
+            flags.put(flagIndex, null);
+
+            if (target.endsWith(":")) {
+                if (rawArgs.contains(argFlag)) {
+                    int valueIndex = rawArgs.indexOf(argFlag);
+
+                    if (valueIndex < rawArgs.size()) {
+                        flags.put(flagIndex, new Tag<String>(rawArgs.get(valueIndex)));
+                        found = true;
+                    }
+                }
+            } else {
+                found = rawArgs.contains(argFlag);
+
+                flags.put(flagIndex, new Tag<Boolean>(found));
+            }
+
+            if (found) {
+                while (rawArgs.contains(argFlag)) {
+                    rawArgs.remove(argFlag);
+                }
+            }
+        }
+
+        List<Tag<?>> args = new ArrayList<Tag<?>>();
+
+        for (String target : rawArgs) {
+            args.add(new Tag<String>(target));
+        }
+
+        return new ContextData(args, flags);
     }
 
-    private Map<ContextDataType, ArrayList<Tag<?>>> parseCommandArguments(final String... args) {
-        return parseCommandArguments(Arrays.asList(args));
+    private ContextData parseCommandArguments(final CommandInfo cmd, final String... args) {
+        return parseCommandArguments(cmd, Arrays.asList(args));
     }
 
     @Override
