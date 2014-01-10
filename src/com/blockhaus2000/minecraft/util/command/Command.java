@@ -84,6 +84,37 @@ public @interface Command {
     public String[] flags() default "";
 
     /**
+     * This is the syntax of the command. The syntax should sepcify the
+     * type-usage for this command (for example "String Integer String..."). The
+     * {@link CommandManager} checks for you, that there are enough arguments
+     * (otherwise, it should call an event) and parse the argument Strings into
+     * Integers or Doubles. With VarArgs, the {@link CommandManager} joins the
+     * next arguments to a long String. You can seperate the types with a blank
+     * (" ") or a comma and a blank (", "). You can also use multiple commas or
+     * blanks. It doesnt effect the delimiter system. The delimiter only have to
+     * match the regex ",* +". Every other delimiter will build an unavailable
+     * type.
+     * 
+     * <p>
+     * <b> NOTE: If you use this feature, the min/max settings are fully
+     * ignored! </b>
+     * </p>
+     * 
+     * @return
+     */
+    public String syntax() default "";
+
+    /**
+     * Enables the auto maximal setting if you use a specific command syntax
+     * (sepcified in {@link Command#syntax()}).
+     * 
+     * @return The boolean value that auto maximal setting on syntax
+     *         specification is enabled.
+     * @see Command#syntax()
+     */
+    public boolean autoSetMaxOnSyntax() default true;
+
+    /**
      * A long description for this {@link Command}.
      * 
      * @return A long description for this {@link Command}.

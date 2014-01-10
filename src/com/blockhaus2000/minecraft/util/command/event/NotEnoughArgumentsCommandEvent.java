@@ -12,14 +12,14 @@ import com.blockhaus2000.util.command.RawCommandContext;
  * 
  * @author Blockhaus2000
  */
-public class NoPermissionCommandEvent extends CommandEvent<RawCommandContext> {
+public class NotEnoughArgumentsCommandEvent extends CommandEvent<RawCommandContext> {
     private static final HandlerList handlers = new HandlerList();
 
-    public NoPermissionCommandEvent(final RawCommandContext command) {
+    public NotEnoughArgumentsCommandEvent(final RawCommandContext command) {
         super(command);
     }
 
-    public NoPermissionCommandEvent(final RawCommandContext command, final boolean executed) {
+    public NotEnoughArgumentsCommandEvent(final RawCommandContext command, final boolean executed) {
         super(command, executed);
     }
 

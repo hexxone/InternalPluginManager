@@ -16,41 +16,23 @@ import com.blockhaus2000.util.Tag;
  * 
  * @author Blockhaus2000
  */
-public class CommandContext extends CommandInfo {
-    private final Command command;
-    private final CommandSender sender;
-    private final String[] rawArgs;
-    private final String label;
+public class CommandContext extends RawCommandContext {
     private final List<Tag<?>> args;
     private final Map<Character, Tag<?>> flags;
 
-    public CommandContext(final CommandInfo syntax, final Command command, final CommandSender sender, final String[] rawArgs,
-            final String label, final List<Tag<?>> args, final Map<Character, Tag<?>> flags) {
-        super(syntax.getCommandAnot(), syntax.getClass(), syntax.getObject(), syntax.getMethod());
-        this.command = command;
-        this.sender = sender;
-        this.rawArgs = rawArgs;
-        this.label = label;
+    public CommandContext(final CommandInfo commandInfo, final CommandSender sender, final Command command, final String label,
+            final String[] rawArgs, final List<Tag<?>> args, final Map<Character, Tag<?>> flags) {
+        super(commandInfo, sender, command, label, rawArgs);
         this.args = args;
         this.flags = flags;
     }
 
-    public Command getCommand() {
-        return command;
+    public CommandContext(final RawCommandContext rawContext, final List<Tag<?>> args, final Map<Character, Tag<?>> flags) {
+        this(rawContext, rawContext.getSender(), rawContext.getCommand(), rawContext.getLabel(), rawContext.getRawArgs(), args,
+                flags);
     }
 
-    public CommandSender getSender() {
-        return sender;
-    }
-
-    public String[] getRawArgs() {
-        return rawArgs;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
+    // Getter
     public List<Tag<?>> getArgs() {
         return args;
     }

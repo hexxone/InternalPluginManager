@@ -15,13 +15,21 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.Validate;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import com.blockhaus2000.minecraft.util.command.event.CommandEvent;
+import com.blockhaus2000.minecraft.util.command.event.NoPermissionCommandEvent;
+import com.blockhaus2000.minecraft.util.command.event.NotEnoughArgumentsCommandEvent;
+import com.blockhaus2000.minecraft.util.command.event.TooManyArgumentsCommandEvent;
+import com.blockhaus2000.util.PermissionUtil;
 import com.blockhaus2000.util.Tag;
 import com.blockhaus2000.util.command.CommandContext;
 import com.blockhaus2000.util.command.CommandInfo;
+import com.blockhaus2000.util.command.CommandSyntax;
 import com.blockhaus2000.util.command.ContextData;
+import com.blockhaus2000.util.command.RawCommandContext;
 
 /**
  * 
@@ -71,7 +79,9 @@ public class CommandManager implements CommandExecutor {
                     cmds.put(targetAlias, new ArrayList<CommandInfo>());
                 }
 
-                cmds.get(targetAlias).add(new CommandInfo(targetMethod.getAnnotation(Command.class), clazz, obj, targetMethod));
+                Command cmdAnot = targetMethod.getAnnotation(Command.class);
+                cmds.get(targetAlias)
+                        .add(new CommandInfo(cmdAnot, clazz, obj, targetMethod, new CommandSyntax(cmdAnot.syntax())));
                 Collections.sort(cmds.get(targetAlias));
             }
         }
@@ -93,18 +103,47 @@ public class CommandManager implements CommandExecutor {
 
         boolean executed = false;
 
+        List<CommandEvent<?>> events = new ArrayList<CommandEvent<?>>();
+
         for (CommandInfo target : cmds.get(label)) {
+            Command cmdAnot = target.getCommandAnot();
+
+            RawCommandContext rawContext = new RawCommandContext(target, sender, cmd, label, bArgs);
+
+            if (!PermissionUtil.hasPermission(sender, cmdAnot.permission())) {
+                events.add(new NoPermissionCommandEvent(rawContext));
+                continue;
+            }
+
+            CommandSyntax syntax = target.getSyntax();
+
+            int min = syntax == null ? cmdAnot.min() : syntax.size();
+            int max = syntax == null ? cmdAnot.max() : syntax.size();
+
+            if (bArgs.length < min) {
+                events.add(new NotEnoughArgumentsCommandEvent(rawContext));
+                continue;
+            }
+
+            if (max != -1 && bArgs.length > max) {
+                events.add(new TooManyArgumentsCommandEvent(rawContext));
+                continue;
+            }
+
             ContextData contextData = parseCommandArguments(target, bArgs);
 
-            CommandContext context = new CommandContext(target, cmd, sender, bArgs, label, contextData.getArgs(),
-                    contextData.getFlags());
-
             try {
-                target.getMethod().invoke(target.getObject(), context);
+                target.getMethod().invoke(target.getObject(),
+                        new CommandContext(rawContext, contextData.getArgs(), contextData.getFlags()));
                 executed = true;
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                 e.printStackTrace();
             }
+        }
+
+        for (CommandEvent<?> target : events) {
+            target.setExecuted(executed);
+            Bukkit.getServer().getPluginManager().callEvent(target);
         }
 
         return executed;

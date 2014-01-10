@@ -13,16 +13,19 @@ import com.blockhaus2000.minecraft.util.command.Command;
  * @author Blockhaus2000
  */
 public class CommandInfo implements Comparable<CommandInfo> {
-    private Command commandAnot;
-    private Class<?> clazz;
-    private Object object;
-    private Method method;
+    private final Command commandAnot;
+    private final Class<?> clazz;
+    private final Object object;
+    private final Method method;
+    private final CommandSyntax syntax;
 
-    public CommandInfo(final Command command, final Class<?> clazz, final Object object, final Method method) {
+    public CommandInfo(final Command command, final Class<?> clazz, final Object object, final Method method,
+            final CommandSyntax syntax) {
         this.commandAnot = command;
         this.clazz = clazz;
         this.object = object;
         this.method = method;
+        this.syntax = syntax;
     }
 
     public Command getCommandAnot() {
@@ -39,6 +42,10 @@ public class CommandInfo implements Comparable<CommandInfo> {
 
     public Method getMethod() {
         return method;
+    }
+
+    public CommandSyntax getSyntax() {
+        return syntax;
     }
 
     @Override
