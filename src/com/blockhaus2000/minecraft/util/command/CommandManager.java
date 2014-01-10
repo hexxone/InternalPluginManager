@@ -23,6 +23,7 @@ import com.blockhaus2000.minecraft.util.command.event.CommandEvent;
 import com.blockhaus2000.minecraft.util.command.event.NoPermissionCommandEvent;
 import com.blockhaus2000.minecraft.util.command.event.NotEnoughArgumentsCommandEvent;
 import com.blockhaus2000.minecraft.util.command.event.TooManyArgumentsCommandEvent;
+import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.PermissionUtil;
 import com.blockhaus2000.util.Tag;
 import com.blockhaus2000.util.command.CommandContext;
@@ -118,7 +119,7 @@ public class CommandManager implements CommandExecutor {
             CommandSyntax syntax = target.getSyntax();
 
             int min = syntax == null ? cmdAnot.min() : syntax.size();
-            int max = syntax == null ? cmdAnot.max() : syntax.size();
+            int max = syntax == null ? cmdAnot.max() : (syntax.endsWithVarArg() ? -1 : syntax.size());
 
             if (bArgs.length < min) {
                 events.add(new NotEnoughArgumentsCommandEvent(rawContext));
@@ -136,8 +137,8 @@ public class CommandManager implements CommandExecutor {
                 target.getMethod().invoke(target.getObject(),
                         new CommandContext(rawContext, contextData.getArgs(), contextData.getFlags()));
                 executed = true;
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                e.printStackTrace();
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                ExceptionHandler.handle(ex);
             }
         }
 
@@ -189,8 +190,28 @@ public class CommandManager implements CommandExecutor {
 
         List<Tag<?>> args = new ArrayList<Tag<?>>();
 
-        for (String target : rawArgs) {
-            args.add(new Tag<String>(target));
+        CommandSyntax syntax = cmd.getSyntax();
+        if (syntax == null) {
+            for (String targetArg : rawArgs) {
+                args.add(new Tag<String>(targetArg));
+            }
+        } else {
+            for (int i = 0; i < syntax.getSyntax().size(); i++) {
+                switch (syntax.getSyntax().get(i)) {
+                case DOUBLE:
+                    args.add(new Tag<Double>(Double.valueOf(rawArgs.get(i))));
+                    break;
+                case INTEGER:
+                    args.add(new Tag<Integer>(Integer.valueOf(rawArgs.get(i))));
+                    break;
+                case STRING:
+                    args.add(new Tag<String>(rawArgs.get(i)));
+                    break;
+                case STRING_VARARG:
+                    args.add(new Tag<String>());
+                    break;
+                }
+            }
         }
 
         return new ContextData(args, flags);

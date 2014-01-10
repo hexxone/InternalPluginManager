@@ -5,13 +5,14 @@
 package com.blockhaus2000.util.command;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * 
  * @author Blockhaus2000
  */
-public class CommandSyntax {
+public class CommandSyntax implements Iterable<CommandSyntaxType> {
     private final List<CommandSyntaxType> syntax;
 
     public CommandSyntax(final String syntaxString) {
@@ -60,8 +61,17 @@ public class CommandSyntax {
         return true;
     }
 
+    public boolean endsWithVarArg() {
+        return syntax.get(syntax.size() - 1).isVarArg();
+    }
+
     public int size() {
         return syntax != null ? syntax.size() : 0;
+    }
+
+    @Override
+    public Iterator<CommandSyntaxType> iterator() {
+        return syntax.iterator();
     }
 
     // Getter

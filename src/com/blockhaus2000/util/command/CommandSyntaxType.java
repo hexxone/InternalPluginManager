@@ -15,11 +15,7 @@ public enum CommandSyntaxType {
 
     INTEGER("Integer"),
 
-    INTEGER_VARARG("Integer..."),
-
-    DOUBLE("Double"),
-
-    DOUBLE_VARARG("Double...");
+    DOUBLE("Double");
 
     private final String typeString;
 
@@ -33,10 +29,6 @@ public enum CommandSyntaxType {
 
     public boolean isVarArg() {
         switch (this) {
-        case DOUBLE_VARARG:
-            /* FALL-THROUGH */
-        case INTEGER_VARARG:
-            /* FALL-THROUGH */
         case STRING_VARARG:
             return true;
 
@@ -49,25 +41,6 @@ public enum CommandSyntaxType {
         }
 
         return false;
-    }
-
-    public Class<?> getTypeClass() {
-        switch (this) {
-        case DOUBLE:
-            return Double.class;
-        case DOUBLE_VARARG:
-            return Double[].class;
-        case INTEGER:
-            return Integer.class;
-        case INTEGER_VARARG:
-            return Integer[].class;
-        case STRING:
-            return String.class;
-        case STRING_VARARG:
-            return String[].class;
-        }
-
-        return null;
     }
 
     public static CommandSyntaxType getTypeByString(final String typeString) {
