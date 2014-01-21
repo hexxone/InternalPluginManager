@@ -19,10 +19,6 @@ public class TooManyArgumentsCommandEvent extends CommandEvent<RawCommandContext
         super(command);
     }
 
-    public TooManyArgumentsCommandEvent(final RawCommandContext command, final boolean executed) {
-        super(command, executed);
-    }
-
     @Override
     public HandlerList getHandlers() {
         return handlers;

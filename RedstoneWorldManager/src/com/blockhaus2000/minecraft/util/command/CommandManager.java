@@ -122,17 +122,19 @@ public class CommandManager implements CommandExecutor {
             int min = syntax == null ? cmdAnot.min() : syntax.size();
             int max = syntax == null ? cmdAnot.max() : (syntax.endsWithVarArg() ? -1 : syntax.size());
 
-            if (bArgs.length < min) {
+            List<Tag<?>> args = parseFlags(target, bArgs).getArgs();
+
+            if (args.size() < min) {
                 events.add(new NotEnoughArgumentsCommandEvent(rawContext));
                 continue;
             }
 
-            if (max != -1 && bArgs.length > max) {
+            if (max != -1 && args.size() > max) {
                 events.add(new TooManyArgumentsCommandEvent(rawContext));
                 continue;
             }
 
-            ContextData contextData = parseCommandArguments(target, bArgs);
+            ContextData contextData = parseCommand(target, bArgs);
 
             try {
                 target.getMethod().invoke(target.getObject(),
@@ -144,20 +146,31 @@ public class CommandManager implements CommandExecutor {
         }
 
         for (CommandEvent<?> target : events) {
-            target.setExecuted(executed);
+            target.setCancelled(executed);
             Bukkit.getServer().getPluginManager().callEvent(target);
         }
 
         return executed;
     }
 
-    private ContextData parseCommandArguments(final CommandInfo cmd, final List<String> rawArgs) {
+    private ContextData parseCommand(final CommandInfo cmd, final List<String> rawArgs) {
         Validate.notNull(cmd, "Cmd cannot be null!");
         Validate.notNull(rawArgs, "RawArgs cannot be null!");
 
-        Map<Character, Tag<?>> flags = null;
+        ContextData contextData = parseFlags(cmd, rawArgs);
 
-        flags = new HashMap<Character, Tag<?>>();
+        return parseArguments(cmd, contextData.getArgs(), contextData.getFlags());
+    }
+
+    private ContextData parseCommand(final CommandInfo cmd, final String... args) {
+        return parseCommand(cmd, Arrays.asList(args));
+    }
+
+    private ContextData parseFlags(final CommandInfo cmd, final List<String> rawArgs) {
+        Validate.notNull(cmd, "Cmd cannot be null!");
+        Validate.notNull(rawArgs, "RawArgs cannot be null!");
+
+        Map<Character, Tag<?>> flags = new HashMap<Character, Tag<?>>();
 
         for (String target : cmd.getCommandAnot().flags()) {
             boolean found = false;
@@ -189,6 +202,20 @@ public class CommandManager implements CommandExecutor {
             }
         }
 
+        return new ContextData((String[]) rawArgs.toArray(), flags);
+    }
+
+    private ContextData parseFlags(final CommandInfo cmd, final String[] args) {
+        return parseFlags(cmd, Arrays.asList(args));
+    }
+
+    private ContextData parseArguments(final CommandInfo cmd, final String[] rawArgsArray, final Map<Character, Tag<?>> flags) {
+        Validate.notNull(cmd, "Cmd cannot be null!");
+        Validate.notNull(rawArgsArray, "RawArgsArray cannot be null!");
+        Validate.notNull(flags, "Flags cannot be null!");
+
+        List<String> rawArgs = Arrays.asList(rawArgsArray);
+
         List<Tag<?>> args = new ArrayList<Tag<?>>();
 
         CommandSyntax syntax = cmd.getSyntax();
@@ -218,8 +245,14 @@ public class CommandManager implements CommandExecutor {
         return new ContextData(args, flags);
     }
 
-    private ContextData parseCommandArguments(final CommandInfo cmd, final String... args) {
-        return parseCommandArguments(cmd, Arrays.asList(args));
+    private ContextData parseArguments(final CommandInfo cmd, final List<Tag<?>> rawArgs, final Map<Character, Tag<?>> flags) {
+        List<String> args = new ArrayList<String>();
+
+        for (Tag<?> target : rawArgs) {
+            args.add((String) target.getData());
+        }
+
+        return parseArguments(cmd, (String[]) args.toArray(), flags);
     }
 
     @Override

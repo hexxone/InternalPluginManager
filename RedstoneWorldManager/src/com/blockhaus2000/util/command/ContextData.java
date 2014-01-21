@@ -4,6 +4,7 @@
  */
 package com.blockhaus2000.util.command;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +29,17 @@ public class ContextData {
      *            The flags that has to be saved.
      */
     public ContextData(final List<Tag<?>> args, final Map<Character, Tag<?>> flags) {
+        this.args = args;
+        this.flags = flags;
+    }
+
+    public ContextData(final String[] rawArgs, final Map<Character, Tag<?>> flags) {
+        List<Tag<?>> args = new ArrayList<Tag<?>>();
+
+        for (String target : rawArgs) {
+            args.add(new Tag<String>(target));
+        }
+
         this.args = args;
         this.flags = flags;
     }

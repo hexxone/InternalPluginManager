@@ -4,6 +4,7 @@
  */
 package com.blockhaus2000.minecraft.util.command.event;
 
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 
 import com.blockhaus2000.util.command.CommandInfo;
@@ -12,17 +13,12 @@ import com.blockhaus2000.util.command.CommandInfo;
  * 
  * @author Blockhaus2000
  */
-public abstract class CommandEvent<T extends CommandInfo> extends Event {
+public abstract class CommandEvent<T extends CommandInfo> extends Event implements Cancellable {
     protected final T command;
-    protected boolean executed;
+    protected boolean cancelled;
 
     public CommandEvent(final T command) {
         this.command = command;
-    }
-
-    public CommandEvent(final T command, final boolean executed) {
-        this(command);
-        this.executed = executed;
     }
 
     // Getter + Setter
@@ -31,12 +27,14 @@ public abstract class CommandEvent<T extends CommandInfo> extends Event {
         return command;
     }
 
-    public boolean isExecuted() {
-        return executed;
+    @Override
+    public boolean isCancelled() {
+        return cancelled;
     }
 
     // Setter
-    public void setExecuted(final boolean executed) {
-        this.executed = executed;
+    @Override
+    public void setCancelled(final boolean cancelled) {
+        this.cancelled = cancelled;
     }
 }

@@ -19,10 +19,6 @@ public class NotEnoughArgumentsCommandEvent extends CommandEvent<RawCommandConte
         super(command);
     }
 
-    public NotEnoughArgumentsCommandEvent(final RawCommandContext command, final boolean executed) {
-        super(command, executed);
-    }
-
     @Override
     public HandlerList getHandlers() {
         return handlers;

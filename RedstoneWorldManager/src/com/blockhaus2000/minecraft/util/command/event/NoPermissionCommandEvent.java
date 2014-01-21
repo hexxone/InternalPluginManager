@@ -19,10 +19,6 @@ public class NoPermissionCommandEvent extends CommandEvent<RawCommandContext> {
         super(command);
     }
 
-    public NoPermissionCommandEvent(final RawCommandContext command, final boolean executed) {
-        super(command, executed);
-    }
-
     @Override
     public HandlerList getHandlers() {
         return handlers;
