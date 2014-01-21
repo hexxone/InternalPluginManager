@@ -4,10 +4,9 @@
  */
 package com.blockhaus2000.util;
 
-import me.lobnews.rwm.bukkit.Main;
-
 import org.apache.commons.lang.Validate;
 
+import com.blockhaus2000.main.bukkit.Main;
 import com.blockhaus2000.util.resources.MainPluginResource;
 
 /**
@@ -19,8 +18,22 @@ import com.blockhaus2000.util.resources.MainPluginResource;
  * @author Blockhaus2000
  */
 public final class ExceptionHandler {
+    /**
+     * 
+     * @see MainPluginResource
+     */
     @MainPluginResource
     private static Main main;
+
+    /**
+     * Checks that a valid call (with {@link ExceptionHandler#main} is not
+     * <code>null</code>) is possible.
+     * 
+     * @return <code>true</code> is a valid call is possible.
+     */
+    public static boolean isCallPossible() {
+        return main == null;
+    }
 
     /**
      * Handles the given {@link Exception}. This method will print out the stack
@@ -39,7 +52,10 @@ public final class ExceptionHandler {
         Validate.notNull(ex, "Ex cannot be null.");
 
         ex.printStackTrace();
-        PluginUtil.disable(main);
+
+        if (disable) {
+            PluginUtil.disable(main);
+        }
     }
 
     /**

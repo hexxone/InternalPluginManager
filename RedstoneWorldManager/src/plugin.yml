@@ -1,6 +1,6 @@
 name: RedstoneWorldManager
 version: 1.0-SNAPSHOT
-main: me.lobnews.rwm.bukkit.Main
+main: com.blockhaus2000.bukkit.plugin.Main
 author: lobnews, Blockhaus2000
 
 # Commands and Permissions are not here, sorry ;)

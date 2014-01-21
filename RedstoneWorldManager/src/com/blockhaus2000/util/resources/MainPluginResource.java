@@ -4,13 +4,12 @@
  */
 package com.blockhaus2000.util.resources;
 
-import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import me.lobnews.rwm.bukkit.Main;
+import com.blockhaus2000.main.bukkit.Main;
 
 /**
  * If you annotate a field with this, the field have to be of the type
@@ -19,7 +18,6 @@ import me.lobnews.rwm.bukkit.Main;
  * 
  * @author Blockhaus2000
  */
-@Documented
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MainPluginResource {

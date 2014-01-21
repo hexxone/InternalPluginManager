@@ -7,9 +7,9 @@ package com.blockhaus2000.util.resources;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
-import me.lobnews.rwm.bukkit.Main;
-
 import org.apache.commons.lang.Validate;
+
+import com.blockhaus2000.main.bukkit.Main;
 
 /**
  * This class will initialize the resources from the given {@link Object}s. See

@@ -2,10 +2,11 @@
  * This file is part of RedstoneWorldManager
  * 
  */
-package me.lobnews.rwm.bukkit;
+package com.blockhaus2000.main.bukkit;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.blockhaus2000.plugin.RwmPluginManager;
 import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.PluginUtil;
 import com.blockhaus2000.util.resources.MainPluginResource;
@@ -32,6 +33,7 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         try {
             ResourceManager.initializeResources(ExceptionHandler.class);
+            ResourceManager.initializeResources(RwmPluginManager.getInstance());
         } catch (IllegalArgumentException | IllegalAccessException ex) {
             ExceptionHandler.handle(ex);
             PluginUtil.disable(this);
