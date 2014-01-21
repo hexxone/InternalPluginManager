@@ -25,6 +25,7 @@ import com.blockhaus2000.minecraft.util.command.event.NotEnoughArgumentsCommandE
 import com.blockhaus2000.minecraft.util.command.event.TooManyArgumentsCommandEvent;
 import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.PermissionUtil;
+import com.blockhaus2000.util.StringUtil;
 import com.blockhaus2000.util.Tag;
 import com.blockhaus2000.util.command.CommandContext;
 import com.blockhaus2000.util.command.CommandInfo;
@@ -208,7 +209,7 @@ public class CommandManager implements CommandExecutor {
                     args.add(new Tag<String>(rawArgs.get(i)));
                     break;
                 case STRING_VARARG:
-                    args.add(new Tag<String>());
+                    args.add(new Tag<String>(StringUtil.joinString(i, " ", rawArgs)));
                     break;
                 }
             }
