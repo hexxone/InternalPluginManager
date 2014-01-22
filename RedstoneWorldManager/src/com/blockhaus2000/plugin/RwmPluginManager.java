@@ -5,6 +5,7 @@
 package com.blockhaus2000.plugin;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.apache.commons.lang.Validate;
@@ -16,7 +17,7 @@ import com.blockhaus2000.util.resources.MainPluginResource;
  * 
  * @author Blockhaus2000
  */
-public class RwmPluginManager {
+public class RwmPluginManager implements Iterable<RwmPlugin> {
     private static RwmPluginManager instance;
 
     @MainPluginResource
@@ -51,11 +52,28 @@ public class RwmPluginManager {
     }
 
     public void registerPlugin(final RwmPlugin plugin) {
+        Validate.notNull(plugin, "Plugin cannot be null!");
+
         plugin.onLoad();
-        
+
         addPlugin(plugin);
-        
+
         plugin.onEnable();
+    }
+
+    public void removePlugin(final RwmPlugin plugin) {
+        Validate.notNull(plugin, "Plugin cannot be null!");
+
+        plugins.remove(plugin);
+    }
+
+    @Override
+    public Iterator<RwmPlugin> iterator() {
+        return plugins.iterator();
+    }
+
+    public void unregisterPlugin(final RwmPlugin plugin) {
+        plugin.onDisable();
     }
 
     public static RwmPluginManager getInstance() {
@@ -64,5 +82,11 @@ public class RwmPluginManager {
         }
 
         return instance;
+    }
+
+    // Getter + Setter
+    // Getter
+    public Set<RwmPlugin> getPlugins() {
+        return plugins;
     }
 }

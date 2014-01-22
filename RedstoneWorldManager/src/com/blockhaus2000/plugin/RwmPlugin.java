@@ -70,10 +70,6 @@ public abstract class RwmPlugin {
      * called instead to the other in the sorting disable - enable.
      * {@link RwmPlugin#onLoad()} will not be called.
      * 
-     * <p>
-     * See {@link RwmPlugin#onDisable()} for the documentation of the reloading
-     * process.
-     * </p>
      */
     public void onDisable() {
         // Has to be empty (see JavaDoc)
