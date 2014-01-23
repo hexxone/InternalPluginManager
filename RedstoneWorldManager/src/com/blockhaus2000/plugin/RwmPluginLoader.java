@@ -5,9 +5,17 @@
 package com.blockhaus2000.plugin;
 
 import java.io.File;
-import java.util.List;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.jar.JarFile;
+import java.util.zip.ZipEntry;
 
 import com.blockhaus2000.main.bukkit.Main;
+import com.blockhaus2000.plugin.exception.InvalidPluginDescriptionException;
+import com.blockhaus2000.plugin.exception.PluginException;
 import com.blockhaus2000.plugin.exception.PluginNotFoundException;
 import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.resources.MainPluginResource;
@@ -35,7 +43,8 @@ public class RwmPluginLoader {
         mainPluginPath = main.getDataFolder().getAbsolutePath() + "/plugins/%pluginName%.jar";
     }
 
-    public RwmPlugin loadPlugin(final String pluginName) {
+    public RwmPluginDescriptionFile loadPlugin(final String pluginName) throws PluginNotFoundException,
+            InvalidPluginDescriptionException, PluginException, InstantiationException, IllegalAccessException {
         String pluginPath = mainPluginPath.replace("%pluginName%", pluginName);
 
         File file = new File(pluginPath);
@@ -44,11 +53,56 @@ public class RwmPluginLoader {
             throw new PluginNotFoundException("The plugin " + pluginName + " cannot be found at " + pluginPath);
         }
 
-        return null; // TODO
+        JarFile pluginJar = null;
+        InputStream stream = null;
+
+        try {
+            pluginJar = new JarFile(pluginPath);
+
+            ZipEntry pluginDescJarEntry = pluginJar.getEntry("plugin.yml");
+
+            if (pluginDescJarEntry == null) {
+                throw new InvalidPluginDescriptionException(new FileNotFoundException("The file \"" + pluginPath
+                        + "\" cannot be found!"));
+            }
+
+            stream = pluginJar.getInputStream(pluginDescJarEntry);
+        } catch (IOException ex) {
+            throw new PluginException(ex);
+        } finally {
+            if (pluginJar != null) {
+                try {
+                    pluginJar.close();
+                } catch (IOException ex) {
+                    ExceptionHandler.handle(ex);
+                }
+            }
+
+            if (stream != null) {
+                try {
+                    stream.close();
+                } catch (IOException ex) {
+                    ExceptionHandler.handle(ex);
+                }
+            }
+        }
+
+        return new RwmPluginDescriptionFile(stream);
     }
 
-    public List<RwmPlugin> loadAllPlugins() {
-        return null; // TODO
+    public Set<RwmPluginDescriptionFile> loadAllPlugins() throws PluginNotFoundException, InvalidPluginDescriptionException,
+            InstantiationException, IllegalAccessException, PluginException {
+        Set<RwmPluginDescriptionFile> plugins = new HashSet<RwmPluginDescriptionFile>();
+
+        for (File target : new File(mainPluginPath.replace("%pluginName%.jar", "")).listFiles()) {
+            if (target.isDirectory()) {
+                continue;
+            }
+
+            plugins.add(loadPlugin(target.getName().replace(".jar", "")));
+        }
+
+        return plugins;
     }
 
     public static RwmPluginLoader getInstance() {

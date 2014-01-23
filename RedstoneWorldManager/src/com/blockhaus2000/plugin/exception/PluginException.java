@@ -8,7 +8,7 @@ package com.blockhaus2000.plugin.exception;
  * 
  * @author Blockhaus2000
  */
-public class PluginException extends RuntimeException {
+public class PluginException extends Exception {
     private static final long serialVersionUID = -7270008574817315415L;
 
     public PluginException() {

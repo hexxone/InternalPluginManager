@@ -30,6 +30,13 @@ public class Main extends JavaPlugin {
     /**
      * {@inheritDoc}
      */
+    public void onDisable() {
+        RwmPluginManager.getInstance().unregisterAllPlugins();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public void onEnable() {
         try {
             ResourceManager.initializeResources(ExceptionHandler.class);
@@ -38,6 +45,8 @@ public class Main extends JavaPlugin {
             ExceptionHandler.handle(ex);
             PluginUtil.disable(this);
         }
+
+        RwmPluginManager.getInstance().registerAllPlugins();
     }
 
     /**

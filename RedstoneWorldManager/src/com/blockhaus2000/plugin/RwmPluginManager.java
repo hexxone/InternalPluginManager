@@ -11,19 +11,21 @@ import java.util.Set;
 import org.apache.commons.lang.Validate;
 
 import com.blockhaus2000.main.bukkit.Main;
+import com.blockhaus2000.plugin.exception.PluginException;
+import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.resources.MainPluginResource;
 
 /**
  * 
  * @author Blockhaus2000
  */
-public class RwmPluginManager implements Iterable<RwmPlugin> {
+public class RwmPluginManager implements Iterable<RwmPluginData> {
     private static RwmPluginManager instance;
 
     @MainPluginResource
     private Main main;
 
-    private Set<RwmPlugin> plugins = new HashSet<RwmPlugin>();
+    private Set<RwmPluginData> plugins = new HashSet<RwmPluginData>();
 
     private RwmPluginManager() {
         // Nothing to do (only to provide singleton pattern)
@@ -45,35 +47,52 @@ public class RwmPluginManager implements Iterable<RwmPlugin> {
      *             Will be throwed if the given {@link RwmPlugin} is
      *             <code>null</code>.
      */
-    public void addPlugin(final RwmPlugin plugin) throws IllegalArgumentException {
+    public void addPlugin(final RwmPlugin plugin, final RwmPluginDescriptionFile desc) throws IllegalArgumentException {
         Validate.notNull(plugin, "Plugin cannot be null!");
 
-        plugins.add(plugin);
+        plugins.add(new RwmPluginData(plugin, desc));
     }
 
-    public void registerPlugin(final RwmPlugin plugin) {
+    public void registerPlugin(final RwmPlugin plugin, final RwmPluginDescriptionFile desc) throws IllegalArgumentException {
         Validate.notNull(plugin, "Plugin cannot be null!");
 
         plugin.onLoad();
-
-        addPlugin(plugin);
-
+        addPlugin(plugin, desc);
         plugin.onEnable();
     }
 
-    public void removePlugin(final RwmPlugin plugin) {
+    public void registerAllPlugins() {
+        try {
+            for (RwmPluginDescriptionFile target : RwmPluginLoader.getInstance().loadAllPlugins()) {
+                registerPlugin(target.getMain().newInstance(), target);
+            }
+        } catch (InstantiationException | IllegalAccessException | PluginException ex) {
+            ExceptionHandler.handle(ex, true);
+        }
+    }
+
+    public void removePlugin(final RwmPlugin plugin) throws IllegalArgumentException {
         Validate.notNull(plugin, "Plugin cannot be null!");
 
         plugins.remove(plugin);
     }
 
-    @Override
-    public Iterator<RwmPlugin> iterator() {
-        return plugins.iterator();
+    public void unregisterPlugin(final RwmPlugin plugin) throws IllegalArgumentException {
+        Validate.notNull(plugin, "Plugin cannot be null!");
+
+        plugin.onDisable();
+        removePlugin(plugin);
     }
 
-    public void unregisterPlugin(final RwmPlugin plugin) {
-        plugin.onDisable();
+    public void unregisterAllPlugins() {
+        for (RwmPluginData target : plugins) {
+            removePlugin(target.getPlugin());
+        }
+    }
+
+    @Override
+    public Iterator<RwmPluginData> iterator() {
+        return plugins.iterator();
     }
 
     public static RwmPluginManager getInstance() {
@@ -86,7 +105,7 @@ public class RwmPluginManager implements Iterable<RwmPlugin> {
 
     // Getter + Setter
     // Getter
-    public Set<RwmPlugin> getPlugins() {
+    public Set<RwmPluginData> getPlugins() {
         return plugins;
     }
 }

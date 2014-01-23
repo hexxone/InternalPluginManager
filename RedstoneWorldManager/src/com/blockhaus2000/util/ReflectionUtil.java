@@ -6,6 +6,8 @@ package com.blockhaus2000.util;
 
 import java.lang.reflect.Field;
 
+import org.apache.commons.lang.Validate;
+
 /**
  * 
  * @author Blockhaus2000
@@ -13,6 +15,10 @@ import java.lang.reflect.Field;
 public class ReflectionUtil {
     @SuppressWarnings("unchecked")
     public static <T> T getField(final Object obj, final String fieldName) {
+        Validate.notNull(obj, "Obj cannot be null!");
+        Validate.notNull(fieldName, "FieldName cannot be null!");
+        Validate.notEmpty(fieldName, "FieldName cannot be empty!");
+
         Class<?> clazz = obj.getClass();
 
         while (clazz != null) {
@@ -35,5 +41,22 @@ public class ReflectionUtil {
         }
 
         return null;
+    }
+
+    public static boolean hasSuperclass(final Class<?> clazz, final Class<?> superClass) {
+        Validate.notNull(clazz, "Clazz cannot be null!");
+        Validate.notNull(superClass, "SuperClass cannot be null!");
+
+        Class<?> targetClass = clazz;
+
+        while (clazz != null) {
+            if (targetClass == superClass) {
+                return true;
+            }
+
+            targetClass = targetClass.getSuperclass();
+        }
+
+        return false;
     }
 }
