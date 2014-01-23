@@ -7,6 +7,7 @@ package com.blockhaus2000.main.bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.blockhaus2000.plugin.RwmPluginManager;
+import com.blockhaus2000.util.CommandUtil;
 import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.PluginUtil;
 import com.blockhaus2000.util.resources.MainPluginResource;
@@ -47,6 +48,18 @@ public class Main extends JavaPlugin {
         }
 
         RwmPluginManager.getInstance().registerAllPlugins();
+    }
+
+    public void registerCommands(final Class<?> clazz, final Object obj) {
+        CommandUtil.registerCommands(clazz, obj, this);
+    }
+
+    public void registerCommands(final Class<?> clazz) {
+        registerCommands(clazz, null);
+    }
+
+    public void registerCommands(final Object obj) {
+        registerCommands(obj.getClass(), obj);
     }
 
     /**

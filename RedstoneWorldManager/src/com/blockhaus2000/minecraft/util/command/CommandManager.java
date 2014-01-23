@@ -47,7 +47,9 @@ public class CommandManager implements CommandExecutor {
         // Nothing to do (only to provide singleton pattern)
     }
 
-    public void register(final Class<?> clazz, final Object obj) throws CommandException {
+    public List<CommandInfo> register(final Class<?> clazz, final Object obj) throws CommandException {
+        List<CommandInfo> registered = new ArrayList<CommandInfo>();
+
         for (Method targetMethod : clazz.getMethods()) {
             if (!targetMethod.isAnnotationPresent(Command.class)) {
                 continue;
@@ -82,19 +84,24 @@ public class CommandManager implements CommandExecutor {
                 }
 
                 Command cmdAnot = targetMethod.getAnnotation(Command.class);
-                cmds.get(targetAlias)
-                        .add(new CommandInfo(cmdAnot, clazz, obj, targetMethod, new CommandSyntax(cmdAnot.syntax())));
+                CommandInfo commandInfo = new CommandInfo(cmdAnot, clazz, obj, targetMethod, new CommandSyntax(cmdAnot.syntax()));
+
+                registered.add(commandInfo);
+
+                cmds.get(targetAlias).add(commandInfo);
                 Collections.sort(cmds.get(targetAlias));
             }
         }
+
+        return registered;
     }
 
-    public void register(final Class<?> clazz) throws CommandException {
-        register(clazz, null);
+    public List<CommandInfo> register(final Class<?> clazz) throws CommandException {
+        return register(clazz, null);
     }
 
-    public void register(final Object obj) throws CommandException {
-        register(obj.getClass(), obj);
+    public List<CommandInfo> register(final Object obj) throws CommandException {
+        return register(obj.getClass(), obj);
     }
 
     public boolean execute(final CommandSender sender, final org.bukkit.command.Command cmd, final String[] bArgs,

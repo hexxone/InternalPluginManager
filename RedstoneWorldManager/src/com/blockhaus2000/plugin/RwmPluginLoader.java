@@ -41,6 +41,15 @@ public class RwmPluginLoader {
         }
 
         mainPluginPath = main.getDataFolder().getAbsolutePath() + "/plugins/%pluginName%.jar";
+
+        File mainDir = new File(mainPluginPath.replace("%pluginName%.jar", ""));
+        if (!mainDir.exists()) {
+            try {
+                mainDir.createNewFile();
+            } catch (IOException ex) {
+                ExceptionHandler.handle(ex, true);
+            }
+        }
     }
 
     public RwmPluginDescriptionFile loadPlugin(final String pluginName) throws PluginNotFoundException,

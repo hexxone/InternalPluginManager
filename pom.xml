@@ -28,6 +28,7 @@
 
 	<modules>
 		<module>RedstoneWorldManager</module>
+		<module>RedstoneWorldManagerTest</module>
 	</modules>
 
 	<dependencies>
@@ -40,7 +41,6 @@
 
 	<build>
 		<sourceDirectory>src</sourceDirectory>
-		<testSourceDirectory>test</testSourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -60,7 +60,12 @@
 					<artifactItems>
 						<artifactItem>
 							<groupId>${project.groupId}</groupId>
-							<artifactId>UltimateServerPlugin</artifactId>
+							<artifactId>RedstoneWorldManager</artifactId>
+							<version>${project.version}</version>
+						</artifactItem>
+						<artifactItem>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>RedstoneWorldManagerTest</artifactId>
 							<version>${project.version}</version>
 						</artifactItem>
 					</artifactItems>
