@@ -4,6 +4,7 @@
  */
 package com.blockhaus2000.plugin;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -66,8 +67,8 @@ public class RwmPluginManager implements Iterable<RwmPluginData> {
             for (RwmPluginDescriptionFile target : RwmPluginLoader.getInstance().loadAllPlugins()) {
                 registerPlugin(target.getMain().newInstance(), target);
             }
-        } catch (InstantiationException | IllegalAccessException | PluginException ex) {
-            ExceptionHandler.handle(ex, true);
+        } catch (InstantiationException | IllegalAccessException | PluginException | IOException | IllegalArgumentException ex) {
+            ExceptionHandler.handle(ex);
         }
     }
 

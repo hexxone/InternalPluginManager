@@ -4,6 +4,7 @@
  */
 package com.blockhaus2000.plugin;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
@@ -25,8 +26,10 @@ public class RwmPluginDescriptionFile {
     private String version;
     private Class<? extends RwmPlugin> main;
 
-    public RwmPluginDescriptionFile(final InputStream stream) throws InvalidPluginDescriptionException, PluginException {
+    public RwmPluginDescriptionFile(final InputStream stream) throws InvalidPluginDescriptionException, PluginException,
+            IOException {
         loadMap(asMap(yaml.load(stream)));
+        stream.close();
     }
 
     @SuppressWarnings("unchecked")

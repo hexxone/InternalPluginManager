@@ -5,7 +5,6 @@
 package com.blockhaus2000.util.resources;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 
 import org.apache.commons.lang.Validate;
 
@@ -42,14 +41,11 @@ public class ResourceManager {
      *             throw it.
      */
     @SuppressWarnings("deprecation")
-    public static void initializeResources(final Class<?> clazz, final Object obj) throws IllegalArgumentException,
-            IllegalAccessException {
+    public static void initializeResources(final Class<?> clazz, final Object obj) throws IllegalAccessException {
         Validate.notNull(clazz, "The given class is null!");
 
-        for (Field target : clazz.getFields()) {
+        for (Field target : clazz.getDeclaredFields()) {
             if (target.isAnnotationPresent(MainPluginResource.class)) {
-                isFieldCallValid(target, obj, true);
-
                 target.setAccessible(true);
                 target.set(obj, Main.getInstance());
             }
@@ -120,14 +116,17 @@ public class ResourceManager {
      *             Will be throwed if this will return <code>false</code> and
      *             <code>throwException == true</code>.
      */
-    private static boolean isFieldCallValid(final Field field, final Object obj, final boolean throwException)
-            throws IllegalArgumentException {
-        final boolean isValid = !Modifier.isStatic(field.getModifiers()) && obj == null;
-
-        if (throwException && !isValid) {
-            throw new IllegalArgumentException("The field " + field + " is non-static and the given Object is null!");
-        }
-
-        return !Modifier.isStatic(field.getModifiers()) && obj == null;
-    }
+    // private static boolean isFieldCallValid(final Field field, final Object
+    // obj, final boolean throwException)
+    // throws IllegalArgumentException {
+    // final boolean isValid = !Modifier.isStatic(field.getModifiers()) && obj
+    // == null;
+    //
+    // if (throwException && !isValid) {
+    // throw new IllegalArgumentException("The field " + field +
+    // " is non-static and the given Object is null!");
+    // }
+    //
+    // return !Modifier.isStatic(field.getModifiers()) && obj == null;
+    // }
 }
