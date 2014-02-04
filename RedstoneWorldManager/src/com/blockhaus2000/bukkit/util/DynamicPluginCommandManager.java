@@ -57,7 +57,7 @@ public class DynamicPluginCommandManager {
     }
 
     private CommandMap getCommandMap() {
-        CommandMap commandMap = ReflectionUtil.getField(Bukkit.getServer().getPluginManager(), "commandMap");
+        CommandMap commandMap = ReflectionUtil.getFieldValue(Bukkit.getServer().getPluginManager(), "commandMap");
 
         if (commandMap == null) {
             if (fallbackCommandMap != null) {

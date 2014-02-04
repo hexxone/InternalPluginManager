@@ -78,7 +78,7 @@ public class RwmPluginLoader {
             throw new PluginException(ex);
         }
 
-        RwmPluginDescriptionFile descFile = new RwmPluginDescriptionFile(stream);
+        RwmPluginDescriptionFile descFile = new RwmPluginDescriptionFile(stream, file);
 
         stream.close();
         pluginJar.close();

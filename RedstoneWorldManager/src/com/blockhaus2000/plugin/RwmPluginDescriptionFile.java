@@ -4,6 +4,7 @@
  */
 package com.blockhaus2000.plugin;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.yaml.snakeyaml.constructor.SafeConstructor;
 
 import com.blockhaus2000.plugin.exception.InvalidPluginDescriptionException;
 import com.blockhaus2000.plugin.exception.PluginException;
+import com.blockhaus2000.util.DynamicClasspathExtensionUtil;
 import com.blockhaus2000.util.ReflectionUtil;
 
 /**
@@ -22,12 +24,16 @@ import com.blockhaus2000.util.ReflectionUtil;
 public class RwmPluginDescriptionFile {
     private final Yaml yaml = new Yaml(new SafeConstructor());
 
+    private final File file;
+
     private String name;
     private String version;
     private Class<? extends RwmPlugin> main;
 
-    public RwmPluginDescriptionFile(final InputStream stream) throws InvalidPluginDescriptionException, PluginException,
-            IOException {
+    public RwmPluginDescriptionFile(final InputStream stream, final File file) throws InvalidPluginDescriptionException,
+            PluginException, IOException {
+        this.file = file;
+
         loadMap(asMap(yaml.load(stream)));
         stream.close();
     }
@@ -62,10 +68,12 @@ public class RwmPluginDescriptionFile {
 
         Class<?> main = null;
 
+        DynamicClasspathExtensionUtil.addJarToClassPath(file);
+
         try {
             main = Class.forName(mainClassPath);
         } catch (ClassNotFoundException ex) {
-            throw new InvalidPluginDescriptionException("The setted main class cannot be found!", ex);
+            throw new InvalidPluginDescriptionException("The setted main class (\"" + mainClassPath + "\")cannot be found!", ex);
         }
 
         if (!ReflectionUtil.hasSuperclass(main, RwmPlugin.class)) {
@@ -86,6 +94,10 @@ public class RwmPluginDescriptionFile {
     // Getter
     public Yaml getYaml() {
         return yaml;
+    }
+
+    public File getFile() {
+        return file;
     }
 
     public String getName() {

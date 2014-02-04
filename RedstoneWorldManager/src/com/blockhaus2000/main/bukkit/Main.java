@@ -6,6 +6,7 @@ package com.blockhaus2000.main.bukkit;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.blockhaus2000.plugin.RwmPlugin;
 import com.blockhaus2000.plugin.RwmPluginManager;
 import com.blockhaus2000.util.CommandUtil;
 import com.blockhaus2000.util.ExceptionHandler;
@@ -31,6 +32,7 @@ public class Main extends JavaPlugin {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void onDisable() {
         RwmPluginManager.getInstance().unregisterAllPlugins();
     }
@@ -38,6 +40,7 @@ public class Main extends JavaPlugin {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void onEnable() {
         try {
             ResourceManager.initializeResources(ExceptionHandler.class);
@@ -48,6 +51,16 @@ public class Main extends JavaPlugin {
         }
 
         RwmPluginManager.getInstance().registerAllPlugins();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onLoad() {
+        new RwmPlugin() {
+            // Nothing to do (only to load the class)
+        };
     }
 
     public void registerCommands(final Class<?> clazz, final Object obj) {
