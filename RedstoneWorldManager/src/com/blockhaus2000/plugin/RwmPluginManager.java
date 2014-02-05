@@ -9,8 +9,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.apache.commons.lang.Validate;
-
 import com.blockhaus2000.main.bukkit.Main;
 import com.blockhaus2000.plugin.exception.PluginException;
 import com.blockhaus2000.util.ExceptionHandler;
@@ -49,13 +47,13 @@ public class RwmPluginManager implements Iterable<RwmPluginData> {
      *             <code>null</code>.
      */
     public void addPlugin(final RwmPlugin plugin, final RwmPluginDescriptionFile desc) throws IllegalArgumentException {
-        Validate.notNull(plugin, "Plugin cannot be null!");
+        assert plugin != null : "Plugin cannot be null!";
 
         plugins.add(new RwmPluginData(plugin, desc));
     }
 
     public void registerPlugin(final RwmPlugin plugin, final RwmPluginDescriptionFile desc) throws IllegalArgumentException {
-        Validate.notNull(plugin, "Plugin cannot be null!");
+        assert plugin != null : "Plugin cannot be null!";
 
         plugin.onLoad();
         addPlugin(plugin, desc);
@@ -73,13 +71,13 @@ public class RwmPluginManager implements Iterable<RwmPluginData> {
     }
 
     public void removePlugin(final RwmPlugin plugin) throws IllegalArgumentException {
-        Validate.notNull(plugin, "Plugin cannot be null!");
+        assert plugin != null : "Plugin cannot be null!";
 
         plugins.remove(plugin);
     }
 
     public void unregisterPlugin(final RwmPlugin plugin) throws IllegalArgumentException {
-        Validate.notNull(plugin, "Plugin cannot be null!");
+        assert plugin != null : "Plugin cannot be null!";
 
         plugin.onDisable();
         removePlugin(plugin);

@@ -6,8 +6,6 @@ package com.blockhaus2000.util.resources;
 
 import java.lang.reflect.Field;
 
-import org.apache.commons.lang.Validate;
-
 import com.blockhaus2000.main.bukkit.Main;
 
 /**
@@ -42,7 +40,7 @@ public class ResourceManager {
      */
     @SuppressWarnings("deprecation")
     public static void initializeResources(final Class<?> clazz, final Object obj) throws IllegalAccessException {
-        Validate.notNull(clazz, "The given class is null!");
+        assert clazz != null : "The given class is null!";
 
         for (Field target : clazz.getDeclaredFields()) {
             if (target.isAnnotationPresent(MainPluginResource.class)) {

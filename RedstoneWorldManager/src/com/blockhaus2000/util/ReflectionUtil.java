@@ -6,17 +6,15 @@ package com.blockhaus2000.util;
 
 import java.lang.reflect.Field;
 
-import org.apache.commons.lang.Validate;
-
 /**
  * 
  * @author Blockhaus2000
  */
 public class ReflectionUtil {
     public static Field getField(Class<?> clazz, final String fieldName) {
-        Validate.notNull(clazz, "Clazz cannot be null!");
-        Validate.notNull(fieldName, "FieldName cannot be null!");
-        Validate.notEmpty(fieldName, "FieldName cannot be empty!");
+        assert clazz != null : "Clazz cannot be null!";
+        assert fieldName != null : "FieldName cannot be null!";
+        assert fieldName.length() != 0 : "FieldName cannot be empty!";
 
         while (clazz != null) {
             try {
@@ -41,9 +39,9 @@ public class ReflectionUtil {
 
     @SuppressWarnings("unchecked")
     public static <T> T getFieldValue(final Object obj, final String fieldName) {
-        Validate.notNull(obj, "Obj cannot be null!");
-        Validate.notNull(fieldName, "FieldName cannot be null!");
-        Validate.notEmpty(fieldName, "FieldName cannot be empty!");
+        assert obj != null : "Obj cannot be null!";
+        assert fieldName != null : "FieldName cannot be null!";
+        assert fieldName.length() != 0 : "FieldName cannot be empty!";
 
         Field field = getField(obj.getClass(), fieldName);
         field.setAccessible(true);
@@ -65,10 +63,10 @@ public class ReflectionUtil {
 
     public static void setField(final Object obj, final String fieldName, final Object value) throws IllegalArgumentException,
             IllegalAccessException {
-        Validate.notNull(obj, "Obj cannot be null!");
-        Validate.notNull(fieldName, "FieldName cannot be null!");
-        Validate.notEmpty(fieldName, "FieldName cannot be empty!");
-        Validate.notNull(value, "Value cannot be null!");
+        assert obj != null : "Obj cannot be null!";
+        assert fieldName != null : "FieldName cannot be null!";
+        assert fieldName.length() != 0 : "FieldName cannot be empty!";
+        assert value != null : "Value cannot be null!";
 
         Field field = getField(obj.getClass(), fieldName);
         field.setAccessible(true);
@@ -76,8 +74,8 @@ public class ReflectionUtil {
     }
 
     public static boolean hasSuperclass(final Class<?> clazz, final Class<?> superClass) {
-        Validate.notNull(clazz, "Clazz cannot be null!");
-        Validate.notNull(superClass, "SuperClass cannot be null!");
+        assert clazz != null : "Clazz cannot be null!";
+        assert superClass != null : "SuperClass cannot be null!";
 
         Class<?> targetClass = clazz;
 

@@ -37,12 +37,10 @@ public class DynamicPluginCommandManager {
         this(plugin, plugin);
     }
 
-    public boolean registerCommands(List<CommandInfo> registered) {
-        CommandMap commandMap = getCommandMap();
+    public void registerCommands(List<CommandInfo> registered) {
+        assert registered != null : "Registered cannot be null!";
 
-        if (commandMap == null || registered == null || registered.size() == 0) {
-            return false;
-        }
+        CommandMap commandMap = getCommandMap();
 
         for (CommandInfo target : registered) {
             Command cmdAnot = target.getCommandAnot();
@@ -52,8 +50,6 @@ public class DynamicPluginCommandManager {
             cmd.setPermission(cmdAnot.permission());
             commandMap.register(plugin.getDescription().getName(), cmd);
         }
-
-        return true;
     }
 
     private CommandMap getCommandMap() {

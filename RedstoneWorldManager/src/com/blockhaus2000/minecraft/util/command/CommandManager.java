@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -48,6 +47,8 @@ public class CommandManager implements CommandExecutor {
     }
 
     public List<CommandInfo> register(final Class<?> clazz, final Object obj) throws CommandException {
+        assert clazz != null : "Clazz cannot be null!";
+
         List<CommandInfo> registered = new ArrayList<CommandInfo>();
 
         for (Method targetMethod : clazz.getMethods()) {
@@ -55,23 +56,15 @@ public class CommandManager implements CommandExecutor {
                 continue;
             }
 
-            if (!Modifier.isStatic(targetMethod.getModifiers()) && obj == null) {
-                throw new CommandException("The method " + targetMethod + " is non-static and the given Object is null.");
-            }
-
-            if (!targetMethod.getParameterTypes().equals(new Class<?>[] { CommandContext.class })) {
-                throw new CommandException("The arguments of the method " + targetMethod
-                        + " ar not correct. They only argument has to be \"CommandContext\"");
-            }
+            assert !Modifier.isStatic(targetMethod.getModifiers()) && obj == null : "The method " + targetMethod
+                    + " is non-static and the given Object is null.";
+            assert targetMethod.getParameterTypes().equals(new Class<?>[] { CommandContext.class }) : "The arguments of the method "
+                    + targetMethod + " ar not correct. They only argument has to be \"CommandContext\"";
 
             String[] flags = targetMethod.getAnnotation(Command.class).flags();
-            if (flags.length != 0) {
-                for (String targetFlag : flags) {
-                    if (!targetFlag.matches(flagRegex)) {
-                        throw new CommandException("The flag \"" + targetFlag + "\" does not match the regex \"" + flagRegex
-                                + "\"!");
-                    }
-                }
+            for (String targetFlag : flags) {
+                assert !targetFlag.matches(flagRegex) : "The flag \"" + targetFlag + "\" does not match the regex \"" + flagRegex
+                        + "\"!";
             }
 
             for (String targetAlias : targetMethod.getAnnotation(Command.class).aliases()) {
@@ -106,6 +99,13 @@ public class CommandManager implements CommandExecutor {
 
     public boolean execute(final CommandSender sender, final org.bukkit.command.Command cmd, final String[] bArgs,
             final String label) throws CommandException {
+        assert sender != null : "Sender cannot be null!";
+        assert cmd != null : "Cmd cannot be null!";
+        assert bArgs != null : "BArgs cannot be null!";
+        assert bArgs.length != 0 : "BArgs cannot be empty!";
+        assert label != null : "Label cannot be null!";
+        assert label.length() != 0 : "Label cannot be empty!";
+
         if (!cmds.containsKey(label)) {
             throw new CommandException("The given command \"" + label + "\" is not registered.");
         }
@@ -161,8 +161,8 @@ public class CommandManager implements CommandExecutor {
     }
 
     private ContextData parseCommand(final CommandInfo cmd, final List<String> rawArgs) {
-        Validate.notNull(cmd, "Cmd cannot be null!");
-        Validate.notNull(rawArgs, "RawArgs cannot be null!");
+        assert cmd != null : "Cmd cannot be null!";
+        assert rawArgs != null : "RawArgs cannot be null!";
 
         ContextData contextData = parseFlags(cmd, rawArgs);
 
@@ -174,8 +174,8 @@ public class CommandManager implements CommandExecutor {
     }
 
     private ContextData parseFlags(final CommandInfo cmd, final List<String> rawArgs) {
-        Validate.notNull(cmd, "Cmd cannot be null!");
-        Validate.notNull(rawArgs, "RawArgs cannot be null!");
+        assert cmd != null : "Cmd cannot be null!";
+        assert rawArgs != null : "RawArgs cannot be null!";
 
         Map<Character, Tag<?>> flags = new HashMap<Character, Tag<?>>();
 
@@ -217,9 +217,9 @@ public class CommandManager implements CommandExecutor {
     }
 
     private ContextData parseArguments(final CommandInfo cmd, final String[] rawArgsArray, final Map<Character, Tag<?>> flags) {
-        Validate.notNull(cmd, "Cmd cannot be null!");
-        Validate.notNull(rawArgsArray, "RawArgsArray cannot be null!");
-        Validate.notNull(flags, "Flags cannot be null!");
+        assert cmd != null : "Cmd cannot be null!";
+        assert rawArgsArray != null : "RawArgsArray cannot be null!";
+        assert flags != null : "Flags cannot be null!";
 
         List<String> rawArgs = Arrays.asList(rawArgsArray);
 

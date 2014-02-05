@@ -11,16 +11,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-import org.apache.commons.lang.Validate;
-
 /**
  * 
  * @author Blockhaus2000
  */
 public class DynamicClasspathExtensionUtil {
     public static void addJarToClassPath(final ClassLoader loader, final File jar) {
-        Validate.notNull(loader, "Loader cannot be null!");
-        Validate.notNull(jar, "Jar cannot be null!");
+        assert loader != null : "Loader cannot be null!";
+        assert jar != null : "Jar cannot be null!";
 
         if (!(loader instanceof URLClassLoader)) {
             throw new IllegalArgumentException("Loader ha to be an instance of URLClassLoader!");

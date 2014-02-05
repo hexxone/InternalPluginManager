@@ -84,9 +84,7 @@ public class RwmPluginDescriptionFile {
     }
 
     private Map<?, ?> asMap(final Object obj) throws InvalidPluginDescriptionException {
-        if (!(obj instanceof Map)) {
-            throw new InvalidPluginDescriptionException(obj + " is not correct structured!");
-        }
+        assert !(obj instanceof Map) : obj + " is not correct structured!";
 
         return (Map<?, ?>) obj;
     }

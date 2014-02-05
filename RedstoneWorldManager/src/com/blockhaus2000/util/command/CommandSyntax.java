@@ -16,11 +16,7 @@ public class CommandSyntax implements Iterable<CommandSyntaxType> {
     private final List<CommandSyntaxType> syntax;
 
     public CommandSyntax(final String syntaxString) {
-        if (syntaxString == null || syntaxString.length() == 0) {
-            syntax = null;
-        } else {
-            syntax = parseCommandSyntax(syntaxString);
-        }
+        syntax = syntaxString == null || syntaxString.length() == 0 ? null : parseCommandSyntax(syntaxString);
     }
 
     public List<CommandSyntaxType> parseCommandSyntax(final String syntaxString) throws IllegalArgumentException {

@@ -4,8 +4,6 @@
  */
 package com.blockhaus2000.util;
 
-import org.apache.commons.lang.Validate;
-
 import com.blockhaus2000.main.bukkit.Main;
 import com.blockhaus2000.util.resources.MainPluginResource;
 
@@ -49,7 +47,7 @@ public final class ExceptionHandler {
      *             <code>null</code>.
      */
     public static void handle(final Exception ex, final boolean disable) throws IllegalArgumentException {
-        Validate.notNull(ex, "Ex cannot be null.");
+        assert ex != null : "Ex cannot be null!";
 
         ex.printStackTrace();
 
