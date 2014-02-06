@@ -12,7 +12,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 /**
- * test
  * 
  * @author Blockhaus2000
  */
