@@ -19,10 +19,7 @@ public class DynamicClasspathExtensionUtil {
     public static void addJarToClassPath(final ClassLoader loader, final File jar) {
         assert loader != null : "Loader cannot be null!";
         assert jar != null : "Jar cannot be null!";
-
-        if (!(loader instanceof URLClassLoader)) {
-            throw new IllegalArgumentException("Loader has to be an instance of URLClassLoader!");
-        }
+        assert loader instanceof URLClassLoader : "Loader has to be an instance of URLClassLoader!";
 
         Method addUrlMethod = null;
 
