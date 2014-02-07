@@ -13,6 +13,7 @@ import org.bukkit.command.PluginIdentifiableCommand;
 import org.bukkit.plugin.Plugin;
 
 /**
+ * test
  * 
  * @author Blockhaus2000
  */
