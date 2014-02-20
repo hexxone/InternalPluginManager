@@ -1,4 +1,4 @@
-name: RedstoneWorldManager
+name: InternalPluginManager
 version: 1.0-SNAPSHOT
 main: com.blockhaus2000.main.bukkit.IpmMain
 author: Blockhaus2000, lobnews

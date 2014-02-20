@@ -32,6 +32,11 @@ public class Tag<T> {
         this(null);
     }
 
+    @Override
+    public String toString() {
+        return getClass().getName() + "[data=" + data + "]";
+    }
+
     public T getData() {
         return data;
     }

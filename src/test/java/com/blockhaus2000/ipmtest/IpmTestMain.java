@@ -17,41 +17,53 @@
  */
 package com.blockhaus2000.ipmtest;
 
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
 import com.blockhaus2000.main.bukkit.IpmMain;
-import com.blockhaus2000.minecraft.util.command.Command;
+import com.blockhaus2000.minecraft.util.command.event.NoPermissionCommandEvent;
+import com.blockhaus2000.minecraft.util.command.event.NotEnoughArgumentsCommandEvent;
+import com.blockhaus2000.minecraft.util.command.event.TooManyArgumentsCommandEvent;
 import com.blockhaus2000.plugin.IpmPlugin;
 import com.blockhaus2000.util.CommandUtil;
-import com.blockhaus2000.util.ChatOut;
-import com.blockhaus2000.util.command.CommandContext;
-import com.blockhaus2000.util.command.SingleCommand;
+import com.blockhaus2000.util.ExceptionHandler;
+import com.blockhaus2000.util.resources.MainPluginResource;
+import com.blockhaus2000.util.resources.ResourceManager;
 
 /**
  * 
  * @author Blockhaus2000
  */
-public class IpmTestMain extends IpmPlugin implements SingleCommand {
-    @Override
-    public void onDisable() {
-        System.out.println("onDisable()");
-    }
+public class IpmTestMain extends IpmPlugin implements Listener {
+    @MainPluginResource
+    private IpmMain main;
 
-    @SuppressWarnings("deprecation")
-    @Override
     public void onEnable() {
-        System.out.println("onEnable()");
+        try {
+            ResourceManager.initializeResources(this);
+        } catch (IllegalArgumentException ex) {
+            ExceptionHandler.handle(ex);
+        } catch (IllegalAccessException ex) {
+            ExceptionHandler.handle(ex);
+        }
 
-        CommandUtil.registerCommands(this, IpmMain.getInstance());
+        CommandUtil.registerCommands(new TestCommands(), main);
+
+        main.getServer().getPluginManager().registerEvents(this, main);
     }
 
-    @Override
-    public void onLoad() {
-        System.out.println("onLoad()");
+    @EventHandler
+    public void onNotEnoughtArgumentsCommand(NotEnoughArgumentsCommandEvent event) {
+        System.out.println("onNotEnoughtArgumentsCommand");
     }
 
-    @Command(aliases = { "ipmtest" },
-             desc = "This is the first test command!")
-    @Override
-    public void onCommand(CommandContext context) {
-        ChatOut.sendMessage(context.getSender(), "It works!");
+    @EventHandler
+    public void onTooManyArgumentsCommand(TooManyArgumentsCommandEvent event) {
+        System.out.println("onTooManyArgumentsCommand");
+    }
+
+    @EventHandler
+    public void onNoPermissionCommand(NoPermissionCommandEvent event) {
+        System.out.println("onNoPermissionCommand");
     }
 }

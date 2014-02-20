@@ -1,10 +1,10 @@
 #!/bin/bash
 
-rm dist/plugins/InternalPluginManager_Dev-Build.jar >> build.log
+rm dist/plugins/InternalPluginManager_Dev-Build.jar >> /dev/null
 
-cd target/classes/ >> build.log
-zip -r -u ../../dist/plugins/InternalPluginManager_Dev-Build.jar * >> build.log
-cd ../../target/test-classes/ >> build.log
-zip -r -u ../../dist/plugins/InternalPluginManager_Dev-Build.jar * >> build.log
+cd target/classes/ >> /dev/null
+zip -r -u ../../dist/plugins/InternalPluginManager_Dev-Build.jar * >> /dev/null
+cd ../../target/test-classes/ >> /dev/null
+zip -r -u ../../dist/plugins/InternalPluginManager_Dev-Build.jar * >> /dev/null
 
-screen -S "eclipse-bukkit-debugger" -p 0 -X stuff "`printf "reload\r"`" >> build.log
+screen -S "eclipse-bukkit-debugger" -p 0 -X stuff "`printf "reload\r"`" >> /dev/null

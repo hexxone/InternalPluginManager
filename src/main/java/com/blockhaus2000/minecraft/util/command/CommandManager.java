@@ -69,10 +69,11 @@ public class CommandManager implements CommandExecutor {
                 continue;
             }
 
-            assert !Modifier.isStatic(targetMethod.getModifiers()) && obj == null : "The method " + targetMethod
-                    + " is non-static and the given Object is null.";
-            assert targetMethod.getParameterTypes().equals(new Class<?>[] { CommandContext.class }) : "The arguments of the method "
-                    + targetMethod + " ar not correct. They only argument has to be \"CommandContext\"";
+            assert Modifier.isStatic(targetMethod.getModifiers()) || obj != null : "The method \"" + targetMethod
+                    + "\" is non-static and the given Object is null.";
+            assert targetMethod.toString().split("\\(")[1].equals("com.blockhaus2000.util.command.CommandContext)") : "The "
+                    + "arguments of the method \"" + targetMethod
+                    + "\" are not correct. The only argument has to be \"CommandContext\"";
 
             String[] flags = targetMethod.getAnnotation(Command.class).flags();
             for (String targetFlag : flags) {
@@ -115,7 +116,6 @@ public class CommandManager implements CommandExecutor {
         assert sender != null : "Sender cannot be null!";
         assert cmd != null : "Cmd cannot be null!";
         assert bArgs != null : "BArgs cannot be null!";
-        assert bArgs.length != 0 : "BArgs cannot be empty!";
         assert label != null : "Label cannot be null!";
         assert label.length() != 0 : "Label cannot be empty!";
 
@@ -139,8 +139,8 @@ public class CommandManager implements CommandExecutor {
 
             CommandSyntax syntax = target.getSyntax();
 
-            int min = syntax == null ? cmdAnot.min() : syntax.size();
-            int max = syntax == null ? cmdAnot.max() : (syntax.endsWithVarArg() ? -1 : syntax.size());
+            int min = syntax.isNull() ? cmdAnot.min() : syntax.size();
+            int max = syntax.isNull() ? cmdAnot.max() : (syntax.endsWithVarArg() ? -1 : syntax.size());
 
             List<Tag<?>> args = parseFlags(target, bArgs).getArgs();
 
@@ -255,16 +255,16 @@ public class CommandManager implements CommandExecutor {
             for (int i = 0; i < syntax.getSyntax().size(); i++) {
                 switch (syntax.getSyntax().get(i)) {
                 case DOUBLE:
-                    args.add(new Tag<Double>(Double.valueOf(rawArgs.get(i))));
+                    args.add(new Tag<Double>(Double.valueOf(rawArgs.get(i).trim())));
                     break;
                 case INTEGER:
-                    args.add(new Tag<Integer>(Integer.valueOf(rawArgs.get(i))));
+                    args.add(new Tag<Integer>(Integer.valueOf(rawArgs.get(i).trim())));
                     break;
                 case STRING:
-                    args.add(new Tag<String>(rawArgs.get(i)));
+                    args.add(new Tag<String>(rawArgs.get(i).trim()));
                     break;
                 case STRING_VARARG:
-                    args.add(new Tag<String>(StringUtil.joinString(i, " ", rawArgs)));
+                    args.add(new Tag<String>(StringUtil.joinString(i, "", rawArgs)));
                     break;
                 }
             }

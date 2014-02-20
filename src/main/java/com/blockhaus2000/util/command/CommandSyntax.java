@@ -78,6 +78,10 @@ public class CommandSyntax implements Iterable<CommandSyntaxType> {
         return syntax != null ? syntax.size() : 0;
     }
 
+    public boolean isNull() {
+        return syntax == null;
+    }
+    
     @Override
     public Iterator<CommandSyntaxType> iterator() {
         return syntax.iterator();

@@ -24,29 +24,15 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import com.blockhaus2000.configuration.Configuration;
 import com.blockhaus2000.main.bukkit.IpmMain;
-import com.blockhaus2000.util.ExceptionHandler;
-import com.blockhaus2000.util.resources.MainPluginResource;
-import com.blockhaus2000.util.resources.ResourceManager;
 
 /**
  * 
  * @author Blockhaus2000
  */
 public abstract class IpmPlugin {
-    @MainPluginResource
-    private IpmMain main;
-
     private final Configuration config;
 
     public IpmPlugin() {
-        try {
-            ResourceManager.initializeResources(this);
-        } catch (IllegalArgumentException ex) {
-            ExceptionHandler.handle(ex, true);
-        } catch (IllegalAccessException ex) {
-            ExceptionHandler.handle(ex, true);
-        }
-
         config = null;
     }
 
@@ -102,6 +88,6 @@ public abstract class IpmPlugin {
 
     @Deprecated
     public FileConfiguration getRawConfig() {
-        return main.getConfig();
+        return IpmMain.getInstance().getConfig();
     }
 }
