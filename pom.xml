@@ -52,7 +52,6 @@
 		<finalName>${project.artifactId}_${project.version}</finalName>
 		<testOutputDirectory>target/test-classes</testOutputDirectory>
 		<sourceDirectory>src/main/java</sourceDirectory>
-		<scriptSourceDirectory>src/main/scripts</scriptSourceDirectory>
 		<testSourceDirectory>src/test/java</testSourceDirectory>
 		<plugins>
 			<plugin>
@@ -96,13 +95,5 @@
 				</includes>
 			</resource>
 		</resources>
-		<testResources>
-			<testResource>
-				<directory>src/test/resources</directory>
-				<includes>
-					<include>plugin.yml</include>
-				</includes>
-			</testResource>
-		</testResources>
 	</build>
 </project>

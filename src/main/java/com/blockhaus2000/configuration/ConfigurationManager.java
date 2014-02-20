@@ -17,7 +17,7 @@
  */
 package com.blockhaus2000.configuration;
 
-import com.blockhaus2000.main.bukkit.Main;
+import com.blockhaus2000.main.bukkit.IpmMain;
 import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.resources.MainPluginResource;
 import com.blockhaus2000.util.resources.ResourceManager;
@@ -30,7 +30,7 @@ public class ConfigurationManager {
     private static ConfigurationManager instance;
 
     @MainPluginResource
-    private Main main;
+    private IpmMain main;
 
     private ConfigurationManager() {
         try {

@@ -165,7 +165,7 @@ public class CommandManager implements CommandExecutor {
             } catch (IllegalAccessException ex) {
                 ExceptionHandler.handle(ex);
             } catch (InvocationTargetException ex) {
-                ExceptionHandler.handle(ex);
+                throw new CommandException("An exception is throw in the called method!", ex);
             }
         }
 
@@ -197,6 +197,10 @@ public class CommandManager implements CommandExecutor {
         Map<Character, Tag<?>> flags = new HashMap<Character, Tag<?>>();
 
         for (String target : cmd.getCommandAnot().flags()) {
+            if (target.length() == 0) {
+                continue;
+            }
+
             boolean found = false;
 
             char flagIndex = target.charAt(0);
@@ -243,7 +247,7 @@ public class CommandManager implements CommandExecutor {
         List<Tag<?>> args = new ArrayList<Tag<?>>();
 
         CommandSyntax syntax = cmd.getSyntax();
-        if (syntax == null) {
+        if (syntax == null || syntax.getSyntax() == null) {
             for (String targetArg : rawArgs) {
                 args.add(new Tag<String>(targetArg));
             }
@@ -276,7 +280,7 @@ public class CommandManager implements CommandExecutor {
             args.add((String) target.getData());
         }
 
-        return parseArguments(cmd, (String[]) args.toArray(), flags);
+        return parseArguments(cmd, args.toString().replace("[", "").replace("]", "").split(","), flags);
     }
 
     @Override

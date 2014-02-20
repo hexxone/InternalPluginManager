@@ -21,21 +21,21 @@ package com.blockhaus2000.plugin;
  * 
  * @author Blockhaus2000
  */
-public class RwmPluginData {
-    private final RwmPlugin plugin;
-    private final RwmPluginDescriptionFile description;
+public class IpmPluginData {
+    private final IpmPlugin plugin;
+    private final IpmPluginDescriptionFile description;
 
-    public RwmPluginData(final RwmPlugin plugin, final RwmPluginDescriptionFile description) {
+    public IpmPluginData(final IpmPlugin plugin, final IpmPluginDescriptionFile description) {
         this.plugin = plugin;
         this.description = description;
     }
 
     // Getter
-    public RwmPlugin getPlugin() {
+    public IpmPlugin getPlugin() {
         return plugin;
     }
 
-    public RwmPluginDescriptionFile getDescription() {
+    public IpmPluginDescriptionFile getDescription() {
         return description;
     }
 }

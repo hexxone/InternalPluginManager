@@ -22,7 +22,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import com.blockhaus2000.main.bukkit.Main;
+import com.blockhaus2000.main.bukkit.IpmMain;
 import com.blockhaus2000.plugin.exception.InvalidPluginDescriptionException;
 import com.blockhaus2000.plugin.exception.PluginException;
 import com.blockhaus2000.plugin.exception.PluginNotFoundException;
@@ -33,41 +33,41 @@ import com.blockhaus2000.util.resources.MainPluginResource;
  * 
  * @author Blockhaus2000
  */
-public class RwmPluginManager implements Iterable<RwmPluginData> {
-    private static RwmPluginManager instance;
+public class IpmPluginManager implements Iterable<IpmPluginData> {
+    private static IpmPluginManager instance;
 
     @MainPluginResource
-    private Main main;
+    private IpmMain main;
 
-    private Set<RwmPluginData> plugins = new HashSet<RwmPluginData>();
+    private Set<IpmPluginData> plugins = new HashSet<IpmPluginData>();
 
-    private RwmPluginManager() {
+    private IpmPluginManager() {
         // Nothing to do (only to provide singleton pattern)
     }
 
     /**
-     * This will add the given {@link RwmPlugin} to
-     * {@link RwmPluginManager#plugins}.
+     * This will add the given {@link IpmPlugin} to
+     * {@link IpmPluginManager#plugins}.
      * 
      * <p>
      * <b> Note: This will NOT register the given plugin (does not call
-     * {@link RwmPlugin#onEnable()} or something like that). </b>
+     * {@link IpmPlugin#onEnable()} or something like that). </b>
      * </p>
      * 
      * @param plugin
-     *            The {@link RwmPlugin} that has to be added to the {@link Set}
-     *            {@link RwmPluginManager#plugins}.
+     *            The {@link IpmPlugin} that has to be added to the {@link Set}
+     *            {@link IpmPluginManager#plugins}.
      * @throws IllegalArgumentException
-     *             Will be throwed if the given {@link RwmPlugin} is
+     *             Will be throwed if the given {@link IpmPlugin} is
      *             <code>null</code>.
      */
-    public void addPlugin(final RwmPlugin plugin, final RwmPluginDescriptionFile desc) throws IllegalArgumentException {
+    public void addPlugin(final IpmPlugin plugin, final IpmPluginDescriptionFile desc) throws IllegalArgumentException {
         assert plugin != null : "Plugin cannot be null!";
 
-        plugins.add(new RwmPluginData(plugin, desc));
+        plugins.add(new IpmPluginData(plugin, desc));
     }
 
-    public void registerPlugin(final RwmPlugin plugin, final RwmPluginDescriptionFile desc) throws IllegalArgumentException {
+    public void registerPlugin(final IpmPlugin plugin, final IpmPluginDescriptionFile desc) throws IllegalArgumentException {
         assert plugin != null : "Plugin cannot be null!";
 
         plugin.onLoad();
@@ -77,7 +77,7 @@ public class RwmPluginManager implements Iterable<RwmPluginData> {
 
     public void registerAllPlugins() {
         try {
-            for (RwmPluginDescriptionFile target : RwmPluginLoader.getInstance().loadAllPlugins()) {
+            for (IpmPluginDescriptionFile target : IpmPluginLoader.getInstance().loadAllPlugins()) {
                 registerPlugin(target.getMain().newInstance(), target);
             }
         } catch (PluginNotFoundException ex) {
@@ -97,13 +97,13 @@ public class RwmPluginManager implements Iterable<RwmPluginData> {
         }
     }
 
-    public void removePlugin(final RwmPlugin plugin) throws IllegalArgumentException {
+    public void removePlugin(final IpmPlugin plugin) throws IllegalArgumentException {
         assert plugin != null : "Plugin cannot be null!";
 
         plugins.remove(plugin);
     }
 
-    public void unregisterPlugin(final RwmPlugin plugin) throws IllegalArgumentException {
+    public void unregisterPlugin(final IpmPlugin plugin) throws IllegalArgumentException {
         assert plugin != null : "Plugin cannot be null!";
 
         plugin.onDisable();
@@ -111,19 +111,19 @@ public class RwmPluginManager implements Iterable<RwmPluginData> {
     }
 
     public void unregisterAllPlugins() {
-        for (RwmPluginData target : plugins) {
+        for (IpmPluginData target : plugins) {
             removePlugin(target.getPlugin());
         }
     }
 
     @Override
-    public Iterator<RwmPluginData> iterator() {
+    public Iterator<IpmPluginData> iterator() {
         return plugins.iterator();
     }
 
-    public static RwmPluginManager getInstance() {
+    public static IpmPluginManager getInstance() {
         if (instance == null) {
-            instance = new RwmPluginManager();
+            instance = new IpmPluginManager();
         }
 
         return instance;
@@ -131,7 +131,7 @@ public class RwmPluginManager implements Iterable<RwmPluginData> {
 
     // Getter + Setter
     // Getter
-    public Set<RwmPluginData> getPlugins() {
+    public Set<IpmPluginData> getPlugins() {
         return plugins;
     }
 }

@@ -25,7 +25,7 @@ import java.util.Set;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
-import com.blockhaus2000.main.bukkit.Main;
+import com.blockhaus2000.main.bukkit.IpmMain;
 import com.blockhaus2000.plugin.exception.InvalidPluginDescriptionException;
 import com.blockhaus2000.plugin.exception.PluginException;
 import com.blockhaus2000.plugin.exception.PluginNotFoundException;
@@ -37,15 +37,15 @@ import com.blockhaus2000.util.resources.ResourceManager;
  * 
  * @author Blockhaus2000
  */
-public class RwmPluginLoader {
-    private static RwmPluginLoader instance;
+public class IpmPluginLoader {
+    private static IpmPluginLoader instance;
 
     @MainPluginResource
-    private Main main;
+    private IpmMain main;
 
     private final String mainPluginPath;
 
-    private RwmPluginLoader() {
+    private IpmPluginLoader() {
         try {
             ResourceManager.initializeResources(this);
         } catch (IllegalAccessException ex) {
@@ -62,7 +62,7 @@ public class RwmPluginLoader {
         }
     }
 
-    public RwmPluginDescriptionFile loadPlugin(final String pluginName) throws PluginNotFoundException,
+    public IpmPluginDescriptionFile loadPlugin(final String pluginName) throws PluginNotFoundException,
             InvalidPluginDescriptionException, PluginException, InstantiationException, IllegalAccessException, IOException {
         String pluginPath = mainPluginPath.replace("%pluginName%", pluginName);
 
@@ -91,7 +91,7 @@ public class RwmPluginLoader {
             throw new PluginException(ex);
         }
 
-        RwmPluginDescriptionFile descFile = new RwmPluginDescriptionFile(stream, file);
+        IpmPluginDescriptionFile descFile = new IpmPluginDescriptionFile(stream, file);
 
         stream.close();
         pluginJar.close();
@@ -99,9 +99,9 @@ public class RwmPluginLoader {
         return descFile;
     }
 
-    public Set<RwmPluginDescriptionFile> loadAllPlugins() throws PluginNotFoundException, InvalidPluginDescriptionException,
+    public Set<IpmPluginDescriptionFile> loadAllPlugins() throws PluginNotFoundException, InvalidPluginDescriptionException,
             InstantiationException, IllegalAccessException, PluginException, IOException {
-        Set<RwmPluginDescriptionFile> plugins = new HashSet<RwmPluginDescriptionFile>();
+        Set<IpmPluginDescriptionFile> plugins = new HashSet<IpmPluginDescriptionFile>();
 
         for (File target : new File(mainPluginPath.replace("%pluginName%.jar", "")).listFiles()) {
             if (target.isDirectory()) {
@@ -114,9 +114,9 @@ public class RwmPluginLoader {
         return plugins;
     }
 
-    public static RwmPluginLoader getInstance() {
+    public static IpmPluginLoader getInstance() {
         if (instance == null) {
-            instance = new RwmPluginLoader();
+            instance = new IpmPluginLoader();
         }
 
         return instance;

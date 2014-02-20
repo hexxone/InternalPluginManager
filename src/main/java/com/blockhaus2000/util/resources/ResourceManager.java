@@ -19,7 +19,7 @@ package com.blockhaus2000.util.resources;
 
 import java.lang.reflect.Field;
 
-import com.blockhaus2000.main.bukkit.Main;
+import com.blockhaus2000.main.bukkit.IpmMain;
 
 /**
  * This class will initialize the resources from the given {@link Object}s. See
@@ -36,7 +36,7 @@ public class ResourceManager {
      * <code>null</code>.
      * 
      * The <code>@SuppressWarnings("deprecation")</code> is to suppress the
-     * warning from {@link Main#getInstance()}. It is used to get the main
+     * warning from {@link IpmMain#getInstance()}. It is used to get the main
      * plugin instance.
      * 
      * @param clazz
@@ -58,7 +58,7 @@ public class ResourceManager {
         for (Field target : clazz.getDeclaredFields()) {
             if (target.isAnnotationPresent(MainPluginResource.class)) {
                 target.setAccessible(true);
-                target.set(obj, Main.getInstance());
+                target.set(obj, IpmMain.getInstance());
             }
         }
     }

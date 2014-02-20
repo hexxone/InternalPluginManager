@@ -30,7 +30,7 @@ import org.bukkit.entity.Player;
  * 
  * @author Blockhaus2000
  */
-public class OutputStream {
+public class ChatOut {
     private static final Logger logger = Bukkit.getServer().getLogger();
 
     public static <T> void log(final Level level, final T msg) {
@@ -62,6 +62,7 @@ public class OutputStream {
     public static <T> void sendMessage(final CommandSender sender, final T msg) {
         if (!(sender instanceof Player)) {
             log(msg);
+            return;
         }
 
         ((Player) sender).sendMessage(msg.toString());

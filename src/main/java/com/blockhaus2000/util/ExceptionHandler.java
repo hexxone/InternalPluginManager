@@ -17,7 +17,7 @@
  */
 package com.blockhaus2000.util;
 
-import com.blockhaus2000.main.bukkit.Main;
+import com.blockhaus2000.main.bukkit.IpmMain;
 import com.blockhaus2000.util.resources.MainPluginResource;
 
 /**
@@ -34,7 +34,7 @@ public final class ExceptionHandler {
      * @see MainPluginResource
      */
     @MainPluginResource
-    private static Main main;
+    private static IpmMain main;
 
     /**
      * Checks that a valid call (with {@link ExceptionHandler#main} is not
@@ -48,7 +48,7 @@ public final class ExceptionHandler {
 
     /**
      * Handles the given {@link Exception}. This method will print out the stack
-     * trace and disables the main plugin ({@link Main}, if the
+     * trace and disables the main plugin ({@link IpmMain}, if the
      * <code>disable == true</code>.
      * 
      * @param ex

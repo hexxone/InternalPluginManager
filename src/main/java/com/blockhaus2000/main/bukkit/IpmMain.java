@@ -19,8 +19,9 @@ package com.blockhaus2000.main.bukkit;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.blockhaus2000.plugin.RwmPlugin;
-import com.blockhaus2000.plugin.RwmPluginManager;
+import com.blockhaus2000.ipmtest.IpmTestMain;
+import com.blockhaus2000.plugin.IpmPlugin;
+import com.blockhaus2000.plugin.IpmPluginManager;
 import com.blockhaus2000.util.CommandUtil;
 import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.PluginUtil;
@@ -31,10 +32,12 @@ import com.blockhaus2000.util.resources.ResourceManager;
  * 
  * @author Blockhaus2000
  */
-public class Main extends JavaPlugin {
-    private static Main instance;
+public class IpmMain extends JavaPlugin {
+    private static IpmMain instance;
 
-    public Main() {
+    private final IpmPlugin ipmTestPlugin = new IpmTestMain();
+
+    public IpmMain() {
         if (instance != null) {
             throw new IllegalStateException("Only bukkit initialize a new main plugin!");
         }
@@ -47,7 +50,10 @@ public class Main extends JavaPlugin {
      */
     @Override
     public void onDisable() {
-        RwmPluginManager.getInstance().unregisterAllPlugins();
+        IpmPluginManager.getInstance().unregisterAllPlugins();
+
+        // Only for IpmTestPlugin
+        ipmTestPlugin.onDisable();
     }
 
     /**
@@ -57,7 +63,7 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         try {
             ResourceManager.initializeResources(ExceptionHandler.class);
-            ResourceManager.initializeResources(RwmPluginManager.getInstance());
+            ResourceManager.initializeResources(IpmPluginManager.getInstance());
         } catch (IllegalArgumentException ex) {
             ExceptionHandler.handle(ex);
             PluginUtil.disable(this);
@@ -66,7 +72,10 @@ public class Main extends JavaPlugin {
             PluginUtil.disable(this);
         }
 
-        RwmPluginManager.getInstance().registerAllPlugins();
+        IpmPluginManager.getInstance().registerAllPlugins();
+
+        // Only for IpmTestPlugin
+        ipmTestPlugin.onEnable();
     }
 
     /**
@@ -74,9 +83,8 @@ public class Main extends JavaPlugin {
      */
     @Override
     public void onLoad() {
-        new RwmPlugin() {
-            // Nothing to do (only to load the class)
-        };
+        // Only for IpmTestPlugin
+        ipmTestPlugin.onLoad();
     }
 
     public void registerCommands(final Class<?> clazz, final Object obj) {
@@ -92,16 +100,16 @@ public class Main extends JavaPlugin {
     }
 
     /**
-     * Returns you an instance from the {@link Main} class.
+     * Returns you an instance from the {@link IpmMain} class.
      * 
      * @deprecated Use the annotation {@link MainPluginResource} and call
      *             {@link ResourceManager#initializeResources(Object)} instead!
-     * @return An instance from the {@link Main} class.
+     * @return An instance from the {@link IpmMain} class.
      */
     @Deprecated
-    public static Main getInstance() {
+    public static IpmMain getInstance() {
         if (instance == null) {
-            return instance = new Main();
+            return instance = new IpmMain();
         }
 
         return instance;

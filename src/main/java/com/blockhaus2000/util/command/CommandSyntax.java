@@ -71,7 +71,7 @@ public class CommandSyntax implements Iterable<CommandSyntaxType> {
     }
 
     public boolean endsWithVarArg() {
-        return syntax.get(syntax.size() - 1).isVarArg();
+        return syntax == null || syntax.get(syntax.size() - 1).isVarArg();
     }
 
     public int size() {

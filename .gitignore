@@ -2,3 +2,7 @@
 /.settings
 /.classpath
 /.project
+/dist
+/package.jardesc
+/.externalToolBuilders
+/build.log

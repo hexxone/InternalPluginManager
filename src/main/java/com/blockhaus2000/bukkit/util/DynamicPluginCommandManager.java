@@ -27,7 +27,7 @@ import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.plugin.Plugin;
 
 import com.blockhaus2000.minecraft.util.command.Command;
-import com.blockhaus2000.util.OutputStream;
+import com.blockhaus2000.util.ChatOut;
 import com.blockhaus2000.util.ReflectionUtil;
 import com.blockhaus2000.util.command.CommandInfo;
 
@@ -70,7 +70,7 @@ public class DynamicPluginCommandManager {
 
         if (commandMap == null) {
             if (fallbackCommandMap != null) {
-                OutputStream.log(Level.SEVERE, "Could not retrieve server CommandMap, using fallback instead!");
+                ChatOut.log(Level.SEVERE, "Could not retrieve server CommandMap, using fallback instead!");
                 commandMap = fallbackCommandMap = new SimpleCommandMap(Bukkit.getServer());
                 Bukkit.getServer().getPluginManager().registerEvents(new PlayerCommandPreprocessListener(commandMap), plugin);
             }

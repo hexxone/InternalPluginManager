@@ -50,6 +50,6 @@ public class PluginUtil {
             return;
         }
 
-        OutputStream.log(messages);
+        ChatOut.log(messages);
     }
 }

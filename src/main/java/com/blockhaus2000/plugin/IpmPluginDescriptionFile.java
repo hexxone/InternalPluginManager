@@ -34,16 +34,16 @@ import com.blockhaus2000.util.ReflectionUtil;
  * 
  * @author Blockhaus2000
  */
-public class RwmPluginDescriptionFile {
+public class IpmPluginDescriptionFile {
     private final Yaml yaml = new Yaml(new SafeConstructor());
 
     private final File file;
 
     private String name;
     private String version;
-    private Class<? extends RwmPlugin> main;
+    private Class<? extends IpmPlugin> main;
 
-    public RwmPluginDescriptionFile(final InputStream stream, final File file) throws InvalidPluginDescriptionException,
+    public IpmPluginDescriptionFile(final InputStream stream, final File file) throws InvalidPluginDescriptionException,
             PluginException, IOException {
         this.file = file;
 
@@ -89,11 +89,11 @@ public class RwmPluginDescriptionFile {
             throw new InvalidPluginDescriptionException("The setted main class (\"" + mainClassPath + "\")cannot be found!", ex);
         }
 
-        if (!ReflectionUtil.hasSuperclass(main, RwmPlugin.class)) {
-            throw new PluginException("The main class \"" + main + "\" does not extends \"" + RwmPlugin.class + "\"");
+        if (!ReflectionUtil.hasSuperclass(main, IpmPlugin.class)) {
+            throw new PluginException("The main class \"" + main + "\" does not extends \"" + IpmPlugin.class + "\"");
         }
 
-        this.main = (Class<? extends RwmPlugin>) main;
+        this.main = (Class<? extends IpmPlugin>) main;
     }
 
     private Map<?, ?> asMap(final Object obj) throws InvalidPluginDescriptionException {
@@ -119,7 +119,7 @@ public class RwmPluginDescriptionFile {
         return version;
     }
 
-    public Class<? extends RwmPlugin> getMain() {
+    public Class<? extends IpmPlugin> getMain() {
         return main;
     }
 }
