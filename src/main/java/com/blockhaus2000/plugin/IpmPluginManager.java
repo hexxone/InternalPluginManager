@@ -45,6 +45,16 @@ public class IpmPluginManager implements Iterable<IpmPluginData> {
         // Nothing to do (only to provide singleton pattern)
     }
 
+    public IpmPluginData getPlugin(final String name) {
+        for (IpmPluginData target : plugins) {
+            if (target.getDescription().getName().equalsIgnoreCase(name)) {
+                return target;
+            }
+        }
+
+        return null;
+    }
+
     /**
      * This will add the given {@link IpmPlugin} to
      * {@link IpmPluginManager#plugins}.
@@ -61,16 +71,18 @@ public class IpmPluginManager implements Iterable<IpmPluginData> {
      *             Will be throwed if the given {@link IpmPlugin} is
      *             <code>null</code>.
      */
-    public void addPlugin(final IpmPlugin plugin, final IpmPluginDescriptionFile desc) throws IllegalArgumentException {
+    public void addPlugin(final IpmPlugin plugin, final IpmPluginDescriptionFile desc) {
         assert plugin != null : "Plugin cannot be null!";
 
         plugins.add(new IpmPluginData(plugin, desc));
     }
 
-    public void registerPlugin(final IpmPlugin plugin, final IpmPluginDescriptionFile desc) throws IllegalArgumentException {
+    public void registerPlugin(final IpmPlugin plugin, final IpmPluginDescriptionFile desc) {
         assert plugin != null : "Plugin cannot be null!";
 
         plugin.onLoad();
+        plugin.setPluginDescriptionFile(desc);
+        plugin.init();
         addPlugin(plugin, desc);
         plugin.onEnable();
     }
@@ -97,13 +109,13 @@ public class IpmPluginManager implements Iterable<IpmPluginData> {
         }
     }
 
-    public void removePlugin(final IpmPlugin plugin) throws IllegalArgumentException {
+    public void removePlugin(final IpmPlugin plugin) {
         assert plugin != null : "Plugin cannot be null!";
 
         plugins.remove(plugin);
     }
 
-    public void unregisterPlugin(final IpmPlugin plugin) throws IllegalArgumentException {
+    public void unregisterPlugin(final IpmPlugin plugin) {
         assert plugin != null : "Plugin cannot be null!";
 
         plugin.onDisable();

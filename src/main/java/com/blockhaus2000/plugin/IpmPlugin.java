@@ -18,7 +18,10 @@
 package com.blockhaus2000.plugin;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -26,26 +29,52 @@ import java.util.logging.Logger;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginLoader;
 
 import com.avaje.ebean.EbeanServer;
-import com.blockhaus2000.configuration.Configuration;
 import com.blockhaus2000.main.bukkit.IpmMain;
+import com.blockhaus2000.util.ExceptionHandler;
 
 /**
  * 
  * @author Blockhaus2000
  */
-@SuppressWarnings("deprecation")
 public class IpmPlugin implements Plugin {
-    private final Configuration config;
+    private IpmPluginDescriptionFile desc;
 
-    public IpmPlugin() {
-        config = null;
+    private FileConfiguration config;
+    private File configFile;
+
+    private File dataFolder;
+
+    // has to be package-private
+    final void setPluginDescriptionFile(IpmPluginDescriptionFile desc) {
+        this.desc = desc;
+    }
+
+    @SuppressWarnings("deprecation")
+    final void init() {
+        dataFolder = new File(IpmMain.getInstance().getDataFolder() + File.separator + "plugins" + File.separator
+                + desc.getName() + File.separator);
+
+        config = new YamlConfiguration();
+        configFile = new File(dataFolder.getPath() + "config.yml");
+
+        try {
+            config.load(configFile);
+        } catch (FileNotFoundException ex) {
+            ExceptionHandler.handle(ex);
+        } catch (IOException ex) {
+            ExceptionHandler.handle(ex);
+        } catch (InvalidConfigurationException ex) {
+            ExceptionHandler.handle(ex);
+        }
     }
 
     /**
@@ -117,18 +146,61 @@ public class IpmPlugin implements Plugin {
      */
     @Override
     public final List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
-        return null;
+        return new ArrayList<String>();
     }
 
     // Getter + Setter
     // Getter
     @Override
-    public Configuration getConfig() {
+    public FileConfiguration getConfig() {
         return config;
     }
 
+    @Override
+    public File getDataFolder() {
+        return dataFolder;
+    }
+
+    @Deprecated
+    @Override
+    public PluginDescriptionFile getDescription() {
+        return IpmMain.getInstance().getDescription();
+    }
+
+    public IpmPluginDescriptionFile getNewDescription() {
+        return desc;
+    }
+
+    @Override
+    public String getName() {
+        return desc.getName();
+    }
+
+    @SuppressWarnings("deprecation")
     public FileConfiguration getRootConfig() {
         return IpmMain.getInstance().getConfig();
+    }
+
+    @Override
+    public void reloadConfig() {
+        try {
+            config.load(dataFolder);
+        } catch (FileNotFoundException ex) {
+            ExceptionHandler.handle(ex);
+        } catch (IOException ex) {
+            ExceptionHandler.handle(ex);
+        } catch (InvalidConfigurationException ex) {
+            ExceptionHandler.handle(ex);
+        }
+    }
+
+    @Override
+    public void saveConfig() {
+        try {
+            config.save(configFile);
+        } catch (IOException ex) {
+            ExceptionHandler.handle(ex);
+        }
     }
 
     // ----------------------------------------------------------------------------------------------------
@@ -138,84 +210,67 @@ public class IpmPlugin implements Plugin {
     // plugin. Maybe some methods will be implemented explicit, but the usage
     // will not change.
 
-    @Override
-    public File getDataFolder() {
-        return IpmMain.getInstance().getDataFolder();
-    }
-
+    @SuppressWarnings("deprecation")
     @Override
     public EbeanServer getDatabase() {
         return IpmMain.getInstance().getDatabase();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
         return IpmMain.getInstance().getDefaultWorldGenerator(worldName, id);
     }
 
-    @Override
-    public PluginDescriptionFile getDescription() {
-        return IpmMain.getInstance().getDescription();
-    }
-
+    @SuppressWarnings("deprecation")
     @Override
     public Logger getLogger() {
         return IpmMain.getInstance().getLogger();
     }
 
-    @Override
-    public String getName() {
-        return IpmMain.getInstance().getName();
-    }
-
+    @SuppressWarnings("deprecation")
     @Override
     public PluginLoader getPluginLoader() {
         return IpmMain.getInstance().getPluginLoader();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public InputStream getResource(String resource) {
         return IpmMain.getInstance().getResource(resource);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public Server getServer() {
         return IpmMain.getInstance().getServer();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean isEnabled() {
         return IpmMain.getInstance().isEnabled();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean isNaggable() {
         return IpmMain.getInstance().isNaggable();
     }
 
-    @Override
-    public void reloadConfig() {
-        IpmMain.getInstance().reloadConfig();
-        ;
-    }
-
-    @Override
-    public void saveConfig() {
-        IpmMain.getInstance().saveConfig();
-        ;
-    }
-
+    @SuppressWarnings("deprecation")
     @Override
     public void saveDefaultConfig() {
         IpmMain.getInstance().saveDefaultConfig();
-        ;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void saveResource(String resource, boolean unknown) {
         IpmMain.getInstance().saveResource(resource, unknown);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void setNaggable(boolean canNag) {
         IpmMain.getInstance().setNaggable(canNag);
