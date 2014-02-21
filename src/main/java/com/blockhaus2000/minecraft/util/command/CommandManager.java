@@ -32,9 +32,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import com.blockhaus2000.minecraft.util.command.event.CommandEvent;
+import com.blockhaus2000.minecraft.util.command.event.IllegalSyntaxType;
 import com.blockhaus2000.minecraft.util.command.event.NoPermissionCommandEvent;
 import com.blockhaus2000.minecraft.util.command.event.NotEnoughArgumentsCommandEvent;
 import com.blockhaus2000.minecraft.util.command.event.TooManyArgumentsCommandEvent;
+import com.blockhaus2000.minecraft.util.command.event.IllegalSyntaxCommandEvent;
 import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.PermissionUtil;
 import com.blockhaus2000.util.StringUtil;
@@ -77,7 +79,11 @@ public class CommandManager implements CommandExecutor {
 
             String[] flags = targetMethod.getAnnotation(Command.class).flags();
             for (String targetFlag : flags) {
-                assert !targetFlag.matches(flagRegex) : "The flag \"" + targetFlag + "\" does not match the regex \"" + flagRegex
+                if (targetFlag.length() == 0) {
+                    continue;
+                }
+
+                assert targetFlag.matches(flagRegex) : "The flag \"" + targetFlag + "\" does not match the regex \"" + flagRegex
                         + "\"!";
             }
 
@@ -142,7 +148,14 @@ public class CommandManager implements CommandExecutor {
             int min = syntax.isNull() ? cmdAnot.min() : syntax.size();
             int max = syntax.isNull() ? cmdAnot.max() : (syntax.endsWithVarArg() ? -1 : syntax.size());
 
-            List<Tag<?>> args = parseFlags(target, bArgs).getArgs();
+            List<Tag<?>> args = null;
+
+            try {
+                args = parseFlags(target, bArgs).getArgs();
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                events.add(new IllegalSyntaxCommandEvent(rawContext, IllegalSyntaxType.UNAVAILABLE_FLAG_VALUE));
+                continue;
+            }
 
             if (args.size() < min) {
                 events.add(new NotEnoughArgumentsCommandEvent(rawContext));
@@ -154,7 +167,14 @@ public class CommandManager implements CommandExecutor {
                 continue;
             }
 
-            ContextData contextData = parseCommand(target, bArgs);
+            ContextData contextData = null;
+
+            try {
+                contextData = parseCommand(target, bArgs);
+            } catch (NumberFormatException ex) {
+                events.add(new IllegalSyntaxCommandEvent(rawContext, IllegalSyntaxType.INTEGER_SYNTAX_IS_STRING));
+                continue;
+            }
 
             try {
                 target.getMethod().invoke(target.getObject(),
@@ -213,7 +233,7 @@ public class CommandManager implements CommandExecutor {
                     int valueIndex = rawArgs.indexOf(argFlag);
 
                     if (valueIndex < rawArgs.size()) {
-                        flags.put(flagIndex, new Tag<String>(rawArgs.get(valueIndex)));
+                        flags.put(flagIndex, new Tag<String>(rawArgs.get(valueIndex + 1)));
                         found = true;
                     }
                 }
@@ -223,11 +243,11 @@ public class CommandManager implements CommandExecutor {
                 flags.put(flagIndex, new Tag<Boolean>(found));
             }
 
-            if (found) {
-                while (rawArgs.contains(argFlag)) {
-                    rawArgs.remove(argFlag);
-                }
-            }
+            // if (found) {
+            // while (rawArgs.contains(argFlag)) {
+            // rawArgs.remove(argFlag);
+            // }
+            // }
         }
 
         return new ContextData((String[]) rawArgs.toArray(), flags);
@@ -264,7 +284,7 @@ public class CommandManager implements CommandExecutor {
                     args.add(new Tag<String>(rawArgs.get(i).trim()));
                     break;
                 case STRING_VARARG:
-                    args.add(new Tag<String>(StringUtil.joinString(i, "", rawArgs)));
+                    args.add(new Tag<String>(StringUtil.joinString(i, " ", rawArgs)));
                     break;
                 }
             }

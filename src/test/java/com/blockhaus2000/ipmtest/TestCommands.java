@@ -29,22 +29,22 @@ import com.blockhaus2000.util.command.CommandContext;
 public class TestCommands {
     @Command(aliases = { "ipmtest1", "it1", "it" },
              desc = "IpmTest One",
-             priority = CommandPriority.HIGHEST,
-             syntax = "String, Integer, String")
+             priority = CommandPriority.LOW)
     public void testCommandOne(CommandContext context) {
         System.out.println(context.getCommandAnot().desc());
 
         for (Tag<?> target : context.getArgs()) {
-            System.out.println(target);
+            System.out.println("<" + target.getData() + ">");
         }
     }
 
     @Command(aliases = { "ipmtest2", "it2", "it" },
-             desc = "IpmTest Two",
-             priority = CommandPriority.LOWEST,
-             min = 1,
-             max = 2)
+             desc = "IpmTest Two")
     public static void testCommandTwo(CommandContext context) {
         System.out.println(context.getCommandAnot().desc());
+
+        for (Character target : context.getFlags().keySet()) {
+            System.out.println(context.getFlags().get(target));
+        }
     }
 }

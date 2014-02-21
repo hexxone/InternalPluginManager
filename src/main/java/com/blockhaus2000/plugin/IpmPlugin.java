@@ -17,11 +17,22 @@
  */
 package com.blockhaus2000.plugin;
 
+import java.io.File;
+import java.io.InputStream;
+import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import org.bukkit.Server;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.generator.ChunkGenerator;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.PluginLoader;
 
+import com.avaje.ebean.EbeanServer;
 import com.blockhaus2000.configuration.Configuration;
 import com.blockhaus2000.main.bukkit.IpmMain;
 
@@ -29,7 +40,8 @@ import com.blockhaus2000.main.bukkit.IpmMain;
  * 
  * @author Blockhaus2000
  */
-public abstract class IpmPlugin {
+@SuppressWarnings("deprecation")
+public class IpmPlugin implements Plugin {
     private final Configuration config;
 
     public IpmPlugin() {
@@ -44,7 +56,10 @@ public abstract class IpmPlugin {
      * See {@link IpmPlugin#onDisable()} for the documentation of the reloading
      * process.
      * </p>
+     * 
+     * @see org.bukkit.plugin.java.JavaPlugin#onLoad()
      */
+    @Override
     public void onLoad() {
         // Has to be empty (see JavaDoc)
     }
@@ -59,7 +74,10 @@ public abstract class IpmPlugin {
      * See {@link IpmPlugin#onDisable()} for the documentation of the reloading
      * process.
      * </p>
+     * 
+     * @see org.bukkit.plugin.java.JavaPlugin#onEnable()
      */
+    @Override
     public void onEnable() {
         // Has to be empty (see JavaDoc)
     }
@@ -71,23 +89,135 @@ public abstract class IpmPlugin {
      * called instead to the other in the sorting disable - enable.
      * {@link IpmPlugin#onLoad()} will not be called.
      * 
+     * @see org.bukkit.plugin.java.JavaPlugin#onDisable()
      */
+    @Override
     public void onDisable() {
         // Has to be empty (see JavaDoc)
     }
 
-    public void saveConfig() {
-        // TODO
+    /**
+     * <p>
+     * <b> NOTE: This is disable (<code>final</code>)! Please use the command
+     * system (with {@link com.blockhaus2000.minecraft.util.command.Command}
+     * instead! </b>
+     * </p>
+     * 
+     */
+    @Override
+    public final boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        return false;
+    }
+
+    /**
+     * <p>
+     * <b> NOTE: This is disable (<code>final</code>)! </b>
+     * </p>
+     * 
+     */
+    @Override
+    public final List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+        return null;
     }
 
     // Getter + Setter
     // Getter
+    @Override
     public Configuration getConfig() {
         return config;
     }
 
-    @Deprecated
-    public FileConfiguration getRawConfig() {
+    public FileConfiguration getRootConfig() {
         return IpmMain.getInstance().getConfig();
+    }
+
+    // ----------------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------------------
+
+    // This stuff has to be implemented but it is only directed to the root
+    // plugin. Maybe some methods will be implemented explicit, but the usage
+    // will not change.
+
+    @Override
+    public File getDataFolder() {
+        return IpmMain.getInstance().getDataFolder();
+    }
+
+    @Override
+    public EbeanServer getDatabase() {
+        return IpmMain.getInstance().getDatabase();
+    }
+
+    @Override
+    public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
+        return IpmMain.getInstance().getDefaultWorldGenerator(worldName, id);
+    }
+
+    @Override
+    public PluginDescriptionFile getDescription() {
+        return IpmMain.getInstance().getDescription();
+    }
+
+    @Override
+    public Logger getLogger() {
+        return IpmMain.getInstance().getLogger();
+    }
+
+    @Override
+    public String getName() {
+        return IpmMain.getInstance().getName();
+    }
+
+    @Override
+    public PluginLoader getPluginLoader() {
+        return IpmMain.getInstance().getPluginLoader();
+    }
+
+    @Override
+    public InputStream getResource(String resource) {
+        return IpmMain.getInstance().getResource(resource);
+    }
+
+    @Override
+    public Server getServer() {
+        return IpmMain.getInstance().getServer();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return IpmMain.getInstance().isEnabled();
+    }
+
+    @Override
+    public boolean isNaggable() {
+        return IpmMain.getInstance().isNaggable();
+    }
+
+    @Override
+    public void reloadConfig() {
+        IpmMain.getInstance().reloadConfig();
+        ;
+    }
+
+    @Override
+    public void saveConfig() {
+        IpmMain.getInstance().saveConfig();
+        ;
+    }
+
+    @Override
+    public void saveDefaultConfig() {
+        IpmMain.getInstance().saveDefaultConfig();
+        ;
+    }
+
+    @Override
+    public void saveResource(String resource, boolean unknown) {
+        IpmMain.getInstance().saveResource(resource, unknown);
+    }
+
+    @Override
+    public void setNaggable(boolean canNag) {
+        IpmMain.getInstance().setNaggable(canNag);
     }
 }

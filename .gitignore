@@ -6,3 +6,5 @@
 /package.jardesc
 /.externalToolBuilders
 /build.log
+/build.sh
+/start.sh

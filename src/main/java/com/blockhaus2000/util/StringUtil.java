@@ -44,7 +44,7 @@ public class StringUtil {
             buffer.append(delimiter + list.get(i));
         }
 
-        return buffer.toString();
+        return buffer.toString().replaceAll("(" + escape(delimiter) + ")+", delimiter);
     }
 
     public static String joinString(final int i, final String delimiter, final String... array) {
@@ -57,5 +57,15 @@ public class StringUtil {
 
     public static String joinString(final String delimiter, final String... array) {
         return joinString(0, delimiter, array);
+    }
+
+    public static String escape(final String str) {
+        StringBuffer buffer = new StringBuffer();
+
+        for (int i = 0; i < str.length(); i++) {
+            buffer.append("\\" + str.charAt(i));
+        }
+
+        return buffer.toString();
     }
 }
