@@ -54,7 +54,8 @@ public class IpmPluginLoader {
 
         System.out.println(main);
 
-        mainPluginPath = main.getDataFolder().getAbsolutePath() + "\\plugins\\%pluginName%.jar";
+        mainPluginPath = main.getDataFolder().getAbsolutePath() + File.separator + "plugins" + File.separator
+                + "%pluginName%.jar";
 
         File mainDir = new File(mainPluginPath.replace("%pluginName%.jar", ""));
         if (!mainDir.exists()) {

@@ -20,6 +20,8 @@ package com.blockhaus2000.plugin;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Map;
 
 import org.yaml.snakeyaml.Yaml;
@@ -27,7 +29,7 @@ import org.yaml.snakeyaml.constructor.SafeConstructor;
 
 import com.blockhaus2000.plugin.exception.InvalidPluginDescriptionException;
 import com.blockhaus2000.plugin.exception.PluginException;
-import com.blockhaus2000.util.DynamicClasspathExtensionUtil;
+import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.ReflectionUtil;
 
 /**
@@ -79,25 +81,28 @@ public class IpmPluginDescriptionFile {
             throw new InvalidPluginDescriptionException("The main class is not set!");
         }
 
+        // DynamicClasspathExtensionUtil.addJarToClassPath(file);
+
         Class<?> main = null;
 
-        DynamicClasspathExtensionUtil.addJarToClassPath(file);
-
         try {
-            main = Class.forName(mainClassPath);
+            main = new IpmPluginClassLoader(new URL[] { file.toURI().toURL() }).findClass(mainClassPath);
+        } catch (MalformedURLException ex) {
+            ExceptionHandler.handle(ex);
+            return;
         } catch (ClassNotFoundException ex) {
-            throw new InvalidPluginDescriptionException("The setted main class (\"" + mainClassPath + "\")cannot be found!", ex);
+            throw new InvalidPluginDescriptionException("The setted main class (\"" + mainClassPath + "\") cannot be found!", ex);
         }
 
         if (!ReflectionUtil.hasSuperclass(main, IpmPlugin.class)) {
-            throw new PluginException("The main class \"" + main + "\" does not extends \"" + IpmPlugin.class + "\"");
+            throw new PluginException("The main class \"" + main + "\" does not extend \"" + IpmPlugin.class + "\"");
         }
 
         this.main = (Class<? extends IpmPlugin>) main;
     }
 
     private Map<?, ?> asMap(final Object obj) throws InvalidPluginDescriptionException {
-        assert !(obj instanceof Map) : obj + " is not correct structured!";
+        assert obj instanceof Map : obj + " is not correct structured!";
 
         return (Map<?, ?>) obj;
     }
