@@ -52,7 +52,7 @@ public class SimpleIpmPluginDescription implements IpmPluginDescription {
         Map<?, ?> data = asMap(yaml.load(stream));
 
         // load name
-        String name = (String) data.get("name");
+        String name = data.get("name").toString();
 
         if (name == null || name.length() == 0 || !name.matches("^[A-Za-z0-9_.-]+$")) {
             throw new InvalidPluginDescriptionException(
@@ -62,7 +62,7 @@ public class SimpleIpmPluginDescription implements IpmPluginDescription {
         this.name = name;
 
         // load version
-        String version = (String) data.get("version");
+        String version = data.get("version").toString();
 
         if (version == null || version.length() == 0) {
             throw new InvalidPluginDescriptionException("The version is not set or empty!");
@@ -71,7 +71,7 @@ public class SimpleIpmPluginDescription implements IpmPluginDescription {
         this.version = version;
 
         // load main
-        String main = (String) data.get("main");
+        String main = data.get("main").toString();
 
         if (main == null || version.length() == 0) {
             throw new InvalidPluginDescriptionException("The main class is not set or empty!");
@@ -80,10 +80,22 @@ public class SimpleIpmPluginDescription implements IpmPluginDescription {
         this.main = main;
 
         // load authors
-        authors = ((String) data.get("authors")).split(", *");
+        Object authorsObj = data.get("authors");
+        if (authors != null) {
+            String[] authors = authorsObj.toString().split(", +");
+            this.authors = authors == null || authors.length == 0 ? null : authors;
+        } else {
+            authors = null;
+        }
 
         // load depends
-        depends = ((String) data.get("depends")).split(", *");
+        Object dependsObj = data.get("depends");
+        if (depends != null) {
+            String[] depends = dependsObj.toString().split(", +");
+            this.depends = depends == null || depends.length == 0 ? null : depends;
+        } else {
+            depends = null;
+        }
     }
 
     private Map<?, ?> asMap(final Object obj) {

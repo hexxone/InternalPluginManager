@@ -22,13 +22,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
 import com.blockhaus2000.main.bukkit.IpmMain;
 import com.blockhaus2000.plugin.exception.InvalidPluginDescriptionException;
 import com.blockhaus2000.plugin.exception.PluginException;
+import com.blockhaus2000.util.ExceptionHandler;
 
 /**
  * 
@@ -55,7 +58,7 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
     public IpmPlugin load(final File file) throws PluginException {
         assert file.exists() : "File does not exist!";
 
-        JarFile jarFile = null;
+        JarFile jarFile;
 
         try {
             jarFile = new JarFile(file);
@@ -63,41 +66,42 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
             throw new PluginException(ex);
         }
 
-        InputStream stream = null;
+        InputStream stream;
+
+        ZipEntry pluginYml = jarFile.getEntry("plugin.yml");
+
+        if (pluginYml == null) {
+            throw new InvalidPluginDescriptionException("The plugin.yml cannot be found in \"" + file.getAbsolutePath() + "\"!");
+        }
 
         try {
-            ZipEntry pluginYml = jarFile.getEntry("plugin.yml");
-
-            if (pluginYml == null) {
-                throw new InvalidPluginDescriptionException("The plugin.yml cannot be found in \"" + file.getAbsolutePath()
-                        + "\"!");
-            }
-
-            try {
-                stream = jarFile.getInputStream(pluginYml);
-            } catch (IOException ex) {
-                throw new PluginException(ex);
-            }
-        } catch (PluginException ex) {
-            throw ex;
-        } finally {
+            stream = jarFile.getInputStream(pluginYml);
+        } catch (IOException ex) {
             try {
                 jarFile.close();
-            } catch (IOException ex) {
-                throw new PluginException(ex);
+            } catch (IOException ex1) {
+                ExceptionHandler.handle(ex);
             }
 
-            try {
-                stream.close();
-            } catch (IOException ex) {
-                throw new PluginException(ex);
-            }
+            throw new PluginException(ex);
         }
 
         IpmPluginDescription desc = new SimpleIpmPluginDescription();
         desc.load(stream);
 
-        SimpleIpmPluginClassLoader classLoader = null;
+        try {
+            stream.close();
+        } catch (IOException ex) {
+            ExceptionHandler.handle(ex);
+        }
+
+        try {
+            jarFile.close();
+        } catch (IOException ex) {
+            ExceptionHandler.handle(ex);
+        }
+
+        SimpleIpmPluginClassLoader classLoader;
 
         try {
             classLoader = new SimpleIpmPluginClassLoader(this, file, Thread.currentThread().getContextClassLoader());
@@ -105,7 +109,7 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
             throw new PluginException(ex);
         }
 
-        Class<? extends SimpleIpmPlugin> pluginClass = null;
+        Class<? extends SimpleIpmPlugin> pluginClass;
 
         try {
             pluginClass = Class.forName(desc.getMain(), true, classLoader).asSubclass(SimpleIpmPlugin.class);
@@ -117,7 +121,7 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
 
         }
 
-        IpmPlugin plugin = null;
+        IpmPlugin plugin;
 
         try {
             plugin = pluginClass.newInstance();
@@ -129,6 +133,9 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
 
         classLoaders.add(classLoader);
 
+        plugin.init(desc);
+        plugin.onLoad();
+
         return plugin;
     }
 
@@ -139,6 +146,25 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
     @Override
     public IpmPlugin load(final String pluginName) throws PluginException {
         return load(new File(pluginFolder.getPath() + pluginName + ".jar"));
+    }
+
+    /**
+     * 
+     * @see com.blockhaus2000.plugin.IpmPluginLoader#loadAll()
+     */
+    @Override
+    public Set<IpmPlugin> loadAll() throws PluginException {
+        Set<IpmPlugin> plugins = new HashSet<IpmPlugin>();
+
+        for (File target : pluginFolder.listFiles()) {
+            if (target.isDirectory() || !target.getName().endsWith(".jar")) {
+                continue;
+            }
+
+            plugins.add(load(target));
+        }
+
+        return plugins;
     }
 
     /**

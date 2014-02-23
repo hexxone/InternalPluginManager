@@ -30,7 +30,7 @@ public class TestCommands {
     @Command(aliases = { "ipmtest1", "it1", "it" },
              desc = "IpmTest One",
              priority = CommandPriority.LOW)
-    public void testCommandOne(CommandContext context) {
+    public void testCommandOne(final CommandContext context) {
         System.out.println(context.getCommandAnot().desc());
 
         for (Tag<?> target : context.getArgs()) {
@@ -39,12 +39,22 @@ public class TestCommands {
     }
 
     @Command(aliases = { "ipmtest2", "it2", "it" },
-             desc = "IpmTest Two")
-    public static void testCommandTwo(CommandContext context) {
+             desc = "IpmTest Two",
+             flags = { "a", "A", "p:" },
+             min = 0,
+             max = 0,
+             syntax = "String, Integer, String...")
+    public static void testCommandTwo(final CommandContext context) {
         System.out.println(context.getCommandAnot().desc());
 
+        System.out.println("Flags:");
         for (Character target : context.getFlags().keySet()) {
             System.out.println(context.getFlags().get(target));
+        }
+
+        System.out.println("Args:");
+        for (Tag<?> target : context.getArgs()) {
+            System.out.println(target);
         }
     }
 }

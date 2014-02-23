@@ -37,7 +37,7 @@ import com.blockhaus2000.util.ExceptionHandler;
  * @author Blockhaus2000
  */
 public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
-    protected final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+    protected final PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
     private IpmPluginDescription description;
 
@@ -55,23 +55,13 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
     @SuppressWarnings("deprecation")
     @Override
     public void init(final IpmPluginDescription description) {
-        addPropertyChangeListener(this);
+        changes.addPropertyChangeListener(this);
 
         this.description = description;
 
         dataFolder = new File(IpmMain.getInstance().getDataFolder() + File.separator + "plugins" + File.separator
                 + description.getName() + File.separator);
-        dataFolder.mkdir();
-
-        configFile = new File(dataFolder.getPath() + "plugin.yml");
-        if (!configFile.exists()) {
-            try {
-                configFile.createNewFile();
-            } catch (IOException ex) {
-                ExceptionHandler.handle(ex);
-            }
-        }
-
+        configFile = new File(dataFolder.getPath() + File.separator + "config.yml");
         config = new YamlConfiguration();
         reloadConfig();
     }
@@ -186,7 +176,7 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
 
         this.enabled = enabled;
 
-        propertyChangeSupport.firePropertyChange("enabled", oldValue, enabled);
+        changes.firePropertyChange("enabled", oldValue, enabled);
     }
 
     /**
@@ -231,7 +221,7 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
      */
     @Override
     public void propertyChange(final PropertyChangeEvent event) {
-        if (!event.getPropertyName().equalsIgnoreCase("enabled") || event.getOldValue().equals(event.getOldValue())) {
+        if (!event.getPropertyName().equalsIgnoreCase("enabled")) {
             return;
         }
 
@@ -240,45 +230,5 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
         } else if (event.getNewValue().equals(false)) {
             onDisable();
         }
-    }
-
-    /**
-     * 
-     * @param listener
-     * @see java.beans.PropertyChangeSupport#addPropertyChangeListener(PropertyChangeListener)
-     */
-    public void addPropertyChangeListener(final PropertyChangeListener listener) {
-        propertyChangeSupport.addPropertyChangeListener(listener);
-    }
-
-    /**
-     * 
-     * @param propertyName
-     * @param listener
-     * @see java.beans.PropertyChangeSupport#addPropertyChangeListener(String,
-     *      PropertyChangeListener)
-     */
-    public void addPropertyChangeListener(final String propertyName, final PropertyChangeListener listener) {
-        propertyChangeSupport.addPropertyChangeListener(propertyName, listener);
-    }
-
-    /**
-     * 
-     * @param listener
-     * @see java.beans.PropertyChangeSupport#removePropertyChangeListener(PropertyChangeListener)
-     */
-    public void removePropertyChangeListener(final PropertyChangeListener listener) {
-        propertyChangeSupport.removePropertyChangeListener(listener);
-    }
-
-    /**
-     * 
-     * @param propertyName
-     * @param listener
-     * @see java.beans.PropertyChangeSupport#removePropertyChangeListener(String,
-     *      PropertyChangeListener)
-     */
-    public void removePropertyChangeListener(final String propertyName, final PropertyChangeListener listener) {
-        propertyChangeSupport.removePropertyChangeListener(propertyName, listener);
     }
 }

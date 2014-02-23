@@ -17,8 +17,8 @@
  */
 package com.blockhaus2000.plugin;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 
@@ -27,7 +27,7 @@ import java.util.Map;
 public class SimpleIpmPluginManager implements IpmPluginManager {
     private static final IpmPluginManager instance = new SimpleIpmPluginManager();
 
-    private final Map<String, IpmPlugin> plugins = new HashMap<String, IpmPlugin>();
+    private final Set<IpmPlugin> plugins = new HashSet<IpmPlugin>();
 
     private SimpleIpmPluginManager() {
         // nothing to do (only to provide singleton pattern)
@@ -39,7 +39,13 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
      */
     @Override
     public IpmPlugin getPlugin(final String pluginName) {
-        return plugins.get(pluginName);
+        for (IpmPlugin target : plugins) {
+            if (target.getDescription().getName().equalsIgnoreCase(pluginName)) {
+                return target;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -53,11 +59,51 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
 
     /**
      * 
+     * @see com.blockhaus2000.plugin.IpmPluginManager#disable(java.util.Set)
+     */
+    @Override
+    public void disable(final Set<IpmPlugin> plugins) {
+        for (IpmPlugin target : plugins) {
+            disable(target);
+        }
+    }
+
+    /**
+     * 
+     * @see com.blockhaus2000.plugin.IpmPluginManager#disableAll()
+     */
+    @Override
+    public void disableAll() {
+        disable(plugins);
+    }
+
+    /**
+     * 
      * @see com.blockhaus2000.plugin.IpmPluginManager#enable(com.blockhaus2000.plugin.IpmPlugin)
      */
     @Override
     public void enable(final IpmPlugin plugin) {
         plugin.setEnabled(true);
+    }
+
+    /**
+     * 
+     * @see com.blockhaus2000.plugin.IpmPluginManager#enable(java.util.Set)
+     */
+    @Override
+    public void enable(final Set<IpmPlugin> plugins) {
+        for (IpmPlugin target : plugins) {
+            enable(target);
+        }
+    }
+
+    /**
+     * 
+     * @see com.blockhaus2000.plugin.IpmPluginManager#enableAll()
+     */
+    @Override
+    public void enableAll() {
+        enable(plugins);
     }
 
     /**
@@ -71,13 +117,42 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
 
     /**
      * 
+     * @see com.blockhaus2000.plugin.IpmPluginManager#unregister(java.util.Set)
+     */
+    @Override
+    public void unregister(final Set<IpmPlugin> plugins) {
+        for (IpmPlugin target : plugins) {
+            unregister(target);
+        }
+    }
+
+    /**
+     * 
+     * @see com.blockhaus2000.plugin.IpmPluginManager#unregisterAll()
+     */
+    @Override
+    public void unregisterAll() {
+        unregister(plugins);
+    }
+
+    /**
+     * 
      * @see com.blockhaus2000.plugin.IpmPluginManager#register(com.blockhaus2000.plugin.IpmPlugin)
      */
     @Override
-    public void register(final IpmPlugin plugin, final IpmPluginDescription description) {
-        plugin.init(description);
+    public void register(final IpmPlugin plugin) {
+        plugins.add(plugin);
+    }
 
-        plugins.put(plugin.getDescription().getName().toLowerCase(), plugin);
+    /**
+     * 
+     * @see com.blockhaus2000.plugin.IpmPluginManager#register(java.util.Set)
+     */
+    @Override
+    public void register(final Set<IpmPlugin> plugins) {
+        for (IpmPlugin target : plugins) {
+            register(target);
+        }
     }
 
     /**
@@ -85,7 +160,7 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
      * @see com.blockhaus2000.plugin.IpmPluginManager#getPlugins()
      */
     @Override
-    public Map<String, IpmPlugin> getPlugins() {
+    public Set<IpmPlugin> getPlugins() {
         return plugins;
     }
 

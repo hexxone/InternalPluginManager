@@ -20,10 +20,12 @@ package com.blockhaus2000.minecraft.util.command;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.AbstractSequentialList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,11 +34,12 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import com.blockhaus2000.minecraft.util.command.event.CommandEvent;
+import com.blockhaus2000.minecraft.util.command.event.IllegalSyntaxCommandEvent;
 import com.blockhaus2000.minecraft.util.command.event.IllegalSyntaxType;
 import com.blockhaus2000.minecraft.util.command.event.NoPermissionCommandEvent;
 import com.blockhaus2000.minecraft.util.command.event.NotEnoughArgumentsCommandEvent;
 import com.blockhaus2000.minecraft.util.command.event.TooManyArgumentsCommandEvent;
-import com.blockhaus2000.minecraft.util.command.event.IllegalSyntaxCommandEvent;
+import com.blockhaus2000.util.ArrayUtil;
 import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.PermissionUtil;
 import com.blockhaus2000.util.StringUtil;
@@ -146,13 +149,13 @@ public class CommandManager implements CommandExecutor {
             CommandSyntax syntax = target.getSyntax();
 
             int min = syntax.isNull() ? cmdAnot.min() : syntax.size();
-            int max = syntax.isNull() ? cmdAnot.max() : (syntax.endsWithVarArg() ? -1 : syntax.size());
+            int max = syntax.isNull() ? cmdAnot.max() : syntax.endsWithVarArg() ? -1 : syntax.size();
 
             List<Tag<?>> args = null;
 
             try {
                 args = parseFlags(target, bArgs).getArgs();
-            } catch (ArrayIndexOutOfBoundsException ex) {
+            } catch (IndexOutOfBoundsException ex) {
                 events.add(new IllegalSyntaxCommandEvent(rawContext, IllegalSyntaxType.UNAVAILABLE_FLAG_VALUE));
                 continue;
             }
@@ -210,9 +213,11 @@ public class CommandManager implements CommandExecutor {
         return parseCommand(cmd, Arrays.asList(args));
     }
 
-    private ContextData parseFlags(final CommandInfo cmd, final List<String> rawArgs) {
+    private ContextData parseFlags(final CommandInfo cmd, final List<String> rawArgs) throws IndexOutOfBoundsException {
         assert cmd != null : "Cmd cannot be null!";
         assert rawArgs != null : "RawArgs cannot be null!";
+
+        AbstractSequentialList<String> args = new LinkedList<String>(rawArgs);
 
         Map<Character, Tag<?>> flags = new HashMap<Character, Tag<?>>();
 
@@ -229,31 +234,31 @@ public class CommandManager implements CommandExecutor {
             flags.put(flagIndex, null);
 
             if (target.endsWith(":")) {
-                if (rawArgs.contains(argFlag)) {
-                    int valueIndex = rawArgs.indexOf(argFlag);
+                if (args.contains(argFlag)) {
+                    int valueIndex = args.indexOf(argFlag) + 1;
 
-                    if (valueIndex < rawArgs.size()) {
-                        flags.put(flagIndex, new Tag<String>(rawArgs.get(valueIndex + 1)));
-                        found = true;
-                    }
+                    flags.put(flagIndex, new Tag<String>(args.get(valueIndex)));
+                    found = true;
+
+                    args.remove(valueIndex);
                 }
             } else {
-                found = rawArgs.contains(argFlag);
+                found = args.contains(argFlag);
 
                 flags.put(flagIndex, new Tag<Boolean>(found));
             }
 
-            // if (found) {
-            // while (rawArgs.contains(argFlag)) {
-            // rawArgs.remove(argFlag);
-            // }
-            // }
+            if (found) {
+                while (args.contains(argFlag)) {
+                    args.remove(argFlag);
+                }
+            }
         }
 
-        return new ContextData((String[]) rawArgs.toArray(), flags);
+        return new ContextData(ArrayUtil.toStringArray(args), flags);
     }
 
-    private ContextData parseFlags(final CommandInfo cmd, final String[] args) {
+    private ContextData parseFlags(final CommandInfo cmd, final String[] args) throws IndexOutOfBoundsException {
         return parseFlags(cmd, Arrays.asList(args));
     }
 
@@ -269,7 +274,7 @@ public class CommandManager implements CommandExecutor {
         CommandSyntax syntax = cmd.getSyntax();
         if (syntax == null || syntax.getSyntax() == null) {
             for (String targetArg : rawArgs) {
-                args.add(new Tag<String>(targetArg));
+                args.add(new Tag<String>(targetArg.trim()));
             }
         } else {
             for (int i = 0; i < syntax.getSyntax().size(); i++) {
@@ -304,15 +309,16 @@ public class CommandManager implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, org.bukkit.command.Command cmd, String label, String[] args) {
+    public boolean onCommand(final CommandSender sender, final org.bukkit.command.Command cmd, final String label,
+            final String[] args) {
         return execute(sender, cmd, args, label);
     }
 
     public static CommandManager getInstance() {
-        if (instance == null) {
-            return instance = new CommandManager();
+        if (CommandManager.instance == null) {
+            return CommandManager.instance = new CommandManager();
         }
 
-        return instance;
+        return CommandManager.instance;
     }
 }

@@ -18,6 +18,7 @@
 package com.blockhaus2000.plugin;
 
 import java.io.File;
+import java.util.Set;
 
 import com.blockhaus2000.plugin.exception.PluginException;
 
@@ -29,6 +30,8 @@ public interface IpmPluginLoader {
     public IpmPlugin load(final File file) throws PluginException;
 
     public IpmPlugin load(final String pluginName) throws PluginException;
+
+    public Set<IpmPlugin> loadAll() throws PluginException;
 
     public Class<?> getClassByName(final String className);
 }

@@ -25,22 +25,22 @@ import com.blockhaus2000.minecraft.util.command.event.IllegalSyntaxCommandEvent;
 import com.blockhaus2000.minecraft.util.command.event.NoPermissionCommandEvent;
 import com.blockhaus2000.minecraft.util.command.event.NotEnoughArgumentsCommandEvent;
 import com.blockhaus2000.minecraft.util.command.event.TooManyArgumentsCommandEvent;
-
-//import com.blockhaus2000.plugin_old.IpmPlugin;
-
-import com.blockhaus2000.util.CommandRegistrationUtil;
+import com.blockhaus2000.plugin.SimpleIpmPlugin;
 import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.resources.MainPluginResource;
 import com.blockhaus2000.util.resources.ResourceManager;
+
+//import com.blockhaus2000.plugin_old.IpmPlugin;
 
 /**
  * 
  * @author Blockhaus2000
  */
-public class IpmTestMain /* extends IpmPlugin */implements Listener {
+public class IpmTestMain extends SimpleIpmPlugin implements Listener {
     @MainPluginResource
     private IpmMain main;
 
+    @Override
     public void onEnable() {
         try {
             ResourceManager.initializeResources(this);
@@ -50,28 +50,28 @@ public class IpmTestMain /* extends IpmPlugin */implements Listener {
             ExceptionHandler.handle(ex);
         }
 
-        CommandRegistrationUtil.registerCommands(new TestCommands(), main);
+        registerCommands(new TestCommands());
 
         main.getServer().getPluginManager().registerEvents(this, main);
     }
 
     @EventHandler
-    public void onNotEnoughtArgumentsCommand(NotEnoughArgumentsCommandEvent event) {
+    public void onNotEnoughtArgumentsCommand(final NotEnoughArgumentsCommandEvent event) {
         System.out.println("onNotEnoughtArgumentsCommand: " + event.getCommand().getCommand().getName());
     }
 
     @EventHandler
-    public void onTooManyArgumentsCommand(TooManyArgumentsCommandEvent event) {
+    public void onTooManyArgumentsCommand(final TooManyArgumentsCommandEvent event) {
         System.out.println("onTooManyArgumentsCommand: " + event.getCommand().getCommand().getName());
     }
 
     @EventHandler
-    public void onNoPermissionCommand(NoPermissionCommandEvent event) {
+    public void onNoPermissionCommand(final NoPermissionCommandEvent event) {
         System.out.println("onNoPermissionCommand: " + event.getCommand().getCommand().getName());
     }
 
     @EventHandler
-    public void onIllegalSyntaxCommand(IllegalSyntaxCommandEvent event) {
+    public void onIllegalSyntaxCommand(final IllegalSyntaxCommandEvent event) {
         System.out.print("onIllegalSyntaxCommand: " + event.getCommand().getCommand().getName() + ", : "
                 + event.getIllegalSyntaxType());
     }

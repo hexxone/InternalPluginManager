@@ -39,6 +39,10 @@ public class SimpleIpmPluginClassLoader extends URLClassLoader implements IpmPlu
         this.loader = loader;
     }
 
+    public SimpleIpmPluginClassLoader(final IpmPluginLoader loader, final File file) throws MalformedURLException {
+        this(loader, file, ClassLoader.getSystemClassLoader());
+    }
+
     /**
      * 
      * @throws ClassNotFoundException
@@ -47,11 +51,13 @@ public class SimpleIpmPluginClassLoader extends URLClassLoader implements IpmPlu
      */
     @Override
     public Class<?> findClass(final String name, final boolean global) throws ClassNotFoundException {
-        if (name.startsWith("com.blockhaus2000.") || name.startsWith("org.bukkit.") || name.startsWith("net.minecraft.")) {
-            throw new ClassNotFoundException("Cannot find class \"" + name + "\"");
-        }
+        Class<?> clazz;
 
-        Class<?> clazz = classes.get(name);
+        if (name.startsWith("com.blockhaus2000.") || name.startsWith("org.bukkit.") || name.startsWith("net.minecraft.")) {
+            clazz = Class.forName(name);
+        } else {
+            clazz = classes.get(name);
+        }
 
         if (clazz == null) {
             if (global) {

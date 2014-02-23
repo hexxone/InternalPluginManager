@@ -19,11 +19,11 @@ package com.blockhaus2000.main.bukkit;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-//import com.blockhaus2000.ipmtest.IpmTestMain;
-//import com.blockhaus2000.plugin_old.IpmPlugin;
-
-//import com.blockhaus2000.plugin_old.IpmPluginManager;
-
+import com.blockhaus2000.ipmtest.IpmTestMain;
+import com.blockhaus2000.plugin.IpmPlugin;
+import com.blockhaus2000.plugin.SimpleIpmPluginLoader;
+import com.blockhaus2000.plugin.SimpleIpmPluginManager;
+import com.blockhaus2000.plugin.exception.PluginException;
 import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.PluginUtil;
 import com.blockhaus2000.util.resources.MainPluginResource;
@@ -36,14 +36,14 @@ import com.blockhaus2000.util.resources.ResourceManager;
 public class IpmMain extends JavaPlugin {
     private static IpmMain instance;
 
-    // private final IpmPlugin ipmTestPlugin = new IpmTestMain();
+    private final IpmPlugin ipmTestPlugin = new IpmTestMain();
 
     public IpmMain() {
-        if (instance != null) {
+        if (IpmMain.instance != null) {
             throw new IllegalStateException("Only bukkit initialize a new main plugin!");
         }
 
-        instance = this;
+        IpmMain.instance = this;
     }
 
     /**
@@ -51,10 +51,11 @@ public class IpmMain extends JavaPlugin {
      */
     @Override
     public void onDisable() {
-        // IpmPluginManager.getInstance().unregisterAllPlugins();
+        SimpleIpmPluginManager.getInstance().disableAll();
+        SimpleIpmPluginManager.getInstance().unregisterAll();
 
         // Only for IpmTestPlugin
-        // ipmTestPlugin.onDisable();
+        ipmTestPlugin.onDisable();
     }
 
     /**
@@ -64,7 +65,6 @@ public class IpmMain extends JavaPlugin {
     public void onEnable() {
         try {
             ResourceManager.initializeResources(ExceptionHandler.class);
-            // ResourceManager.initializeResources(IpmPluginManager.getInstance());
         } catch (IllegalArgumentException ex) {
             ExceptionHandler.handle(ex);
             PluginUtil.disable(this);
@@ -73,10 +73,16 @@ public class IpmMain extends JavaPlugin {
             PluginUtil.disable(this);
         }
 
-        // IpmPluginManager.getInstance().registerAllPlugins();
+        try {
+            SimpleIpmPluginManager.getInstance().register(SimpleIpmPluginLoader.getInstance().loadAll());
+        } catch (PluginException ex) {
+            ExceptionHandler.handle(ex);
+        }
+
+        SimpleIpmPluginManager.getInstance().enableAll();
 
         // Only for IpmTestPlugin
-        // ipmTestPlugin.onEnable();
+        ipmTestPlugin.onEnable();
     }
 
     /**
@@ -85,7 +91,7 @@ public class IpmMain extends JavaPlugin {
     @Override
     public void onLoad() {
         // Only for IpmTestPlugin
-        // ipmTestPlugin.onLoad();
+        ipmTestPlugin.onLoad();
     }
 
     /**
@@ -97,10 +103,10 @@ public class IpmMain extends JavaPlugin {
      */
     @Deprecated
     public static IpmMain getInstance() {
-        if (instance == null) {
-            return instance = new IpmMain();
+        if (IpmMain.instance == null) {
+            return IpmMain.instance = new IpmMain();
         }
 
-        return instance;
+        return IpmMain.instance;
     }
 }

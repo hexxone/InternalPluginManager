@@ -17,7 +17,7 @@
  */
 package com.blockhaus2000.plugin;
 
-import java.util.Map;
+import java.util.Set;
 
 /**
  * 
@@ -28,11 +28,25 @@ public interface IpmPluginManager {
 
     public void disable(final IpmPlugin plugin);
 
+    public void disable(final Set<IpmPlugin> plugins);
+
+    public void disableAll();
+
     public void enable(final IpmPlugin plugin);
+
+    public void enable(final Set<IpmPlugin> plugins);
+
+    public void enableAll();
 
     public void unregister(final IpmPlugin plugin);
 
-    public void register(final IpmPlugin plugin, final IpmPluginDescription description);
+    public void unregister(final Set<IpmPlugin> plugins);
 
-    public Map<String, IpmPlugin> getPlugins();
+    public void unregisterAll();
+
+    public void register(final IpmPlugin plugin);
+
+    public void register(final Set<IpmPlugin> plugins);
+
+    public Set<IpmPlugin> getPlugins();
 }
