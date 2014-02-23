@@ -17,18 +17,35 @@
  */
 package com.blockhaus2000.plugin;
 
-import java.io.File;
-
-import com.blockhaus2000.plugin.exception.PluginException;
+import org.bukkit.Bukkit;
+import org.bukkit.Server;
 
 /**
  * 
  * @author Blockhaus2000
  */
-public interface IpmPluginLoader {
-    public IpmPlugin load(final File file) throws PluginException;
+public class SimpleIpmServer implements IpmServer {
+    private static final IpmServer instance = new SimpleIpmServer();
 
-    public IpmPlugin load(final String pluginName) throws PluginException;
+    /**
+     * 
+     * @see com.blockhaus2000.plugin.IpmServer#getPluginManager()
+     */
+    @Override
+    public IpmPluginManager getPluginManager() {
+        return SimpleIpmPluginManager.getInstance();
+    }
 
-    public Class<?> getClassByName(final String className);
+    /**
+     * 
+     * @see com.blockhaus2000.plugin.IpmServer#getBukkitServer()
+     */
+    @Override
+    public Server getBukkitServer() {
+        return Bukkit.getServer();
+    }
+
+    public static IpmServer getInstance() {
+        return SimpleIpmServer.instance;
+    }
 }

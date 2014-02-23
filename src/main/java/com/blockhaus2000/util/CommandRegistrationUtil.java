@@ -26,7 +26,7 @@ import com.blockhaus2000.minecraft.util.command.CommandManager;
  * 
  * @author Blockhaus2000
  */
-public class CommandUtil {
+public class CommandRegistrationUtil {
     public static void registerCommands(final Class<?> clazz, final Object obj, final Plugin plugin) {
         new DynamicPluginCommandManager(plugin, CommandManager.getInstance()).registerCommands(CommandManager.getInstance()
                 .register(clazz, obj));

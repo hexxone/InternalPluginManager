@@ -15,7 +15,7 @@
  *  Limitations under the License.
  *  package com.blockhaus2000.bukkit.util;
  */
-package com.blockhaus2000.plugin;
+package com.blockhaus2000.plugin_old;
 
 import java.io.File;
 import java.io.IOException;
@@ -101,7 +101,7 @@ public class IpmPluginDescriptionFile {
         this.main = (Class<? extends IpmPlugin>) main;
     }
 
-    private Map<?, ?> asMap(final Object obj) throws InvalidPluginDescriptionException {
+    private Map<?, ?> asMap(final Object obj) {
         assert obj instanceof Map : obj + " is not correct structured!";
 
         return (Map<?, ?>) obj;

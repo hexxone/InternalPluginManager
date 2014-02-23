@@ -25,8 +25,10 @@ import com.blockhaus2000.minecraft.util.command.event.IllegalSyntaxCommandEvent;
 import com.blockhaus2000.minecraft.util.command.event.NoPermissionCommandEvent;
 import com.blockhaus2000.minecraft.util.command.event.NotEnoughArgumentsCommandEvent;
 import com.blockhaus2000.minecraft.util.command.event.TooManyArgumentsCommandEvent;
-import com.blockhaus2000.plugin.IpmPlugin;
-import com.blockhaus2000.util.CommandUtil;
+
+//import com.blockhaus2000.plugin_old.IpmPlugin;
+
+import com.blockhaus2000.util.CommandRegistrationUtil;
 import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.resources.MainPluginResource;
 import com.blockhaus2000.util.resources.ResourceManager;
@@ -35,7 +37,7 @@ import com.blockhaus2000.util.resources.ResourceManager;
  * 
  * @author Blockhaus2000
  */
-public class IpmTestMain extends IpmPlugin implements Listener {
+public class IpmTestMain /* extends IpmPlugin */implements Listener {
     @MainPluginResource
     private IpmMain main;
 
@@ -48,7 +50,7 @@ public class IpmTestMain extends IpmPlugin implements Listener {
             ExceptionHandler.handle(ex);
         }
 
-        CommandUtil.registerCommands(new TestCommands(), main);
+        CommandRegistrationUtil.registerCommands(new TestCommands(), main);
 
         main.getServer().getPluginManager().registerEvents(this, main);
     }

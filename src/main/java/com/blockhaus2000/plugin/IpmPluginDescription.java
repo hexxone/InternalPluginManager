@@ -17,7 +17,7 @@
  */
 package com.blockhaus2000.plugin;
 
-import java.io.File;
+import java.io.InputStream;
 
 import com.blockhaus2000.plugin.exception.PluginException;
 
@@ -25,10 +25,16 @@ import com.blockhaus2000.plugin.exception.PluginException;
  * 
  * @author Blockhaus2000
  */
-public interface IpmPluginLoader {
-    public IpmPlugin load(final File file) throws PluginException;
+public interface IpmPluginDescription {
+    public void load(final InputStream stream) throws PluginException;
 
-    public IpmPlugin load(final String pluginName) throws PluginException;
+    public String getName();
 
-    public Class<?> getClassByName(final String className);
+    public String getVersion();
+
+    public String getMain();
+
+    public String[] getAuthors();
+
+    public String[] getDepends();
 }

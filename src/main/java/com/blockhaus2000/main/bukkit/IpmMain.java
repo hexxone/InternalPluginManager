@@ -20,8 +20,10 @@ package com.blockhaus2000.main.bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 //import com.blockhaus2000.ipmtest.IpmTestMain;
-//import com.blockhaus2000.plugin.IpmPlugin;
-import com.blockhaus2000.plugin.IpmPluginManager;
+//import com.blockhaus2000.plugin_old.IpmPlugin;
+
+//import com.blockhaus2000.plugin_old.IpmPluginManager;
+
 import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.PluginUtil;
 import com.blockhaus2000.util.resources.MainPluginResource;
@@ -49,7 +51,7 @@ public class IpmMain extends JavaPlugin {
      */
     @Override
     public void onDisable() {
-        IpmPluginManager.getInstance().unregisterAllPlugins();
+        // IpmPluginManager.getInstance().unregisterAllPlugins();
 
         // Only for IpmTestPlugin
         // ipmTestPlugin.onDisable();
@@ -62,7 +64,7 @@ public class IpmMain extends JavaPlugin {
     public void onEnable() {
         try {
             ResourceManager.initializeResources(ExceptionHandler.class);
-            ResourceManager.initializeResources(IpmPluginManager.getInstance());
+            // ResourceManager.initializeResources(IpmPluginManager.getInstance());
         } catch (IllegalArgumentException ex) {
             ExceptionHandler.handle(ex);
             PluginUtil.disable(this);
@@ -71,7 +73,7 @@ public class IpmMain extends JavaPlugin {
             PluginUtil.disable(this);
         }
 
-        IpmPluginManager.getInstance().registerAllPlugins();
+        // IpmPluginManager.getInstance().registerAllPlugins();
 
         // Only for IpmTestPlugin
         // ipmTestPlugin.onEnable();

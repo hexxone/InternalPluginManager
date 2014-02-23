@@ -15,20 +15,17 @@
  *  Limitations under the License.
  *  package com.blockhaus2000.bukkit.util;
  */
-package com.blockhaus2000.plugin;
+package com.blockhaus2000.main.bukkit;
 
-import java.io.File;
-
-import com.blockhaus2000.plugin.exception.PluginException;
+import com.blockhaus2000.plugin.IpmServer;
+import com.blockhaus2000.plugin.SimpleIpmServer;
 
 /**
  * 
  * @author Blockhaus2000
  */
-public interface IpmPluginLoader {
-    public IpmPlugin load(final File file) throws PluginException;
-
-    public IpmPlugin load(final String pluginName) throws PluginException;
-
-    public Class<?> getClassByName(final String className);
+public class InternalPluginManager {
+    public static IpmServer getServer() {
+        return SimpleIpmServer.getInstance();
+    }
 }

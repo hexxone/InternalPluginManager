@@ -20,6 +20,7 @@ package com.blockhaus2000.util;
 /**
  * 
  * @author Blockhaus2000
+ * @param <T>
  */
 public class Tag<T> {
     private T data;

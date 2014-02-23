@@ -24,6 +24,7 @@ import java.lang.reflect.Field;
  * @author Blockhaus2000
  */
 public class ReflectionUtil {
+    @SuppressWarnings("null")
     public static Field getField(Class<?> clazz, final String fieldName) {
         assert clazz != null : "Clazz cannot be null!";
         assert fieldName != null : "FieldName cannot be null!";
@@ -56,7 +57,7 @@ public class ReflectionUtil {
         assert fieldName != null : "FieldName cannot be null!";
         assert fieldName.length() != 0 : "FieldName cannot be empty!";
 
-        Field field = getField(obj.getClass(), fieldName);
+        Field field = ReflectionUtil.getField(obj.getClass(), fieldName);
         field.setAccessible(true);
 
         try {
@@ -81,7 +82,7 @@ public class ReflectionUtil {
         assert fieldName.length() != 0 : "FieldName cannot be empty!";
         assert value != null : "Value cannot be null!";
 
-        Field field = getField(obj.getClass(), fieldName);
+        Field field = ReflectionUtil.getField(obj.getClass(), fieldName);
         field.setAccessible(true);
         field.set(obj, value);
     }

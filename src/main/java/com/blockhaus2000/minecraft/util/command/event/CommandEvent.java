@@ -25,6 +25,7 @@ import com.blockhaus2000.util.command.CommandInfo;
 /**
  * 
  * @author Blockhaus2000
+ * @param <T>
  */
 public abstract class CommandEvent<T extends CommandInfo> extends Event implements Cancellable {
     protected final T command;
