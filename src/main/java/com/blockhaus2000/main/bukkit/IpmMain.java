@@ -19,8 +19,6 @@ package com.blockhaus2000.main.bukkit;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.blockhaus2000.ipmtest.IpmTestMain;
-import com.blockhaus2000.plugin.IpmPlugin;
 import com.blockhaus2000.plugin.SimpleIpmPluginLoader;
 import com.blockhaus2000.plugin.SimpleIpmPluginManager;
 import com.blockhaus2000.plugin.exception.PluginException;
@@ -36,7 +34,8 @@ import com.blockhaus2000.util.resources.ResourceManager;
 public class IpmMain extends JavaPlugin {
     private static IpmMain instance;
 
-    private final IpmPlugin ipmTestPlugin = new IpmTestMain();
+    // Only for IpmTestPlugin
+    // private final IpmPlugin ipmTestPlugin = new IpmTestMain();
 
     public IpmMain() {
         if (IpmMain.instance != null) {
@@ -55,7 +54,7 @@ public class IpmMain extends JavaPlugin {
         SimpleIpmPluginManager.getInstance().unregisterAll();
 
         // Only for IpmTestPlugin
-        ipmTestPlugin.onDisable();
+        // ipmTestPlugin.onDisable();
     }
 
     /**
@@ -82,7 +81,7 @@ public class IpmMain extends JavaPlugin {
         SimpleIpmPluginManager.getInstance().enableAll();
 
         // Only for IpmTestPlugin
-        ipmTestPlugin.onEnable();
+        // ipmTestPlugin.onEnable();
     }
 
     /**
@@ -91,7 +90,7 @@ public class IpmMain extends JavaPlugin {
     @Override
     public void onLoad() {
         // Only for IpmTestPlugin
-        ipmTestPlugin.onLoad();
+        // ipmTestPlugin.onLoad();
     }
 
     /**
