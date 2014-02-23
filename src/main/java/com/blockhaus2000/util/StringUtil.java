@@ -44,19 +44,19 @@ public class StringUtil {
             buffer.append(delimiter + list.get(i));
         }
 
-        return buffer.toString().replaceAll("(" + escape(delimiter) + ")+", delimiter);
+        return buffer.toString().replaceAll("(" + StringUtil.escape(delimiter) + ")+", delimiter);
     }
 
     public static String joinString(final int i, final String delimiter, final String... array) {
-        return joinString(delimiter, Arrays.asList(array));
+        return StringUtil.joinString(i, delimiter, Arrays.asList(array));
     }
 
     public static String joinString(final String delimiter, final List<String> list) {
-        return joinString(0, delimiter, list);
+        return StringUtil.joinString(0, delimiter, list);
     }
 
     public static String joinString(final String delimiter, final String... array) {
-        return joinString(0, delimiter, array);
+        return StringUtil.joinString(0, delimiter, array);
     }
 
     public static String escape(final String str) {

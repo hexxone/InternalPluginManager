@@ -17,28 +17,12 @@
  */
 package com.blockhaus2000.plugin;
 
-import java.net.URL;
-import java.net.URLClassLoader;
-
 /**
  * 
  * @author Blockhaus2000
  */
-public class IpmPluginClassLoader extends URLClassLoader {
-    public IpmPluginClassLoader(URL[] urls, ClassLoader parent) {
-        super(urls, parent);
-    }
+public interface IpmPluginClassLoader {
+    public Class<?> findClass(final String name, final boolean global) throws ClassNotFoundException;
 
-    public IpmPluginClassLoader(URL[] urls) {
-        this(urls, ClassLoader.getSystemClassLoader());
-    }
-
-    @Override
-    public Class<?> findClass(final String name) throws ClassNotFoundException {
-        if (name.startsWith("com.blockhaus2000.") || name.startsWith("org.bukkit.") || name.startsWith("net.minecraft.")) {
-            return Class.forName(name);
-        }
-
-        return super.findClass(name);
-    }
+    public Class<?> findClass(final String name) throws ClassNotFoundException;
 }

@@ -15,20 +15,30 @@
  *  Limitations under the License.
  *  package com.blockhaus2000.bukkit.util;
  */
-package com.blockhaus2000.plugin;
+package com.blockhaus2000.plugin_old;
 
-import java.io.File;
-
-import com.blockhaus2000.plugin.exception.PluginException;
+import java.net.URL;
+import java.net.URLClassLoader;
 
 /**
  * 
  * @author Blockhaus2000
  */
-public interface IpmPluginLoader {
-    public IpmPlugin load(final File file) throws PluginException;
+public class IpmPluginClassLoader extends URLClassLoader {
+    public IpmPluginClassLoader(URL[] urls, ClassLoader parent) {
+        super(urls, parent);
+    }
 
-    public IpmPlugin load(final String pluginName) throws PluginException;
+    public IpmPluginClassLoader(URL[] urls) {
+        this(urls, ClassLoader.getSystemClassLoader());
+    }
 
-    public Class<?> getClassByName(final String className);
+    @Override
+    public Class<?> findClass(final String name) throws ClassNotFoundException {
+        if (name.startsWith("com.blockhaus2000.") || name.startsWith("org.bukkit.") || name.startsWith("net.minecraft.")) {
+            return Class.forName(name);
+        }
+
+        return super.findClass(name);
+    }
 }

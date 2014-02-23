@@ -15,7 +15,7 @@
  *  Limitations under the License.
  *  package com.blockhaus2000.bukkit.util;
  */
-package com.blockhaus2000.plugin;
+package com.blockhaus2000.plugin_old;
 
 /**
  * 
