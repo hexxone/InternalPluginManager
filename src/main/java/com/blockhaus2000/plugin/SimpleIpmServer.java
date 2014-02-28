@@ -28,6 +28,7 @@ public class SimpleIpmServer implements IpmServer {
     private static final IpmServer instance = new SimpleIpmServer();
 
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmServer#getPluginManager()
      */
@@ -37,6 +38,7 @@ public class SimpleIpmServer implements IpmServer {
     }
 
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmServer#getBukkitServer()
      */
@@ -45,6 +47,11 @@ public class SimpleIpmServer implements IpmServer {
         return Bukkit.getServer();
     }
 
+    /**
+     * Will provide singleton.
+     * 
+     * @return An instance of {@link SimpleIpmServer}.
+     */
     public static IpmServer getInstance() {
         return SimpleIpmServer.instance;
     }

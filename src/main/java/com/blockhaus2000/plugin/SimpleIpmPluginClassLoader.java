@@ -44,8 +44,8 @@ public class SimpleIpmPluginClassLoader extends URLClassLoader implements IpmPlu
     }
 
     /**
+     * {@inheritDoc}
      * 
-     * @throws ClassNotFoundException
      * @see com.blockhaus2000.plugin.IpmPluginClassLoader#findClass(java.lang.String,
      *      boolean)
      */
@@ -79,7 +79,6 @@ public class SimpleIpmPluginClassLoader extends URLClassLoader implements IpmPlu
     }
 
     /**
-     * 
      * {@inheritDoc}
      * 
      * @see java.net.URLClassLoader#findClass(java.lang.String)

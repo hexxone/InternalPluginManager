@@ -17,35 +17,84 @@
  */
 package com.blockhaus2000.util;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
 
 /**
+ * This class is a utility class for easy disableing and enabling of Bukkit (!)
+ * plugins.
  * 
  * @author Blockhaus2000
  */
 public class PluginUtil {
-    public static void disable(final Plugin plugin, final List<String> messages) {
+    /**
+     * Disables the given {@link Plugin} and sends the given messages. The
+     * messages are send with the usage of
+     * {@link ChatOut#log(java.util.Collection)}. Will call
+     * {@link PluginManager#disablePlugin(org.bukkit.plugin.Plugin)}
+     * 
+     * @param plugin
+     *            The plugin that has to be disabled.
+     * @param messages
+     *            The messages that has to be send.
+     * @see com.blockhaus2000.util.ChatOut#log(java.util.Collection)
+     * @see org.bukkit.plugin.PluginManager#disablePlugin(org.bukkit.plugin.Plugin)
+     */
+    public static void disable(final Plugin plugin, final Collection<String> messages) {
         Bukkit.getServer().getPluginManager().disablePlugin(plugin);
-        sendMessages(messages);
+        PluginUtil.sendMessages(messages);
     }
 
+    /**
+     * Disables the given plugin. Will call
+     * {@link PluginUtil#disable(Plugin, Collection)} with
+     * <code>messages = null</code>.
+     * 
+     * @param plugin
+     *            The plugin that has to be disabled.
+     * @see com.blockhaus2000.util.PluginUtil#disable(org.bukkit.plugin.Plugin,
+     *      java.util.Collection)
+     */
     public static void disable(final Plugin plugin) {
-        disable(plugin, null);
+        PluginUtil.disable(plugin, null);
     }
 
-    public static void enable(final Plugin plugin, final List<String> messages) {
+    /**
+     * Enables the given {@link Plugin} and sends the given messages. The
+     * messages are send with the usage of
+     * {@link ChatOut#log(java.util.Collection)}. Will call
+     * {@link PluginManager#enablePlugin(org.bukkit.plugin.Plugin)}
+     * 
+     * @param plugin
+     *            The plugin that has to be disabled.
+     * @param messages
+     *            The messages that has to be send.
+     * @see com.blockhaus2000.util.ChatOut#log(java.util.Collection)
+     * @see org.bukkit.plugin.PluginManager#enablePlugin(org.bukkit.plugin.Plugin)
+     */
+    public static void enable(final Plugin plugin, final Collection<String> messages) {
         Bukkit.getServer().getPluginManager().enablePlugin(plugin);
-        sendMessages(messages);
+        PluginUtil.sendMessages(messages);
     }
 
+    /**
+     * Enables the given plugin. Will call
+     * {@link PluginUtil#enable(Plugin, Collection)} with
+     * <code>messages = null</code>.
+     * 
+     * @param plugin
+     *            The plugin that has to be disabled.
+     * @see com.blockhaus2000.util.PluginUtil#enable(org.bukkit.plugin.Plugin,
+     *      java.util.Collection)
+     */
     public static void enable(final Plugin plugin) {
-        enable(plugin, null);
+        PluginUtil.enable(plugin, null);
     }
 
-    private static void sendMessages(final List<String> messages) {
+    private static void sendMessages(final Collection<String> messages) {
         if (messages == null) {
             return;
         }

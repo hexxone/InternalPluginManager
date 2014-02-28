@@ -39,6 +39,9 @@ public class ResourceManager {
      * warning from {@link IpmMain#getInstance()}. It is used to get the main
      * plugin instance.
      * 
+     * The <code>@SuppressWarnings("javadoc")</code> is to suppress the warning
+     * from the drepecated link above.
+     * 
      * @param clazz
      *            The {@link Class} where the fields with the annotations are.
      * @param obj
@@ -51,7 +54,7 @@ public class ResourceManager {
      *             Will be throwed if {@link Field#set(Object, Object)} will
      *             throw it.
      */
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings({ "deprecation", "javadoc" })
     public static void initializeResources(final Class<?> clazz, final Object obj) throws IllegalAccessException {
         assert clazz != null : "The given class is null!";
 
@@ -83,7 +86,7 @@ public class ResourceManager {
      * @see ResourceManager#initializeResources(Class, Object)
      */
     public static void initializeResources(final Class<?> clazz) throws IllegalArgumentException, IllegalAccessException {
-        initializeResources(clazz, null);
+        ResourceManager.initializeResources(clazz, null);
     }
 
     /**
@@ -106,7 +109,7 @@ public class ResourceManager {
      * @see ResourceManager#initializeResources(Class, Object)
      */
     public static void initializeResources(final Object obj) throws IllegalArgumentException, IllegalAccessException {
-        initializeResources(obj.getClass(), obj);
+        ResourceManager.initializeResources(obj.getClass(), obj);
     }
 
     /**

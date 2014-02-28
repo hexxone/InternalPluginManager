@@ -17,27 +17,47 @@
  */
 package com.blockhaus2000.minecraft.util.command.event;
 
+import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import com.blockhaus2000.util.command.RawCommandContext;
 
 /**
+ * This class represents an {@link Event} (specifically {@link CommandEvent})
+ * that will be callen if a command has been executed and too many arguments
+ * were given.
  * 
  * @author Blockhaus2000
  */
 public class TooManyArgumentsCommandEvent extends CommandEvent<RawCommandContext> {
     private static final HandlerList handlers = new HandlerList();
 
+    /**
+     * This will initialize a new {@link TooManyArgumentsCommandEvent} with the
+     * given {@link RawCommandContext}.
+     * 
+     * @param command
+     *            The specific {@link RawCommandContext}.
+     */
     public TooManyArgumentsCommandEvent(final RawCommandContext command) {
         super(command);
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.bukkit.event.Event#getHandlers()
+     */
     @Override
     public HandlerList getHandlers() {
-        return handlers;
+        return TooManyArgumentsCommandEvent.handlers;
     }
 
+    /**
+     * 
+     * @return The {@link HandlerList} of this {@link Event}.
+     */
     public static HandlerList getHandlerList() {
-        return handlers;
+        return TooManyArgumentsCommandEvent.handlers;
     }
 }

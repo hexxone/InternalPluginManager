@@ -41,9 +41,9 @@ public class SimpleIpmPluginDescription implements IpmPluginDescription {
     private String[] depends;
 
     /**
+     * {@inheritDoc}
      * 
-     * @see com.blockhaus2000.plugin.IpmPluginDescription#load(java.io.InputStream,
-     *      java.io.File)
+     * @see com.blockhaus2000.plugin.IpmPluginDescription#load(InputStream)
      */
     @Override
     public void load(final InputStream stream) throws PluginException {
@@ -105,6 +105,7 @@ public class SimpleIpmPluginDescription implements IpmPluginDescription {
 
     // Getter
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPluginDescription#getName()
      */
@@ -114,6 +115,7 @@ public class SimpleIpmPluginDescription implements IpmPluginDescription {
     }
 
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPluginDescription#getVersion()
      */
@@ -123,6 +125,7 @@ public class SimpleIpmPluginDescription implements IpmPluginDescription {
     }
 
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPluginDescription#getMain()
      */
@@ -132,6 +135,7 @@ public class SimpleIpmPluginDescription implements IpmPluginDescription {
     }
 
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPluginDescription#getAuthors()
      */
@@ -141,6 +145,7 @@ public class SimpleIpmPluginDescription implements IpmPluginDescription {
     }
 
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPluginDescription#getDepends()
      */

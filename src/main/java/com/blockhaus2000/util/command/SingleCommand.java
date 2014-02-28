@@ -17,10 +17,26 @@
  */
 package com.blockhaus2000.util.command;
 
+import com.blockhaus2000.bukkit.util.DynamicPluginCommandManager;
+import com.blockhaus2000.minecraft.util.command.Command;
+import com.blockhaus2000.minecraft.util.command.CommandManager;
+import com.blockhaus2000.util.CommandRegistrationUtil;
+
 /**
+ * This interface represents a help interface for implementing a usage-proof
+ * command method. Has to be used with the command system and the
+ * {@link Command} annotation.
  * 
  * @author Blockhaus2000
  */
 public interface SingleCommand {
+    /**
+     * If you tag this with the {@link Command} annotation and register it to
+     * the {@link DynamicPluginCommandManager} and {@link CommandManager}
+     * (easyli with the {@link CommandRegistrationUtil}).
+     * 
+     * @param context
+     *            The {@link CommandContext} of the executed command.
+     */
     public void onCommand(final CommandContext context);
 }

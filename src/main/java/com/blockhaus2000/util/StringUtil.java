@@ -21,20 +21,38 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * This class represents a util class for {@link String}s. You can use the
+ * static methods in this class for basic {@link String} operations that are not
+ * implemented in the Java SE, such as joinString or something else.
  * 
  * @author Blockhaus2000
  */
 public class StringUtil {
+    /**
+     * Joins the give {@link List} to a {@link String}. The given delemiter will
+     * be placed between the entrys of the given {@link List}. The index is the
+     * index of the elemt of the given {@link List}, where the join algorithm
+     * has to start.
+     * 
+     * @param i
+     *            The "join-start" index. Cannot be smaller than 0 or bigger or
+     *            equals the size of the given {@link List}.
+     * @param delimiter
+     *            The delmiter that has to be placed between the elements of the
+     *            given {@link List}.
+     * @param list
+     *            The {@link List} that has to be joined to a {@link String}. If
+     *            it is <code>null</code> or empty, This method returns an empty
+     *            {@link String}.
+     * @return The joined {@link String} or, in the case that the given
+     *         {@link List} is <code>null</code> or empty, an empty
+     *         {@link String}.
+     */
     public static String joinString(int i, final String delimiter, final List<String> list) {
-        if (i < 0) {
-            throw new StringIndexOutOfBoundsException("I cannot be < 0!");
-        }
+        assert i >= 0 : "I cannot be < 0!";
+        assert list == null || i < list.size() : "I cannot be > list.size()!";
 
-        if (i > list.size()) {
-            throw new StringIndexOutOfBoundsException("I cannot be > list.size()");
-        }
-
-        if (list.size() == 0) {
+        if (list == null || list.size() == 0) {
             return "";
         }
 
@@ -47,18 +65,79 @@ public class StringUtil {
         return buffer.toString().replaceAll("(" + StringUtil.escape(delimiter) + ")+", delimiter);
     }
 
+    /**
+     * Joins the given {@link String}[] (implemented with var args) to a
+     * {@link String}. Will call
+     * {@link StringUtil#joinString(int, String, List)}.
+     * 
+     * @param i
+     *            The "join-start" index. Will be given to
+     *            {@link StringUtil#joinString(int, String, List)}.
+     * @param delimiter
+     *            The delimiter that has to be placed between the elements of
+     *            the given {@link List}. Will be given to
+     *            {@link StringUtil#joinString(int, String, List)}.
+     * @param array
+     *            The {@link String}[] that has to be joined to a {@link String}
+     *            . Will be given to
+     *            {@link StringUtil#joinString(int, String, List)}.
+     * @return The return of {@link StringUtil#joinString(int, String, List)}.
+     * @see com.blockhaus2000.util.StringUtil#joinString(int, java.lang.String,
+     *      java.util.List)
+     */
     public static String joinString(final int i, final String delimiter, final String... array) {
         return StringUtil.joinString(i, delimiter, Arrays.asList(array));
     }
 
+    /**
+     * Joins the given {@link List} to a {@link String}. Will call
+     * {@link StringUtil#joinString(int, String, List)} with <code>i = 0</code>.
+     * 
+     * @param delimiter
+     *            The delimiter that has to be placed between the elements of
+     *            the given {@link List}. Will be given to
+     *            {@link StringUtil#joinString(int, String, List)}.
+     * @param list
+     *            The {@link List} that has to be joined to a {@link String} .
+     *            Will be given to
+     *            {@link StringUtil#joinString(int, String, List)}.
+     * @return The return of {@link StringUtil#joinString(int, String, List)}.
+     * @see com.blockhaus2000.util.StringUtil#joinString(int, java.lang.String,
+     *      java.util.List)
+     */
     public static String joinString(final String delimiter, final List<String> list) {
         return StringUtil.joinString(0, delimiter, list);
     }
 
+    /**
+     * Joins the given {@link String}[] (implemented with var args) to a
+     * {@link String}. Will call
+     * {@link StringUtil#joinString(int, String, List)} with <code>i = 0</code>.
+     * 
+     * @param delimiter
+     *            The delimiter that has to be placed between the elements of
+     *            the given {@link List}. Will be given to
+     *            {@link StringUtil#joinString(int, String, List)}.
+     * @param array
+     *            The {@link String}[] that has to be joined to a {@link String}
+     *            . Will be given to
+     *            {@link StringUtil#joinString(int, String, List)}.
+     * @return The return of {@link StringUtil#joinString(int, String, List)}.
+     * @see com.blockhaus2000.util.StringUtil#joinString(int, java.lang.String,
+     *      java.util.List)
+     */
     public static String joinString(final String delimiter, final String... array) {
         return StringUtil.joinString(0, delimiter, array);
     }
 
+    /**
+     * This method will escape all chars of the given {@link String}. That means
+     * that "abcdfg" will be escaped to "\\a\\b\\c\\d\\e\\f\\g".
+     * 
+     * @param str
+     *            The {@link String} that has to be escaped.
+     * @return The escaped {@link String}.
+     */
     public static String escape(final String str) {
         StringBuffer buffer = new StringBuffer();
 

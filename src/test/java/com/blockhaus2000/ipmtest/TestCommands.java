@@ -26,6 +26,7 @@ import com.blockhaus2000.util.command.CommandContext;
  * 
  * @author Blockhaus2000
  */
+@SuppressWarnings("javadoc")
 public class TestCommands {
     @Command(aliases = { "ipmtest1", "it1", "it" },
              desc = "IpmTest One",

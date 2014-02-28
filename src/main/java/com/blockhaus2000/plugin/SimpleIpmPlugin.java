@@ -23,12 +23,16 @@ import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.logging.Level;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.blockhaus2000.main.bukkit.IpmMain;
+import com.blockhaus2000.util.ChatOut;
 import com.blockhaus2000.util.CommandRegistrationUtil;
 import com.blockhaus2000.util.ExceptionHandler;
 
@@ -49,6 +53,7 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
     private boolean enabled = false;
 
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPlugin#init(IpmPluginDescription)
      */
@@ -67,6 +72,7 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
     }
 
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPlugin#onLoad()
      */
@@ -76,6 +82,7 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
     }
 
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPlugin#onDisable()
      */
@@ -85,6 +92,7 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
     }
 
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPlugin#onEnable()
      */
@@ -94,6 +102,7 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
     }
 
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPlugin#saveConfig()
      */
@@ -103,6 +112,7 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
     }
 
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPlugin#reloadConfig()
      */
@@ -120,6 +130,7 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
     }
 
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPlugin#loadConfig()
      */
@@ -129,6 +140,7 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
     }
 
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPlugin#registerCommands(java.lang.Class,
      *      java.lang.Object)
@@ -140,6 +152,7 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
     }
 
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPlugin#registerCommands(java.lang.Class)
      */
@@ -149,6 +162,7 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
     }
 
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPlugin#registerCommands(java.lang.Object)
      */
@@ -158,6 +172,7 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
     }
 
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPlugin#isEnabled()
      */
@@ -167,6 +182,7 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
     }
 
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPlugin#setEnabled(boolean)
      */
@@ -180,6 +196,103 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
     }
 
     /**
+     * {@inheritDoc}
+     * 
+     * @see com.blockhaus2000.plugin.IpmPlugin#log(java.util.logging.Level,
+     *      java.lang.Object)
+     */
+    @Override
+    public <T> void log(final Level level, final T msg) {
+        ChatOut.log(level, msg);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see com.blockhaus2000.plugin.IpmPlugin#log(java.lang.Object)
+     */
+    @Override
+    public <T> void log(final T msg) {
+        ChatOut.log(msg);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see com.blockhaus2000.plugin.IpmPlugin#log(java.util.logging.Level,
+     *      java.util.Collection)
+     */
+    @Override
+    public <T> void log(final Level level, final Collection<T> msg) {
+        ChatOut.log(level, msg);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see com.blockhaus2000.plugin.IpmPlugin#log(java.util.Collection)
+     */
+    @Override
+    public <T> void log(final Collection<T> msg) {
+        ChatOut.log(msg);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see com.blockhaus2000.plugin.IpmPlugin#log(java.util.logging.Level,
+     *      java.lang.Object[])
+     */
+    @Override
+    public <T> void log(final Level level, final T... msg) {
+        ChatOut.log(level, msg);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see com.blockhaus2000.plugin.IpmPlugin#log(java.lang.Object[])
+     */
+    @Override
+    public <T> void log(final T... msg) {
+        ChatOut.log(msg);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see com.blockhaus2000.plugin.IpmPlugin#sendMessage(org.bukkit.command.CommandSender,
+     *      java.lang.Object)
+     */
+    @Override
+    public <T> void sendMessage(final CommandSender sender, final T msg) {
+        ChatOut.sendMessage(sender, msg);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see com.blockhaus2000.plugin.IpmPlugin#sendMessage(org.bukkit.command.CommandSender,
+     *      java.util.Collection)
+     */
+    @Override
+    public <T> void sendMessage(final CommandSender sender, final Collection<T> msg) {
+        ChatOut.sendMessage(sender, msg);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see com.blockhaus2000.plugin.IpmPlugin#sendMessage(org.bukkit.command.CommandSender,
+     *      java.lang.Object[])
+     */
+    @Override
+    public <T> void sendMessage(final CommandSender sender, final T... msg) {
+        ChatOut.sendMessage(sender, msg);
+    }
+
+    /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPlugin#getServer()
      */
@@ -189,6 +302,7 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
     }
 
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPlugin#getConfig()
      */
@@ -198,6 +312,7 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
     }
 
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPlugin#getDataFolder()
      */
@@ -207,6 +322,7 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
     }
 
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPlugin#getDescription()
      */
@@ -216,6 +332,7 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
     }
 
     /**
+     * {@inheritDoc}
      * 
      * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
      */

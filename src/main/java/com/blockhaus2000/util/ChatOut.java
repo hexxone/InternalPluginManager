@@ -18,7 +18,7 @@
 package com.blockhaus2000.util;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,59 +27,131 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 /**
+ * This class is a utility class to simplify the message system.
  * 
  * @author Blockhaus2000
  */
 public class ChatOut {
-    private static final Logger logger = Bukkit.getServer().getLogger();
+    private static Logger logger = Bukkit.getServer().getLogger();
 
-    public static <T> void log(final Level level, final T msg) {
-        logger.log(level, msg.toString());
+    /**
+     * Logs the given message with the given {@link Level}.
+     * 
+     * @param level
+     *            The {@link Level} that has to be used for logging.
+     * @param msg
+     *            The message that has to be logged.
+     */
+    public static synchronized <T> void log(final Level level, final T msg) {
+        ChatOut.logger.log(level, msg.toString());
     }
 
-    public static <T> void log(final T msg) {
-        log(Level.INFO, msg);
+    /**
+     * Logs the given message with the log level {@link Level#INFO}.
+     * 
+     * @param msg
+     *            The message that has to be logged.
+     */
+    public static synchronized <T> void log(final T msg) {
+        ChatOut.log(Level.INFO, msg);
     }
 
-    public static <T> void log(final Level level, final List<T> msg) {
+    /**
+     * Logs the given {@link Collection} with the given {@link Level}.
+     * 
+     * <p>
+     * <b> NOTE: Every entry of the given {@link Collection} will be logged
+     * alone. To join the messages, use
+     * {@link StringUtil#joinString(String, java.util.List)}. </b>
+     * </p>
+     * 
+     * @param level
+     *            The {@link Level} that has to be used for logging.
+     * @param msg
+     *            The message that has to be logged.
+     */
+    public static synchronized <T> void log(final Level level, final Collection<T> msg) {
         for (T target : msg) {
-            log(level, target);
+            ChatOut.log(level, target);
         }
     }
 
-    public static <T> void log(final List<T> msg) {
-        log(Level.INFO, msg);
+    /**
+     * Logs the given {@link Collection} with the log level {@link Level#INFO}.
+     * 
+     * <p>
+     * <b> NOTE: Every entry of the given {@link Collection} will be logged
+     * alone. To join the messages, use
+     * {@link StringUtil#joinString(String, java.util.List)}. </b>
+     * </p>
+     * 
+     * @param msg
+     *            The message that has to be logged.
+     */
+    public static synchronized <T> void log(final Collection<T> msg) {
+        ChatOut.log(Level.INFO, msg);
     }
 
-    public static <T> void log(final Level level, final T... msg) {
-        log(level, Arrays.asList(msg));
+    /**
+     * Logs the given array (implemented with var args) with the given
+     * {@link Level}.
+     * 
+     * <p>
+     * <b> NOTE: Every entry of the given array will be logged alone. To join
+     * the messages, use {@link StringUtil#joinString(String, String...)}. </b>
+     * </p>
+     * 
+     * @param level
+     *            The {@link Level} that has to be used for logging.
+     * @param msg
+     *            The message that has to be logged.
+     */
+    public static synchronized <T> void log(final Level level, final T... msg) {
+        ChatOut.log(level, Arrays.asList(msg));
     }
 
-    public static <T> void log(final T... msg) {
-        log(Level.INFO, msg);
+    /**
+     * Logs the given array (implemented with var args) with the log level
+     * {@link Level#INFO}.
+     * 
+     * <p>
+     * <b> NOTE: Every entry of the given array will be logged alone. To join
+     * the messages, use {@link StringUtil#joinString(String, String...)}. </b>
+     * </p>
+     * 
+     * @param msg
+     *            The message that has to be logged.
+     */
+    public static synchronized <T> void log(final T... msg) {
+        ChatOut.log(Level.INFO, msg);
     }
 
-    public static <T> void sendMessage(final CommandSender sender, final T msg) {
+    public static synchronized <T> void sendMessage(final CommandSender sender, final T msg) {
         if (!(sender instanceof Player)) {
-            log(msg);
+            ChatOut.log(msg);
             return;
         }
 
         ((Player) sender).sendMessage(msg.toString());
     }
 
-    public static <T> void sendMessage(final CommandSender sender, final List<T> msg) {
+    public static synchronized <T> void sendMessage(final CommandSender sender, final Collection<T> msg) {
         for (T target : msg) {
-            sendMessage(sender, target);
+            ChatOut.sendMessage(sender, target);
         }
     }
 
-    public static <T> void sendMessage(final CommandSender sender, final T... msg) {
-        sendMessage(sender, Arrays.asList(msg));
+    public static synchronized <T> void sendMessage(final CommandSender sender, final T... msg) {
+        ChatOut.sendMessage(sender, Arrays.asList(msg));
     }
 
     // Getter
     public static Logger getLogger() {
-        return logger;
+        return ChatOut.logger;
+    }
+
+    // Setter
+    public static void setLogger(final Logger logger) {
+        ChatOut.logger = logger;
     }
 }

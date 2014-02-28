@@ -19,7 +19,10 @@ package com.blockhaus2000.plugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.logging.Level;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 
 /**
@@ -50,6 +53,24 @@ public interface IpmPlugin {
     public boolean isEnabled();
 
     public void setEnabled(final boolean enabled);
+
+    public <T> void log(final Level level, final T msg);
+
+    public <T> void log(final T msg);
+
+    public <T> void log(final Level level, final Collection<T> msg);
+
+    public <T> void log(final Collection<T> msg);
+
+    public <T> void log(final Level level, final T... msg);
+
+    public <T> void log(final T... msg);
+
+    public <T> void sendMessage(final CommandSender sender, final T msg);
+
+    public <T> void sendMessage(final CommandSender sender, final Collection<T> msg);
+
+    public <T> void sendMessage(final CommandSender sender, final T... msg);
 
     public IpmServer getServer();
 

@@ -36,10 +36,16 @@ import com.blockhaus2000.util.resources.ResourceManager;
  * 
  * @author Blockhaus2000
  */
+@SuppressWarnings("javadoc")
 public class IpmTestMain extends SimpleIpmPlugin implements Listener {
     @MainPluginResource
     private IpmMain main;
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see com.blockhaus2000.plugin.SimpleIpmPlugin#onEnable()
+     */
     @Override
     public void onEnable() {
         try {

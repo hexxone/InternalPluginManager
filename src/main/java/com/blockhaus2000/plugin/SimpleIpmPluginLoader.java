@@ -51,6 +51,7 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
     }
 
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPluginLoader#load(java.io.File)
      */
@@ -140,6 +141,7 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
     }
 
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPluginLoader#load(java.lang.String)
      */
@@ -149,6 +151,7 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
     }
 
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPluginLoader#loadAll()
      */
@@ -168,6 +171,7 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
     }
 
     /**
+     * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPluginLoader#getClassByName(java.lang.String)
      */
@@ -187,6 +191,11 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
         return clazz;
     }
 
+    /**
+     * Will provide singleton.
+     * 
+     * @return An instance of {@link SimpleIpmServer}.
+     */
     public static IpmPluginLoader getInstance() {
         return SimpleIpmPluginLoader.instance;
     }

@@ -20,10 +20,31 @@ package com.blockhaus2000.util;
 import java.lang.reflect.Field;
 
 /**
+ * This class is to simplify the usage of reflection.
  * 
  * @author Blockhaus2000
  */
 public class ReflectionUtil {
+    /**
+     * Searchs in the given {@link Class} for the given field name. if it is not
+     * found, it will search in the superclass and so on, until the superclass
+     * is <code>null</code>.
+     * 
+     * <p>
+     * <b> NOTE: No exception will be thrown here, because the only exception
+     * {@link NoSuchFieldException} fails silent. This fails silent because this
+     * method checks that the field is available. If not, this method gets the
+     * superclass and checks again. If no field has been found, this method
+     * returns null. </b>
+     * </p>
+     * 
+     * @param clazz
+     *            The {@link Class} where the method has to search for the given
+     *            field name.
+     * @param fieldName
+     *            The field name to search for.
+     * @return The field if foudn, otherwise <code>null</code>.
+     */
     @SuppressWarnings("null")
     public static Field getField(Class<?> clazz, final String fieldName) {
         assert clazz != null : "Clazz cannot be null!";
@@ -41,9 +62,7 @@ public class ReflectionUtil {
                 /*
                  * This fails silent.
                  * 
-                 * This is because this method checks that the field is
-                 * available. If not, this method gets the superclass and checks
-                 * again. If no field has been found, this method returns null.
+                 * Se JavaDoc for explanation.
                  */
             }
         }
@@ -51,6 +70,23 @@ public class ReflectionUtil {
         return null;
     }
 
+    /**
+     * Gets the value of the given field name in the given {@link Object}. Will
+     * call {@link ReflectionUtil#getField(Class, String)} to get the field.
+     * 
+     * <p>
+     * <b> NOTE: This method does not throw any exception. If an exception is
+     * thrown internal, this will return <code>null</code>.</b>
+     * </p>
+     * 
+     * @param obj
+     *            The {@link Object} where the field is stored.
+     * @param fieldName
+     *            The field name to search for.
+     * @return The value of the field if found, otherwise <code>null</code>.
+     * @see com.blockhaus2000.util.ReflectionUtil#getField(java.lang.Class,
+     *      java.lang.String)
+     */
     @SuppressWarnings("unchecked")
     public static <T> T getFieldValue(final Object obj, final String fieldName) {
         assert obj != null : "Obj cannot be null!";
@@ -75,8 +111,23 @@ public class ReflectionUtil {
         }
     }
 
-    public static void setField(final Object obj, final String fieldName, final Object value) throws IllegalArgumentException,
-            IllegalAccessException {
+    /**
+     * Sets the value of the given field name in the given {@link Object} to the
+     * given value. Will call {@link ReflectionUtil#getField(Class, String)} to
+     * get the field.
+     * 
+     * @param obj
+     *            The {@link Object} where the field name can be found.
+     * @param fieldName
+     *            The field name to search for.
+     * @param value
+     *            The new value for the given field.
+     * @throws IllegalAccessException
+     *             Will be thrown, if the field access is not allowed.
+     * @see com.blockhaus2000.util.ReflectionUtil#getField(java.lang.Class,
+     *      java.lang.String)
+     */
+    public static void setField(final Object obj, final String fieldName, final Object value) throws IllegalAccessException {
         assert obj != null : "Obj cannot be null!";
         assert fieldName != null : "FieldName cannot be null!";
         assert fieldName.length() != 0 : "FieldName cannot be empty!";
@@ -87,6 +138,17 @@ public class ReflectionUtil {
         field.set(obj, value);
     }
 
+    /**
+     * Checks that the given {@link Class} has the given super {@link Class}.
+     * 
+     * @param clazz
+     *            The {@link Class} to check for the given super {@link Class}.
+     * @param superClass
+     *            The super {@link Class} that has to be implemented by the
+     *            given {@link Class}.
+     * @return A boolean value if the given {@link Class} has the given super
+     *         {@link Class}.
+     */
     public static boolean hasSuperclass(final Class<?> clazz, final Class<?> superClass) {
         assert clazz != null : "Clazz cannot be null!";
         assert superClass != null : "SuperClass cannot be null!";

@@ -17,31 +17,61 @@
  */
 package com.blockhaus2000.util;
 
+import java.util.Collection;
+
 /**
+ * This class represents a tag. A tag is a util type that can be used to put
+ * different types (for example {@link Integer} and {@link String}) into a
+ * {@link Collection}.
  * 
  * @author Blockhaus2000
  * @param <T>
+ *            The type that has to be used for data storage.
  */
 public class Tag<T> {
     private T data;
 
+    /**
+     * Instances a new {@link Tag} with the given data.
+     * 
+     * @param data
+     *            The data that has to be stored.
+     */
     public Tag(final T data) {
         this.data = data;
     }
 
+    /**
+     * Instances a new {@link Tag} without any date.
+     * 
+     */
     public Tag() {
         this(null);
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString() {
         return getClass().getName() + "[data=" + data + "]";
     }
 
+    /**
+     * 
+     * @return The stored data.
+     */
     public T getData() {
         return data;
     }
 
+    /**
+     * 
+     * @param data
+     *            The data that has to be stored.
+     */
     public void setData(final T data) {
         this.data = data;
     }

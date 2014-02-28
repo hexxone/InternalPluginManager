@@ -29,10 +29,6 @@ import com.blockhaus2000.util.resources.MainPluginResource;
  * @author Blockhaus2000
  */
 public final class ExceptionHandler {
-    /**
-     * 
-     * @see MainPluginResource
-     */
     @MainPluginResource
     private static IpmMain main;
 
@@ -43,7 +39,7 @@ public final class ExceptionHandler {
      * @return <code>true</code> is a valid call is possible.
      */
     public static boolean isCallPossible() {
-        return main == null;
+        return ExceptionHandler.main == null;
     }
 
     /**
@@ -65,7 +61,7 @@ public final class ExceptionHandler {
         ex.printStackTrace();
 
         if (disable) {
-            PluginUtil.disable(main);
+            PluginUtil.disable(ExceptionHandler.main);
         }
     }
 
@@ -83,6 +79,6 @@ public final class ExceptionHandler {
      * @see ExceptionHandler#handle(Exception, boolean)
      */
     public static void handle(final Exception ex) throws IllegalArgumentException {
-        handle(ex, false);
+        ExceptionHandler.handle(ex, false);
     }
 }
