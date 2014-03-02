@@ -13,7 +13,6 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  see the License for the specific language governing permissions and
  *  Limitations under the License.
- *  package com.blockhaus2000.bukkit.util;
  */
 package com.blockhaus2000.plugin.exception;
 
@@ -28,15 +27,15 @@ public class InvalidPluginDescriptionException extends PluginException {
         super();
     }
 
-    public InvalidPluginDescriptionException(String description, Throwable cause) {
+    public InvalidPluginDescriptionException(final String description, final Throwable cause) {
         super(description, cause);
     }
 
-    public InvalidPluginDescriptionException(String description) {
+    public InvalidPluginDescriptionException(final String description) {
         super(description);
     }
 
-    public InvalidPluginDescriptionException(Throwable cause) {
+    public InvalidPluginDescriptionException(final Throwable cause) {
         super(cause);
     }
 }

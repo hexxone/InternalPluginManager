@@ -13,7 +13,6 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  see the License for the specific language governing permissions and
  *  Limitations under the License.
- *  package com.blockhaus2000.bukkit.util;
  */
 package com.blockhaus2000.minecraft.util.command.event;
 
@@ -42,10 +41,10 @@ public class IllegalSyntaxCommandEvent extends CommandEvent<RawCommandContext> {
 
     @Override
     public HandlerList getHandlers() {
-        return handlers;
+        return IllegalSyntaxCommandEvent.handlers;
     }
 
     public static HandlerList getHandlerList() {
-        return handlers;
+        return IllegalSyntaxCommandEvent.handlers;
     }
 }

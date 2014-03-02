@@ -13,7 +13,6 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  see the License for the specific language governing permissions and
  *  Limitations under the License.
- *  package com.blockhaus2000.bukkit.util;
  */
 package com.blockhaus2000.plugin;
 
@@ -343,8 +342,12 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
         }
 
         if (event.getNewValue().equals(true)) {
+            System.out.println("[" + getDescription().getName() + "] Enabling " + getDescription().getName() + " v"
+                    + getDescription().getVersion());
             onEnable();
         } else if (event.getNewValue().equals(false)) {
+            System.out.println("[" + getDescription().getName() + "] Disabling " + getDescription().getName() + " v"
+                    + getDescription().getVersion());
             onDisable();
         }
     }

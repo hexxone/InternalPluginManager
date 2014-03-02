@@ -13,7 +13,6 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  see the License for the specific language governing permissions and
  *  Limitations under the License.
- *  package com.blockhaus2000.bukkit.util;
  */
 package com.blockhaus2000.util;
 
@@ -51,11 +50,8 @@ public final class ExceptionHandler {
      *            The Exception that has to be handled.
      * @param disable
      *            The flag to enable/disable main plugin deactivation.
-     * @throws IllegalArgumentException
-     *             Will be throwed if the given {@link Exception} is
-     *             <code>null</code>.
      */
-    public static void handle(final Exception ex, final boolean disable) throws IllegalArgumentException {
+    public static void handle(final Exception ex, final boolean disable) {
         assert ex != null : "Ex cannot be null!";
 
         ex.printStackTrace();
@@ -72,13 +68,9 @@ public final class ExceptionHandler {
      * 
      * @param ex
      *            The Exception that has to be handled.
-     * @throws IllegalArgumentException
-     *             Will be throwed if
-     *             {@link ExceptionHandler#handle(Exception, boolean)} will
-     *             throw it.
      * @see ExceptionHandler#handle(Exception, boolean)
      */
-    public static void handle(final Exception ex) throws IllegalArgumentException {
+    public static void handle(final Exception ex) {
         ExceptionHandler.handle(ex, false);
     }
 }

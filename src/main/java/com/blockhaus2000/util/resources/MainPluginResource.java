@@ -13,7 +13,6 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  see the License for the specific language governing permissions and
  *  Limitations under the License.
- *  package com.blockhaus2000.bukkit.util;
  */
 package com.blockhaus2000.util.resources;
 
@@ -26,8 +25,11 @@ import com.blockhaus2000.main.bukkit.IpmMain;
 
 /**
  * If you annotate a field with this, the field have to be of the type
- * {@link IpmMain} and you have to call {@link IpmMain#initialResources(Class)} with
- * the class object from the class where the resource have to be initialized.
+ * {@link IpmMain} and you have to call
+ * {@link ResourceManager#initializeResources(Class)} /
+ * {@link ResourceManager#initializeResources(Object)} with the class object
+ * from the class where the resource have to be initialized or with an object of
+ * your class if the field is non-static.
  * 
  * @author Blockhaus2000
  */

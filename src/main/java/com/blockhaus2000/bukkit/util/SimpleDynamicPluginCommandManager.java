@@ -13,7 +13,6 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  see the License for the specific language governing permissions and
  *  Limitations under the License.
- *  package com.blockhaus2000.bukkit.util;
  */
 package com.blockhaus2000.bukkit.util;
 
@@ -32,6 +31,9 @@ import com.blockhaus2000.util.ReflectionUtil;
 import com.blockhaus2000.util.command.CommandInfo;
 
 /**
+ * The {@link SimpleDynamicPluginCommand} is used to register commands dynamicly
+ * into the command map of Bukkit. So you do not have to register the commands
+ * in the <code>plugin.yml</code>.
  * 
  * @author Blockhaus2000
  */
@@ -41,6 +43,15 @@ public class SimpleDynamicPluginCommandManager implements DynamicPluginCommandMa
 
     private CommandMap fallbackCommandMap;
 
+    /**
+     * Instances a new {@link SimpleDynamicPluginCommand} with the given
+     * arguments.
+     * 
+     * @param plugin
+     *            The {@link Plugin} that is the holder of the commands.
+     * @param executor
+     *            The {@link CommandExecutor} that executes the commands.
+     */
     public SimpleDynamicPluginCommandManager(final Plugin plugin, final CommandExecutor executor) {
         this.plugin = plugin;
         this.executor = executor;

@@ -13,10 +13,10 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  see the License for the specific language governing permissions and
  *  Limitations under the License.
- *  package com.blockhaus2000.bukkit.util;
  */
 package com.blockhaus2000.ipmtest;
 
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -30,13 +30,11 @@ import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.resources.MainPluginResource;
 import com.blockhaus2000.util.resources.ResourceManager;
 
-//import com.blockhaus2000.plugin_old.IpmPlugin;
-
 /**
  * 
  * @author Blockhaus2000
  */
-@SuppressWarnings("javadoc")
+// @SuppressWarnings("javadoc")
 public class IpmTestMain extends SimpleIpmPlugin implements Listener {
     @MainPluginResource
     private IpmMain main;
@@ -58,27 +56,26 @@ public class IpmTestMain extends SimpleIpmPlugin implements Listener {
 
         registerCommands(new TestCommands());
 
-        main.getServer().getPluginManager().registerEvents(this, main);
+        Bukkit.getServer().getPluginManager().registerEvents(this, main);
     }
 
     @EventHandler
-    public void onNotEnoughtArgumentsCommand(final NotEnoughArgumentsCommandEvent event) {
-        System.out.println("onNotEnoughtArgumentsCommand: " + event.getCommand().getCommand().getName());
+    public void onNoPermissionCommand(@SuppressWarnings("unused") final NoPermissionCommandEvent event) {
+        System.out.println("onNoPermissionCommand");
     }
 
     @EventHandler
-    public void onTooManyArgumentsCommand(final TooManyArgumentsCommandEvent event) {
-        System.out.println("onTooManyArgumentsCommand: " + event.getCommand().getCommand().getName());
+    public void onNotEnoughArgumentsCommand(@SuppressWarnings("unused") final NotEnoughArgumentsCommandEvent event) {
+        System.out.println("onNotEnoughArgumentsCommand");
     }
 
     @EventHandler
-    public void onNoPermissionCommand(final NoPermissionCommandEvent event) {
-        System.out.println("onNoPermissionCommand: " + event.getCommand().getCommand().getName());
+    public void onTooManyArgumentsCommand(@SuppressWarnings("unused") final TooManyArgumentsCommandEvent event) {
+        System.out.println("onTooManyArgumentsCommand");
     }
 
     @EventHandler
     public void onIllegalSyntaxCommand(final IllegalSyntaxCommandEvent event) {
-        System.out.print("onIllegalSyntaxCommand: " + event.getCommand().getCommand().getName() + ", : "
-                + event.getIllegalSyntaxType());
+        System.out.println("onIllegalSyntaxCommand " + event.getIllegalSyntaxType());
     }
 }

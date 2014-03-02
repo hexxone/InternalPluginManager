@@ -1,4 +1,4 @@
-/* This file is part of InternalPluginManager
+/* This filejava is part of InternalPluginManager
  * 
  * Copyright 2014 Blockhaus2000
  * 
@@ -13,7 +13,6 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  see the License for the specific language governing permissions and
  *  Limitations under the License.
- *  package com.blockhaus2000.bukkit.util;
  */
 package com.blockhaus2000.util.command;
 

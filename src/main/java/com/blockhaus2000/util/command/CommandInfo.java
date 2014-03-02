@@ -13,7 +13,6 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  see the License for the specific language governing permissions and
  *  Limitations under the License.
- *  package com.blockhaus2000.bukkit.util;
  */
 package com.blockhaus2000.util.command;
 
@@ -34,7 +33,7 @@ public class CommandInfo implements Comparable<CommandInfo> {
 
     public CommandInfo(final Command command, final Class<?> clazz, final Object object, final Method method,
             final CommandSyntax syntax) {
-        this.commandAnot = command;
+        commandAnot = command;
         this.clazz = clazz;
         this.object = object;
         this.method = method;
@@ -62,8 +61,8 @@ public class CommandInfo implements Comparable<CommandInfo> {
     }
 
     @Override
-    public int compareTo(CommandInfo that) {
-        final int levelThis = this.getCommandAnot().priority().getLevel();
+    public int compareTo(final CommandInfo that) {
+        final int levelThis = getCommandAnot().priority().getLevel();
         final int levelThat = that.getCommandAnot().priority().getLevel();
 
         if (levelThis == levelThat) {

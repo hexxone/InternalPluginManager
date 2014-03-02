@@ -13,7 +13,6 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  see the License for the specific language governing permissions and
  *  Limitations under the License.
- *  package com.blockhaus2000.bukkit.util;
  */
 package com.blockhaus2000.bukkit.util;
 
@@ -32,6 +31,21 @@ public class SimpleDynamicPluginCommand extends Command implements DynamicPlugin
     private final CommandExecutor executor;
     private final Plugin plugin;
 
+    /**
+     * Instances a new {@link SimpleDynamicPluginCommand} with the given
+     * arguments. Will call the super constructor.
+     * 
+     * @param aliases
+     *            Will be used in the <code>super</code>-call.
+     * @param desc
+     *            Will be used in the <code>super</code>-call.
+     * @param usage
+     *            Will be used in the <code>super</code>-call.
+     * @param executor
+     *            The {@link CommandExecutor} that executes the command.
+     * @param plugin
+     *            The {@link Plugin} that holds the command.
+     */
     public SimpleDynamicPluginCommand(final String[] aliases, final String desc, final String usage,
             final CommandExecutor executor, final Plugin plugin) {
         super(aliases[0], desc, usage, Arrays.asList(aliases));

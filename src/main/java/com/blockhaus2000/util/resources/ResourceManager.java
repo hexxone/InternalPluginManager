@@ -13,7 +13,6 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  see the License for the specific language governing permissions and
  *  Limitations under the License.
- *  package com.blockhaus2000.bukkit.util;
  */
 package com.blockhaus2000.util.resources;
 
@@ -54,8 +53,9 @@ public class ResourceManager {
      *             Will be throwed if {@link Field#set(Object, Object)} will
      *             throw it.
      */
-    @SuppressWarnings({ "deprecation", "javadoc" })
-    public static void initializeResources(final Class<?> clazz, final Object obj) throws IllegalAccessException {
+    @SuppressWarnings({ "deprecation"/* , "javadoc" */})
+    public static void initializeResources(final Class<?> clazz, final Object obj) throws IllegalArgumentException,
+            IllegalAccessException {
         assert clazz != null : "The given class is null!";
 
         for (Field target : clazz.getDeclaredFields()) {
@@ -108,7 +108,7 @@ public class ResourceManager {
      *             will throw it.
      * @see ResourceManager#initializeResources(Class, Object)
      */
-    public static void initializeResources(final Object obj) throws IllegalArgumentException, IllegalAccessException {
+    public static void initializeResources(final Object obj) throws IllegalAccessException {
         ResourceManager.initializeResources(obj.getClass(), obj);
     }
 

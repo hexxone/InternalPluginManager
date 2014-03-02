@@ -13,7 +13,6 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  see the License for the specific language governing permissions and
  *  Limitations under the License.
- *  package com.blockhaus2000.bukkit.util;
  */
 package com.blockhaus2000.bukkit.util;
 
@@ -34,7 +33,7 @@ public class PlayerCommandPreprocessListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
+    public void onPlayerCommandPreprocess(final PlayerCommandPreprocessEvent event) {
         if (commandMap.dispatch(event.getPlayer(), event.getMessage())) {
             event.setCancelled(true);
         }

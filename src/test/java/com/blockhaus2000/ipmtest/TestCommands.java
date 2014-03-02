@@ -13,12 +13,10 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  see the License for the specific language governing permissions and
  *  Limitations under the License.
- *  package com.blockhaus2000.bukkit.util;
  */
 package com.blockhaus2000.ipmtest;
 
 import com.blockhaus2000.minecraft.util.command.Command;
-import com.blockhaus2000.minecraft.util.command.CommandPriority;
 import com.blockhaus2000.util.Tag;
 import com.blockhaus2000.util.command.CommandContext;
 
@@ -26,36 +24,39 @@ import com.blockhaus2000.util.command.CommandContext;
  * 
  * @author Blockhaus2000
  */
-@SuppressWarnings("javadoc")
+// @SuppressWarnings("javadoc")
 public class TestCommands {
-    @Command(aliases = { "ipmtest1", "it1", "it" },
-             desc = "IpmTest One",
-             priority = CommandPriority.LOW)
+    @Command(aliases = { "test", "t" },
+             desc = "Do something :D",
+             permission = "ipmtest.test",
+             flags = "a:")
     public void testCommandOne(final CommandContext context) {
-        System.out.println(context.getCommandAnot().desc());
-
-        for (Tag<?> target : context.getArgs()) {
-            System.out.println("<" + target.getData() + ">");
-        }
-    }
-
-    @Command(aliases = { "ipmtest2", "it2", "it" },
-             desc = "IpmTest Two",
-             flags = { "a", "A", "p:" },
-             min = 0,
-             max = 0,
-             syntax = "String, Integer, String...")
-    public static void testCommandTwo(final CommandContext context) {
-        System.out.println(context.getCommandAnot().desc());
-
-        System.out.println("Flags:");
-        for (Character target : context.getFlags().keySet()) {
-            System.out.println(context.getFlags().get(target));
-        }
+        System.out.println(context.getLabel() + "1");
 
         System.out.println("Args:");
         for (Tag<?> target : context.getArgs()) {
-            System.out.println(target);
+            System.out.println("<" + target.toString() + ">");
+        }
+
+        for (char target : context.getFlags().keySet()) {
+            System.out.println(target + ": " + context.getFlags().get(target));
+        }
+    }
+
+    @Command(aliases = { "test2", "t" },
+             desc = "Do something 2 :D",
+             syntax = "String, Integer",
+             flags = "a")
+    public void testCommand2(final CommandContext context) {
+        System.out.println(context.getLabel() + "2");
+
+        System.out.println("Args:");
+        for (Tag<?> target : context.getArgs()) {
+            System.out.println("<" + target.toString() + ">");
+        }
+
+        for (char target : context.getFlags().keySet()) {
+            System.out.println(target + ": " + context.getFlags().get(target));
         }
     }
 }

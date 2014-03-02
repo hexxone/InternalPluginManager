@@ -13,7 +13,6 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  see the License for the specific language governing permissions and
  *  Limitations under the License.
- *  package com.blockhaus2000.bukkit.util;
  */
 package com.blockhaus2000.util;
 
@@ -51,11 +50,7 @@ public class PermissionUtil {
      *         Otherwise, this will return <code>false</code>.
      */
     public static boolean hasPermission(final CommandSender sender, final String perm) {
-        if (perm == null || perm.length() == 0 || !(sender instanceof Player) || sender.isOp() || sender.hasPermission(perm)) {
-            return true;
-        }
-
-        return false;
+        return perm == null || perm.length() == 0 || !(sender instanceof Player) || sender.isOp() || sender.hasPermission(perm);
     }
 
     /**

@@ -13,7 +13,6 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  see the License for the specific language governing permissions and
  *  Limitations under the License.
- *  package com.blockhaus2000.bukkit.util;
  */
 package com.blockhaus2000.util;
 
@@ -24,6 +23,7 @@ import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 /**
@@ -126,6 +126,16 @@ public class ChatOut {
         ChatOut.log(Level.INFO, msg);
     }
 
+    /**
+     * Sends the given message to the given {@link CommandSender}. If the
+     * {@link CommandSender} is an {@link ConsoleCommandSender} , this will log
+     * the given message.
+     * 
+     * @param sender
+     *            The {@link CommandSender} that has to receive the message.
+     * @param msg
+     *            The message that has to be sended.
+     */
     public static synchronized <T> void sendMessage(final CommandSender sender, final T msg) {
         if (!(sender instanceof Player)) {
             ChatOut.log(msg);
@@ -135,22 +145,60 @@ public class ChatOut {
         ((Player) sender).sendMessage(msg.toString());
     }
 
+    /**
+     * Sends the given message to the given {@link CommandSender}. If the
+     * {@link CommandSender} is an {@link ConsoleCommandSender} , this will log
+     * the given message.
+     * 
+     * <p>
+     * <b> NOTE: Every entry of the given {@link Collection} will be sended
+     * alone. To join the messages, use
+     * {@link StringUtil#joinString(String, String...)}. </b>
+     * </p>
+     * 
+     * @param sender
+     *            The {@link CommandSender} that has to receive the message.
+     * @param msg
+     *            The message that has to be sended.
+     */
     public static synchronized <T> void sendMessage(final CommandSender sender, final Collection<T> msg) {
         for (T target : msg) {
             ChatOut.sendMessage(sender, target);
         }
     }
 
+    /**
+     * Sends the given message to the given {@link CommandSender}. If the
+     * {@link CommandSender} is an {@link ConsoleCommandSender} , this will log
+     * the given message.
+     * 
+     * <p>
+     * <b> NOTE: Every entry of the given array will be sended alone. To join
+     * the messages, use {@link StringUtil#joinString(String, String...)}. </b>
+     * </p>
+     * 
+     * @param sender
+     *            The {@link CommandSender} that has to receive the message.
+     * @param msg
+     *            The message that has to be sended.
+     */
     public static synchronized <T> void sendMessage(final CommandSender sender, final T... msg) {
         ChatOut.sendMessage(sender, Arrays.asList(msg));
     }
 
-    // Getter
+    /**
+     * 
+     * @return {@link ChatOut#logger}
+     */
     public static Logger getLogger() {
         return ChatOut.logger;
     }
 
-    // Setter
+    /**
+     * 
+     * @param logger
+     *            The {@link ChatOut#logger} to set
+     */
     public static void setLogger(final Logger logger) {
         ChatOut.logger = logger;
     }
