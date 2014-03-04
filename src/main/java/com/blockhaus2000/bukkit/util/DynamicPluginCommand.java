@@ -25,6 +25,20 @@ import org.bukkit.command.PluginIdentifiableCommand;
  * @author Blockhaus2000
  */
 public interface DynamicPluginCommand extends PluginIdentifiableCommand {
+    /**
+     * This will be callen if the command has be executed.
+     * 
+     * @param sender
+     *            The {@link CommandSender} that has executed the command.
+     * @param label
+     *            The label of the executed command (will be the alias or
+     *            something like that).
+     * @param args
+     *            The arguments of the executed command (will be a
+     *            {@link String}[]).
+     * @return Has to return <code>true</code> if command has been handled,
+     *         otherwise <code>false</code>.
+     */
     public boolean execute(final CommandSender sender, final String label, final String[] args);
 
     public CommandExecutor getExecutor();
