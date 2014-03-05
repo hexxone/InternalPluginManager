@@ -24,29 +24,122 @@ import java.util.logging.Level;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import com.blockhaus2000.main.bukkit.IpmMain;
+import com.blockhaus2000.util.CommandRegistrationUtil;
+
 /**
  * 
  * @author Blockhaus2000
  */
 public interface IpmPlugin {
+    /**
+     * This inits the target {@link IpmPlugin}.
+     * 
+     * <p>
+     * <b> NOTE: This is only for internal use, and you should not call it
+     * explicit! </b>
+     * </p>
+     * 
+     * @param description
+     *            The init {@link IpmPluginDescription}.
+     */
     public void init(final IpmPluginDescription description);
 
+    /**
+     * Will be callen on load.
+     * 
+     * <p>
+     * <b> NOTE: This will not be callen in dependency-order! </b>
+     * </p>
+     * <p>
+     * <b> NOTE: Do not call this explicit! </b>
+     * </p>
+     * 
+     */
     public void onLoad();
 
+    /**
+     * Will be callen on disable.
+     * 
+     * <p>
+     * <b> NOTE: This will be callen if you set the enabled-status to
+     * <code>true</code> with {@link IpmPlugin#setEnabled(boolean)}. Do not call
+     * this explicit! </b>
+     * </p>
+     * 
+     */
     public void onDisable();
 
+    /**
+     * Will be callen on disable.
+     * 
+     * <p>
+     * <b> NOTE: This will be callen if you set the enabled-status to
+     * <code>false</code> with {@link IpmPlugin#setEnabled(boolean)}. Do not
+     * call this explicit! </b>
+     * </p>
+     * 
+     */
     public void onEnable();
 
+    /**
+     * Will save the default plugin config to the default path.
+     * 
+     * @throws IOException
+     *             If something goes wrong whilest save the config.
+     */
     public void saveConfig() throws IOException;
 
+    /**
+     * Reloads the config.
+     * 
+     */
     public void reloadConfig();
 
+    /**
+     * Loads the config, but will call {@link IpmPlugin#reloadConfig()}.
+     * 
+     * @see com.blockhaus2000.plugin.IpmPlugin#reloadConfig()
+     */
     public void loadConfig();
 
+    /**
+     * Registers the given command {@link Class} with the given {@link Object}.
+     * Will call
+     * {@link CommandRegistrationUtil#registerCommands(Class, Object, org.bukkit.plugin.Plugin)}
+     * with <code>plugin = {@link IpmMain#getInstance()}</code>.
+     * 
+     * @param clazz
+     *            The {@link Class} where the commands are located.
+     * @param obj
+     *            An {@link Object} of the given {@link Class}.
+     * @see com.blockhaus2000.util.CommandRegistrationUtil#registerCommands(java.lang.Class,
+     *      java.lang.Object, org.bukkit.plugin.Plugin)
+     */
     public void registerCommands(final Class<?> clazz, final Object obj);
 
+    /**
+     * Registers the given command {@link Class}. Will call
+     * {@link IpmPlugin#registerCommands(Class, Object)} with
+     * <code>obj = null</code>.
+     * 
+     * @param clazz
+     *            The {@link Class} where the commands are located.
+     * @see com.blockhaus2000.plugin.IpmPlugin#registerCommands(java.lang.Class,
+     *      java.lang.Object)
+     */
     public void registerCommands(final Class<?> clazz);
 
+    /**
+     * Registers the given command {@link Object}. Will call
+     * {@link IpmPlugin#registerCommands(Class, Object)} with
+     * <code>clazz = {@link Object#getClass()}</code>.
+     * 
+     * @param obj
+     *            The {@link Object} where the commands are located.
+     * @see com.blockhaus2000.plugin.IpmPlugin#registerCommands(java.lang.Class,
+     *      java.lang.Object)
+     */
     public void registerCommands(final Object obj);
 
     public boolean isEnabled();

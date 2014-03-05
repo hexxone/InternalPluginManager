@@ -16,7 +16,6 @@
  */
 package com.blockhaus2000.minecraft.util.command.event;
 
-import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 
 import com.blockhaus2000.util.command.CommandInfo;
@@ -27,7 +26,7 @@ import com.blockhaus2000.util.command.CommandInfo;
  * @param <T>
  *            The specific {@link CommandInfo}.
  */
-public abstract class CommandEvent<T extends CommandInfo> extends Event implements Cancellable {
+public abstract class CommandEvent<T extends CommandInfo> extends Event {
     protected final T command;
     protected boolean cancelled;
 
@@ -39,16 +38,5 @@ public abstract class CommandEvent<T extends CommandInfo> extends Event implemen
     // Getter
     public T getCommand() {
         return command;
-    }
-
-    @Override
-    public boolean isCancelled() {
-        return cancelled;
-    }
-
-    // Setter
-    @Override
-    public void setCancelled(final boolean cancelled) {
-        this.cancelled = cancelled;
     }
 }

@@ -34,6 +34,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
 import com.blockhaus2000.minecraft.util.command.event.CommandEvent;
+import com.blockhaus2000.minecraft.util.command.event.CommandEventPackage;
 import com.blockhaus2000.minecraft.util.command.event.IllegalSyntaxCommandEvent;
 import com.blockhaus2000.minecraft.util.command.event.IllegalSyntaxType;
 import com.blockhaus2000.minecraft.util.command.event.NoPermissionCommandEvent;
@@ -219,9 +220,12 @@ public class SimpleCommandManager implements CommandManager {
             }
         }
 
-        for (CommandEvent<?> target : events) {
-            target.setCancelled(true);
-            Bukkit.getServer().getPluginManager().callEvent(target);
+        if (!executed) {
+            for (CommandEvent<?> target : events) {
+                Bukkit.getServer().getPluginManager().callEvent(target);
+            }
+
+            Bukkit.getServer().getPluginManager().callEvent(new CommandEventPackage(events));
         }
 
         return executed;
