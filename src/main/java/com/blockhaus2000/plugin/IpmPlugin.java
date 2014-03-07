@@ -17,7 +17,6 @@
 package com.blockhaus2000.plugin;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.logging.Level;
 
@@ -83,12 +82,16 @@ public interface IpmPlugin {
     public void onEnable();
 
     /**
+     * Will reload the plugin.
+     * 
+     */
+    public void reload();
+
+    /**
      * Will save the default plugin config to the default path.
      * 
-     * @throws IOException
-     *             If something goes wrong whilest save the config.
      */
-    public void saveConfig() throws IOException;
+    public void saveConfig();
 
     /**
      * Reloads the config.
@@ -171,4 +174,6 @@ public interface IpmPlugin {
     public File getDataFolder();
 
     public IpmPluginDescription getDescription();
+
+    public String getName();
 }

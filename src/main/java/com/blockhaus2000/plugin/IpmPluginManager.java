@@ -37,6 +37,12 @@ public interface IpmPluginManager {
 
     public void enableAll();
 
+    public void reload(final IpmPlugin plugin);
+
+    public void reload(final Set<IpmPlugin> plugins);
+
+    public void reloadAll();
+
     public void unregister(final IpmPlugin plugin);
 
     public void unregister(final Set<IpmPlugin> plugins);

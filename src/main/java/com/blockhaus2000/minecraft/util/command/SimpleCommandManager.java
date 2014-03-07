@@ -19,7 +19,6 @@ package com.blockhaus2000.minecraft.util.command;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.AbstractSequentialList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -40,6 +39,7 @@ import com.blockhaus2000.minecraft.util.command.event.IllegalSyntaxType;
 import com.blockhaus2000.minecraft.util.command.event.NoPermissionCommandEvent;
 import com.blockhaus2000.minecraft.util.command.event.NotEnoughArgumentsCommandEvent;
 import com.blockhaus2000.minecraft.util.command.event.TooManyArgumentsCommandEvent;
+import com.blockhaus2000.minecraft.util.command.event.UnknownSecondLevelCommandEvent;
 import com.blockhaus2000.plugin.SimpleIpmServer;
 import com.blockhaus2000.util.ArrayUtil;
 import com.blockhaus2000.util.ExceptionHandler;
@@ -148,8 +148,7 @@ public class SimpleCommandManager implements CommandManager {
      *      org.bukkit.command.Command, java.lang.String, java.lang.String[])
      */
     @Override
-    public boolean onCommand(final CommandSender sender, final org.bukkit.command.Command cmd, final String label,
-            final String[] bArgs) {
+    public boolean onCommand(final CommandSender sender, final org.bukkit.command.Command cmd, final String label, String[] bArgs) {
         assert sender != null : "Sender cannot be null!";
         assert cmd != null : "Cmd cannot be null!";
         assert bArgs != null : "BArgs cannot be null!";
@@ -169,15 +168,21 @@ public class SimpleCommandManager implements CommandManager {
 
             RawCommandContext rawContext = new RawCommandContext(target, sender, cmd, label, bArgs);
 
-            if (!PermissionUtil.hasPermission(sender, cmdAnot.permission())) {
-                events.add(new NoPermissionCommandEvent(rawContext));
-                continue;
-            }
-
             CommandSyntax syntax = target.getSyntax();
 
             int min = syntax.isNull() ? cmdAnot.min() : syntax.size();
-            int max = syntax.isNull() ? cmdAnot.max() : syntax.endsWithVarArg() ? -1 : syntax.size();
+            int max = syntax.isNull() ? cmdAnot.max() : syntax.endsWithVarArg() && cmdAnot.autoSetMaxOnSyntax() ? -1 : syntax
+                    .size();
+
+            final boolean secondLevelCmdSet = cmdAnot.secondLevelCommand().length() != 0;
+
+            if (secondLevelCmdSet) {
+                min++;
+
+                if (max != -1) {
+                    max++;
+                }
+            }
 
             List<Tag<?>> args = null;
 
@@ -198,12 +203,27 @@ public class SimpleCommandManager implements CommandManager {
                 continue;
             }
 
+            if (secondLevelCmdSet) {
+                if (cmdAnot.secondLevelCommand().equalsIgnoreCase(args.get(0).getData().toString())) {
+                    args.remove(0);
+                    bArgs = ArrayUtil.toStringArray(args);
+                } else {
+                    events.add(new UnknownSecondLevelCommandEvent(rawContext));
+                    continue;
+                }
+            }
+
             ContextData contextData = null;
 
             try {
-                contextData = parseCommand(target, bArgs);
+                contextData = parseCommand(target, ArrayUtil.toStringArray(args));
             } catch (NumberFormatException ex) {
                 events.add(new IllegalSyntaxCommandEvent(rawContext, IllegalSyntaxType.INTEGER_SYNTAX_IS_STRING));
+                continue;
+            }
+
+            if (!PermissionUtil.hasPermission(sender, cmdAnot.permission())) {
+                events.add(new NoPermissionCommandEvent(rawContext));
                 continue;
             }
 
@@ -248,7 +268,7 @@ public class SimpleCommandManager implements CommandManager {
         assert cmd != null : "Cmd cannot be null!";
         assert rawArgs != null : "RawArgs cannot be null!";
 
-        AbstractSequentialList<String> args = new LinkedList<String>(rawArgs);
+        List<String> args = new LinkedList<String>(rawArgs);
 
         Map<Character, Tag<?>> flags = new HashMap<Character, Tag<?>>();
 
@@ -315,6 +335,9 @@ public class SimpleCommandManager implements CommandManager {
                     break;
                 case INTEGER:
                     args.add(new Tag<Integer>(Integer.valueOf(rawArgs.get(i).trim())));
+                    break;
+                case LONG:
+                    args.add(new Tag<Long>(Long.valueOf(rawArgs.get(i).trim())));
                     break;
                 case STRING:
                     args.add(new Tag<String>(rawArgs.get(i).trim()));

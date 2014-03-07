@@ -25,6 +25,8 @@ public enum CommandSyntaxType {
 
     STRING_VARARG("String..."),
 
+    LONG("Long"),
+
     INTEGER("Integer"),
 
     DOUBLE("Double");
@@ -43,10 +45,11 @@ public enum CommandSyntaxType {
         switch (this) {
         case STRING_VARARG:
             return true;
-
         case DOUBLE:
-            /* FALL-THROUGH */
+            /* FALL THROUGH */
         case INTEGER:
+            /* FALL-THROUGH */
+        case LONG:
             /* FALL-THROUGH */
         case STRING:
             /* FALL-THROUGH */

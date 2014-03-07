@@ -21,10 +21,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import com.blockhaus2000.main.bukkit.IpmMain;
-import com.blockhaus2000.minecraft.util.command.event.IllegalSyntaxCommandEvent;
-import com.blockhaus2000.minecraft.util.command.event.NoPermissionCommandEvent;
-import com.blockhaus2000.minecraft.util.command.event.NotEnoughArgumentsCommandEvent;
-import com.blockhaus2000.minecraft.util.command.event.TooManyArgumentsCommandEvent;
+import com.blockhaus2000.minecraft.util.command.event.CommandEvent;
+import com.blockhaus2000.minecraft.util.command.event.CommandEventPackage;
 import com.blockhaus2000.plugin.SimpleIpmPlugin;
 import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.resources.MainPluginResource;
@@ -60,22 +58,9 @@ public class IpmTestMain extends SimpleIpmPlugin implements Listener {
     }
 
     @EventHandler
-    public void onNoPermissionCommand(@SuppressWarnings("unused") final NoPermissionCommandEvent event) {
-        System.out.println("onNoPermissionCommand");
-    }
-
-    @EventHandler
-    public void onNotEnoughArgumentsCommand(@SuppressWarnings("unused") final NotEnoughArgumentsCommandEvent event) {
-        System.out.println("onNotEnoughArgumentsCommand");
-    }
-
-    @EventHandler
-    public void onTooManyArgumentsCommand(@SuppressWarnings("unused") final TooManyArgumentsCommandEvent event) {
-        System.out.println("onTooManyArgumentsCommand");
-    }
-
-    @EventHandler
-    public void onIllegalSyntaxCommand(final IllegalSyntaxCommandEvent event) {
-        System.out.println("onIllegalSyntaxCommand " + event.getIllegalSyntaxType());
+    public void onCommandEventPackage(final CommandEventPackage eventPackage) {
+        for (CommandEvent<?> target : eventPackage) {
+            System.out.println(target.getEventName());
+        }
     }
 }

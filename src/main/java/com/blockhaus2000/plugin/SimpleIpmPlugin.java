@@ -103,11 +103,25 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
     /**
      * {@inheritDoc}
      * 
+     * @see com.blockhaus2000.plugin.IpmPlugin#reload()
+     */
+    @Override
+    public void reload() {
+        SimpleIpmPluginManager.getInstance().reload(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
      * @see com.blockhaus2000.plugin.IpmPlugin#saveConfig()
      */
     @Override
-    public void saveConfig() throws IOException {
-        config.save(configFile);
+    public void saveConfig() {
+        try {
+            config.save(configFile);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     /**
@@ -328,6 +342,16 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
     @Override
     public IpmPluginDescription getDescription() {
         return description;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see com.blockhaus2000.plugin.IpmPlugin#getName()
+     */
+    @Override
+    public String getName() {
+        return getDescription().getName();
     }
 
     /**

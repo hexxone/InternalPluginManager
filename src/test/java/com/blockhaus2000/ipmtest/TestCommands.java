@@ -29,7 +29,8 @@ public class TestCommands {
     @Command(aliases = { "test", "t" },
              desc = "Do something :D",
              permission = "ipmtest.test",
-             flags = "a:")
+             secondLevelCommand = "sl1",
+             min = 1)
     public void testCommandOne(final CommandContext context) {
         System.out.println(context.getLabel() + "1");
 
@@ -45,8 +46,7 @@ public class TestCommands {
 
     @Command(aliases = { "test2", "t" },
              desc = "Do something 2 :D",
-             syntax = "String, Integer",
-             flags = "a")
+             secondLevelCommand = "sl2")
     public void testCommand2(final CommandContext context) {
         System.out.println(context.getLabel() + "2");
 

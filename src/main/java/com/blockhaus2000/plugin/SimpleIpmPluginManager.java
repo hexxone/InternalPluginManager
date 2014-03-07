@@ -115,6 +115,39 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
     /**
      * {@inheritDoc}
      * 
+     * @see com.blockhaus2000.plugin.IpmPluginManager#reload(com.blockhaus2000.plugin.IpmPlugin)
+     */
+    @Override
+    public void reload(final IpmPlugin plugin) {
+        plugin.setEnabled(false);
+        plugin.setEnabled(true);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see com.blockhaus2000.plugin.IpmPluginManager#reload(java.util.Set)
+     */
+    @Override
+    public void reload(final Set<IpmPlugin> plugins) {
+        for (IpmPlugin target : plugins) {
+            reload(target);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see com.blockhaus2000.plugin.IpmPluginManager#reloadAll()
+     */
+    @Override
+    public void reloadAll() {
+        reload(plugins);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
      * @see com.blockhaus2000.plugin.IpmPluginManager#unregister(com.blockhaus2000.plugin.IpmPlugin)
      */
     @Override

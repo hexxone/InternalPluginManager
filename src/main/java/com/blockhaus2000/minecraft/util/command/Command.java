@@ -154,6 +154,18 @@ public @interface Command {
      */
     public String syntax() default "";
 
+    public String secondLevelCommand() default "";
+
+    /**
+     * Enables the auto maximal setting if you use a specific command syntax
+     * (sepcified in {@link Command#syntax()}).
+     * 
+     * @return The boolean value that auto maximal setting on syntax
+     *         specification is enabled.
+     * @see Command#syntax()
+     */
+    public boolean autoSetMaxOnSyntax() default true;
+
     /**
      * A long help for this command.
      * 

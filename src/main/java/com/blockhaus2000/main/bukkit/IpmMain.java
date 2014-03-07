@@ -37,6 +37,8 @@ public class IpmMain extends JavaPlugin {
     // private final IpmPlugin ipmTestPlugin = new IpmTestMain();
 
     public IpmMain() {
+        ResourceManager.getInstance().registerResource(MainPluginResource.class, this);
+
         if (IpmMain.instance != null) {
             throw new IllegalStateException("Only bukkit initialize a new main plugin!");
         }

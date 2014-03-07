@@ -45,4 +45,21 @@ public class ArrayUtil {
 
         return array;
     }
+
+    public static String[] removeFromArray(final String[] array, final int index) {
+        String[] edited = new String[array.length - 1];
+
+        boolean removed = false;
+        for (int i = 0; i < array.length; i++) {
+            if (!removed && i == index) {
+                continue;
+            } else if (!removed) {
+                edited[i] = array[i];
+            } else {
+                edited[i - 1] = array[i];
+            }
+        }
+
+        return edited;
+    }
 }
