@@ -14,7 +14,7 @@
  *  see the License for the specific language governing permissions and
  *  Limitations under the License.
  */
-package com.blockhaus2000.ipmtest;
+package com.blockhaus2000.test;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -33,7 +33,7 @@ import com.blockhaus2000.util.resources.ResourceManager;
  * @author Blockhaus2000
  */
 // @SuppressWarnings("javadoc")
-public class IpmTestMain extends SimpleIpmPlugin implements Listener {
+public class TestMain extends SimpleIpmPlugin implements Listener {
     @MainPluginResource
     private IpmMain main;
 

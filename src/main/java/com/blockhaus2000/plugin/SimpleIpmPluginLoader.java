@@ -27,10 +27,16 @@ import java.util.Set;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
+
 import com.blockhaus2000.main.bukkit.IpmMain;
 import com.blockhaus2000.plugin.exception.InvalidPluginDescriptionException;
 import com.blockhaus2000.plugin.exception.PluginException;
 import com.blockhaus2000.util.ExceptionHandler;
+import com.blockhaus2000.util.ReflectionUtil;
+import com.blockhaus2000.util.resources.MainPluginResource;
+import com.blockhaus2000.util.resources.ResourceManager;
 
 /**
  * 
@@ -39,13 +45,21 @@ import com.blockhaus2000.util.ExceptionHandler;
 public class SimpleIpmPluginLoader implements IpmPluginLoader {
     private static IpmPluginLoader instance = new SimpleIpmPluginLoader();
 
+    @MainPluginResource
+    private IpmMain main;
+
     private final List<IpmPluginClassLoader> classLoaders = new ArrayList<IpmPluginClassLoader>();
 
     private final File pluginFolder;
 
-    @SuppressWarnings("deprecation")
     private SimpleIpmPluginLoader() {
-        pluginFolder = new File(IpmMain.getInstance().getDataFolder() + File.separator + "plugins" + File.separator);
+        try {
+            ResourceManager.initializeResources(this);
+        } catch (IllegalAccessException ex) {
+            ExceptionHandler.handle(ex, true);
+        }
+
+        pluginFolder = new File(main.getDataFolder() + File.separator + "plugins" + File.separator);
         pluginFolder.mkdirs();
     }
 
@@ -137,6 +151,8 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
         plugin.init(desc);
         plugin.onLoad();
 
+        addPlugin(plugin);
+
         return plugin;
     }
 
@@ -189,6 +205,41 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
         }
 
         return clazz;
+    }
+
+    /**
+     * This will do some magic to add an {@link IpmPlugin} to Bukkit's plugin
+     * list that use will see if you execute the command <code>/plugins</code>.
+     * 
+     * <p>
+     * <b> NOTE: This uses reflection a lot and some other tricks and it will
+     * not work in the future propably, so EVERY {@link Throwable} will be
+     * catched and fails silent. </b>
+     * </p>
+     * 
+     * @param ipmPlugin
+     *            The {@link IpmPlugin} to register to Bukkit's plugin list.
+     */
+    // TODO Add try {} catch (Throwable ex) {} to the whole method body.
+    // TODO Remove try {} catch (IllegalAccessException ex) {}
+    private void addPlugin(final IpmPlugin ipmPlugin) {
+        final Plugin plugin = new FakePlugin(main.getName() + ":" + ipmPlugin.getName(), ipmPlugin.getDescription().getVersion());
+
+        List<Plugin> plugins = ReflectionUtil.getFieldValue(Bukkit.getServer().getPluginManager(), "plugins");
+
+        for (Plugin target : plugins) {
+            if (target.getName().equalsIgnoreCase(plugin.getName())) {
+                return;
+            }
+        }
+
+        plugins.add(plugin);
+
+        try {
+            ReflectionUtil.setField(Bukkit.getServer().getPluginManager(), "plugins", plugins);
+        } catch (IllegalAccessException ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**

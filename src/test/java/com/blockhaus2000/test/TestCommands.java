@@ -14,7 +14,7 @@
  *  see the License for the specific language governing permissions and
  *  Limitations under the License.
  */
-package com.blockhaus2000.ipmtest;
+package com.blockhaus2000.test;
 
 import com.blockhaus2000.minecraft.util.command.Command;
 import com.blockhaus2000.util.Tag;
