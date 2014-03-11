@@ -59,7 +59,6 @@ public class SimpleIpmPluginClassLoader extends URLClassLoader implements IpmPlu
     public SimpleIpmPluginClassLoader(final IpmPluginLoader loader, final File file, final ClassLoader parent)
             throws MalformedURLException {
         super(new URL[] { file.toURI().toURL() }, parent);
-
         this.loader = loader;
     }
 
