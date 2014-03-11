@@ -41,5 +41,9 @@ public interface DynamicPluginCommand extends PluginIdentifiableCommand {
      */
     public boolean execute(final CommandSender sender, final String label, final String[] args);
 
+    /**
+     * 
+     * @return The {@link CommandExecutor} for this command.
+     */
     public CommandExecutor getExecutor();
 }
