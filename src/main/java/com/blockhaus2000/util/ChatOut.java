@@ -188,7 +188,7 @@ public class ChatOut {
 
     /**
      * 
-     * @return {@link ChatOut.java#logger}
+     * @return {@link ChatOut#logger}
      */
     public static Logger getLogger() {
         return ChatOut.logger;
@@ -197,7 +197,7 @@ public class ChatOut {
     /**
      * 
      * @param logger
-     *            the {@link ChatOut.java#logger} to set
+     *            the {@link ChatOut#logger} to set
      */
     public static void setLogger(final Logger logger) {
         ChatOut.logger = logger;

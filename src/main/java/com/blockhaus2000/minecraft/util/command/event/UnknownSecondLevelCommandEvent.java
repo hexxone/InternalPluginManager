@@ -16,26 +16,46 @@
  */
 package com.blockhaus2000.minecraft.util.command.event;
 
+import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import com.blockhaus2000.util.command.RawCommandContext;
 
 /**
+ * This {@link CommandEvent} will be fired if a command has been executed but
+ * the second-level-command does not match.
  * 
  * @author Blockhaus2000
  */
 public class UnknownSecondLevelCommandEvent extends CommandEvent<RawCommandContext> {
     private static final HandlerList handlers = new HandlerList();
 
+    /**
+     * Instances a new {@link UnknownSecondLevelCommandEvent} of the given
+     * {@link RawCommandContext}.
+     * 
+     * @param command
+     *            The {@link RawCommandContext} where the event has been fired
+     *            in the execution.
+     */
     public UnknownSecondLevelCommandEvent(final RawCommandContext command) {
         super(command);
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.bukkit.event.Event#getHandlers()
+     */
     @Override
     public HandlerList getHandlers() {
         return UnknownSecondLevelCommandEvent.handlers;
     }
 
+    /**
+     * 
+     * @return The {@link HandlerList} of this {@link Event}.
+     */
     public static HandlerList getHandlerList() {
         return UnknownSecondLevelCommandEvent.handlers;
     }

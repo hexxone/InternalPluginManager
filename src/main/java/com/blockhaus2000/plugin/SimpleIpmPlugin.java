@@ -34,6 +34,7 @@ import com.blockhaus2000.main.bukkit.IpmMain;
 import com.blockhaus2000.util.ChatOut;
 import com.blockhaus2000.util.CommandRegistrationUtil;
 import com.blockhaus2000.util.ExceptionHandler;
+import com.blockhaus2000.util.resources.ResourceManager;
 
 /**
  * 
@@ -41,6 +42,8 @@ import com.blockhaus2000.util.ExceptionHandler;
  */
 public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
     protected final PropertyChangeSupport changes = new PropertyChangeSupport(this);
+
+    private IpmMain main;
 
     private IpmPluginDescription description;
 
@@ -51,20 +54,28 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
 
     private boolean enabled = false;
 
+    public SimpleIpmPlugin() {
+        try {
+            ResourceManager.initializeResources(this);
+        } catch (IllegalAccessException ex) {
+            ExceptionHandler.handle(ex);
+            return;
+        }
+    }
+
     /**
      * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPlugin#init(IpmPluginDescription)
      */
-    @SuppressWarnings("deprecation")
     @Override
     public void init(final IpmPluginDescription description) {
         changes.addPropertyChangeListener(this);
 
         this.description = description;
 
-        dataFolder = new File(IpmMain.getInstance().getDataFolder() + File.separator + "plugins" + File.separator
-                + description.getName() + File.separator);
+        dataFolder = new File(main.getDataFolder() + File.separator + "plugins" + File.separator + description.getName()
+                + File.separator);
         configFile = new File(dataFolder.getPath() + File.separator + "config.yml");
         config = new YamlConfiguration();
         reloadConfig();
@@ -161,7 +172,7 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
     @SuppressWarnings("deprecation")
     @Override
     public void registerCommands(final Class<?> clazz, final Object obj) {
-        CommandRegistrationUtil.registerCommands(clazz, obj, IpmMain.getInstance());
+        CommandRegistrationUtil.registerCommands(clazz, obj, main);
     }
 
     /**

@@ -39,7 +39,7 @@ public class IllegalSyntaxCommandEvent extends CommandEvent<RawCommandContext> {
      * {@link RawCommandContext} and the given {@link IllegalSyntaxType}.
      * 
      * @param command
-     *            The {@link RawCommandContext} ehere the event has been fired
+     *            The {@link RawCommandContext} where the event has been fired
      *            in the execution.
      * @param illegalSyntaxType
      *            The {@link IllegalSyntaxType} that specifies the event.

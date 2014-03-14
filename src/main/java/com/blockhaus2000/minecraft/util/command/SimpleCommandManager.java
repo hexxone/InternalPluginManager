@@ -220,7 +220,7 @@ public class SimpleCommandManager implements CommandManager {
             try {
                 contextData = parseCommand(target, ArrayUtil.toStringArray(args));
             } catch (NumberFormatException ex) {
-                events.add(new IllegalSyntaxCommandEvent(rawContext, IllegalSyntaxType.INTEGER_SYNTAX_IS_STRING));
+                events.add(new IllegalSyntaxCommandEvent(rawContext, IllegalSyntaxType.NUMBER_SYNTAX_IS_STRING));
                 continue;
             }
 

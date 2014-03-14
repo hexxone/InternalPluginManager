@@ -34,7 +34,7 @@ import com.blockhaus2000.util.resources.ResourceManager;
  * @see org.bukkit.plugin.java.JavaPlugin
  */
 public class IpmMain extends JavaPlugin {
-    private static IpmMain instance;
+    private static boolean enabled = false;
 
     // Only for IpmTestPlugin
     // private final IpmPlugin ipmTestPlugin = new IpmTestMain();
@@ -43,11 +43,11 @@ public class IpmMain extends JavaPlugin {
     public IpmMain() {
         ResourceManager.getInstance().registerResource(MainPluginResource.class, this);
 
-        if (IpmMain.instance != null) {
+        if (IpmMain.enabled) {
             throw new IllegalStateException("Only bukkit initialize a new main plugin!");
         }
 
-        IpmMain.instance = this;
+        IpmMain.enabled = true;
     }
 
     /**
@@ -98,19 +98,19 @@ public class IpmMain extends JavaPlugin {
         // ipmTestPlugin.onLoad();
     }
 
-    /**
-     * Returns you an instance from the {@link IpmMain} class.
-     * 
-     * @deprecated Use the annotation {@link MainPluginResource} and call
-     *             {@link ResourceManager#initializeResources(Object)} instead!
-     * @return An instance from the {@link IpmMain} class.
-     */
-    @Deprecated
-    public static IpmMain getInstance() {
-        if (IpmMain.instance == null) {
-            return IpmMain.instance = new IpmMain();
-        }
-
-        return IpmMain.instance;
-    }
+    // /**
+    // * Returns you an instance from the {@link IpmMain} class.
+    // *
+    // * @deprecated Use the annotation {@link MainPluginResource} and call
+    // * {@link ResourceManager#initializeResources(Object)} instead!
+    // * @return An instance from the {@link IpmMain} class.
+    // */
+    // @Deprecated
+    // public static IpmMain getInstance() {
+    // if (IpmMain.instance == null) {
+    // return IpmMain.instance = new IpmMain();
+    // }
+    //
+    // return IpmMain.instance;
+    // }
 }

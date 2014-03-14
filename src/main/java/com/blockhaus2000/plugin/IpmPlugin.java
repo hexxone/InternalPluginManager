@@ -119,6 +119,8 @@ public interface IpmPlugin {
      * @see com.blockhaus2000.util.CommandRegistrationUtil#registerCommands(java.lang.Class,
      *      java.lang.Object, org.bukkit.plugin.Plugin)
      */
+    // for link to IpmMain#getInstance()
+    @SuppressWarnings("javadoc")
     public void registerCommands(final Class<?> clazz, final Object obj);
 
     /**

@@ -16,26 +16,47 @@
  */
 package com.blockhaus2000.minecraft.util.command.event;
 
+import org.bukkit.command.CommandSender;
+import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import com.blockhaus2000.util.command.RawCommandContext;
 
 /**
+ * This {@link CommandEvent} will be fired if a command has been executed but
+ * the {@link CommandSender} does not have the required minimum arguments.
  * 
  * @author Blockhaus2000
  */
 public class NotEnoughArgumentsCommandEvent extends CommandEvent<RawCommandContext> {
     private static final HandlerList handlers = new HandlerList();
 
+    /**
+     * Instances a new {@link NotEnoughArgumentsCommandEvent} of the given
+     * {@link RawCommandContext}.
+     * 
+     * @param command
+     *            The {@link RawCommandContext} where the event has been fired
+     *            in the execution.
+     */
     public NotEnoughArgumentsCommandEvent(final RawCommandContext command) {
         super(command);
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.bukkit.event.Event#getHandlers()
+     */
     @Override
     public HandlerList getHandlers() {
         return NotEnoughArgumentsCommandEvent.handlers;
     }
 
+    /**
+     * 
+     * @return The {@link HandlerList} of this {@link Event}.
+     */
     public static HandlerList getHandlerList() {
         return NotEnoughArgumentsCommandEvent.handlers;
     }

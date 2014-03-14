@@ -31,5 +31,14 @@ public enum IllegalSyntaxType {
      * 
      */
     UNAVAILABLE_FLAG_VALUE,
-    INTEGER_SYNTAX_IS_STRING;
+
+    /**
+     * Will be the specification if an {@link Integer}, {@link Double} or
+     * {@link Long} is a syntax element, but the command has been executed with
+     * an unvalid/illegal value at the same position. For example, a command
+     * with the syntax <code>String, Integer</code> will be executed like
+     * <code>/cmd arg0 arg1</code>.
+     * 
+     */
+    NUMBER_SYNTAX_IS_STRING;
 }

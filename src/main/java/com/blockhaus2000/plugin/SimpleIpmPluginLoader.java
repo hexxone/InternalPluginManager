@@ -220,25 +220,28 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
      * @param ipmPlugin
      *            The {@link IpmPlugin} to register to Bukkit's plugin list.
      */
-    // TODO Add try {} catch (Throwable ex) {} to the whole method body.
-    // TODO Remove try {} catch (IllegalAccessException ex) {}
     private void addPlugin(final IpmPlugin ipmPlugin) {
-        final Plugin plugin = new FakePlugin(main.getName() + ":" + ipmPlugin.getName(), ipmPlugin.getDescription().getVersion());
-
-        List<Plugin> plugins = ReflectionUtil.getFieldValue(Bukkit.getServer().getPluginManager(), "plugins");
-
-        for (Plugin target : plugins) {
-            if (target.getName().equalsIgnoreCase(plugin.getName())) {
-                return;
-            }
-        }
-
-        plugins.add(plugin);
-
         try {
-            ReflectionUtil.setField(Bukkit.getServer().getPluginManager(), "plugins", plugins);
-        } catch (IllegalAccessException ex) {
-            ex.printStackTrace();
+            final Plugin plugin = new FakePlugin(main.getName() + ":" + ipmPlugin.getName(), ipmPlugin.getDescription()
+                    .getVersion());
+
+            List<Plugin> plugins = ReflectionUtil.getFieldValue(Bukkit.getServer().getPluginManager(), "plugins");
+
+            for (Plugin target : plugins) {
+                if (target.getName().equalsIgnoreCase(plugin.getName())) {
+                    return;
+                }
+            }
+
+            plugins.add(plugin);
+
+            try {
+                ReflectionUtil.setField(Bukkit.getServer().getPluginManager(), "plugins", plugins);
+            } catch (IllegalAccessException ex) {
+                ex.printStackTrace();
+            }
+        } catch (Throwable ex) {
+            // fails silent (see JavaDoc)
         }
     }
 
