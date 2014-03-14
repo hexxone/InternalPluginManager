@@ -16,11 +16,14 @@
  */
 package com.blockhaus2000.bukkit.util;
 
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginIdentifiableCommand;
 
 /**
+ * This will represent a {@link Command} that can be dynamicly registered in the
+ * {@link DynamicPluginCommandManager}.
  * 
  * @author Blockhaus2000
  */

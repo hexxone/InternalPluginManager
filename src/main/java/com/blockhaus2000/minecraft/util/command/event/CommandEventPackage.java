@@ -24,6 +24,10 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
+ * This {@link Event} is not a regular {@link CommandEvent}, because this will
+ * hold a bunch of {@link CommandEvent}s that are fired within a command
+ * execution. Use this and not the raw {@link CommandEvent}s to handle
+ * {@link CommandEvent}s.
  * 
  * @author Blockhaus2000
  */
@@ -32,6 +36,13 @@ public class CommandEventPackage extends Event implements Iterable<CommandEvent<
 
     private final List<CommandEvent<?>> events;
 
+    /**
+     * Instances a new {@link CommandEventPackage} with the given
+     * {@link CommandEvent}-{@link List}.
+     * 
+     * @param events
+     *            The events that are fired in the command execution.
+     */
     public CommandEventPackage(final List<CommandEvent<?>> events) {
         this.events = events;
     }
@@ -46,6 +57,10 @@ public class CommandEventPackage extends Event implements Iterable<CommandEvent<
         return events.iterator();
     }
 
+    /**
+     * 
+     * @return All events that are fired in the command execution.
+     */
     public List<CommandEvent<?>> getEvents() {
         return new ArrayList<CommandEvent<?>>(events);
     }

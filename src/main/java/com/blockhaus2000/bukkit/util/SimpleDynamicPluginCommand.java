@@ -24,8 +24,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
 /**
+ * Represents a {@link DynamicPluginCommand}.
  * 
  * @author Blockhaus2000
+ * @see org.bukkit.command.Command
+ * @see com.blockhaus2000.bukkit.util.DynamicPluginCommand
  */
 public class SimpleDynamicPluginCommand extends Command implements DynamicPluginCommand {
     private final CommandExecutor executor;

@@ -20,6 +20,7 @@ package com.blockhaus2000.minecraft.util.command;
  * 
  * @author Blockhaus2000
  */
+@SuppressWarnings("javadoc")
 public class CommandException extends RuntimeException {
     private static final long serialVersionUID = -8928926369449212788L;
 

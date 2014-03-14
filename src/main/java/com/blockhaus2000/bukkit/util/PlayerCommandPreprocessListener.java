@@ -22,9 +22,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 /**
+ * Will be used for command execution if something goes wrong with the
+ * {@link DynamicPluginCommandManager} reflection usage.
  * 
  * @author Blockhaus2000
  */
+@SuppressWarnings("javadoc")
 public class PlayerCommandPreprocessListener implements Listener {
     private final CommandMap commandMap;
 

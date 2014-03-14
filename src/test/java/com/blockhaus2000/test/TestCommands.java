@@ -24,7 +24,7 @@ import com.blockhaus2000.util.command.CommandContext;
  * 
  * @author Blockhaus2000
  */
-// @SuppressWarnings("javadoc")
+@SuppressWarnings("javadoc")
 public class TestCommands {
     @Command(aliases = { "test", "t" },
              desc = "Do something :D",

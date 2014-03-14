@@ -27,8 +27,11 @@ import com.blockhaus2000.util.resources.MainPluginResource;
 import com.blockhaus2000.util.resources.ResourceManager;
 
 /**
+ * Represents the main plugin of the InternalPluginManager.
  * 
  * @author Blockhaus2000
+ * @see org.bukkit.plugin.Plugin
+ * @see org.bukkit.plugin.java.JavaPlugin
  */
 public class IpmMain extends JavaPlugin {
     private static IpmMain instance;
@@ -36,6 +39,7 @@ public class IpmMain extends JavaPlugin {
     // Only for IpmTestPlugin
     // private final IpmPlugin ipmTestPlugin = new IpmTestMain();
 
+    @SuppressWarnings("javadoc")
     public IpmMain() {
         ResourceManager.getInstance().registerResource(MainPluginResource.class, this);
 

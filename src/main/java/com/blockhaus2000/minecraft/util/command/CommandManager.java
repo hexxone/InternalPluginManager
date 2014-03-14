@@ -23,13 +23,56 @@ import org.bukkit.command.CommandExecutor;
 import com.blockhaus2000.util.command.CommandInfo;
 
 /**
+ * This command manager is used to execute the commands tagged with the
+ * {@link Command} annotation. This is a {@link CommandExecutor}.
  * 
  * @author Blockhaus2000
+ * @see org.bukkit.command.CommandExecutor
  */
 public interface CommandManager extends CommandExecutor {
+    /**
+     * Registers all of the methods in the given {@link Class} that are tagged
+     * with the {@link Command} annotation.
+     * 
+     * @param clazz
+     *            The {@link Class} that holds of the tagged methods.
+     * @param obj
+     *            An {@link Object} of the given {@link Class}. Can be
+     *            <code>null</code> if all of the methods are static.
+     * @return An {@link Set} of {@link CommandInfo}s that are registered.
+     */
     public Set<CommandInfo> register(final Class<?> clazz, final Object obj);
 
+    /**
+     * Registers all of the methods in the given {@link Class} that are tagged
+     * with the {@link Command} annotation. Will call
+     * {@link CommandManager#register(Class, Object)} with
+     * <code>obj = null</code>.
+     * 
+     * <p>
+     * <b> NOTE: Only call this if all of the tagged methods are static. </b>
+     * </p>
+     * 
+     * @param clazz
+     *            The {@link Class} that holds of the tagged methods.
+     * @return An {@link Set} of {@link CommandInfo}s that are registered.
+     * @see com.blockhaus2000.minecraft.util.command.CommandManager#register(java.lang.Class,
+     *      java.lang.Object)
+     */
     public Set<CommandInfo> register(final Class<?> clazz);
 
+    /**
+     * Registers all of the methods in the given {@link Class} that are tagged
+     * with the {@link Command} annotation. Will call
+     * {@link CommandManager#register(Class, Object)} with
+     * <code>clazz = {@link Object#getClass()}</code>.
+     * 
+     * @param obj
+     *            An {@link Object} of the given {@link Class}. Will be used to
+     *            get the {@link Class} of the {@link Object}.
+     * @return An {@link Set} of {@link CommandInfo}s that are registered.
+     * @see com.blockhaus2000.minecraft.util.command.CommandManager#register(java.lang.Class,
+     *      java.lang.Object)
+     */
     public Set<CommandInfo> register(final Object obj);
 }

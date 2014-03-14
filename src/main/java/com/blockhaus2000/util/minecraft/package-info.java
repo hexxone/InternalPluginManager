@@ -14,22 +14,16 @@
  *  see the License for the specific language governing permissions and
  *  Limitations under the License.
  */
-package com.blockhaus2000.main.bukkit;
-
-import com.blockhaus2000.plugin.IpmServer;
-import com.blockhaus2000.plugin.SimpleIpmServer;
-
 /**
- * This is a utility class with static methods.
+ * This package only declares some methods that will help to organize some
+ * things for Minecraft/Bukkit.
+ * 
+ * <p>
+ * <b>NOTE: Absolute NOTHING in this package will be used in the
+ * InternalPluginManager plugin, command, configuration or other systems.
+ * Also NOTHING will be used in some internals. </b>
+ * </p>
  * 
  * @author Blockhaus2000
  */
-public class InternalPluginManager {
-    /**
-     * 
-     * @return An {@link IpmServer}.
-     */
-    public static IpmServer getServer() {
-        return SimpleIpmServer.getInstance();
-    }
-}
+package com.blockhaus2000.util.minecraft;

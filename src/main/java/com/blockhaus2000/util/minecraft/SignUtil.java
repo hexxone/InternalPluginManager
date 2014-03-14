@@ -14,22 +14,12 @@
  *  see the License for the specific language governing permissions and
  *  Limitations under the License.
  */
-package com.blockhaus2000.main.bukkit;
-
-import com.blockhaus2000.plugin.IpmServer;
-import com.blockhaus2000.plugin.SimpleIpmServer;
+package com.blockhaus2000.util.minecraft;
 
 /**
- * This is a utility class with static methods.
  * 
- * @author Blockhaus2000
+ * @author lobnews
  */
-public class InternalPluginManager {
-    /**
-     * 
-     * @return An {@link IpmServer}.
-     */
-    public static IpmServer getServer() {
-        return SimpleIpmServer.getInstance();
-    }
+public class SignUtil {
+    // lobnews will edit this in the future
 }

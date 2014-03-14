@@ -16,34 +16,62 @@
  */
 package com.blockhaus2000.minecraft.util.command.event;
 
+import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import com.blockhaus2000.util.command.RawCommandContext;
 
 /**
+ * A {@link CommandEvent} that is fired if the syntax of a command is
+ * wrong/illegal. See the {@link IllegalSyntaxType} for a detailed error
+ * message.
  * 
  * @author Blockhaus2000
+ * @see com.blockhaus2000.minecraft.util.command.event.IllegalSyntaxCommandEvent
  */
 public class IllegalSyntaxCommandEvent extends CommandEvent<RawCommandContext> {
     private static final HandlerList handlers = new HandlerList();
 
     private final IllegalSyntaxType illegalSyntaxType;
 
+    /**
+     * Instances a new {@link IllegalSyntaxCommandEvent} of the given
+     * {@link RawCommandContext} and the given {@link IllegalSyntaxType}.
+     * 
+     * @param command
+     *            The {@link RawCommandContext} ehere the event has been fired
+     *            in the execution.
+     * @param illegalSyntaxType
+     *            The {@link IllegalSyntaxType} that specifies the event.
+     */
     public IllegalSyntaxCommandEvent(final RawCommandContext command, final IllegalSyntaxType illegalSyntaxType) {
         super(command);
 
         this.illegalSyntaxType = illegalSyntaxType;
     }
 
+    /**
+     * 
+     * @return The {@link IllegalSyntaxType} that specifies the event.
+     */
     public IllegalSyntaxType getIllegalSyntaxType() {
         return illegalSyntaxType;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.bukkit.event.Event#getHandlers()
+     */
     @Override
     public HandlerList getHandlers() {
         return IllegalSyntaxCommandEvent.handlers;
     }
 
+    /**
+     * 
+     * @return The {@link HandlerList} of this {@link Event}.
+     */
     public static HandlerList getHandlerList() {
         return IllegalSyntaxCommandEvent.handlers;
     }

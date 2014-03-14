@@ -53,8 +53,10 @@ import com.blockhaus2000.util.command.ContextData;
 import com.blockhaus2000.util.command.RawCommandContext;
 
 /**
+ * Represents a {@link CommandManager}.
  * 
  * @author Blockhaus2000
+ * @see com.blockhaus2000.minecraft.util.command.CommandManager
  */
 public class SimpleCommandManager implements CommandManager {
     private static SimpleCommandManager instance;

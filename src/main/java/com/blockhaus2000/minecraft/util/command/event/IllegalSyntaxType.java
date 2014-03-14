@@ -17,9 +17,19 @@
 package com.blockhaus2000.minecraft.util.command.event;
 
 /**
+ * Specifies the illegal syntax type in the {@link IllegalSyntaxCommandEvent}.
  * 
  * @author Blockhaus2000
  */
 public enum IllegalSyntaxType {
-    UNAVAILABLE_FLAG_VALUE, INTEGER_SYNTAX_IS_STRING;
+    /**
+     * Will be the specification if a flag value is not available. For example,
+     * a command with the setted flag <code>p:</code> will be executed like
+     * <code>/cmd -p Blockhaus2000</code>, the flag value is available. But if
+     * the flag is used like a toggleflag (<code>/cmd -p</code>), an
+     * {@link IllegalSyntaxCommandEvent} will be fired with this type.
+     * 
+     */
+    UNAVAILABLE_FLAG_VALUE,
+    INTEGER_SYNTAX_IS_STRING;
 }

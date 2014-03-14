@@ -17,11 +17,50 @@
 package com.blockhaus2000.minecraft.util.command;
 
 /**
+ * The priority for commands to regulate the execution order from high to low.
+ * That means that the exection order is:
+ * <ul>
+ * <li>{@link #LOWEST}</li>
+ * <li>{@link #LOW}</li>
+ * <li>{@link #NORMAL}</li>
+ * <li>{@link #HIGH}</li>
+ * <li>{@link #HIGHEST}</li>
+ * <li>{@link #MONITOR}</li>
+ * </ul>
  * 
  * @author Blockhaus2000
  */
 public enum CommandPriority {
-    LOWEST(0), LOW(1), NORMAL(2), HIGH(3), HIGHEST(4), MONITOR(5);
+    /**
+     * The lowest {@link CommandPriority}.
+     */
+    LOWEST(0),
+
+    /**
+     * The second-lowest {@link CommandPriority}.
+     */
+    LOW(1),
+
+    /**
+     * The normal {@link CommandPriority}.
+     */
+    NORMAL(2),
+
+    /**
+     * The second-highest {@link CommandPriority}.
+     */
+    HIGH(3),
+
+    /**
+     * The highest {@link CommandPriority}.
+     */
+    HIGHEST(4),
+
+    /**
+     * The super-high {@link CommandPriority}. Do not execute something with
+     * this {@link CommandPriority}, only use it for monitoring!
+     */
+    MONITOR(5);
 
     private final int level;
 
@@ -29,6 +68,10 @@ public enum CommandPriority {
         this.level = level;
     }
 
+    /**
+     * 
+     * @return The level of the target {@link CommandPriority}.
+     */
     public int getLevel() {
         return level;
     }

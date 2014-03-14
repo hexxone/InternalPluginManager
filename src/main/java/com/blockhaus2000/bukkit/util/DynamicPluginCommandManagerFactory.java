@@ -26,6 +26,8 @@ import com.blockhaus2000.util.resources.MainPluginResource;
 import com.blockhaus2000.util.resources.ResourceManager;
 
 /**
+ * Provides some static methods to create a new
+ * {@link DynamicPluginCommandManager}.
  * 
  * @author Blockhaus2000
  */
@@ -43,23 +45,89 @@ public class DynamicPluginCommandManagerFactory {
         }
     }
 
+    /**
+     * Instances a new {@link DynamicPluginCommandManager}.
+     * 
+     * <p>
+     * The <code>@SuppressWarnings("deprecation")</code> is to suprress the
+     * waring of the usage of the deprecated constructor of the
+     * {@link SimpleDynamicPluginCommandManager}.
+     * </p>
+     * 
+     * @param plugin
+     *            The command-holding {@link Plugin}.
+     * @param executor
+     *            The {@link CommandExecutor} that executes the commands that
+     *            will be registered.
+     * @return A new {@link DynamicPluginCommandManager}.
+     */
+    @SuppressWarnings("deprecation")
     public static DynamicPluginCommandManager newInstance(final Plugin plugin, final CommandExecutor executor) {
         return new SimpleDynamicPluginCommandManager(plugin, executor);
     }
 
+    /**
+     * Instances a new {@link DynamicPluginCommandManager}. Will call
+     * {@link DynamicPluginCommandManagerFactory#newInstance(Plugin, CommandExecutor)}
+     * the given {@link Plugin} and <code>executor</code> as the command system
+     * or, if <code>useCommandSystem == false</code>, with the given
+     * {@link Plugin} as the {@link CommandExecutor}.
+     * 
+     * @param plugin
+     *            The command-holding {@link Plugin}.
+     * @param useCommandSystem
+     *            If <code>true</code>, the command system will be used.
+     *            Otherwise, the plugin will be the {@link CommandExecutor}.
+     * @return A new {@link DynamicPluginCommandManager}.
+     * @see com.blockhaus2000.bukkit.util.DynamicPluginCommandManagerFactory#newInstance(org.bukkit.plugin.Plugin,
+     *      org.bukkit.command.CommandExecutor)
+     */
     public static DynamicPluginCommandManager newInstance(final Plugin plugin, final boolean useCommandSystem) {
         return DynamicPluginCommandManagerFactory.newInstance(plugin, useCommandSystem ? SimpleCommandManager.getInstance()
                 : plugin);
     }
 
+    /**
+     * Instances a new {@link DynamicPluginCommandManager}. Will call
+     * {@link DynamicPluginCommandManagerFactory#newInstance(Plugin, boolean)}
+     * with <code>useCommandSystem = true</code> and the given Plugin.
+     * 
+     * @param plugin
+     *            The command-holding {@link Plugin}.
+     * @return A new {@link DynamicPluginCommandManager}.
+     * @see com.blockhaus2000.bukkit.util.DynamicPluginCommandManagerFactory#newInstance(org.bukkit.plugin.Plugin,
+     *      boolean)
+     */
     public static DynamicPluginCommandManager newInstance(final Plugin plugin) {
         return DynamicPluginCommandManagerFactory.newInstance(plugin, true);
     }
 
+    /**
+     * Instances a new {@link DynamicPluginCommandManager}. Will calling
+     * {@link DynamicPluginCommandManagerFactory#newInstance(Plugin, CommandExecutor)}
+     * with <code>plugin</code> as the main plugin and the given
+     * {@link CommandExecutor}.
+     * 
+     * @param executor
+     *            The {@link CommandExecutor} that executes the commands.
+     * @return A new {@link DynamicPluginCommandManager}.
+     * @see com.blockhaus2000.bukkit.util.DynamicPluginCommandManagerFactory#newInstance(org.bukkit.plugin.Plugin,
+     *      org.bukkit.command.CommandExecutor)
+     */
     public static DynamicPluginCommandManager newInstance(final CommandExecutor executor) {
         return DynamicPluginCommandManagerFactory.newInstance(DynamicPluginCommandManagerFactory.main, executor);
     }
 
+    /**
+     * Instances a new {@link DynamicPluginCommandManager}. Will calling
+     * {@link DynamicPluginCommandManagerFactory#newInstance(Plugin, CommandExecutor)}
+     * with <code>plugin</code> as the main plugin and <code>executor</code> as
+     * the command system executor.
+     * 
+     * @return A new {@link DynamicPluginCommandManager}.
+     * @see com.blockhaus2000.bukkit.util.DynamicPluginCommandManagerFactory#newInstance(org.bukkit.plugin.Plugin,
+     *      org.bukkit.command.CommandExecutor)
+     */
     public static DynamicPluginCommandManager newInstance() {
         return DynamicPluginCommandManagerFactory.newInstance(DynamicPluginCommandManagerFactory.main,
                 SimpleCommandManager.getInstance());

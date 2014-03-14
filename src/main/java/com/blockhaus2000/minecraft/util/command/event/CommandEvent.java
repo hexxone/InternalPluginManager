@@ -21,6 +21,7 @@ import org.bukkit.event.Event;
 import com.blockhaus2000.util.command.CommandInfo;
 
 /**
+ * This is the main class for all {@link CommandEvent}s.
  * 
  * @author Blockhaus2000
  * @param <T>
@@ -30,12 +31,21 @@ public abstract class CommandEvent<T extends CommandInfo> extends Event {
     protected final T command;
     protected boolean cancelled;
 
+    /**
+     * Instances a new {@link CommandEvent} with the given {@link CommandInfo}
+     * (specified by the type <code>T</code>).
+     * 
+     * @param command
+     *            The {@link CommandInfo}.
+     */
     public CommandEvent(final T command) {
         this.command = command;
     }
 
-    // Getter + Setter
-    // Getter
+    /**
+     * 
+     * @return {@link CommandEvent#command}
+     */
     public T getCommand() {
         return command;
     }

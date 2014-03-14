@@ -32,7 +32,7 @@ import com.blockhaus2000.util.resources.ResourceManager;
  * 
  * @author Blockhaus2000
  */
-// @SuppressWarnings("javadoc")
+@SuppressWarnings("javadoc")
 public class TestMain extends SimpleIpmPlugin implements Listener {
     @MainPluginResource
     private IpmMain main;

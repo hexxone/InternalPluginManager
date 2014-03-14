@@ -29,6 +29,8 @@ import com.blockhaus2000.minecraft.util.command.event.NotEnoughArgumentsCommandE
 import com.blockhaus2000.minecraft.util.command.event.TooManyArgumentsCommandEvent;
 
 /**
+ * The annotation is used to tag methods, so they will be detected from the
+ * {@link CommandManager} to register the implemented commands.
  * 
  * @author Blockhaus2000
  */
@@ -154,6 +156,22 @@ public @interface Command {
      */
     public String syntax() default "";
 
+    /**
+     * This is the second-level-command of the command. So the command method
+     * calling will be extended so the second-level-command has to equals the
+     * second arguments of the executed command. (for example, this is
+     * <code>all</code> and one of the command alisas is <code>kill</code>,
+     * <code>/kill all</code> has to be executed o enter the method that is
+     * tagged with this annotation).
+     * 
+     * <p>
+     * <b> NOTE: This will not effect the max. argument setting, the min.
+     * argument setting or the command syntax setting! The second-level-command
+     * will be removed completly. </b>
+     * </p>
+     * 
+     * @return The second-level-command for this command.
+     */
     public String secondLevelCommand() default "";
 
     /**

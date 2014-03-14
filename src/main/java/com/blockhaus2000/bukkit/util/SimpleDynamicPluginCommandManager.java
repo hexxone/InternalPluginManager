@@ -31,11 +31,10 @@ import com.blockhaus2000.util.ReflectionUtil;
 import com.blockhaus2000.util.command.CommandInfo;
 
 /**
- * The {@link SimpleDynamicPluginCommand} is used to register commands dynamicly
- * into the command map of Bukkit. So you do not have to register the commands
- * in the <code>plugin.yml</code>.
+ * Represents a {@link DynamicPluginCommandManager}.
  * 
  * @author Blockhaus2000
+ * @see com.blockhaus2000.bukkit.util.DynamicPluginCommandManager
  */
 public class SimpleDynamicPluginCommandManager implements DynamicPluginCommandManager {
     private final Plugin plugin;
@@ -47,11 +46,20 @@ public class SimpleDynamicPluginCommandManager implements DynamicPluginCommandMa
      * Instances a new {@link SimpleDynamicPluginCommand} with the given
      * arguments.
      * 
+     * <p>
+     * <b> NOTE: Please use the {@link DynamicPluginCommandManagerFactory}
+     * instead of calling this constructor. </b>
+     * </p>
+     * 
      * @param plugin
      *            The {@link Plugin} that is the holder of the commands.
      * @param executor
      *            The {@link CommandExecutor} that executes the commands.
+     * @deprecated Please use the {@link DynamicPluginCommandManagerFactory}
+     *             instead.
+     * @see com.blockhaus2000.bukkit.util.DynamicPluginCommandManagerFactory
      */
+    @Deprecated
     public SimpleDynamicPluginCommandManager(final Plugin plugin, final CommandExecutor executor) {
         this.plugin = plugin;
         this.executor = executor;

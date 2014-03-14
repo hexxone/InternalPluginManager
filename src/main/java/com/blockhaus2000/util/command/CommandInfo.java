@@ -69,6 +69,6 @@ public class CommandInfo implements Comparable<CommandInfo> {
             return 0;
         }
 
-        return levelThis < levelThat ? 1 : -1;
+        return levelThis < levelThat ? -1 : 1;
     }
 }
