@@ -17,10 +17,15 @@
 package com.blockhaus2000.util;
 
 /**
+ * This is a utility class for the usage of the stack.
  * 
  * @author Blockhaus2000
  */
 public class StackUtil {
+    /**
+     * 
+     * @return The {@link Caller} of the method that calls this method.
+     */
     public static Caller getCaller() {
         StackTraceElement caller = Thread.currentThread().getStackTrace()[2];
         return new Caller(caller.getClassName(), caller.getMethodName());

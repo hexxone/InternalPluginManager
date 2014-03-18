@@ -17,7 +17,6 @@
 package com.blockhaus2000.plugin;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -37,15 +36,17 @@ import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.resources.ResourceManager;
 
 /**
+ * An implmenetation of {@link IpmPlugin}.
  * 
  * @author Blockhaus2000
  */
-public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
+public class SimpleIpmPlugin implements IpmPlugin {
     protected final PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
     private IpmMain main;
 
     private IpmPluginDescription description;
+    private String name;
 
     private FileConfiguration config;
     private File configFile;
@@ -54,6 +55,14 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
 
     private boolean enabled = false;
 
+    /**
+     * Instances a new {@link SimpleIpmPlugin}.
+     * 
+     * <p>
+     * <b> NOTE: Only the {@link IpmPluginManager} creates a new
+     * {@link SimpleIpmPlugin}. </b>
+     * </p>
+     */
     public SimpleIpmPlugin() {
         try {
             ResourceManager.initializeResources(this);
@@ -79,6 +88,8 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
         configFile = new File(dataFolder.getPath() + File.separator + "config.yml");
         config = new YamlConfiguration();
         reloadConfig();
+
+        name = this.description.getName();
     }
 
     /**
@@ -169,7 +180,6 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
      * @see com.blockhaus2000.plugin.IpmPlugin#registerCommands(java.lang.Class,
      *      java.lang.Object)
      */
-    @SuppressWarnings("deprecation")
     @Override
     public void registerCommands(final Class<?> clazz, final Object obj) {
         CommandRegistrationUtil.registerCommands(clazz, obj, main);
@@ -362,7 +372,7 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
      */
     @Override
     public String getName() {
-        return getDescription().getName();
+        return name;
     }
 
     /**
@@ -385,5 +395,39 @@ public class SimpleIpmPlugin implements IpmPlugin, PropertyChangeListener {
                     + getDescription().getVersion());
             onDisable();
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return 31 + (name == null ? 0 : name.hashCode());
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || !(obj instanceof SimpleIpmPlugin)) {
+            return false;
+        }
+
+        IpmPlugin that = (SimpleIpmPlugin) obj;
+
+        if (name == null || that.getName() == null) {
+            return false;
+        }
+
+        return name.equals(that.getName());
     }
 }

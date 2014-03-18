@@ -25,6 +25,7 @@ import org.bukkit.command.CommandSender;
 import com.blockhaus2000.util.Tag;
 
 /**
+ * An extended {@link RawCommandContext}.
  * 
  * @author Blockhaus2000
  */
@@ -32,6 +33,24 @@ public class CommandContext extends RawCommandContext {
     private final List<Tag<?>> args;
     private final Map<Character, Tag<?>> flags;
 
+    /**
+     * Instances a new {@link CommandContext}.
+     * 
+     * @param commandInfo
+     *            The {@link CommandInfo} that will be used for the super-call.
+     * @param sender
+     *            The {@link CommandSyntax} that has executed the command.
+     * @param command
+     *            The {@link Command} that has been executed.
+     * @param label
+     *            The label from the execution.
+     * @param rawArgs
+     *            The non-parsed arguments of the command.
+     * @param args
+     *            The parsed arguments.
+     * @param flags
+     *            The parsed flags.
+     */
     public CommandContext(final CommandInfo commandInfo, final CommandSender sender, final Command command, final String label,
             final String[] rawArgs, final List<Tag<?>> args, final Map<Character, Tag<?>> flags) {
         super(commandInfo, sender, command, label, rawArgs);
@@ -39,16 +58,33 @@ public class CommandContext extends RawCommandContext {
         this.flags = flags;
     }
 
+    /**
+     * Instances a new {@link CommandContext}.
+     * 
+     * @param rawContext
+     *            The {@link CommandInfo} that will be used for the super-call.
+     * @param args
+     *            The parsed arguments.
+     * @param flags
+     *            The parsed flags.
+     */
     public CommandContext(final RawCommandContext rawContext, final List<Tag<?>> args, final Map<Character, Tag<?>> flags) {
         this(rawContext, rawContext.getSender(), rawContext.getCommand(), rawContext.getLabel(), rawContext.getRawArgs(), args,
                 flags);
     }
 
-    // Getter
+    /**
+     * 
+     * @return {@link CommandContext#args}
+     */
     public List<Tag<?>> getArgs() {
         return args;
     }
 
+    /**
+     * 
+     * @return {@link CommandContext#flags}
+     */
     public Map<Character, Tag<?>> getFlags() {
         return flags;
     }

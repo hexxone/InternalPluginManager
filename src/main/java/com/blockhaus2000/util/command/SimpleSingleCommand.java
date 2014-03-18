@@ -19,13 +19,14 @@ package com.blockhaus2000.util.command;
 import com.blockhaus2000.plugin.IpmPlugin;
 
 /**
+ * An implementation of {@link SingleCommand} for a self-registering command.
  * 
  * @author Blockhaus2000
  */
 public abstract class SimpleSingleCommand implements SingleCommand {
     protected final IpmPlugin plugin;
 
-    public SimpleSingleCommand(final IpmPlugin plugin) {
+    protected SimpleSingleCommand(final IpmPlugin plugin) {
         this.plugin = plugin;
         this.plugin.registerCommands(this);
     }

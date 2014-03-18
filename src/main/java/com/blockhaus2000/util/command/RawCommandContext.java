@@ -20,6 +20,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 /**
+ * An extended {@link CommandInfo}.
  * 
  * @author Blockhaus2000
  */
@@ -29,6 +30,20 @@ public class RawCommandContext extends CommandInfo {
     private final String label;
     private final String[] rawArgs;
 
+    /**
+     * Instances a new {@link RawCommandContext}.
+     * 
+     * @param commandInfo
+     *            The {@link CommandInfo} that will be used for the super-call.
+     * @param sender
+     *            The {@link CommandSyntax} that has executed the command.
+     * @param command
+     *            The {@link Command} that has been executed.
+     * @param label
+     *            The label from the execution.
+     * @param rawArgs
+     *            The non-parsed arguments of the command.
+     */
     public RawCommandContext(final CommandInfo commandInfo, final CommandSender sender, final Command command,
             final String label, final String[] rawArgs) {
         super(commandInfo.getCommandAnot(), commandInfo.getClazz(), commandInfo.getObject(), commandInfo.getMethod(), commandInfo
@@ -39,19 +54,34 @@ public class RawCommandContext extends CommandInfo {
         this.rawArgs = rawArgs;
     }
 
-    // Getter
+    /**
+     * 
+     * @return {@link RawCommandContext#sender}
+     */
     public CommandSender getSender() {
         return sender;
     }
 
+    /**
+     * 
+     * @return {@link RawCommandContext#command}
+     */
     public Command getCommand() {
         return command;
     }
 
+    /**
+     * 
+     * @return {@link RawCommandContext#label}
+     */
     public String getLabel() {
         return label;
     }
 
+    /**
+     * 
+     * @return {@link RawCommandContext#rawArgs}
+     */
     public String[] getRawArgs() {
         return rawArgs;
     }

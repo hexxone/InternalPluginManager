@@ -16,6 +16,7 @@
  */
 package com.blockhaus2000.plugin;
 
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.Collection;
 import java.util.logging.Level;
@@ -23,14 +24,15 @@ import java.util.logging.Level;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import com.blockhaus2000.main.bukkit.IpmMain;
+import com.blockhaus2000.util.ChatOut;
 import com.blockhaus2000.util.CommandRegistrationUtil;
 
 /**
+ * The main class that is used for plugin.
  * 
  * @author Blockhaus2000
  */
-public interface IpmPlugin {
+public interface IpmPlugin extends PropertyChangeListener {
     /**
      * This inits the target {@link IpmPlugin}.
      * 
@@ -110,7 +112,7 @@ public interface IpmPlugin {
      * Registers the given command {@link Class} with the given {@link Object}.
      * Will call
      * {@link CommandRegistrationUtil#registerCommands(Class, Object, org.bukkit.plugin.Plugin)}
-     * with <code>plugin = {@link IpmMain#getInstance()}</code>.
+     * with <code>plugin</code> as the root plugin.
      * 
      * @param clazz
      *            The {@link Class} where the commands are located.
@@ -119,8 +121,6 @@ public interface IpmPlugin {
      * @see com.blockhaus2000.util.CommandRegistrationUtil#registerCommands(java.lang.Class,
      *      java.lang.Object, org.bukkit.plugin.Plugin)
      */
-    // for link to IpmMain#getInstance()
-    @SuppressWarnings("javadoc")
     public void registerCommands(final Class<?> clazz, final Object obj);
 
     /**
@@ -147,35 +147,176 @@ public interface IpmPlugin {
      */
     public void registerCommands(final Object obj);
 
+    /**
+     * 
+     * @return If <code>true</code>, the plugin is enabled, if
+     *         <code>false</code>, the plugin is disabled.
+     */
     public boolean isEnabled();
 
+    /**
+     * Sets the enabled status and the {@link IpmPlugin#onEnable()} (or
+     * {@link IpmPlugin#onDisable()}, of course) will be callen.
+     * 
+     * @param enabled
+     *            The enabled status (<code>true</code> if enabled,
+     *            <code>false</code> if disabled).
+     */
     public void setEnabled(final boolean enabled);
 
+    /**
+     * Will call {@link ChatOut#log(Level, Object)}.
+     * 
+     * @param level
+     *            Will be overgiven.
+     * @param msg
+     *            Will be overgiven.
+     * @see com.blockhaus2000.util.ChatOut#log(java.util.logging.Level,
+     *      java.lang.Object)
+     */
     public <T> void log(final Level level, final T msg);
 
+    /**
+     * Will call {@link ChatOut#log(Object)}.
+     * 
+     * @param msg
+     *            Will be overgiven.
+     * @see com.blockhaus2000.util.ChatOut#log(java.lang.Object)
+     */
     public <T> void log(final T msg);
 
+    /**
+     * Will call {@link ChatOut#log(Level, Collection)}.
+     * 
+     * @param level
+     *            Will be overgiven.
+     * @param msg
+     *            Will be overgiven.
+     * @see com.blockhaus2000.util.ChatOut#log(Collection)
+     */
     public <T> void log(final Level level, final Collection<T> msg);
 
+    /**
+     * Will call {@link ChatOut#log(Collection)}.
+     * 
+     * @param msg
+     *            Will be overgiven.
+     * @see com.blockhaus2000.util.ChatOut#log(Collection)
+     */
     public <T> void log(final Collection<T> msg);
 
+    /**
+     * Will call {@link ChatOut#log(Level, Object...)}.
+     * 
+     * @param level
+     *            Will be overgiven.
+     * @param msg
+     *            Will be overgiven.
+     * @see com.blockhaus2000.util.ChatOut#log(java.util.logging.Level,
+     *      java.lang.Object...)
+     */
     public <T> void log(final Level level, final T... msg);
 
+    /**
+     * Will call {@link ChatOut#log(Object...)}.
+     * 
+     * @param msg
+     *            Will be overgiven.
+     * @see com.blockhaus2000.util.ChatOut#log(java.lang.Object...)
+     */
     public <T> void log(final T... msg);
 
+    /**
+     * Will call {@link ChatOut#sendMessage(CommandSender, Object)}.
+     * 
+     * @param sender
+     *            Will be overgiven.
+     * @param msg
+     *            Will be overgiven.
+     * @see com.blockhaus2000.util.ChatOut#sendMessage(org.bukkit.command.CommandSender,
+     *      java.lang.Object)
+     */
     public <T> void sendMessage(final CommandSender sender, final T msg);
 
+    /**
+     * Will call {@link ChatOut#sendMessage(CommandSender, Collection)}.
+     * 
+     * @param sender
+     *            Will be overgiven.
+     * @param msg
+     *            Will be overgiven.
+     * @see com.blockhaus2000.util.ChatOut#sendMessage(org.bukkit.command.CommandSender,
+     *      java.util.Collection)
+     */
     public <T> void sendMessage(final CommandSender sender, final Collection<T> msg);
 
+    /**
+     * Will call {@link ChatOut#sendMessage(CommandSender, Object...)}.
+     * 
+     * @param sender
+     *            Will be overgiven.
+     * @param msg
+     *            Will be overgiven.
+     * @see com.blockhaus2000.util.ChatOut#sendMessage(org.bukkit.command.CommandSender,
+     *      java.lang.Object...)
+     */
     public <T> void sendMessage(final CommandSender sender, final T... msg);
 
+    /**
+     * 
+     * @return An instance of {@link IpmServer}, a utility class.
+     */
     public IpmServer getServer();
 
+    /**
+     * 
+     * @return The individual {@link FileConfiguration} of this plugin.
+     */
     public FileConfiguration getConfig();
 
+    /**
+     * 
+     * @return The individual {@link File} (a folder) where the config is placed
+     *         and where you can place your own files.
+     */
     public File getDataFolder();
 
+    /**
+     * 
+     * @return The {@link IpmPluginDescription} (the <code>plugin.yml</code>)
+     *         for this plugin.
+     */
     public IpmPluginDescription getDescription();
 
+    /**
+     * 
+     * @return The name of this plugin. The name is case-sensitive and is
+     *         configurable in the {@link IpmPluginDescription} (the
+     *         <code>plugin.yml</code>).
+     */
     public String getName();
+
+    /**
+     * {@inheritDoc}
+     * 
+     * <p>
+     * <b> Based on case-sensitive plugin name. </b>
+     * </p>
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode();
+
+    /**
+     * {@inheritDoc}
+     * 
+     * <p>
+     * <b> Based on case-sensitive plugin name. </b>
+     * </p>
+     * 
+     * @see java.lang.Object#equals(Object)
+     */
+    @Override
+    public boolean equals(final Object obj);
 }

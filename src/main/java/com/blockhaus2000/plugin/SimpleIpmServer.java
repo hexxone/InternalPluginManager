@@ -20,6 +20,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Server;
 
 /**
+ * An implementation of {@link IpmServer}.
  * 
  * @author Blockhaus2000
  */

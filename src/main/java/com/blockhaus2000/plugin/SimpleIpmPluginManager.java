@@ -20,6 +20,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * An implementation if {@link IpmPluginManager}.
  * 
  * @author Blockhaus2000
  */

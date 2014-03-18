@@ -20,18 +20,28 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.blockhaus2000.minecraft.util.command.Command;
+
 /**
+ * The {@link CommandSyntax} for internal use of {@link Command#syntax()}.
  * 
  * @author Blockhaus2000
  */
 public class CommandSyntax implements Iterable<CommandSyntaxType> {
     private final List<CommandSyntaxType> syntax;
 
+    /**
+     * Instances a new {@link CommandSyntax} with the given syntax string to
+     * parse.
+     * 
+     * @param syntaxString
+     *            The syntax string to parse.
+     */
     public CommandSyntax(final String syntaxString) {
         syntax = syntaxString == null || syntaxString.length() == 0 ? null : parseCommandSyntax(syntaxString);
     }
 
-    public List<CommandSyntaxType> parseCommandSyntax(final String syntaxString) throws IllegalArgumentException {
+    private List<CommandSyntaxType> parseCommandSyntax(final String syntaxString) throws IllegalArgumentException {
         String[] syntax = syntaxString.split(",* +");
 
         List<CommandSyntaxType> syntaxClasses = new ArrayList<CommandSyntaxType>();
@@ -49,6 +59,11 @@ public class CommandSyntax implements Iterable<CommandSyntaxType> {
         return syntaxClasses;
     }
 
+    /**
+     * 
+     * @return If this returns <code>true</code>, the syntax is valid (only the
+     *         last argument is a var arg, for example).
+     */
     public boolean isSyntaxValid() {
         if (syntax.size() == 0) {
             return true;
@@ -69,24 +84,46 @@ public class CommandSyntax implements Iterable<CommandSyntaxType> {
         return true;
     }
 
+    /**
+     * 
+     * @return If this returns <code>true</code>, the last syntax element is a
+     *         var arg.
+     */
     public boolean endsWithVarArg() {
         return syntax == null || syntax.get(syntax.size() - 1).isVarArg();
     }
 
+    /**
+     * 
+     * @return The size of the syntax.
+     */
     public int size() {
-        return syntax != null ? syntax.size() : 0;
+        return syntax == null ? 0 : syntax.size();
     }
 
+    /**
+     * 
+     * @return If this returns <code>true</code>, the syntax is
+     *         <code>null</code>.
+     */
     public boolean isNull() {
         return syntax == null;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Iterable#iterator()
+     */
     @Override
     public Iterator<CommandSyntaxType> iterator() {
         return syntax.iterator();
     }
 
-    // Getter
+    /**
+     * 
+     * @return {@link CommandSyntax#syntax}
+     */
     public List<CommandSyntaxType> getSyntax() {
         return syntax;
     }

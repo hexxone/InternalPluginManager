@@ -19,11 +19,21 @@ package com.blockhaus2000.plugin;
 import org.bukkit.Server;
 
 /**
+ * The {@link IpmServer} provides some methods for the usage if the
+ * InternalPluginManager.
  * 
  * @author Blockhaus2000
  */
 public interface IpmServer {
+    /**
+     * 
+     * @return An instance of the {@link IpmPluginManager}.
+     */
     public IpmPluginManager getPluginManager();
 
+    /**
+     * 
+     * @return The Bukkit {@link Server}.
+     */
     public Server getBukkitServer();
 }

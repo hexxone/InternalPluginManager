@@ -19,8 +19,11 @@ package com.blockhaus2000.util.command;
 import java.lang.reflect.Method;
 
 import com.blockhaus2000.minecraft.util.command.Command;
+import com.blockhaus2000.minecraft.util.command.CommandPriority;
 
 /**
+ * This class contains the basic options of a command. Implements
+ * {@link Comparable} to sort commands by the {@link CommandPriority}.
  * 
  * @author Blockhaus2000
  */
@@ -31,6 +34,21 @@ public class CommandInfo implements Comparable<CommandInfo> {
     private final Method method;
     private final CommandSyntax syntax;
 
+    /**
+     * Instances a new {@link CommandInfo} with the given informations.
+     * 
+     * @param command
+     *            The {@link Command} annotation.
+     * @param clazz
+     *            The {@link Class} that contains the method that executes the
+     *            command.
+     * @param object
+     *            An {@link Object} of the given command-executing class.
+     * @param method
+     *            The {@link Method} that executes the command.
+     * @param syntax
+     *            The {@link CommandSyntax} that is the syntax of the command.
+     */
     public CommandInfo(final Command command, final Class<?> clazz, final Object object, final Method method,
             final CommandSyntax syntax) {
         commandAnot = command;
@@ -40,26 +58,51 @@ public class CommandInfo implements Comparable<CommandInfo> {
         this.syntax = syntax;
     }
 
+    /**
+     * 
+     * @return {@link CommandInfo#commandAnot}
+     */
     public Command getCommandAnot() {
         return commandAnot;
     }
 
+    /**
+     * 
+     * @return {@link CommandInfo#clazz}
+     */
     public Class<?> getClazz() {
         return clazz;
     }
 
+    /**
+     * 
+     * @return {@link CommandInfo#object}
+     */
     public Object getObject() {
         return object;
     }
 
+    /**
+     * 
+     * @return {@link CommandInfo#method}
+     */
     public Method getMethod() {
         return method;
     }
 
+    /**
+     * 
+     * @return {@link CommandInfo#syntax}
+     */
     public CommandSyntax getSyntax() {
         return syntax;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
     @Override
     public int compareTo(final CommandInfo that) {
         final int levelThis = getCommandAnot().priority().getLevel();

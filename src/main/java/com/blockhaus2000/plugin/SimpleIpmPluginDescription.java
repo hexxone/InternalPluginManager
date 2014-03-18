@@ -26,6 +26,7 @@ import com.blockhaus2000.plugin.exception.InvalidPluginDescriptionException;
 import com.blockhaus2000.plugin.exception.PluginException;
 
 /**
+ * An implementation of {@link IpmPluginDescription}.
  * 
  * @author Blockhaus2000
  */

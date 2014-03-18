@@ -45,6 +45,14 @@ public class ContextData {
         this.flags = flags;
     }
 
+    /**
+     * Intances a new {@link ContextData} with the given arguments and flags.
+     * 
+     * @param rawArgs
+     *            The arguments that has to be saved.
+     * @param flags
+     *            The flags that has to be saved.
+     */
     public ContextData(final String[] rawArgs, final Map<Character, Tag<?>> flags) {
         List<Tag<?>> args = new ArrayList<Tag<?>>();
 

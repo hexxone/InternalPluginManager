@@ -39,6 +39,7 @@ import com.blockhaus2000.util.resources.MainPluginResource;
 import com.blockhaus2000.util.resources.ResourceManager;
 
 /**
+ * An implementation of {@link IpmPluginLoader}.
  * 
  * @author Blockhaus2000
  */

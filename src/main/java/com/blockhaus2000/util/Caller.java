@@ -17,6 +17,8 @@
 package com.blockhaus2000.util;
 
 /**
+ * This class represents a caller (for use in the {@link StackUtil}). It
+ * contains the name of the class that contains the caller method.
  * 
  * @author Blockhaus2000
  */
@@ -24,15 +26,31 @@ public class Caller {
     private final String className;
     private final String methodName;
 
+    /**
+     * Instances a new {@link Caller}.
+     * 
+     * @param className
+     *            The name of the class that contains the caller method name.
+     * @param methodName
+     *            The name of the method that was the caller.
+     */
     public Caller(final String className, final String methodName) {
         this.className = className;
         this.methodName = methodName;
     }
 
+    /**
+     * 
+     * @return The name of the class that contains the caller method.
+     */
     public String getClassName() {
         return className;
     }
 
+    /**
+     * 
+     * @return The name of the caller method.
+     */
     public String getMethodName() {
         return methodName;
     }

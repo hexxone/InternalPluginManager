@@ -16,19 +16,20 @@
  */
 package com.blockhaus2000.util.command;
 
+import com.blockhaus2000.minecraft.util.command.Command;
+
 /**
+ * This {@link CommandSyntaxType} is for internal usage of
+ * {@link Command#syntax()}.
  * 
  * @author Blockhaus2000
  */
+@SuppressWarnings("javadoc")
 public enum CommandSyntaxType {
     STRING("String"),
-
     STRING_VARARG("String..."),
-
     LONG("Long"),
-
     INTEGER("Integer"),
-
     DOUBLE("Double");
 
     private final String typeString;
@@ -37,10 +38,18 @@ public enum CommandSyntaxType {
         this.typeString = typeString;
     }
 
+    /**
+     * 
+     * @return The {@link CommandSyntaxType} string.
+     */
     public String getTypeString() {
         return typeString;
     }
 
+    /**
+     * 
+     * @return If the target syntax type is a var arg,
+     */
     public boolean isVarArg() {
         switch (this) {
         case STRING_VARARG:
@@ -58,6 +67,13 @@ public enum CommandSyntaxType {
         return false;
     }
 
+    /**
+     * 
+     * @param typeString
+     *            The type string to search for.
+     * @return The {@link CommandSyntaxType} that is associated with the given
+     *         syntax string.
+     */
     public static CommandSyntaxType getTypeByString(final String typeString) {
         for (CommandSyntaxType target : CommandSyntaxType.values()) {
             if (target.getTypeString().equalsIgnoreCase(typeString)) {

@@ -114,10 +114,25 @@ public class ResourceManager {
         ResourceManager.initializeResources(obj.getClass(), obj);
     }
 
+    /**
+     * Adds a resource annotation and an object to use for this
+     * {@link ResourceManager} (the usage if like the usage of the
+     * {@link MainPluginResource} annotation).
+     * 
+     * @param anot
+     *            The resource-annotation.
+     * @param obj
+     *            The object that has to be associated with the given
+     *            annotation.
+     */
     public void registerResource(final Class<? extends Annotation> anot, final Object obj) {
         anots.put(anot, obj);
     }
 
+    /**
+     * 
+     * @return An instance of the {@link ResourceManager}.
+     */
     public static ResourceManager getInstance() {
         return ResourceManager.instance;
     }

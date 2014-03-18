@@ -46,7 +46,20 @@ public class ArrayUtil {
         return array;
     }
 
-    public static String[] removeFromArray(final String[] array, final int index) {
+    /**
+     * Removes the given index from the given {@link String}[] and returns the
+     * new {@link String}[].
+     * 
+     * @param array
+     *            The {@link String}[] that contains the index to remove.
+     * @param index
+     *            The index to remove.
+     * @return A new {@link String}[] where the given index has been removed.
+     * @throws ArrayIndexOutOfBoundsException
+     *             Will be thrown if the given index is out of bounds of the
+     *             array.
+     */
+    public static String[] removeFromArray(final String[] array, final int index) throws ArrayIndexOutOfBoundsException {
         String[] edited = new String[array.length - 1];
 
         boolean removed = false;

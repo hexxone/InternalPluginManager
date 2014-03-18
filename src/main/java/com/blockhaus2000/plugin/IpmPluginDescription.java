@@ -21,19 +21,54 @@ import java.io.InputStream;
 import com.blockhaus2000.plugin.exception.PluginException;
 
 /**
+ * The plugin description file that contains the main information of a
+ * {@link IpmPlugin}.
  * 
  * @author Blockhaus2000
  */
 public interface IpmPluginDescription {
+    /**
+     * Loads all information from the given {@link InputStream} (An
+     * {@link InputStream} from the <code>plugin.yml</code>.
+     * 
+     * @param stream
+     *            The stream that contains the informations.
+     * @throws PluginException
+     *             If <code>name</code>, <code>version</code> or
+     *             <code>main</code> is not set.
+     */
     public void load(final InputStream stream) throws PluginException;
 
+    /**
+     * 
+     * @return The name that was setted in the <code>plugin.yml</code>.
+     */
     public String getName();
 
+    /**
+     * 
+     * @return The version that was setted in the <code>plugin.yml</code>.
+     */
     public String getVersion();
 
+    /**
+     * 
+     * @return The full-qualified name of the main class that was setted in the
+     *         <code>plugin.yml</code>.
+     */
     public String getMain();
 
+    /**
+     * 
+     * @return The authors that where setted in the <code>plugin.yml</code>. Is
+     *         <code>null</code> if nothing was setted.
+     */
     public String[] getAuthors();
 
+    /**
+     * 
+     * @return The depends that where setted in the <code>plugin.yml</code>. Is
+     *         <code>null</code> if nothing was setted.
+     */
     public String[] getDepends();
 }
