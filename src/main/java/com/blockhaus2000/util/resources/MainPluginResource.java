@@ -31,6 +31,11 @@ import com.blockhaus2000.main.bukkit.IpmMain;
  * from the class where the resource have to be initialized or with an object of
  * your class if the field is non-static.
  * 
+ * <p>
+ * <b> NOTE: Only use this if you really need the root/main plugin. For event
+ * listening, use TODO instead. </b>
+ * </p>
+ * 
  * @author Blockhaus2000
  */
 @Target(ElementType.FIELD)

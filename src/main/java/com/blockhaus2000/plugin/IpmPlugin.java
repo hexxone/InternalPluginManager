@@ -23,6 +23,7 @@ import java.util.logging.Level;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.Plugin;
 
 import com.blockhaus2000.util.ChatOut;
 import com.blockhaus2000.util.CommandRegistrationUtil;
@@ -32,7 +33,7 @@ import com.blockhaus2000.util.CommandRegistrationUtil;
  * 
  * @author Blockhaus2000
  */
-public interface IpmPlugin extends PropertyChangeListener {
+public interface IpmPlugin extends Plugin, PropertyChangeListener {
     /**
      * This inits the target {@link IpmPlugin}.
      * 
@@ -57,6 +58,7 @@ public interface IpmPlugin extends PropertyChangeListener {
      * </p>
      * 
      */
+    @Override
     public void onLoad();
 
     /**
@@ -69,6 +71,7 @@ public interface IpmPlugin extends PropertyChangeListener {
      * </p>
      * 
      */
+    @Override
     public void onDisable();
 
     /**
@@ -81,6 +84,7 @@ public interface IpmPlugin extends PropertyChangeListener {
      * </p>
      * 
      */
+    @Override
     public void onEnable();
 
     /**
@@ -93,12 +97,14 @@ public interface IpmPlugin extends PropertyChangeListener {
      * Will save the default plugin config to the default path.
      * 
      */
+    @Override
     public void saveConfig();
 
     /**
      * Reloads the config.
      * 
      */
+    @Override
     public void reloadConfig();
 
     /**
@@ -152,6 +158,7 @@ public interface IpmPlugin extends PropertyChangeListener {
      * @return If <code>true</code>, the plugin is enabled, if
      *         <code>false</code>, the plugin is disabled.
      */
+    @Override
     public boolean isEnabled();
 
     /**
@@ -264,14 +271,21 @@ public interface IpmPlugin extends PropertyChangeListener {
 
     /**
      * 
-     * @return An instance of {@link IpmServer}, a utility class.
+     * @return An instance of {@link IpmServer}.
      */
-    public IpmServer getServer();
+    public IpmServer getIpmServer();
+
+    /**
+     * 
+     * @return Am instance of {@link IpmPluginManager}.
+     */
+    public IpmPluginManager getPluginManager();
 
     /**
      * 
      * @return The individual {@link FileConfiguration} of this plugin.
      */
+    @Override
     public FileConfiguration getConfig();
 
     /**
@@ -279,6 +293,7 @@ public interface IpmPlugin extends PropertyChangeListener {
      * @return The individual {@link File} (a folder) where the config is placed
      *         and where you can place your own files.
      */
+    @Override
     public File getDataFolder();
 
     /**
@@ -286,7 +301,7 @@ public interface IpmPlugin extends PropertyChangeListener {
      * @return The {@link IpmPluginDescription} (the <code>plugin.yml</code>)
      *         for this plugin.
      */
-    public IpmPluginDescription getDescription();
+    public IpmPluginDescription getIpmDescription();
 
     /**
      * 
@@ -294,6 +309,7 @@ public interface IpmPlugin extends PropertyChangeListener {
      *         configurable in the {@link IpmPluginDescription} (the
      *         <code>plugin.yml</code>).
      */
+    @Override
     public String getName();
 
     /**

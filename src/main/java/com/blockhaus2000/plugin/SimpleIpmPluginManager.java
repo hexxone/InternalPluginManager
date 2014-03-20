@@ -30,7 +30,7 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
     private final Set<IpmPlugin> plugins = new HashSet<IpmPlugin>();
 
     private SimpleIpmPluginManager() {
-        // nothing to do (only to provide singleton pattern)
+        // nothing to do (only to provide singleton)
     }
 
     /**
@@ -41,7 +41,7 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
     @Override
     public IpmPlugin getPlugin(final String pluginName) {
         for (IpmPlugin target : plugins) {
-            if (target.getDescription().getName().equalsIgnoreCase(pluginName)) {
+            if (target.getIpmDescription().getName().equalsIgnoreCase(pluginName)) {
                 return target;
             }
         }
@@ -153,7 +153,7 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
      */
     @Override
     public void unregister(final IpmPlugin plugin) {
-        plugins.remove(plugin.getDescription().getName().toLowerCase());
+        plugins.remove(plugin.getIpmDescription().getName().toLowerCase());
     }
 
     /**

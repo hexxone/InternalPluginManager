@@ -221,11 +221,8 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
      * @param ipmPlugin
      *            The {@link IpmPlugin} to register to Bukkit's plugin list.
      */
-    private void addPlugin(final IpmPlugin ipmPlugin) {
+    private void addPlugin(final IpmPlugin plugin) {
         try {
-            final Plugin plugin = new FakePlugin(main.getName() + ":" + ipmPlugin.getName(), ipmPlugin.getDescription()
-                    .getVersion());
-
             List<Plugin> plugins = ReflectionUtil.getFieldValue(Bukkit.getServer().getPluginManager(), "plugins");
 
             for (Plugin target : plugins) {

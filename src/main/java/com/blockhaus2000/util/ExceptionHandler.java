@@ -16,7 +16,9 @@
  */
 package com.blockhaus2000.util;
 
+import com.blockhaus2000.main.bukkit.InternalPluginManager;
 import com.blockhaus2000.main.bukkit.IpmMain;
+import com.blockhaus2000.plugin.IpmPlugin;
 import com.blockhaus2000.util.resources.MainPluginResource;
 
 /**
@@ -31,15 +33,15 @@ public final class ExceptionHandler {
     @MainPluginResource
     private static IpmMain main;
 
-    /**
-     * Checks that a valid call (with {@link ExceptionHandler#main} is not
-     * <code>null</code>) is possible.
-     * 
-     * @return <code>true</code> is a valid call is possible.
-     */
-    public static boolean isCallPossible() {
-        return ExceptionHandler.main == null;
-    }
+    // /**
+    // * Checks that a valid call (with {@link ExceptionHandler#main} is not
+    // * <code>null</code>) is possible.
+    // *
+    // * @return <code>true</code> is a valid call is possible.
+    // */
+    // public static boolean isCallPossible() {
+    // return ExceptionHandler.main == null;
+    // }
 
     /**
      * Handles the given {@link Exception}. This method will print out the stack
@@ -72,5 +74,20 @@ public final class ExceptionHandler {
      */
     public static void handle(final Exception ex) {
         ExceptionHandler.handle(ex, false);
+    }
+
+    /**
+     * Handles the given {@link Exception}. This method will print out the stack
+     * trace and disables the given {@link IpmPlugin}.
+     * 
+     * @param ex
+     *            The Exception that has to be handled.
+     * @param plugin
+     *            The {@link IpmPlugin} to disable.
+     */
+    public static void handle(final Exception ex, final IpmPlugin plugin) {
+        ExceptionHandler.handle(ex);
+
+        InternalPluginManager.getServer().getPluginManager().disable(plugin);
     }
 }

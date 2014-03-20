@@ -21,19 +21,29 @@ import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
+import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Server;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.generator.ChunkGenerator;
+import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.PluginLoader;
 
+import com.avaje.ebean.EbeanServer;
+import com.blockhaus2000.bukkit.mock.MockPluginLoader;
 import com.blockhaus2000.main.bukkit.IpmMain;
 import com.blockhaus2000.util.ChatOut;
 import com.blockhaus2000.util.CommandRegistrationUtil;
 import com.blockhaus2000.util.ExceptionHandler;
-import com.blockhaus2000.util.resources.ResourceManager;
 
 /**
  * An implmenetation of {@link IpmPlugin}.
@@ -43,7 +53,7 @@ import com.blockhaus2000.util.resources.ResourceManager;
 public class SimpleIpmPlugin implements IpmPlugin {
     protected final PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
-    private IpmMain main;
+    private PluginDescriptionFile bukkitDescription;
 
     private IpmPluginDescription description;
     private String name;
@@ -56,40 +66,27 @@ public class SimpleIpmPlugin implements IpmPlugin {
     private boolean enabled = false;
 
     /**
-     * Instances a new {@link SimpleIpmPlugin}.
-     * 
-     * <p>
-     * <b> NOTE: Only the {@link IpmPluginManager} creates a new
-     * {@link SimpleIpmPlugin}. </b>
-     * </p>
-     */
-    public SimpleIpmPlugin() {
-        try {
-            ResourceManager.initializeResources(this);
-        } catch (IllegalAccessException ex) {
-            ExceptionHandler.handle(ex);
-            return;
-        }
-    }
-
-    /**
      * {@inheritDoc}
      * 
      * @see com.blockhaus2000.plugin.IpmPlugin#init(IpmPluginDescription)
      */
+    // com.blockhaus2000.main.bukkit.IpmMain#getInstance()
+    @SuppressWarnings("deprecation")
     @Override
     public void init(final IpmPluginDescription description) {
         changes.addPropertyChangeListener(this);
 
         this.description = description;
 
-        dataFolder = new File(main.getDataFolder() + File.separator + "plugins" + File.separator + description.getName()
-                + File.separator);
+        dataFolder = new File(IpmMain.getInstance().getDataFolder() + File.separator + "plugins" + File.separator
+                + description.getName() + File.separator);
         configFile = new File(dataFolder.getPath() + File.separator + "config.yml");
         config = new YamlConfiguration();
         reloadConfig();
 
         name = this.description.getName();
+
+        bukkitDescription = new PluginDescriptionFile(name, this.description.getVersion(), this.description.getMain());
     }
 
     /**
@@ -180,19 +177,11 @@ public class SimpleIpmPlugin implements IpmPlugin {
      * @see com.blockhaus2000.plugin.IpmPlugin#registerCommands(java.lang.Class,
      *      java.lang.Object)
      */
+    // com.blockhaus2000.main.bukkit.IpmMain#getInstance()
+    @SuppressWarnings("deprecation")
     @Override
     public void registerCommands(final Class<?> clazz, final Object obj) {
-        CommandRegistrationUtil.registerCommands(clazz, obj, main);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see com.blockhaus2000.plugin.IpmPlugin#registerCommands(java.lang.Class)
-     */
-    @Override
-    public void registerCommands(final Class<?> clazz) {
-        registerCommands(clazz, null);
+        CommandRegistrationUtil.registerCommands(clazz, obj, IpmMain.getInstance());
     }
 
     /**
@@ -203,6 +192,16 @@ public class SimpleIpmPlugin implements IpmPlugin {
     @Override
     public void registerCommands(final Object obj) {
         registerCommands(obj.getClass(), obj);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see com.blockhaus2000.plugin.IpmPlugin#registerCommands(java.lang.Class)
+     */
+    @Override
+    public void registerCommands(final Class<?> clazz) {
+        registerCommands(clazz, null);
     }
 
     /**
@@ -331,8 +330,18 @@ public class SimpleIpmPlugin implements IpmPlugin {
      * @see com.blockhaus2000.plugin.IpmPlugin#getServer()
      */
     @Override
-    public IpmServer getServer() {
+    public IpmServer getIpmServer() {
         return SimpleIpmServer.getInstance();
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see com.blockhaus2000.plugin.IpmPlugin#getPluginManager()
+     */
+    @Override
+    public IpmPluginManager getPluginManager() {
+        return SimpleIpmPluginManager.getInstance();
     }
 
     /**
@@ -358,10 +367,10 @@ public class SimpleIpmPlugin implements IpmPlugin {
     /**
      * {@inheritDoc}
      * 
-     * @see com.blockhaus2000.plugin.IpmPlugin#getDescription()
+     * @see com.blockhaus2000.plugin.IpmPlugin#getIpmDescription()
      */
     @Override
-    public IpmPluginDescription getDescription() {
+    public IpmPluginDescription getIpmDescription() {
         return description;
     }
 
@@ -387,12 +396,12 @@ public class SimpleIpmPlugin implements IpmPlugin {
         }
 
         if (event.getNewValue().equals(true)) {
-            System.out.println("[" + getDescription().getName() + "] Enabling " + getDescription().getName() + " v"
-                    + getDescription().getVersion());
+            System.out.println("[" + getIpmDescription().getName() + "] Enabling " + getIpmDescription().getName() + " v"
+                    + getIpmDescription().getVersion());
             onEnable();
         } else if (event.getNewValue().equals(false)) {
-            System.out.println("[" + getDescription().getName() + "] Disabling " + getDescription().getName() + " v"
-                    + getDescription().getVersion());
+            System.out.println("[" + getIpmDescription().getName() + "] Disabling " + getIpmDescription().getName() + " v"
+                    + getIpmDescription().getVersion());
             onDisable();
         }
     }
@@ -429,5 +438,201 @@ public class SimpleIpmPlugin implements IpmPlugin {
         }
 
         return name.equals(that.getName());
+    }
+
+    // Mock implementations
+    /**
+     * {@inheritDoc}
+     * 
+     * <p>
+     * <b> NOTE: This is a mock implementation! Use
+     * {@link IpmPlugin#getIpmOldDescription()} instead. </b>
+     * </p>
+     * 
+     * @return A {@link PluginDescriptionFile} with the plugin name, the version
+     *         and the main class.
+     * @see org.bukkit.plugin.Plugin#getDescription()
+     */
+    @Override
+    public PluginDescriptionFile getDescription() {
+        return bukkitDescription;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * <p>
+     * <b> NOTE: This is a mock implementation! </b>
+     * </p>
+     * 
+     * @return <code>null</code>
+     * @see org.bukkit.plugin.Plugin#getResource(java.lang.String)
+     */
+    @Override
+    public InputStream getResource(final String filename) {
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * <p>
+     * <b> NOTE: This is a mock implementation! </b>
+     * </p>
+     * 
+     * @see org.bukkit.plugin.Plugin#saveDefaultConfig()
+     */
+    @Override
+    public void saveDefaultConfig() {
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * <p>
+     * <b> NOTE: This is a mock implementation! </b>
+     * </p>
+     * 
+     * @see org.bukkit.plugin.Plugin#saveResource(java.lang.String, boolean)
+     */
+    @Override
+    public void saveResource(final String resourcePath, final boolean replace) {
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.bukkit.plugin.Plugin#getPluginLoader()
+     */
+    @Override
+    public PluginLoader getPluginLoader() {
+        return MockPluginLoader.getInstance();
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @return {@link Bukkit#getServer()}
+     * @see org.bukkit.plugin.Plugin#getServer()
+     * @see org.bukkit.Bukkit#getServer()
+     */
+    @Override
+    public Server getServer() {
+        return Bukkit.getServer();
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * <p>
+     * <b> NOTE: This is a mock implementation! </b>
+     * </p>
+     * 
+     * @return <code>false</code>
+     * @see org.bukkit.plugin.Plugin#isNaggable()
+     */
+    @Override
+    public boolean isNaggable() {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * <p>
+     * <b> NOTE: This is a mock implementation! </b>
+     * </p>
+     * 
+     * @see org.bukkit.plugin.Plugin#setNaggable(boolean)
+     */
+    @Override
+    public void setNaggable(final boolean canNag) {
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * <p>
+     * <b> NOTE: This is a mock implementation and returns the database from the
+     * root plugin! </b>
+     * </p>
+     * 
+     * @return {@link IpmMain#getDatabase()}
+     * @see org.bukkit.plugin.Plugin#getDatabase()
+     * @see com.blockhaus2000.main.bukkit.IpmMain#getDatabase()
+     */
+    @SuppressWarnings("deprecation")
+    @Override
+    public EbeanServer getDatabase() {
+        return IpmMain.getInstance().getDatabase();
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * <p>
+     * <b> NOTE: This is a mock implementation and returns the default world
+     * generator from the root plugin! </b>
+     * </p>
+     * 
+     * @return {@link IpmMain#getDefaultWorldGenerator()}
+     * @see org.bukkit.plugin.Plugin#getDefaultWorldGenerator(java.lang.String,
+     *      java.lang.String)
+     * @see com.blockhaus2000.main.bukkit.IpmMain#getDefaultWorldGenerator()
+     */
+    @SuppressWarnings("deprecation")
+    @Override
+    public ChunkGenerator getDefaultWorldGenerator(final String worldName, final String id) {
+        return IpmMain.getInstance().getDefaultWorldGenerator(worldName, id);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * <p>
+     * <b> NOTE: This is a mock implementation and returns the logger from the
+     * root plugin! </b>
+     * </p>
+     * 
+     * @return {@link IpmMain#getLogger()}
+     * @see org.bukkit.plugin.Plugin#getLogger()
+     * @see com.blockhaus2000.main.bukkit.IpmMain#getLogger()
+     */
+    @SuppressWarnings("deprecation")
+    @Override
+    public Logger getLogger() {
+        return IpmMain.getInstance().getLogger();
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * <p>
+     * <b> NOTE: This is a mock implementation! </b>
+     * </p>
+     * 
+     * @return <code>false</code>
+     * @see org.bukkit.command.CommandExecutor#onCommand(org.bukkit.command.CommandSender,
+     *      org.bukkit.command.Command, java.lang.String, java.lang.String[])
+     */
+    @Override
+    public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * <p>
+     * <b> NOTE: This is a mock implementation! </b>
+     * </p>
+     * 
+     * @return <code>null</code>
+     * @see org.bukkit.command.TabCompleter#onTabComplete(org.bukkit.command.CommandSender,
+     *      org.bukkit.command.Command, java.lang.String, java.lang.String[])
+     */
+    @Override
+    public List<String> onTabComplete(final CommandSender sender, final Command command, final String alias, final String[] args) {
+        return null;
     }
 }

@@ -27,7 +27,7 @@ public class StackUtil {
      * @return The {@link Caller} of the method that calls this method.
      */
     public static Caller getCaller() {
-        StackTraceElement caller = Thread.currentThread().getStackTrace()[2];
+        StackTraceElement caller = Thread.currentThread().getStackTrace()[3];
         return new Caller(caller.getClassName(), caller.getMethodName());
     }
 }
