@@ -40,7 +40,7 @@ public class NotEnoughArgumentsCommandEvent extends CommandEvent<RawCommandConte
      *            in the execution.
      */
     public NotEnoughArgumentsCommandEvent(final RawCommandContext command) {
-        super(command);
+        super(command, CommandEventType.NOT_ENOUGH_ARGUMENTS);
     }
 
     /**

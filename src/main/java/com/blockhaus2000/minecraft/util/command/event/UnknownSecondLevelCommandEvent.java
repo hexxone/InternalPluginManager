@@ -39,7 +39,7 @@ public class UnknownSecondLevelCommandEvent extends CommandEvent<RawCommandConte
      *            in the execution.
      */
     public UnknownSecondLevelCommandEvent(final RawCommandContext command) {
-        super(command);
+        super(command, CommandEventType.UNKNOWN_SECOND_LEVEL);
     }
 
     /**

@@ -28,6 +28,8 @@ import com.blockhaus2000.util.command.CommandInfo;
  *            The specific {@link CommandInfo}.
  */
 public abstract class CommandEvent<T extends CommandInfo> extends Event {
+    protected final CommandEventType commandEventType;
+
     protected final T command;
     protected boolean cancelled;
 
@@ -38,8 +40,17 @@ public abstract class CommandEvent<T extends CommandInfo> extends Event {
      * @param command
      *            The {@link CommandInfo}.
      */
-    public CommandEvent(final T command) {
+    public CommandEvent(final T command, final CommandEventType commandEventType) {
         this.command = command;
+        this.commandEventType = commandEventType;
+    }
+
+    /**
+     * 
+     * @return {@link CommandEvent#commandEventType}
+     */
+    public CommandEventType getCommandEventType() {
+        return commandEventType;
     }
 
     /**

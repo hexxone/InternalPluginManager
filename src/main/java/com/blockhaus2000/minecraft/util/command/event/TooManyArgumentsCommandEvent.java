@@ -40,7 +40,7 @@ public class TooManyArgumentsCommandEvent extends CommandEvent<RawCommandContext
      *            in the execution.
      */
     public TooManyArgumentsCommandEvent(final RawCommandContext command) {
-        super(command);
+        super(command, CommandEventType.TOO_MANY_ARGUMENTS);
     }
 
     /**

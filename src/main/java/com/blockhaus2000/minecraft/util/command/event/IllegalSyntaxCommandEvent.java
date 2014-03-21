@@ -45,7 +45,7 @@ public class IllegalSyntaxCommandEvent extends CommandEvent<RawCommandContext> {
      *            The {@link IllegalSyntaxType} that specifies the event.
      */
     public IllegalSyntaxCommandEvent(final RawCommandContext command, final IllegalSyntaxType illegalSyntaxType) {
-        super(command);
+        super(command, CommandEventType.ILLEGAL_SYNTAX);
 
         this.illegalSyntaxType = illegalSyntaxType;
     }

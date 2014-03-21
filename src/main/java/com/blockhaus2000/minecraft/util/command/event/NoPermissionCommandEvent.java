@@ -40,7 +40,7 @@ public class NoPermissionCommandEvent extends CommandEvent<RawCommandContext> {
      *            in the execution.
      */
     public NoPermissionCommandEvent(final RawCommandContext command) {
-        super(command);
+        super(command, CommandEventType.NO_PERMISSION);
     }
 
     /**

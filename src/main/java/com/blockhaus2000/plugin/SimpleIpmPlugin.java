@@ -616,7 +616,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
      *      org.bukkit.command.Command, java.lang.String, java.lang.String[])
      */
     @Override
-    public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
+    public final boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
         return false;
     }
 
@@ -632,7 +632,8 @@ public class SimpleIpmPlugin implements IpmPlugin {
      *      org.bukkit.command.Command, java.lang.String, java.lang.String[])
      */
     @Override
-    public List<String> onTabComplete(final CommandSender sender, final Command command, final String alias, final String[] args) {
+    public final List<String> onTabComplete(final CommandSender sender, final Command command, final String alias,
+            final String[] args) {
         return null;
     }
 }
