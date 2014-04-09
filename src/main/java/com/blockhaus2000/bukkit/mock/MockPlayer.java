@@ -1217,4 +1217,8 @@ public class MockPlayer implements Player {
     public double getHealthScale() {
         return 0;
     }
+
+    @Override
+    public void sendSignChange(final Location loc, final String[] msgs) throws IllegalArgumentException {
+    }
 }

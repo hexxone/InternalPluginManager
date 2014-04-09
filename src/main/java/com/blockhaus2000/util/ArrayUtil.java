@@ -36,6 +36,9 @@ public class ArrayUtil {
      * @param col
      *            The {@link Collection} that has to be converted to a an
      *            {@link String}[].
+     * @param <E>
+     *            The data type of the given {@link Collection} that will be
+     *            converted into {@link String}s.
      * @return The converted {@link String}[].
      */
     public static <E> String[] toStringArray(final Collection<E> col) {
@@ -103,6 +106,9 @@ public class ArrayUtil {
      *            {@link Tag} {@link List}.
      * @param listClass
      *            The {@link Class}
+     * @param <T>
+     *            The data type of the collection and the data type of the
+     *            {@link Tag} {@link List} that will be returned.
      * @return A {@link Tag} {@link List} that contains the elements of the
      *         given {@link Collection}.
      */

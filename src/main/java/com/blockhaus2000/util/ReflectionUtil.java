@@ -61,7 +61,7 @@ public class ReflectionUtil {
 
                 /*
                  * This fails silent.
-                 * 
+                 *
                  * Se JavaDoc for explanation.
                  */
             }
@@ -83,6 +83,8 @@ public class ReflectionUtil {
      *            The {@link Object} where the field is stored.
      * @param fieldName
      *            The field name to search for.
+     * @param <T>
+     *            The data type that has to be returned.
      * @return The value of the field if found, otherwise <code>null</code>.
      * @see com.blockhaus2000.util.ReflectionUtil#getField(java.lang.Class,
      *      java.lang.String)
@@ -101,7 +103,7 @@ public class ReflectionUtil {
         } catch (Exception e) {
             /*
              * This fails silent.
-             * 
+             *
              * This is because thid method does not throw any exception
              * (excepted IllegalArgumentException), because it returns null if
              * nothing can be found.

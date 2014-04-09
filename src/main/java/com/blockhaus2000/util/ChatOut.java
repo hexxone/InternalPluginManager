@@ -41,6 +41,8 @@ public class ChatOut {
      *            The {@link Level} that has to be used for logging.
      * @param msg
      *            The message that has to be logged.
+     * @param <T>
+     *            The message data type.
      */
     public static synchronized <T> void log(final Level level, final T msg) {
         ChatOut.logger.log(level, msg.toString());
@@ -51,6 +53,8 @@ public class ChatOut {
      *
      * @param msg
      *            The message that has to be logged.
+     * @param <T>
+     *            The message data type.
      */
     public static synchronized <T> void log(final T msg) {
         ChatOut.log(Level.INFO, msg);
@@ -69,6 +73,8 @@ public class ChatOut {
      *            The {@link Level} that has to be used for logging.
      * @param msg
      *            The message that has to be logged.
+     * @param <T>
+     *            The message data type.
      */
     public static synchronized <T> void log(final Level level, final Collection<T> msg) {
         for (T target : msg) {
@@ -87,6 +93,8 @@ public class ChatOut {
      *
      * @param msg
      *            The message that has to be logged.
+     * @param <T>
+     *            The message data type.
      */
     public static synchronized <T> void log(final Collection<T> msg) {
         ChatOut.log(Level.INFO, msg);
@@ -105,6 +113,8 @@ public class ChatOut {
      *            The {@link Level} that has to be used for logging.
      * @param msg
      *            The message that has to be logged.
+     * @param <T>
+     *            The message data type.
      */
     public static synchronized <T> void log(final Level level, final T... msg) {
         ChatOut.log(level, Arrays.asList(msg));
@@ -121,6 +131,8 @@ public class ChatOut {
      *
      * @param msg
      *            The message that has to be logged.
+     * @param <T>
+     *            The message data type.
      */
     public static synchronized <T> void log(final T... msg) {
         ChatOut.log(Level.INFO, msg);
@@ -135,6 +147,8 @@ public class ChatOut {
      *            The {@link CommandSender} that has to receive the message.
      * @param msg
      *            The message that has to be sended.
+     * @param <T>
+     *            The message data type.
      */
     public static synchronized <T> void sendMessage(final CommandSender sender, final T msg) {
         if (!(sender instanceof Player)) {
@@ -160,6 +174,8 @@ public class ChatOut {
      *            The {@link CommandSender} that has to receive the message.
      * @param msg
      *            The message that has to be sended.
+     * @param <T>
+     *            The message data type.
      */
     public static synchronized <T> void sendMessage(final CommandSender sender, final Collection<T> msg) {
         for (T target : msg) {
@@ -181,6 +197,8 @@ public class ChatOut {
      *            The {@link CommandSender} that has to receive the message.
      * @param msg
      *            The message that has to be sended.
+     * @param <T>
+     *            The message data type.
      */
     public static synchronized <T> void sendMessage(final CommandSender sender, final T... msg) {
         ChatOut.sendMessage(sender, Arrays.asList(msg));
