@@ -1,13 +1,13 @@
 /* This file is part of InternalPluginManager
- * 
+ *
  * Copyright 2014 Blockhaus2000
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -38,7 +38,7 @@ import com.blockhaus2000.plugin.exception.PluginException;
 
 /**
  * This class is a mock implementation of {@link PluginLoader}.
- * 
+ *
  * @author Blockhaus2000
  */
 public class MockPluginLoader implements PluginLoader {
@@ -50,7 +50,7 @@ public class MockPluginLoader implements PluginLoader {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.bukkit.plugin.PluginLoader#loadPlugin(java.io.File)
      * @see com.blockhaus2000.plugin.IpmPluginLoader#load(java.io.File)
      */
@@ -67,7 +67,7 @@ public class MockPluginLoader implements PluginLoader {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @return <code>null</code>
      * @see org.bukkit.plugin.PluginLoader#getPluginDescription(java.io.File)
      */
@@ -78,11 +78,11 @@ public class MockPluginLoader implements PluginLoader {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * <p>
      * <b> This is a mock implementation! </b>
      * </p>
-     * 
+     *
      * @return <code>null</code>
      * @see org.bukkit.plugin.PluginLoader#getPluginFileFilters()
      */
@@ -93,11 +93,11 @@ public class MockPluginLoader implements PluginLoader {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * <p>
      * <b> This is a mock implementation! </b>
      * </p>
-     * 
+     *
      * @return <code>null</code>
      * @see org.bukkit.plugin.PluginLoader#createRegisteredListeners(org.bukkit.event.Listener,
      *      org.bukkit.plugin.Plugin)
@@ -111,7 +111,7 @@ public class MockPluginLoader implements PluginLoader {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.bukkit.plugin.PluginLoader#enablePlugin(org.bukkit.plugin.Plugin)
      * @see com.blockhaus2000.plugin.IpmPluginManager#enable(com.blockhaus2000.plugin.IpmPlugin)
      */
@@ -122,12 +122,12 @@ public class MockPluginLoader implements PluginLoader {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * <p>
      * <b> NOTE: This mock implementation and will call
      * {@link IpmPluginManager#disable(IpmPlugin)}. </b>
      * </p>
-     * 
+     *
      * @see org.bukkit.plugin.PluginLoader#disablePlugin(org.bukkit.plugin.Plugin)
      * @see com.blockhaus2000.plugin.IpmPluginManager#disable(com.blockhaus2000.plugin.IpmPlugin)
      */
@@ -136,6 +136,10 @@ public class MockPluginLoader implements PluginLoader {
         SimpleIpmPluginManager.getInstance().disable(SimpleIpmPluginManager.getInstance().getPlugin(plugin.getName()));
     }
 
+    /**
+     *
+     * @return An instance of the {@link MockPluginLoader}.
+     */
     public static PluginLoader getInstance() {
         return MockPluginLoader.instance;
     }

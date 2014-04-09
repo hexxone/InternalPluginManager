@@ -1,13 +1,13 @@
 /* This file is part of InternalPluginManager
- * 
+ *
  * Copyright 2014 Blockhaus2000
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,7 +28,7 @@ import com.blockhaus2000.util.resources.ResourceManager;
 
 /**
  * Represents the main plugin of the InternalPluginManager.
- * 
+ *
  * @author Blockhaus2000
  * @see org.bukkit.plugin.Plugin
  * @see org.bukkit.plugin.java.JavaPlugin
@@ -48,6 +48,8 @@ public class IpmMain extends JavaPlugin {
         }
 
         IpmMain.instance = this;
+
+        // CommandRegistrationUtil.registerCommands(new Commands(), this);
     }
 
     /**
@@ -100,12 +102,12 @@ public class IpmMain extends JavaPlugin {
 
     /**
      * Returns you an instance from the {@link IpmMain} class.
-     * 
+     *
      * <p>
      * <b> NOTE: This is only for internal usage! Use the
      * {@link ResourceManager} system instead!. </b>
      * </p>
-     * 
+     *
      * @deprecated Use the annotation {@link MainPluginResource} and call
      *             {@link ResourceManager#initializeResources(Object)} instead!
      * @return An instance from the {@link IpmMain} class.

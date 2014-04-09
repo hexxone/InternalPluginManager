@@ -44,8 +44,10 @@ public interface IpmPlugin extends Plugin, PropertyChangeListener {
      * 
      * @param description
      *            The init {@link IpmPluginDescription}.
+     * @param file
+     *            The {@link File} where the plugin is loaded from.
      */
-    public void init(final IpmPluginDescription description);
+    public void init(final IpmPluginDescription description, final File file);
 
     /**
      * Will be callen on load.
@@ -118,7 +120,7 @@ public interface IpmPlugin extends Plugin, PropertyChangeListener {
      * Registers the given command {@link Class} with the given {@link Object}.
      * Will call
      * {@link CommandRegistrationUtil#registerCommands(Class, Object, org.bukkit.plugin.Plugin)}
-     * with <code>plugin</code> as the root plugin.
+     * with <code>plugin</code> as the target plugin.
      * 
      * @param clazz
      *            The {@link Class} where the commands are located.
@@ -277,9 +279,21 @@ public interface IpmPlugin extends Plugin, PropertyChangeListener {
 
     /**
      * 
-     * @return Am instance of {@link IpmPluginManager}.
+     * @return An instance of {@link IpmPluginManager}.
      */
     public IpmPluginManager getPluginManager();
+
+    /**
+     * 
+     * @return An instance of {@link IpmPluginLoader}.
+     */
+    public IpmPluginLoader getIpmPluginLoader();
+
+    /**
+     * 
+     * @return The {@link File} where the plugin is loaded from.
+     */
+    public File getFile();
 
     /**
      * 
@@ -335,4 +349,12 @@ public interface IpmPlugin extends Plugin, PropertyChangeListener {
      */
     @Override
     public boolean equals(final Object obj);
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString();
 }

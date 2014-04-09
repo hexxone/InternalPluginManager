@@ -40,6 +40,16 @@ public class SimpleIpmServer implements IpmServer {
     /**
      * {@inheritDoc}
      * 
+     * @see com.blockhaus2000.plugin.IpmServer#getPluginLoader()
+     */
+    @Override
+    public IpmPluginLoader getPluginLoader() {
+        return SimpleIpmPluginLoader.getInstance();
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
      * @see com.blockhaus2000.plugin.IpmServer#getBukkitServer()
      */
     @Override

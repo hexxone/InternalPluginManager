@@ -1,13 +1,13 @@
 /* This file is part of InternalPluginManager
- * 
+ *
  * Copyright 2014 Blockhaus2000
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,11 +24,12 @@ import com.blockhaus2000.minecraft.util.command.CommandPriority;
 /**
  * This class contains the basic options of a command. Implements
  * {@link Comparable} to sort commands by the {@link CommandPriority}.
- * 
+ *
  * @author Blockhaus2000
  */
 public class CommandInfo implements Comparable<CommandInfo> {
     private final Command commandAnot;
+
     private final Class<?> clazz;
     private final Object object;
     private final Method method;
@@ -36,7 +37,7 @@ public class CommandInfo implements Comparable<CommandInfo> {
 
     /**
      * Instances a new {@link CommandInfo} with the given informations.
-     * 
+     *
      * @param command
      *            The {@link Command} annotation.
      * @param clazz
@@ -59,40 +60,40 @@ public class CommandInfo implements Comparable<CommandInfo> {
     }
 
     /**
-     * 
-     * @return {@link CommandInfo#commandAnot}
+     *
+     * @return The {@link Command} annotation for this command.
      */
     public Command getCommandAnot() {
         return commandAnot;
     }
 
     /**
-     * 
-     * @return {@link CommandInfo#clazz}
+     *
+     * @return The {@link Class} where the invoked method is located.
      */
     public Class<?> getClazz() {
         return clazz;
     }
 
     /**
-     * 
-     * @return {@link CommandInfo#object}
+     *
+     * @return The {@link Object} that is used for method invoking.
      */
     public Object getObject() {
         return object;
     }
 
     /**
-     * 
-     * @return {@link CommandInfo#method}
+     *
+     * @return The {@link Method} that has been invoked.
      */
     public Method getMethod() {
         return method;
     }
 
     /**
-     * 
-     * @return {@link CommandInfo#syntax}
+     *
+     * @return The {@link CommandSyntax} of this command.
      */
     public CommandSyntax getSyntax() {
         return syntax;
@@ -100,7 +101,7 @@ public class CommandInfo implements Comparable<CommandInfo> {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
@@ -113,5 +114,16 @@ public class CommandInfo implements Comparable<CommandInfo> {
         }
 
         return levelThis < levelThat ? -1 : 1;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return getClass().getName() + "[commandAnot=" + commandAnot + ", clazz=" + clazz + ", object=" + object + ", method="
+                + method + ", syntax=" + syntax + "]";
     }
 }

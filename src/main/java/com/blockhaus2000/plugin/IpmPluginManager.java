@@ -1,13 +1,13 @@
 /* This file is part of InternalPluginManager
- * 
+ *
  * Copyright 2014 Blockhaus2000
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,12 +21,12 @@ import java.util.Set;
 /**
  * The plugin manager that manages all enable, disable, register and unregister
  * logics.
- * 
+ *
  * @author Blockhaus2000
  */
 public interface IpmPluginManager {
     /**
-     * 
+     *
      * @param pluginName
      *            The plugin name to search for.
      * @return The {@link IpmPlugin} that is associated with the given plugin
@@ -36,7 +36,7 @@ public interface IpmPluginManager {
 
     /**
      * Disables the given plugin.
-     * 
+     *
      * @param plugin
      *            The plugin to disable.
      */
@@ -44,7 +44,7 @@ public interface IpmPluginManager {
 
     /**
      * Disables the given plugins.
-     * 
+     *
      * @param plugins
      *            The plugins to disable.
      */
@@ -52,13 +52,13 @@ public interface IpmPluginManager {
 
     /**
      * Disables all registered plugins.
-     * 
+     *
      */
     public void disableAll();
 
     /**
      * Enables the given plugin.
-     * 
+     *
      * @param plugin
      *            The plugin to enable.
      */
@@ -66,7 +66,7 @@ public interface IpmPluginManager {
 
     /**
      * Enables the given plugins.
-     * 
+     *
      * @param plugins
      *            The plugins to enable.
      */
@@ -74,35 +74,45 @@ public interface IpmPluginManager {
 
     /**
      * Enables all registered plugins.
-     * 
+     *
      */
     public void enableAll();
 
     /**
-     * Reloads the given plugin.
-     * 
+     * Disables, Unregisters, Registers and Enables the given plugin.
+     *
      * @param plugin
-     *            The plugin to reload
+     *            The plugin to reload.
      */
     public void reload(final IpmPlugin plugin);
 
     /**
-     * Reloads the given plugins
-     * 
+     * Disables, Unregisters, Registers and Enables the given plugins.
+     *
      * @param plugins
-     *            The plugins to reload
+     *            The plugins to reload.
      */
     public void reload(final Set<IpmPlugin> plugins);
 
     /**
-     * Reloads all registered plugins.
-     * 
+     * Disables and Enables the given plugin.
+     *
+     * @param plugin
+     *            The plugin to soft reload.
      */
-    public void reloadAll();
+    public void softReload(final IpmPlugin plugin);
+
+    /**
+     * Disables and Enables the given plugins.
+     *
+     * @param plugins
+     *            The plugins to soft reload.
+     */
+    public void softReload(final Set<IpmPlugin> plugins);
 
     /**
      * Unregisters the given plugin.
-     * 
+     *
      * @param plugin
      *            The plugin to unregister.
      */
@@ -110,7 +120,7 @@ public interface IpmPluginManager {
 
     /**
      * Unregisters the given plugins.
-     * 
+     *
      * @param plugins
      *            The plugins to unregister.
      */
@@ -118,13 +128,13 @@ public interface IpmPluginManager {
 
     /**
      * Unregisters all registered plugins.
-     * 
+     *
      */
     public void unregisterAll();
 
     /**
      * Registers the given plugin.
-     * 
+     *
      * @param plugin
      *            The plugin to register.
      */
@@ -132,14 +142,14 @@ public interface IpmPluginManager {
 
     /**
      * Registers the given plugins.
-     * 
+     *
      * @param plugins
      *            The plugins to register.
      */
     public void register(final Set<IpmPlugin> plugins);
 
     /**
-     * 
+     *
      * @return All registered plugins.
      */
     public Set<IpmPlugin> getPlugins();

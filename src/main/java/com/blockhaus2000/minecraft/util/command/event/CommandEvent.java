@@ -1,13 +1,13 @@
 /* This file is part of InternalPluginManager
- * 
+ *
  * Copyright 2014 Blockhaus2000
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,7 +22,7 @@ import com.blockhaus2000.util.command.CommandInfo;
 
 /**
  * This is the main class for all {@link CommandEvent}s.
- * 
+ *
  * @author Blockhaus2000
  * @param <T>
  *            The specific {@link CommandInfo}.
@@ -36,9 +36,12 @@ public abstract class CommandEvent<T extends CommandInfo> extends Event {
     /**
      * Instances a new {@link CommandEvent} with the given {@link CommandInfo}
      * (specified by the type <code>T</code>).
-     * 
+     *
      * @param command
      *            The {@link CommandInfo}.
+     * @param commandEventType
+     *            The {@link CommandEventType} that is the target
+     *            {@link CommandEvent}.
      */
     public CommandEvent(final T command, final CommandEventType commandEventType) {
         this.command = command;
@@ -46,16 +49,18 @@ public abstract class CommandEvent<T extends CommandInfo> extends Event {
     }
 
     /**
-     * 
-     * @return {@link CommandEvent#commandEventType}
+     *
+     * @return The {@link CommandEventType} that is the target
+     *         {@link CommandEvent}.
      */
     public CommandEventType getCommandEventType() {
         return commandEventType;
     }
 
     /**
-     * 
-     * @return {@link CommandEvent#command}
+     *
+     * @return A {@link CommandInfo} or a subclass that represents the command
+     *         in which execution the event has been fired.
      */
     public T getCommand() {
         return command;

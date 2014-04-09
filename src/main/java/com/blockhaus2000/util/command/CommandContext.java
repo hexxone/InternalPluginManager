@@ -1,13 +1,13 @@
 /* This filejava is part of InternalPluginManager
- * 
+ *
  * Copyright 2014 Blockhaus2000
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,7 +26,7 @@ import com.blockhaus2000.util.Tag;
 
 /**
  * An extended {@link RawCommandContext}.
- * 
+ *
  * @author Blockhaus2000
  */
 public class CommandContext extends RawCommandContext {
@@ -35,7 +35,7 @@ public class CommandContext extends RawCommandContext {
 
     /**
      * Instances a new {@link CommandContext}.
-     * 
+     *
      * @param commandInfo
      *            The {@link CommandInfo} that will be used for the super-call.
      * @param sender
@@ -60,7 +60,7 @@ public class CommandContext extends RawCommandContext {
 
     /**
      * Instances a new {@link CommandContext}.
-     * 
+     *
      * @param rawContext
      *            The {@link CommandInfo} that will be used for the super-call.
      * @param args
@@ -74,18 +74,27 @@ public class CommandContext extends RawCommandContext {
     }
 
     /**
-     * 
-     * @return {@link CommandContext#args}
+     * @return The arguments of this command.
      */
     public List<Tag<?>> getArgs() {
         return args;
     }
 
     /**
-     * 
-     * @return {@link CommandContext#flags}
+     *
+     * @return The flags of this command.
      */
     public Map<Character, Tag<?>> getFlags() {
         return flags;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return getClass().getName() + "[args=" + args + ", flags=" + flags + "]";
     }
 }

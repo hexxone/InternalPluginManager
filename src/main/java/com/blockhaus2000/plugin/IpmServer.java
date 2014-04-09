@@ -33,6 +33,12 @@ public interface IpmServer {
 
     /**
      * 
+     * @return An instance of the {@link IpmPluginLoader}.
+     */
+    public IpmPluginLoader getPluginLoader();
+
+    /**
+     * 
      * @return The Bukkit {@link Server}.
      */
     public Server getBukkitServer();

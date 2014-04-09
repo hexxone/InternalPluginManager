@@ -120,8 +120,10 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
      */
     @Override
     public void reload(final IpmPlugin plugin) {
-        plugin.setEnabled(false);
-        plugin.setEnabled(true);
+        disable(plugin);
+        unregister(plugin);
+        register(plugin);
+        enable(plugin);
     }
 
     /**
@@ -139,11 +141,24 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
     /**
      * {@inheritDoc}
      * 
-     * @see com.blockhaus2000.plugin.IpmPluginManager#reloadAll()
+     * @see com.blockhaus2000.plugin.IpmPluginManager#softReload(com.blockhaus2000.plugin.IpmPlugin)
      */
     @Override
-    public void reloadAll() {
-        reload(plugins);
+    public void softReload(final IpmPlugin plugin) {
+        disable(plugin);
+        enable(plugin);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see com.blockhaus2000.plugin.IpmPluginManager#softReload(java.util.Set)
+     */
+    @Override
+    public void softReload(final Set<IpmPlugin> plugins) {
+        for (IpmPlugin target : plugins) {
+            softReload(target);
+        }
     }
 
     /**
@@ -153,7 +168,7 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
      */
     @Override
     public void unregister(final IpmPlugin plugin) {
-        plugins.remove(plugin.getIpmDescription().getName().toLowerCase());
+        plugins.remove(plugin);
     }
 
     /**

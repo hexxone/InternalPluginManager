@@ -71,4 +71,12 @@ public interface IpmPluginDescription {
      *         <code>null</code> if nothing was setted.
      */
     public String[] getDepends();
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString();
 }

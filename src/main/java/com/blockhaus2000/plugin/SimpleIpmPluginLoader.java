@@ -20,9 +20,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
@@ -49,7 +50,7 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
     @MainPluginResource
     private IpmMain main;
 
-    private final List<IpmPluginClassLoader> classLoaders = new ArrayList<IpmPluginClassLoader>();
+    private final Map<String, IpmPluginClassLoader> classLoaders = new HashMap<String, IpmPluginClassLoader>();
 
     private final File pluginFolder;
 
@@ -116,10 +117,10 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
             ExceptionHandler.handle(ex);
         }
 
-        SimpleIpmPluginClassLoader classLoader;
+        IpmPluginClassLoader classLoader;
 
         try {
-            classLoader = new SimpleIpmPluginClassLoader(this, file, Thread.currentThread().getContextClassLoader());
+            classLoader = new IpmPluginClassLoader(this, file, Thread.currentThread().getContextClassLoader());
         } catch (MalformedURLException ex) {
             throw new PluginException(ex);
         }
@@ -146,10 +147,12 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
             throw new PluginException(ex);
         }
 
-        classLoaders.add(classLoader);
+        String pluginName = desc.getName();
 
-        System.out.println("[" + desc.getName() + "] Loading " + desc.getName() + " v" + desc.getVersion());
-        plugin.init(desc);
+        classLoaders.put(pluginName, classLoader);
+
+        System.out.println("[" + pluginName + "] Loading " + pluginName + " v" + desc.getVersion());
+        plugin.init(desc, file);
         plugin.onLoad();
 
         addPlugin(plugin);
@@ -196,9 +199,9 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
     public Class<?> getClassByName(final String className) {
         Class<?> clazz = null;
 
-        for (IpmPluginClassLoader target : classLoaders) {
+        for (String targetKey : classLoaders.keySet()) {
             try {
-                clazz = target.findClass(className, false);
+                clazz = classLoaders.get(targetKey).findClass(className, false);
                 break;
             } catch (ClassNotFoundException ex) {
                 // fails silent
@@ -206,6 +209,16 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
         }
 
         return clazz;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see com.blockhaus2000.plugin.IpmPluginLoader#getClassLoader(com.blockhaus2000.plugin.IpmPlugin)
+     */
+    @Override
+    public IpmPluginClassLoader getClassLoader(final IpmPlugin plugin) {
+        return classLoaders.get(plugin.getName());
     }
 
     /**

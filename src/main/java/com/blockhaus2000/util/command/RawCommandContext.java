@@ -1,13 +1,13 @@
 /* This file is part of InternalPluginManager
- * 
+ *
  * Copyright 2014 Blockhaus2000
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,12 +16,14 @@
  */
 package com.blockhaus2000.util.command;
 
+import java.util.Arrays;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 /**
  * An extended {@link CommandInfo}.
- * 
+ *
  * @author Blockhaus2000
  */
 public class RawCommandContext extends CommandInfo {
@@ -32,7 +34,7 @@ public class RawCommandContext extends CommandInfo {
 
     /**
      * Instances a new {@link RawCommandContext}.
-     * 
+     *
      * @param commandInfo
      *            The {@link CommandInfo} that will be used for the super-call.
      * @param sender
@@ -55,34 +57,45 @@ public class RawCommandContext extends CommandInfo {
     }
 
     /**
-     * 
-     * @return {@link RawCommandContext#sender}
+     *
+     * @return The {@link CommandSender} that has executed the command.
      */
     public CommandSender getSender() {
         return sender;
     }
 
     /**
-     * 
-     * @return {@link RawCommandContext#command}
+     *
+     * @return The {@link Command} that represents the executed Bukkit command.
      */
     public Command getCommand() {
         return command;
     }
 
     /**
-     * 
-     * @return {@link RawCommandContext#label}
+     *
+     * @return The label of the executed command.
      */
     public String getLabel() {
         return label;
     }
 
     /**
-     * 
-     * @return {@link RawCommandContext#rawArgs}
+     *
+     * @return The raw arguments of the executed command.
      */
     public String[] getRawArgs() {
         return rawArgs;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return getClass().getName() + "[sender=" + sender + ", command=" + command + ", label=" + label + ", rawArgs="
+                + Arrays.toString(rawArgs) + "]";
     }
 }

@@ -1,13 +1,13 @@
 /* This file is part of InternalPluginManager
- * 
+ *
  * Copyright 2014 Blockhaus2000
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,13 +24,13 @@ import com.blockhaus2000.bukkit.util.SimpleDynamicPluginCommand;
 
 /**
  * This class is a utility class for easy permission check.
- * 
+ *
  * @author Blockhaus2000
  */
 public class PermissionUtil {
     /**
      * Checks that the given {@link CommandSender} has the given permission.
-     * 
+     *
      * @param sender
      *            The {@link CommandSender} that has to have the given
      *            permission.
@@ -50,7 +50,8 @@ public class PermissionUtil {
      *         Otherwise, this will return <code>false</code>.
      */
     public static boolean hasPermission(final CommandSender sender, final String perm) {
-        return perm == null || perm.length() == 0 || !(sender instanceof Player) || sender.isOp() || sender.hasPermission(perm);
+        return perm == null || sender == null || perm.length() == 0 || !(sender instanceof Player) || sender.isOp()
+                || sender.hasPermission(perm);
     }
 
     /**
@@ -58,7 +59,7 @@ public class PermissionUtil {
      * given {@link DynamicPluginCommand}. Will call
      * {@link PermissionUtil#hasPermission(CommandSender, String)} with the
      * permission of the given {@link DynamicPluginCommand}.
-     * 
+     *
      * @param sender
      *            The {@link CommandSender} that has to have the permission of
      *            the given {@link DynamicPluginCommand}.

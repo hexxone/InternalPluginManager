@@ -1,13 +1,13 @@
 /* This file is part of InternalPluginManager
- * 
+ *
  * Copyright 2014 Blockhaus2000
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,7 +24,7 @@ import com.blockhaus2000.minecraft.util.command.Command;
 
 /**
  * The {@link CommandSyntax} for internal use of {@link Command#syntax()}.
- * 
+ *
  * @author Blockhaus2000
  */
 public class CommandSyntax implements Iterable<CommandSyntaxType> {
@@ -33,7 +33,7 @@ public class CommandSyntax implements Iterable<CommandSyntaxType> {
     /**
      * Instances a new {@link CommandSyntax} with the given syntax string to
      * parse.
-     * 
+     *
      * @param syntaxString
      *            The syntax string to parse.
      */
@@ -60,7 +60,7 @@ public class CommandSyntax implements Iterable<CommandSyntaxType> {
     }
 
     /**
-     * 
+     *
      * @return If this returns <code>true</code>, the syntax is valid (only the
      *         last argument is a var arg, for example).
      */
@@ -85,7 +85,7 @@ public class CommandSyntax implements Iterable<CommandSyntaxType> {
     }
 
     /**
-     * 
+     *
      * @return If this returns <code>true</code>, the last syntax element is a
      *         var arg.
      */
@@ -94,7 +94,7 @@ public class CommandSyntax implements Iterable<CommandSyntaxType> {
     }
 
     /**
-     * 
+     *
      * @return The size of the syntax.
      */
     public int size() {
@@ -102,7 +102,7 @@ public class CommandSyntax implements Iterable<CommandSyntaxType> {
     }
 
     /**
-     * 
+     *
      * @return If this returns <code>true</code>, the syntax is
      *         <code>null</code>.
      */
@@ -112,7 +112,7 @@ public class CommandSyntax implements Iterable<CommandSyntaxType> {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Iterable#iterator()
      */
     @Override
@@ -121,8 +121,8 @@ public class CommandSyntax implements Iterable<CommandSyntaxType> {
     }
 
     /**
-     * 
-     * @return {@link CommandSyntax#syntax}
+     *
+     * @return A {@link List} of {@link CommandSyntaxType}s.
      */
     public List<CommandSyntaxType> getSyntax() {
         return syntax;

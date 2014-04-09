@@ -1,13 +1,13 @@
 /* This file is part of InternalPluginManager
- * 
+ *
  * Copyright 2014 Blockhaus2000
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,10 +30,14 @@ import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 
 import com.blockhaus2000.minecraft.util.command.event.CommandEvent;
 import com.blockhaus2000.minecraft.util.command.event.CommandEventPackage;
+import com.blockhaus2000.minecraft.util.command.event.IllegalSenderCommandEvent;
 import com.blockhaus2000.minecraft.util.command.event.IllegalSyntaxCommandEvent;
 import com.blockhaus2000.minecraft.util.command.event.IllegalSyntaxType;
 import com.blockhaus2000.minecraft.util.command.event.NoPermissionCommandEvent;
@@ -54,7 +58,7 @@ import com.blockhaus2000.util.command.RawCommandContext;
 
 /**
  * Represents a {@link CommandManager}.
- * 
+ *
  * @author Blockhaus2000
  * @see com.blockhaus2000.minecraft.util.command.CommandManager
  */
@@ -70,7 +74,7 @@ public class SimpleCommandManager implements CommandManager {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.minecraft.util.command.CommandManager#register(java.lang.Class,
      *      java.lang.Object)
      */
@@ -88,8 +92,8 @@ public class SimpleCommandManager implements CommandManager {
             assert Modifier.isStatic(targetMethod.getModifiers()) || obj != null : "The method \"" + targetMethod
                     + "\" is non-static and the given Object is null.";
             assert targetMethod.toString().split("\\(")[1].equals("com.blockhaus2000.util.command.CommandContext)") : "The "
-                    + "arguments of the method \"" + targetMethod
-                    + "\" are not correct. The only argument has to be \"CommandContext\"";
+            + "arguments of the method \"" + targetMethod
+            + "\" are not correct. The only argument has to be \"CommandContext\"";
 
             String[] flags = targetMethod.getAnnotation(Command.class).flags();
             for (String targetFlag : flags) {
@@ -98,7 +102,7 @@ public class SimpleCommandManager implements CommandManager {
                 }
 
                 assert targetFlag.matches(flagRegex) : "The flag \"" + targetFlag + "\" does not match the regex \"" + flagRegex
-                        + "\"!";
+                + "\"!";
             }
 
             for (String targetAlias : targetMethod.getAnnotation(Command.class).aliases()) {
@@ -125,7 +129,7 @@ public class SimpleCommandManager implements CommandManager {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.minecraft.util.command.CommandManager#register(java.lang.Class)
      */
     @Override
@@ -135,7 +139,7 @@ public class SimpleCommandManager implements CommandManager {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.minecraft.util.command.CommandManager#register(java.lang.Object)
      */
     @Override
@@ -145,7 +149,7 @@ public class SimpleCommandManager implements CommandManager {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.bukkit.command.CommandExecutor#onCommand(org.bukkit.command.CommandSender,
      *      org.bukkit.command.Command, java.lang.String, java.lang.String[])
      */
@@ -169,6 +173,11 @@ public class SimpleCommandManager implements CommandManager {
             Command cmdAnot = target.getCommandAnot();
 
             RawCommandContext rawContext = new RawCommandContext(target, sender, cmd, label, bArgs);
+
+            if (!isSenderCorrect(sender, cmdAnot)) {
+                events.add(new IllegalSenderCommandEvent(rawContext));
+                continue;
+            }
 
             CommandSyntax syntax = target.getSyntax();
 
@@ -364,9 +373,36 @@ public class SimpleCommandManager implements CommandManager {
         return parseArguments(cmd, args.toString().replace("[", "").replace("]", "").split(","), flags);
     }
 
+    private boolean isSenderCorrect(final CommandSender sender, final Command cmd) {
+        for (CommandSenderType target : cmd.sender()) {
+            switch (target) {
+            case COMMAND_BLOCK:
+                if (sender instanceof BlockCommandSender) {
+                    return true;
+                }
+
+                break;
+            case CONSOLE:
+                if (sender instanceof ConsoleCommandSender) {
+                    return true;
+                }
+
+                break;
+            case PLAYER:
+                if (sender instanceof Player) {
+                    return true;
+                }
+
+                break;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * Will provide singleton.
-     * 
+     *
      * @return An instance of {@link SimpleIpmServer}.
      */
     public static SimpleCommandManager getInstance() {

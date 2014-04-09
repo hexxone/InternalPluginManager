@@ -17,6 +17,7 @@
 package com.blockhaus2000.plugin;
 
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Map;
 
 import org.yaml.snakeyaml.Yaml;
@@ -152,5 +153,16 @@ public class SimpleIpmPluginDescription implements IpmPluginDescription {
     @Override
     public String[] getDepends() {
         return depends;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return getClass().getName() + "[name=" + name + ", version=" + version + ", main=" + main + ", authors="
+                + Arrays.toString(authors) + ", depends=" + Arrays.toString(depends) + "]";
     }
 }

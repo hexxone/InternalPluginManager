@@ -1,13 +1,13 @@
 /* This file is part of InternalPluginManager
- * 
+ *
  * Copyright 2014 Blockhaus2000
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -40,6 +40,7 @@ import org.bukkit.plugin.PluginLoader;
 
 import com.avaje.ebean.EbeanServer;
 import com.blockhaus2000.bukkit.mock.MockPluginLoader;
+import com.blockhaus2000.main.bukkit.InternalPluginManager;
 import com.blockhaus2000.main.bukkit.IpmMain;
 import com.blockhaus2000.util.ChatOut;
 import com.blockhaus2000.util.CommandRegistrationUtil;
@@ -47,7 +48,7 @@ import com.blockhaus2000.util.ExceptionHandler;
 
 /**
  * An implmenetation of {@link IpmPlugin}.
- * 
+ *
  * @author Blockhaus2000
  */
 public class SimpleIpmPlugin implements IpmPlugin {
@@ -63,19 +64,22 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     private File dataFolder;
 
+    private File file;
+
     private boolean enabled = false;
 
     /**
      * {@inheritDoc}
-     * 
-     * @see com.blockhaus2000.plugin.IpmPlugin#init(IpmPluginDescription)
+     *
+     * @see com.blockhaus2000.plugin.IpmPlugin#init(IpmPluginDescription, File)
      */
     // com.blockhaus2000.main.bukkit.IpmMain#getInstance()
     @SuppressWarnings("deprecation")
     @Override
-    public void init(final IpmPluginDescription description) {
+    public void init(final IpmPluginDescription description, final File file) {
         changes.addPropertyChangeListener(this);
 
+        this.file = file;
         this.description = description;
 
         dataFolder = new File(IpmMain.getInstance().getDataFolder() + File.separator + "plugins" + File.separator
@@ -91,7 +95,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#onLoad()
      */
     @Override
@@ -101,7 +105,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#onDisable()
      */
     @Override
@@ -111,7 +115,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#onEnable()
      */
     @Override
@@ -121,7 +125,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#reload()
      */
     @Override
@@ -131,7 +135,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#saveConfig()
      */
     @Override
@@ -145,7 +149,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#reloadConfig()
      */
     @Override
@@ -163,7 +167,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#loadConfig()
      */
     @Override
@@ -173,20 +177,18 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#registerCommands(java.lang.Class,
      *      java.lang.Object)
      */
-    // com.blockhaus2000.main.bukkit.IpmMain#getInstance()
-    @SuppressWarnings("deprecation")
     @Override
     public void registerCommands(final Class<?> clazz, final Object obj) {
-        CommandRegistrationUtil.registerCommands(clazz, obj, IpmMain.getInstance());
+        CommandRegistrationUtil.registerCommands(clazz, obj, this);
     }
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#registerCommands(java.lang.Object)
      */
     @Override
@@ -196,7 +198,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#registerCommands(java.lang.Class)
      */
     @Override
@@ -206,7 +208,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#isEnabled()
      */
     @Override
@@ -216,7 +218,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#setEnabled(boolean)
      */
     @Override
@@ -230,7 +232,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#log(java.util.logging.Level,
      *      java.lang.Object)
      */
@@ -241,7 +243,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#log(java.lang.Object)
      */
     @Override
@@ -251,7 +253,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#log(java.util.logging.Level,
      *      java.util.Collection)
      */
@@ -262,7 +264,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#log(java.util.Collection)
      */
     @Override
@@ -272,7 +274,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#log(java.util.logging.Level,
      *      java.lang.Object[])
      */
@@ -283,7 +285,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#log(java.lang.Object[])
      */
     @Override
@@ -293,7 +295,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#sendMessage(org.bukkit.command.CommandSender,
      *      java.lang.Object)
      */
@@ -304,7 +306,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#sendMessage(org.bukkit.command.CommandSender,
      *      java.util.Collection)
      */
@@ -315,7 +317,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#sendMessage(org.bukkit.command.CommandSender,
      *      java.lang.Object[])
      */
@@ -326,7 +328,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#getServer()
      */
     @Override
@@ -336,17 +338,37 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#getPluginManager()
      */
     @Override
     public IpmPluginManager getPluginManager() {
-        return SimpleIpmPluginManager.getInstance();
+        return InternalPluginManager.getServer().getPluginManager();
     }
 
     /**
      * {@inheritDoc}
-     * 
+     *
+     * @see com.blockhaus2000.plugin.IpmPlugin#getIpmPluginLoader()
+     */
+    @Override
+    public IpmPluginLoader getIpmPluginLoader() {
+        return InternalPluginManager.getServer().getPluginLoader();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.plugin.IpmPlugin#getFile()
+     */
+    @Override
+    public File getFile() {
+        return file;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#getConfig()
      */
     @Override
@@ -356,7 +378,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#getDataFolder()
      */
     @Override
@@ -366,7 +388,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#getIpmDescription()
      */
     @Override
@@ -376,7 +398,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPlugin#getName()
      */
     @Override
@@ -386,7 +408,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
      */
     @Override
@@ -408,7 +430,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -418,7 +440,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -440,15 +462,26 @@ public class SimpleIpmPlugin implements IpmPlugin {
         return name.equals(that.getName());
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return getClass().getName() + "[description=" + description + ", name=" + name + ", configFile=" + configFile
+                + ", dataFolder=" + dataFolder + ", enabled=" + enabled + "]";
+    }
+
     // Mock implementations
     /**
      * {@inheritDoc}
-     * 
+     *
      * <p>
      * <b> NOTE: This is a mock implementation! Use
-     * {@link IpmPlugin#getIpmOldDescription()} instead. </b>
+     * {@link IpmPlugin#getIpmDescription()} instead. </b>
      * </p>
-     * 
+     *
      * @return A {@link PluginDescriptionFile} with the plugin name, the version
      *         and the main class.
      * @see org.bukkit.plugin.Plugin#getDescription()
@@ -460,11 +493,11 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * <p>
      * <b> NOTE: This is a mock implementation! </b>
      * </p>
-     * 
+     *
      * @return <code>null</code>
      * @see org.bukkit.plugin.Plugin#getResource(java.lang.String)
      */
@@ -475,11 +508,11 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * <p>
      * <b> NOTE: This is a mock implementation! </b>
      * </p>
-     * 
+     *
      * @see org.bukkit.plugin.Plugin#saveDefaultConfig()
      */
     @Override
@@ -488,11 +521,11 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * <p>
      * <b> NOTE: This is a mock implementation! </b>
      * </p>
-     * 
+     *
      * @see org.bukkit.plugin.Plugin#saveResource(java.lang.String, boolean)
      */
     @Override
@@ -501,7 +534,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.bukkit.plugin.Plugin#getPluginLoader()
      */
     @Override
@@ -511,7 +544,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @return {@link Bukkit#getServer()}
      * @see org.bukkit.plugin.Plugin#getServer()
      * @see org.bukkit.Bukkit#getServer()
@@ -523,11 +556,11 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * <p>
      * <b> NOTE: This is a mock implementation! </b>
      * </p>
-     * 
+     *
      * @return <code>false</code>
      * @see org.bukkit.plugin.Plugin#isNaggable()
      */
@@ -538,11 +571,11 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * <p>
      * <b> NOTE: This is a mock implementation! </b>
      * </p>
-     * 
+     *
      * @see org.bukkit.plugin.Plugin#setNaggable(boolean)
      */
     @Override
@@ -551,12 +584,12 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * <p>
      * <b> NOTE: This is a mock implementation and returns the database from the
      * root plugin! </b>
      * </p>
-     * 
+     *
      * @return {@link IpmMain#getDatabase()}
      * @see org.bukkit.plugin.Plugin#getDatabase()
      * @see com.blockhaus2000.main.bukkit.IpmMain#getDatabase()
@@ -569,16 +602,17 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * <p>
      * <b> NOTE: This is a mock implementation and returns the default world
      * generator from the root plugin! </b>
      * </p>
-     * 
-     * @return {@link IpmMain#getDefaultWorldGenerator()}
+     *
+     * @return {@link IpmMain#getDefaultWorldGenerator(String, String)}
      * @see org.bukkit.plugin.Plugin#getDefaultWorldGenerator(java.lang.String,
      *      java.lang.String)
-     * @see com.blockhaus2000.main.bukkit.IpmMain#getDefaultWorldGenerator()
+     * @see com.blockhaus2000.main.bukkit.IpmMain#getDefaultWorldGenerator(java.lang.String,
+     *      java.lang.String)
      */
     @SuppressWarnings("deprecation")
     @Override
@@ -588,12 +622,12 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * <p>
      * <b> NOTE: This is a mock implementation and returns the logger from the
      * root plugin! </b>
      * </p>
-     * 
+     *
      * @return {@link IpmMain#getLogger()}
      * @see org.bukkit.plugin.Plugin#getLogger()
      * @see com.blockhaus2000.main.bukkit.IpmMain#getLogger()
@@ -606,11 +640,11 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * <p>
      * <b> NOTE: This is a mock implementation! </b>
      * </p>
-     * 
+     *
      * @return <code>false</code>
      * @see org.bukkit.command.CommandExecutor#onCommand(org.bukkit.command.CommandSender,
      *      org.bukkit.command.Command, java.lang.String, java.lang.String[])
@@ -622,11 +656,11 @@ public class SimpleIpmPlugin implements IpmPlugin {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * <p>
      * <b> NOTE: This is a mock implementation! </b>
      * </p>
-     * 
+     *
      * @return <code>null</code>
      * @see org.bukkit.command.TabCompleter#onTabComplete(org.bukkit.command.CommandSender,
      *      org.bukkit.command.Command, java.lang.String, java.lang.String[])

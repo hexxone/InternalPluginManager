@@ -1,13 +1,13 @@
 /* This file is part of InternalPluginManager
- * 
+ *
  * Copyright 2014 Blockhaus2000
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,7 +25,7 @@ import com.blockhaus2000.util.Tag;
 /**
  * This class represents the data from a {@link CommandContext}. That includes
  * the arguments and flags.
- * 
+ *
  * @author Blockhaus2000
  */
 public class ContextData {
@@ -34,7 +34,7 @@ public class ContextData {
 
     /**
      * Intances a new {@link ContextData} with the given arguments and flags.
-     * 
+     *
      * @param args
      *            The arguments that has to be saved.
      * @param flags
@@ -47,7 +47,7 @@ public class ContextData {
 
     /**
      * Intances a new {@link ContextData} with the given arguments and flags.
-     * 
+     *
      * @param rawArgs
      *            The arguments that has to be saved.
      * @param flags
@@ -65,16 +65,17 @@ public class ContextData {
     }
 
     /**
-     * 
-     * @return {@link ContextData#args}
+     *
+     * @return The arguments represented by a {@link Tag} {@link List}.
      */
     public List<Tag<?>> getArgs() {
         return args;
     }
 
     /**
-     * 
-     * @return {@link ContextData#flags}
+     *
+     * @return The flags represented by a {@link Character} {@link Tag}
+     *         {@link List}.
      */
     public Map<Character, Tag<?>> getFlags() {
         return flags;
