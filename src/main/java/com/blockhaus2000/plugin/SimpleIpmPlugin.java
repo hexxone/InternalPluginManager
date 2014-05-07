@@ -54,8 +54,6 @@ import com.blockhaus2000.util.ExceptionHandler;
 public class SimpleIpmPlugin implements IpmPlugin {
     protected final PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
-    private PluginDescriptionFile bukkitDescription;
-
     private IpmPluginDescription description;
     private String name;
 
@@ -89,8 +87,6 @@ public class SimpleIpmPlugin implements IpmPlugin {
         reloadConfig();
 
         name = this.description.getName();
-
-        bukkitDescription = new PluginDescriptionFile(name, this.description.getVersion(), this.description.getMain());
     }
 
     /**
@@ -488,7 +484,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
      */
     @Override
     public PluginDescriptionFile getDescription() {
-        return bukkitDescription;
+        return description.convertToBukkit();
     }
 
     /**

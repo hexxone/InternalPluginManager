@@ -1,13 +1,13 @@
 /* This file is part of InternalPluginManager
- * 
+ *
  * Copyright 2014 Blockhaus2000
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Map;
 
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
 
@@ -28,7 +29,7 @@ import com.blockhaus2000.plugin.exception.PluginException;
 
 /**
  * An implementation of {@link IpmPluginDescription}.
- * 
+ *
  * @author Blockhaus2000
  */
 public class SimpleIpmPluginDescription implements IpmPluginDescription {
@@ -43,7 +44,7 @@ public class SimpleIpmPluginDescription implements IpmPluginDescription {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginDescription#load(InputStream)
      */
     @Override
@@ -99,15 +100,25 @@ public class SimpleIpmPluginDescription implements IpmPluginDescription {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.plugin.IpmPluginDescription#convertToBukkit()
+     */
+    @Override
+    public PluginDescriptionFile convertToBukkit() {
+        return new PluginDescriptionFile(name, version, main);
+    }
+
     private Map<?, ?> asMap(final Object obj) {
         assert obj instanceof Map : "Obj has to be an instance of Map!";
-        return (Map<?, ?>) obj;
+    return (Map<?, ?>) obj;
     }
 
     // Getter
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginDescription#getName()
      */
     @Override
@@ -117,7 +128,7 @@ public class SimpleIpmPluginDescription implements IpmPluginDescription {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginDescription#getVersion()
      */
     @Override
@@ -127,7 +138,7 @@ public class SimpleIpmPluginDescription implements IpmPluginDescription {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginDescription#getMain()
      */
     @Override
@@ -137,7 +148,7 @@ public class SimpleIpmPluginDescription implements IpmPluginDescription {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginDescription#getAuthors()
      */
     @Override
@@ -147,7 +158,7 @@ public class SimpleIpmPluginDescription implements IpmPluginDescription {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginDescription#getDepends()
      */
     @Override
@@ -157,7 +168,7 @@ public class SimpleIpmPluginDescription implements IpmPluginDescription {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override

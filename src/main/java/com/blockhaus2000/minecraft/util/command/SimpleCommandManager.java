@@ -48,6 +48,7 @@ import com.blockhaus2000.plugin.SimpleIpmServer;
 import com.blockhaus2000.util.ArrayUtil;
 import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.PermissionUtil;
+import com.blockhaus2000.util.StackUtil;
 import com.blockhaus2000.util.StringUtil;
 import com.blockhaus2000.util.Tag;
 import com.blockhaus2000.util.command.CommandContext;
@@ -154,12 +155,14 @@ public class SimpleCommandManager implements CommandManager {
      *      org.bukkit.command.Command, java.lang.String, java.lang.String[])
      */
     @Override
-    public boolean onCommand(final CommandSender sender, final org.bukkit.command.Command cmd, final String label, String[] bArgs) {
+    public boolean onCommand(final CommandSender sender, final org.bukkit.command.Command cmd, String label, String[] bArgs) {
         assert sender != null : "Sender cannot be null!";
         assert cmd != null : "Cmd cannot be null!";
         assert bArgs != null : "BArgs cannot be null!";
         assert label != null : "Label cannot be null!";
         assert label.length() != 0 : "Label cannot be empty!";
+
+        label = label.contains(":") ? label.split(":")[1] : label;
 
         if (!cmds.containsKey(label)) {
             throw new CommandException("The given command \"" + label + "\" is not registered.");
@@ -188,10 +191,13 @@ public class SimpleCommandManager implements CommandManager {
             final boolean secondLevelCmdSet = cmdAnot.secondLevelCommand().length() != 0;
 
             if (secondLevelCmdSet) {
-                min++;
-
-                if (max != -1) {
-                    max++;
+                if (cmdAnot.secondLevelCommand().equalsIgnoreCase(bArgs[0])) {
+                    List<String> tempArgs = new LinkedList<String>(Arrays.asList(bArgs));
+                    tempArgs.remove(0);
+                    bArgs = ArrayUtil.toStringArray(tempArgs);
+                } else {
+                    events.add(new UnknownSecondLevelCommandEvent(rawContext));
+                    continue;
                 }
             }
 
@@ -214,20 +220,10 @@ public class SimpleCommandManager implements CommandManager {
                 continue;
             }
 
-            if (secondLevelCmdSet) {
-                if (cmdAnot.secondLevelCommand().equalsIgnoreCase(args.get(0).getData().toString())) {
-                    args.remove(0);
-                    bArgs = ArrayUtil.toStringArray(args);
-                } else {
-                    events.add(new UnknownSecondLevelCommandEvent(rawContext));
-                    continue;
-                }
-            }
-
             ContextData contextData = null;
 
             try {
-                contextData = parseCommand(target, ArrayUtil.toStringArray(args));
+                contextData = parseCommand(target, bArgs);
             } catch (NumberFormatException ex) {
                 events.add(new IllegalSyntaxCommandEvent(rawContext, IllegalSyntaxType.NUMBER_SYNTAX_IS_STRING));
                 continue;
@@ -280,6 +276,9 @@ public class SimpleCommandManager implements CommandManager {
         assert rawArgs != null : "RawArgs cannot be null!";
 
         List<String> args = new LinkedList<String>(rawArgs);
+
+        System.out.println("parseFlags (Caller: " + StackUtil.getCaller().getClassName() + "#"
+                + StackUtil.getCaller().getMethodName() + "): " + args);
 
         Map<Character, Tag<?>> flags = new HashMap<Character, Tag<?>>();
 

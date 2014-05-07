@@ -1,13 +1,13 @@
 /* This file is part of InternalPluginManager
- * 
+ *
  * Copyright 2014 Blockhaus2000
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,12 +24,13 @@ import com.blockhaus2000.main.bukkit.IpmMain;
 import com.blockhaus2000.minecraft.util.command.event.CommandEvent;
 import com.blockhaus2000.minecraft.util.command.event.CommandEventPackage;
 import com.blockhaus2000.plugin.SimpleIpmPlugin;
+import com.blockhaus2000.util.CommandRegistrationUtil;
 import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.resources.MainPluginResource;
 import com.blockhaus2000.util.resources.ResourceManager;
 
 /**
- * 
+ *
  * @author Blockhaus2000
  */
 @SuppressWarnings("javadoc")
@@ -39,7 +40,7 @@ public class TestMain extends SimpleIpmPlugin implements Listener {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.SimpleIpmPlugin#onEnable()
      */
     @Override
@@ -52,7 +53,7 @@ public class TestMain extends SimpleIpmPlugin implements Listener {
             ExceptionHandler.handle(ex);
         }
 
-        registerCommands(new TestCommands());
+        CommandRegistrationUtil.registerCommands(new TestCommands(), main);
 
         Bukkit.getServer().getPluginManager().registerEvents(this, main);
     }
