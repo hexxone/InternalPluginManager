@@ -1,13 +1,13 @@
 /* This file is part of InternalPluginManager
- * 
+ *
  * Copyright 2014 Blockhaus2000
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,7 +21,7 @@ import java.util.Set;
 
 /**
  * An implementation if {@link IpmPluginManager}.
- * 
+ *
  * @author Blockhaus2000
  */
 public class SimpleIpmPluginManager implements IpmPluginManager {
@@ -35,7 +35,7 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginManager#getPlugin(java.lang.String)
      */
     @Override
@@ -51,7 +51,7 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginManager#disable(com.blockhaus2000.plugin.IpmPlugin)
      */
     @Override
@@ -61,7 +61,7 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginManager#disable(java.util.Set)
      */
     @Override
@@ -73,7 +73,7 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginManager#disableAll()
      */
     @Override
@@ -83,7 +83,7 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginManager#enable(com.blockhaus2000.plugin.IpmPlugin)
      */
     @Override
@@ -93,7 +93,7 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginManager#enable(java.util.Set)
      */
     @Override
@@ -105,7 +105,7 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginManager#enableAll()
      */
     @Override
@@ -115,7 +115,7 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginManager#reload(com.blockhaus2000.plugin.IpmPlugin)
      */
     @Override
@@ -128,7 +128,7 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginManager#reload(java.util.Set)
      */
     @Override
@@ -140,7 +140,7 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginManager#softReload(com.blockhaus2000.plugin.IpmPlugin)
      */
     @Override
@@ -151,7 +151,7 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginManager#softReload(java.util.Set)
      */
     @Override
@@ -163,17 +163,17 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginManager#unregister(com.blockhaus2000.plugin.IpmPlugin)
      */
     @Override
     public void unregister(final IpmPlugin plugin) {
-        plugins.remove(plugin);
+        plugins.remove(getPlugin(plugin.getName()));
     }
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginManager#unregister(java.util.Set)
      */
     @Override
@@ -185,17 +185,17 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginManager#unregisterAll()
      */
     @Override
     public void unregisterAll() {
-        unregister(plugins);
+        unregister(new HashSet<IpmPlugin>(plugins));
     }
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginManager#register(com.blockhaus2000.plugin.IpmPlugin)
      */
     @Override
@@ -205,7 +205,7 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginManager#register(java.util.Set)
      */
     @Override
@@ -217,17 +217,17 @@ public class SimpleIpmPluginManager implements IpmPluginManager {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginManager#getPlugins()
      */
     @Override
     public Set<IpmPlugin> getPlugins() {
-        return plugins;
+        return new HashSet<IpmPlugin>(plugins);
     }
 
     /**
      * Will provide singleton.
-     * 
+     *
      * @return An instance of {@link SimpleIpmServer}.
      */
     public static IpmPluginManager getInstance() {
