@@ -48,7 +48,6 @@ import com.blockhaus2000.plugin.SimpleIpmServer;
 import com.blockhaus2000.util.ArrayUtil;
 import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.PermissionUtil;
-import com.blockhaus2000.util.StackUtil;
 import com.blockhaus2000.util.StringUtil;
 import com.blockhaus2000.util.Tag;
 import com.blockhaus2000.util.command.CommandContext;
@@ -93,8 +92,8 @@ public class SimpleCommandManager implements CommandManager {
             assert Modifier.isStatic(targetMethod.getModifiers()) || obj != null : "The method \"" + targetMethod
                     + "\" is non-static and the given Object is null.";
             assert targetMethod.toString().split("\\(")[1].equals("com.blockhaus2000.util.command.CommandContext)") : "The "
-            + "arguments of the method \"" + targetMethod
-            + "\" are not correct. The only argument has to be \"CommandContext\"";
+                    + "arguments of the method \"" + targetMethod
+                    + "\" are not correct. The only argument has to be \"CommandContext\"";
 
             String[] flags = targetMethod.getAnnotation(Command.class).flags();
             for (String targetFlag : flags) {
@@ -103,7 +102,7 @@ public class SimpleCommandManager implements CommandManager {
                 }
 
                 assert targetFlag.matches(flagRegex) : "The flag \"" + targetFlag + "\" does not match the regex \"" + flagRegex
-                + "\"!";
+                        + "\"!";
             }
 
             for (String targetAlias : targetMethod.getAnnotation(Command.class).aliases()) {
@@ -276,9 +275,6 @@ public class SimpleCommandManager implements CommandManager {
         assert rawArgs != null : "RawArgs cannot be null!";
 
         List<String> args = new LinkedList<String>(rawArgs);
-
-        System.out.println("parseFlags (Caller: " + StackUtil.getCaller().getClassName() + "#"
-                + StackUtil.getCaller().getMethodName() + "): " + args);
 
         Map<Character, Tag<?>> flags = new HashMap<Character, Tag<?>>();
 
