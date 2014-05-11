@@ -5,16 +5,25 @@
   <artifactId>InternalPluginManager</artifactId>
   <name>InternalPluginManager</name>
   <version>1.7.2</version>
+  <description>An easy-to-use API that improves the command API from Bukkit. Also provides internal plugin management</description>
   <url>https://www.github.com/Blockhaus2000/InternalPluginManager/</url>
+  <issueManagement>
+    <system>MantisBT</system>
+    <url>http://issues.blockhaus2000.com/</url>
+  </issueManagement>
+  <inceptionYear>2014</inceptionYear>
+  <licenses>
+    <license>
+      <name>Apache License Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+    </license>
+  </licenses>
   <scm>
-    <connection>scm:git:git://github.com:Blockhaus2000/InternalPluginManager.git</connection>
+    <connection>scm:git:git://github.com/Blockhaus2000/InternalPluginManager.git</connection>
     <developerConnection>scm:git:git@github.com:Blockhaus2000/InternalPluginManager.git</developerConnection>
-    <url>https://github.com/Blockhaus2000/InternalPluginManager</url>
+    <tag>master</tag>
+    <url>https://www.github.com/Blockhaus2000/InternalPluginManager/</url>
   </scm>
-  <organization>
-    <name>Blockhaus2000</name>
-    <url>https://github.com/Blockhaus2000</url>
-  </organization>
   <build>
     <sourceDirectory>src/main/java</sourceDirectory>
     <testSourceDirectory>src/test/java</testSourceDirectory>
@@ -29,7 +38,13 @@
     </extensions>
     <resources>
       <resource>
-        <directory>src/main/resources</directory>
+        <directory>src/main/resources/</directory>
+        <excludes>
+          <exclude>plugin.yml</exclude>
+        </excludes>
+      </resource>
+      <resource>
+        <directory>target/generated-resources/</directory>
         <includes>
           <include>plugin.yml</include>
         </includes>
@@ -44,20 +59,6 @@
         <configuration>
           <source>1.6</source>
           <target>1.6</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-clean-plugin</artifactId>
-        <version>2.5</version>
-        <configuration>
-          <filesets>
-            <fileset>
-              <directory>${basedir}</directory>
-              <includes>
-                <include>jars/**</include>
-              </includes>
-            </fileset>
-          </filesets>
         </configuration>
       </plugin>
       <plugin>
@@ -120,6 +121,18 @@
           </archive>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>com.google.code.maven-replacer-plugin</groupId>
+        <artifactId>replacer</artifactId>
+        <version>1.5.3</version>
+        <configuration>
+          <file>src/main/resources/plugin.yml</file>
+          <outputFile>target/generated-resources/plugin.yml</outputFile>
+          <regex>false</regex>
+          <token>$project_version$</token>
+          <value>${project.version}</value>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <repositories>
@@ -148,19 +161,15 @@
       </exclusions>
     </dependency>
   </dependencies>
-  <reporting>
-    <plugins>
-      <plugin>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.9.1</version>
-      </plugin>
-    </plugins>
-  </reporting>
   <distributionManagement>
     <repository>
       <id>blockhaus2000-repo-ftp</id>
       <url>ftp://repo.blockhaus2000.com/</url>
     </repository>
+    <site>
+      <id>blockhaus2000-site-ftp</id>
+      <url>ftp://docs.blockhaus2000.com/internalpluginmanager/</url>
+    </site>
   </distributionManagement>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

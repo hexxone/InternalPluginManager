@@ -1,6 +1,4 @@
 name: InternalPluginManager
-version: 1.0-SNAPSHOT
+version: $project_version$
 main: com.blockhaus2000.main.bukkit.IpmMain
-author: Blockhaus2000, lobnews
-
-# Commands and Permissions are not here, sorry ;)
+author: Blockhaus2000
