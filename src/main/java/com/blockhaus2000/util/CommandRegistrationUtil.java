@@ -1,13 +1,13 @@
 /* This file is part of InternalPluginManager
- * 
+ *
  * Copyright 2014 Blockhaus2000
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,14 +23,14 @@ import com.blockhaus2000.minecraft.util.command.SimpleCommandManager;
 
 /**
  * This class is an util class to facilitate the command registration.
- * 
+ *
  * @author Blockhaus2000
  */
 public class CommandRegistrationUtil {
     /**
      * Registers all commands in the given {@link Class} with the given
      * {@link Object} for the given {@link Plugin}.
-     * 
+     *
      * @param clazz
      *            The {@link Class} where the commands are placed.
      * @param obj
@@ -51,7 +51,7 @@ public class CommandRegistrationUtil {
      * Registers commands. Will call
      * {@link CommandRegistrationUtil#registerCommands(Class, Object, Plugin)}
      * with <code>obj = null</code>.
-     * 
+     *
      * @param clazz
      *            The {@link Class} where the commands are placed.
      * @param plugin
@@ -67,7 +67,7 @@ public class CommandRegistrationUtil {
      * Registers commands. Will call
      * {@link CommandRegistrationUtil#registerCommands(Class, Object, Plugin)}
      * with the {@link Class} of the given {@link Object}.
-     * 
+     *
      * @param obj
      *            The {@link Object} where the commands are placed.
      * @param plugin

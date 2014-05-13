@@ -1,13 +1,13 @@
 /* This file is part of InternalPluginManager
- * 
+ *
  * Copyright 2014 Blockhaus2000
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,13 +24,13 @@ import org.bukkit.command.PluginIdentifiableCommand;
 /**
  * This will represent a {@link Command} that can be dynamicly registered in the
  * {@link DynamicPluginCommandManager}.
- * 
+ *
  * @author Blockhaus2000
  */
 public interface DynamicPluginCommand extends PluginIdentifiableCommand {
     /**
      * This will be callen if the command has be executed.
-     * 
+     *
      * @param sender
      *            The {@link CommandSender} that has executed the command.
      * @param label
@@ -45,7 +45,7 @@ public interface DynamicPluginCommand extends PluginIdentifiableCommand {
     public boolean execute(final CommandSender sender, final String label, final String[] args);
 
     /**
-     * 
+     *
      * @return The {@link CommandExecutor} for this command.
      */
     public CommandExecutor getExecutor();

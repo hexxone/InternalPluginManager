@@ -1,13 +1,13 @@
 /* This file is part of InternalPluginManager
- * 
+ *
  * Copyright 2014 Blockhaus2000
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,7 +25,7 @@ import org.bukkit.plugin.Plugin;
 
 /**
  * Represents a {@link DynamicPluginCommand}.
- * 
+ *
  * @author Blockhaus2000
  * @see org.bukkit.command.Command
  * @see com.blockhaus2000.bukkit.util.DynamicPluginCommand
@@ -37,7 +37,7 @@ public class SimpleDynamicPluginCommand extends Command implements DynamicPlugin
     /**
      * Instances a new {@link SimpleDynamicPluginCommand} with the given
      * arguments. Will call the super constructor.
-     * 
+     *
      * @param aliases
      *            Will be used in the <code>super</code>-call.
      * @param desc
@@ -58,7 +58,7 @@ public class SimpleDynamicPluginCommand extends Command implements DynamicPlugin
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.bukkit.command.Command#execute(org.bukkit.command.CommandSender,
      *      java.lang.String, java.lang.String[])
      * @see com.blockhaus2000.bukkit.util.DynamicPluginCommand#execute(org.bukkit.command.CommandSender,
@@ -71,7 +71,7 @@ public class SimpleDynamicPluginCommand extends Command implements DynamicPlugin
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.bukkit.util.DynamicPluginCommand#getExecutor()
      */
     @Override
@@ -81,7 +81,7 @@ public class SimpleDynamicPluginCommand extends Command implements DynamicPlugin
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.bukkit.command.PluginIdentifiableCommand#getPlugin()
      */
     @Override

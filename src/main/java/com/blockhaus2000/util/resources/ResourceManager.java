@@ -1,13 +1,13 @@
 /* This file is part of InternalPluginManager
- * 
+ *
  * Copyright 2014 Blockhaus2000
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * This class will initialize the resources from the given {@link Object}s. See
  * JavaDoc below to see the exact implementation.
- * 
+ *
  * @author Blockhaus2000
  */
 public class ResourceManager {
@@ -38,7 +38,7 @@ public class ResourceManager {
      * {@link MainPluginResource}). If one of the fields that have to be
      * initialized is non-static, the given {@link Object} cannot be
      * <code>null</code>.
-     * 
+     *
      * @param clazz
      *            The {@link Class} where the fields with the annotations are.
      * @param obj
@@ -52,7 +52,7 @@ public class ResourceManager {
      *             throw it.
      */
     public static void initializeResources(final Class<?> clazz, final Object obj) throws IllegalArgumentException,
-            IllegalAccessException {
+    IllegalAccessException {
         assert clazz != null : "The given class is null!";
 
         for (Field target : clazz.getDeclaredFields()) {
@@ -72,7 +72,7 @@ public class ResourceManager {
      * This method will call
      * {@link ResourceManager#initializeResources(Class, Object)}. See there for
      * the full JavaDoc.
-     * 
+     *
      * @param clazz
      *            The {@link Class} with the fields that has to be initialized.
      * @throws IllegalArgumentException
@@ -96,7 +96,7 @@ public class ResourceManager {
      * {@link MainPluginResource}). This method will call
      * {@link ResourceManager#initializeResources(Class, Object)}. See there for
      * the full JavaDoc.
-     * 
+     *
      * @param obj
      *            The {@link Object} with the field that has to be initialized.
      * @throws IllegalArgumentException
@@ -118,7 +118,7 @@ public class ResourceManager {
      * Adds a resource annotation and an object to use for this
      * {@link ResourceManager} (the usage if like the usage of the
      * {@link MainPluginResource} annotation).
-     * 
+     *
      * @param anot
      *            The resource-annotation.
      * @param obj
@@ -130,7 +130,7 @@ public class ResourceManager {
     }
 
     /**
-     * 
+     *
      * @return An instance of the {@link ResourceManager}.
      */
     public static ResourceManager getInstance() {

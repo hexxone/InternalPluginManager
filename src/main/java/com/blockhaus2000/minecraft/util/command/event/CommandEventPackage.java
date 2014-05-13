@@ -1,13 +1,13 @@
 /* This file is part of InternalPluginManager
- * 
+ *
  * Copyright 2014 Blockhaus2000
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,7 +28,7 @@ import org.bukkit.event.HandlerList;
  * hold a bunch of {@link CommandEvent}s that are fired within a command
  * execution. Use this and not the raw {@link CommandEvent}s to handle
  * {@link CommandEvent}s.
- * 
+ *
  * @author Blockhaus2000
  */
 public class CommandEventPackage extends Event implements Iterable<CommandEvent<?>> {
@@ -39,7 +39,7 @@ public class CommandEventPackage extends Event implements Iterable<CommandEvent<
     /**
      * Instances a new {@link CommandEventPackage} with the given
      * {@link CommandEvent}-{@link List}.
-     * 
+     *
      * @param events
      *            The events that are fired in the command execution.
      */
@@ -49,7 +49,7 @@ public class CommandEventPackage extends Event implements Iterable<CommandEvent<
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see java.lang.Iterable#iterator()
      */
     @Override
@@ -58,7 +58,7 @@ public class CommandEventPackage extends Event implements Iterable<CommandEvent<
     }
 
     /**
-     * 
+     *
      * @return All events that are fired in the command execution.
      */
     public List<CommandEvent<?>> getEvents() {
@@ -67,7 +67,7 @@ public class CommandEventPackage extends Event implements Iterable<CommandEvent<
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.bukkit.event.Event#getHandlers()
      */
     @Override
@@ -76,7 +76,7 @@ public class CommandEventPackage extends Event implements Iterable<CommandEvent<
     }
 
     /**
-     * 
+     *
      * @return The {@link HandlerList} of this {@link Event}.
      */
     public static HandlerList getHandlerList() {

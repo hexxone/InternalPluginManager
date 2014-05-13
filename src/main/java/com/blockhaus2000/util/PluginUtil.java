@@ -1,13 +1,13 @@
 /* This file is part of InternalPluginManager
- * 
+ *
  * Copyright 2014 Blockhaus2000
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,7 +25,7 @@ import org.bukkit.plugin.PluginManager;
 /**
  * This class is a utility class for easy disableing and enabling of Bukkit (!)
  * plugins.
- * 
+ *
  * @author Blockhaus2000
  */
 public class PluginUtil {
@@ -34,7 +34,7 @@ public class PluginUtil {
      * messages are send with the usage of
      * {@link ChatOut#log(java.util.Collection)}. Will call
      * {@link PluginManager#disablePlugin(org.bukkit.plugin.Plugin)}
-     * 
+     *
      * @param plugin
      *            The plugin that has to be disabled.
      * @param messages
@@ -51,7 +51,7 @@ public class PluginUtil {
      * Disables the given plugin. Will call
      * {@link PluginUtil#disable(Plugin, Collection)} with
      * <code>messages = null</code>.
-     * 
+     *
      * @param plugin
      *            The plugin that has to be disabled.
      * @see com.blockhaus2000.util.PluginUtil#disable(org.bukkit.plugin.Plugin,
@@ -66,7 +66,7 @@ public class PluginUtil {
      * messages are send with the usage of
      * {@link ChatOut#log(java.util.Collection)}. Will call
      * {@link PluginManager#enablePlugin(org.bukkit.plugin.Plugin)}
-     * 
+     *
      * @param plugin
      *            The plugin that has to be disabled.
      * @param messages
@@ -83,7 +83,7 @@ public class PluginUtil {
      * Enables the given plugin. Will call
      * {@link PluginUtil#enable(Plugin, Collection)} with
      * <code>messages = null</code>.
-     * 
+     *
      * @param plugin
      *            The plugin that has to be disabled.
      * @see com.blockhaus2000.util.PluginUtil#enable(org.bukkit.plugin.Plugin,

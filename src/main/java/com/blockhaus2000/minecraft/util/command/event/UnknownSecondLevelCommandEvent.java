@@ -1,13 +1,13 @@
 /* This file is part of InternalPluginManager
- * 
+ *
  * Copyright 2014 Blockhaus2000
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,7 +24,7 @@ import com.blockhaus2000.util.command.RawCommandContext;
 /**
  * This {@link CommandEvent} will be fired if a command has been executed but
  * the second-level-command does not match.
- * 
+ *
  * @author Blockhaus2000
  */
 public class UnknownSecondLevelCommandEvent extends CommandEvent<RawCommandContext> {
@@ -33,7 +33,7 @@ public class UnknownSecondLevelCommandEvent extends CommandEvent<RawCommandConte
     /**
      * Instances a new {@link UnknownSecondLevelCommandEvent} of the given
      * {@link RawCommandContext}.
-     * 
+     *
      * @param command
      *            The {@link RawCommandContext} where the event has been fired
      *            in the execution.
@@ -44,7 +44,7 @@ public class UnknownSecondLevelCommandEvent extends CommandEvent<RawCommandConte
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see org.bukkit.event.Event#getHandlers()
      */
     @Override
@@ -53,7 +53,7 @@ public class UnknownSecondLevelCommandEvent extends CommandEvent<RawCommandConte
     }
 
     /**
-     * 
+     *
      * @return The {@link HandlerList} of this {@link Event}.
      */
     public static HandlerList getHandlerList() {

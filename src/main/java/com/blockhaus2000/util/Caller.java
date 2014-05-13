@@ -1,13 +1,13 @@
 /* This file is part of InternalPluginManager
- * 
+ *
  * Copyright 2014 Blockhaus2000
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,7 +19,7 @@ package com.blockhaus2000.util;
 /**
  * This class represents a caller (for use in the {@link StackUtil}). It
  * contains the name of the class that contains the caller method.
- * 
+ *
  * @author Blockhaus2000
  */
 public class Caller {
@@ -28,7 +28,7 @@ public class Caller {
 
     /**
      * Instances a new {@link Caller}.
-     * 
+     *
      * @param className
      *            The name of the class that contains the caller method name.
      * @param methodName
@@ -40,7 +40,7 @@ public class Caller {
     }
 
     /**
-     * 
+     *
      * @return The name of the class that contains the caller method.
      */
     public String getClassName() {
@@ -48,7 +48,7 @@ public class Caller {
     }
 
     /**
-     * 
+     *
      * @return The name of the caller method.
      */
     public String getMethodName() {

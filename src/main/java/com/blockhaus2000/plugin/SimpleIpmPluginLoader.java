@@ -1,13 +1,13 @@
 /* This file is part of InternalPluginManager
- * 
+ *
  * Copyright 2014 Blockhaus2000
- * 
+ *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -41,7 +41,7 @@ import com.blockhaus2000.util.resources.ResourceManager;
 
 /**
  * An implementation of {@link IpmPluginLoader}.
- * 
+ *
  * @author Blockhaus2000
  */
 public class SimpleIpmPluginLoader implements IpmPluginLoader {
@@ -67,7 +67,7 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginLoader#load(java.io.File)
      */
     @Override
@@ -162,7 +162,7 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginLoader#load(java.lang.String)
      */
     @Override
@@ -172,7 +172,7 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginLoader#loadAll()
      */
     @Override
@@ -192,7 +192,7 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginLoader#getClassByName(java.lang.String)
      */
     @Override
@@ -213,7 +213,7 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see com.blockhaus2000.plugin.IpmPluginLoader#getClassLoader(com.blockhaus2000.plugin.IpmPlugin)
      */
     @Override
@@ -224,13 +224,13 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
     /**
      * This will do some magic to add an {@link IpmPlugin} to Bukkit's plugin
      * list that use will see if you execute the command <code>/plugins</code>.
-     * 
+     *
      * <p>
      * <b> NOTE: This uses reflection a lot and some other tricks and it will
      * not work in the future propably, so EVERY {@link Throwable} will be
      * catched and fails silent. </b>
      * </p>
-     * 
+     *
      * @param ipmPlugin
      *            The {@link IpmPlugin} to register to Bukkit's plugin list.
      */
@@ -258,7 +258,7 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
 
     /**
      * Will provide singleton.
-     * 
+     *
      * @return An instance of {@link SimpleIpmServer}.
      */
     public static IpmPluginLoader getInstance() {
