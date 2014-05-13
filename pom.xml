@@ -131,7 +131,7 @@
 	<build>
 		<directory>target</directory>
 		<outputDirectory>target/classes</outputDirectory>
-		<finalName>${project.artifactId}_${project.version}</finalName>
+		<finalName>${project.artifactId}_v${project.version}-${buildNumber}</finalName>
 		<testOutputDirectory>target/test-classes</testOutputDirectory>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<testSourceDirectory>src/test/java</testSourceDirectory>
@@ -234,6 +234,106 @@
 					<regex>false</regex>
 					<token>$project_version$</token>
 					<value>${project.version}</value>
+				</configuration>
+			</plugin>
+
+			<!-- Check style -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.12</version>
+				<executions>
+					<execution>
+						<id>verify-style</id>
+						<!--phase>validate</phase-->
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<consoleOutput>true</consoleOutput>
+					<failsOnError>true</failsOnError>
+					<logViolationsToConsole>true</logViolationsToConsole>
+
+					<checkstyleRules>
+						<module name="Checker">
+							<!-- Do not use tabs! -->
+							<module name="FileTabCharacter" />
+
+							<module name="TreeWalker">
+								<module name="OuterTypeFilename" />
+
+								<!-- Utility classes will not have a constructor -->
+								<module name="HideUtilityClassConstructor" />
+								<module name="CovariantEquals" />
+
+								<!-- You have to implement both equals() and hashCode() -->
+								<module name="EqualsHashCode" />
+
+								<module name="NestedTryDepth">
+									<property name="max" value="2" />
+								</module>
+
+								<!-- If you override finalize(), you have to call super.finalize() -->
+								<module name="SuperFinalize" />
+								<module name="JUnitTestCase" />
+
+								<!-- Left curly braces never goes to a new line -->
+								<module name="LeftCurly">
+									<property name="option" value="eol" />
+								</module>
+
+								<!-- In a switch...case structure, the default case comes at the end -->
+								<module name="DefaultComesLast" />
+
+								<module name="GenericWhitespace" />
+
+								<!-- You have to follow these contributions! -->
+								<module name="ClassTypeParameterName">
+									<property name="format" value="^[A-Z][a-zA-Z0-9]*$" />
+								</module>
+								<module name="LocalFinalVariableName" />
+								<module name="LocalVariableName">
+									<property name="format" value="^[a-z_][a-zA-Z0-9]*$" />
+								</module>
+								<module name="MemberName">
+									<property name="format" value="^[a-z_][a-zA-Z0-9]*$" />
+								</module>
+								<module name="MethodName">
+									<property name="format" value="^(_INVALID_)?[a-z][a-zA-Z0-9]*$" />
+								</module>
+								<module name="ParameterName" />
+							</module>
+
+							<!-- Please include the header in each file! -->
+							<module name="Header">
+								<property name="headerFile" value="src/main/build/header.txt" />
+								<property name="fileExtensions" value="java" />
+							</module>
+						</module>
+					</checkstyleRules>
+				</configuration>
+			</plugin>
+
+			<!-- Generate build numbers -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>1.3</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<!--doCheck>false</doCheck>
+					<doUpdate>true</doUpdate-->
+					<item>timestamp</item>
+					<shortRevisionLength>5</shortRevisionLength>
 				</configuration>
 			</plugin>
 
