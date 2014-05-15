@@ -35,6 +35,11 @@ public class DynamicPluginCommandManagerFactory {
     @MainPluginResource
     private static IpmMain main;
 
+    private DynamicPluginCommandManagerFactory() {
+        // Utility classes should not have a public, protected or visible
+        // constructor.
+    }
+
     static {
         try {
             ResourceManager.initializeResources(DynamicPluginCommandManagerFactory.class);

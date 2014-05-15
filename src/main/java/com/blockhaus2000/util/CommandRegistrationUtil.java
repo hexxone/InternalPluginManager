@@ -27,6 +27,11 @@ import com.blockhaus2000.minecraft.util.command.SimpleCommandManager;
  * @author Blockhaus2000
  */
 public class CommandRegistrationUtil {
+    private CommandRegistrationUtil() {
+        // Utility classes should not have a public, protected or visible
+        // constructor.
+    }
+
     /**
      * Registers all commands in the given {@link Class} with the given
      * {@link Object} for the given {@link Plugin}.

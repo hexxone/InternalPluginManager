@@ -29,6 +29,11 @@ import org.bukkit.plugin.PluginManager;
  * @author Blockhaus2000
  */
 public class PluginUtil {
+    private PluginUtil() {
+        // Utility classes should not have a public, protected or visible
+        // constructor.
+    }
+
     /**
      * Disables the given {@link Plugin} and sends the given messages. The
      * messages are send with the usage of

@@ -27,6 +27,11 @@ import java.util.List;
  * @author Blockhaus2000
  */
 public class StringUtil {
+    private StringUtil() {
+        // Utility classes should not have a public, protected or visible
+        // constructor.
+    }
+
     /**
      * Joins the give {@link List} to a {@link String}. The given delemiter will
      * be placed between the entrys of the given {@link List}. The index is the

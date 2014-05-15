@@ -33,6 +33,11 @@ public final class ExceptionHandler {
     @MainPluginResource
     private static IpmMain main;
 
+    private ExceptionHandler() {
+        // Utility classes should not have a public, protected or visible
+        // constructor.
+    }
+
     // /**
     // * Checks that a valid call (with {@link ExceptionHandler#main} is not
     // * <code>null</code>) is possible.

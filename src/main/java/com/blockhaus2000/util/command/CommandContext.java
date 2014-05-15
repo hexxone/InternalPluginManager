@@ -1,4 +1,4 @@
-/* This filejava is part of InternalPluginManager
+/* This file is part of InternalPluginManager
  *
  * Copyright 2014 Blockhaus2000
  *

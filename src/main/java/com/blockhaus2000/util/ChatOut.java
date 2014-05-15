@@ -34,6 +34,11 @@ import org.bukkit.entity.Player;
 public class ChatOut {
     private static Logger logger = Bukkit.getServer().getLogger();
 
+    private ChatOut() {
+        // Utility classes should not have a public, protected or visible
+        // constructor.
+    }
+
     /**
      * Logs the given message with the given {@link Level}.
      *

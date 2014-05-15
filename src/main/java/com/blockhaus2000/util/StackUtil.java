@@ -22,6 +22,11 @@ package com.blockhaus2000.util;
  * @author Blockhaus2000
  */
 public class StackUtil {
+    private StackUtil() {
+        // Utility classes should not have a public, protected or visible
+        // constructor.
+    }
+
     /**
      *
      * @return The {@link Caller} of the method that calls this method.

@@ -28,6 +28,11 @@ import com.blockhaus2000.bukkit.util.SimpleDynamicPluginCommand;
  * @author Blockhaus2000
  */
 public class PermissionUtil {
+    private PermissionUtil() {
+        // Utility classes should not have a public, protected or visible
+        // constructor.
+    }
+
     /**
      * Checks that the given {@link CommandSender} has the given permission.
      *

@@ -28,6 +28,11 @@ import java.util.List;
  * @author Blockhaus2000
  */
 public class ArrayUtil {
+    private ArrayUtil() {
+        // Utility classes should not have a public, protected or visible
+        // constructor.
+    }
+
     /**
      * Converts the given {@link Collection} to an {@link String}[]. To convert
      * the content to a string this will call {@link Object#toString()} or, with

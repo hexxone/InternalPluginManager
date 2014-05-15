@@ -25,6 +25,11 @@ import com.blockhaus2000.plugin.SimpleIpmServer;
  * @author Blockhaus2000
  */
 public class InternalPluginManager {
+    private InternalPluginManager() {
+        // Utility classes should not have a public, protected or visible
+        // constructor.
+    }
+
     /**
      *
      * @return An {@link IpmServer}.

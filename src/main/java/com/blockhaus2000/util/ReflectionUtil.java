@@ -24,6 +24,11 @@ import java.lang.reflect.Field;
  * @author Blockhaus2000
  */
 public class ReflectionUtil {
+    private ReflectionUtil() {
+        // Utility classes should not have a public, protected or visible
+        // constructor.
+    }
+
     /**
      * Searchs in the given {@link Class} for the given field name. if it is not
      * found, it will search in the superclass and so on, until the superclass
@@ -61,7 +66,7 @@ public class ReflectionUtil {
 
                 /*
                  * This fails silent.
-                 *
+                 * 
                  * Se JavaDoc for explanation.
                  */
             }
@@ -103,7 +108,7 @@ public class ReflectionUtil {
         } catch (Exception e) {
             /*
              * This fails silent.
-             *
+             * 
              * This is because thid method does not throw any exception
              * (excepted IllegalArgumentException), because it returns null if
              * nothing can be found.
