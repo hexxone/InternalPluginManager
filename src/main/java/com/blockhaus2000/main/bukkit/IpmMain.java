@@ -18,9 +18,12 @@ package com.blockhaus2000.main.bukkit;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.blockhaus2000.plugin.IpmPlugin;
 import com.blockhaus2000.plugin.SimpleIpmPluginLoader;
 import com.blockhaus2000.plugin.SimpleIpmPluginManager;
 import com.blockhaus2000.plugin.exception.PluginException;
+import com.blockhaus2000.test.TestMain;
+import com.blockhaus2000.util.CommandRegistrationUtil;
 import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.PluginUtil;
 import com.blockhaus2000.util.resources.MainPluginResource;
@@ -37,7 +40,7 @@ public class IpmMain extends JavaPlugin {
     private static IpmMain instance;
 
     // Only for Testing (has to be commented for a release)
-    // private final IpmPlugin ipmTestPlugin = new TestMain();
+    private final IpmPlugin ipmTestPlugin = new TestMain();
 
     @SuppressWarnings("javadoc")
     public IpmMain() {
@@ -49,7 +52,7 @@ public class IpmMain extends JavaPlugin {
 
         IpmMain.instance = this;
 
-        // CommandRegistrationUtil.registerCommands(new Commands(), this);
+        CommandRegistrationUtil.registerCommands(new Commands(), this);
     }
 
     /**
@@ -61,7 +64,7 @@ public class IpmMain extends JavaPlugin {
         SimpleIpmPluginManager.getInstance().unregisterAll();
 
         // Only for Testing (has to be commented for a release)
-        // ipmTestPlugin.onDisable();
+        ipmTestPlugin.onDisable();
     }
 
     /**
@@ -88,7 +91,7 @@ public class IpmMain extends JavaPlugin {
         SimpleIpmPluginManager.getInstance().enableAll();
 
         // Only for Testing (has to be commented for a release)
-        // ipmTestPlugin.onEnable();
+        ipmTestPlugin.onEnable();
     }
 
     /**
@@ -97,7 +100,7 @@ public class IpmMain extends JavaPlugin {
     @Override
     public void onLoad() {
         // Only for Testing (has to be commented for a release)
-        // ipmTestPlugin.onLoad();
+        ipmTestPlugin.onLoad();
     }
 
     /**

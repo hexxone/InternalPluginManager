@@ -53,6 +53,7 @@ import com.blockhaus2000.util.Tag;
 import com.blockhaus2000.util.command.CommandContext;
 import com.blockhaus2000.util.command.CommandInfo;
 import com.blockhaus2000.util.command.CommandSyntax;
+import com.blockhaus2000.util.command.CommandSyntaxType;
 import com.blockhaus2000.util.command.ContextData;
 import com.blockhaus2000.util.command.RawCommandContext;
 
@@ -65,7 +66,9 @@ import com.blockhaus2000.util.command.RawCommandContext;
 public class SimpleCommandManager implements CommandManager {
     private static SimpleCommandManager instance;
 
-    private final String flagRegex = "[a-zA-Z]:?";
+    private final String flagRegex = "^[a-zA-Z](:("
+            + StringUtil.joinString("|", ArrayUtil.toStringArray(Arrays.asList(CommandSyntaxType.values()))).replace(".", "\\.")
+                    .toLowerCase() + ")?)?$";
     private final Map<String, ArrayList<CommandInfo>> cmds = new HashMap<String, ArrayList<CommandInfo>>();
 
     private SimpleCommandManager() {
@@ -95,17 +98,20 @@ public class SimpleCommandManager implements CommandManager {
                     + "arguments of the method \"" + targetMethod
                     + "\" are not correct. The only argument has to be \"CommandContext\"";
 
-            String[] flags = targetMethod.getAnnotation(Command.class).flags();
-            for (String targetFlag : flags) {
+            Command cmdAnot = targetMethod.getAnnotation(Command.class);
+
+            for (String targetFlag : cmdAnot.flags()) {
                 if (targetFlag.length() == 0) {
                     continue;
                 }
 
+                targetFlag = targetFlag.trim().toLowerCase()
+                        .replace("string...", CommandSyntaxType.STRING_VARARG.toString().toLowerCase());
                 assert targetFlag.matches(flagRegex) : "The flag \"" + targetFlag + "\" does not match the regex \"" + flagRegex
                         + "\"!";
             }
 
-            for (String targetAlias : targetMethod.getAnnotation(Command.class).aliases()) {
+            for (String targetAlias : cmdAnot.aliases()) {
                 if (targetAlias.equals("")) {
                     continue;
                 }
@@ -114,13 +120,12 @@ public class SimpleCommandManager implements CommandManager {
                     cmds.put(targetAlias, new ArrayList<CommandInfo>());
                 }
 
-                Command cmdAnot = targetMethod.getAnnotation(Command.class);
                 CommandInfo commandInfo = new CommandInfo(cmdAnot, clazz, obj, targetMethod, new CommandSyntax(cmdAnot.syntax()));
-
-                registered.add(commandInfo);
 
                 cmds.get(targetAlias).add(commandInfo);
                 Collections.sort(cmds.get(targetAlias));
+
+                registered.add(commandInfo);
             }
         }
 
@@ -190,7 +195,7 @@ public class SimpleCommandManager implements CommandManager {
             final boolean secondLevelCmdSet = cmdAnot.secondLevelCommand().length() != 0;
 
             if (secondLevelCmdSet) {
-                if (cmdAnot.secondLevelCommand().equalsIgnoreCase(bArgs[0])) {
+                if (bArgs.length >= 1 && cmdAnot.secondLevelCommand().equalsIgnoreCase(bArgs[0])) {
                     List<String> tempArgs = new LinkedList<String>(Arrays.asList(bArgs));
                     tempArgs.remove(0);
                     bArgs = ArrayUtil.toStringArray(tempArgs);
@@ -242,7 +247,7 @@ public class SimpleCommandManager implements CommandManager {
             } catch (IllegalAccessException ex) {
                 ExceptionHandler.handle(ex);
             } catch (InvocationTargetException ex) {
-                throw new CommandException("An exception is throw in the called method!", ex);
+                throw new CommandException("An exception is thrown in the called method!", ex);
             }
         }
 
@@ -257,7 +262,8 @@ public class SimpleCommandManager implements CommandManager {
         return executed;
     }
 
-    private ContextData parseCommand(final CommandInfo cmd, final List<String> rawArgs) {
+    private ContextData parseCommand(final CommandInfo cmd, final List<String> rawArgs) throws IndexOutOfBoundsException,
+            NumberFormatException {
         assert cmd != null : "Cmd cannot be null!";
         assert rawArgs != null : "RawArgs cannot be null!";
 
@@ -266,11 +272,13 @@ public class SimpleCommandManager implements CommandManager {
         return parseArguments(cmd, contextData.getArgs(), contextData.getFlags());
     }
 
-    private ContextData parseCommand(final CommandInfo cmd, final String... args) {
+    private ContextData parseCommand(final CommandInfo cmd, final String... args) throws IndexOutOfBoundsException,
+            NumberFormatException {
         return parseCommand(cmd, Arrays.asList(args));
     }
 
-    private ContextData parseFlags(final CommandInfo cmd, final List<String> rawArgs) throws IndexOutOfBoundsException {
+    private ContextData parseFlags(final CommandInfo cmd, final List<String> rawArgs) throws IndexOutOfBoundsException,
+            NumberFormatException {
         assert cmd != null : "Cmd cannot be null!";
         assert rawArgs != null : "RawArgs cannot be null!";
 
@@ -290,11 +298,52 @@ public class SimpleCommandManager implements CommandManager {
 
             flags.put(flagIndex, null);
 
-            if (target.endsWith(":")) {
+            if (target.contains(":")) {
                 if (args.contains(argFlag)) {
                     int valueIndex = args.indexOf(argFlag) + 1;
 
-                    flags.put(flagIndex, new Tag<String>(args.get(valueIndex)));
+                    final String value = args.get(valueIndex).trim();
+
+                    final String[] splitted = target.split(":");
+                    switch (CommandSyntaxType.getTypeByString(splitted.length == 1 ? "String" : splitted[1])) {
+                    case DOUBLE:
+                        flags.put(flagIndex, new Tag<Double>(Double.parseDouble(value)));
+                        break;
+                    case INTEGER:
+                        flags.put(flagIndex, new Tag<Integer>(Integer.parseInt(value)));
+                        break;
+                    case LONG:
+                        flags.put(flagIndex, new Tag<Long>(Long.parseLong(value)));
+                        break;
+                    case STRING:
+                        flags.put(flagIndex, new Tag<String>(value));
+                        break;
+                    case STRING_VARARG:
+                        if (!value.startsWith("\"")) {
+                            flags.put(flagIndex, new Tag<String>(value));
+                            break;
+                        }
+
+                        final List<String> values = new ArrayList<String>();
+
+                        for (int i = valueIndex; i < args.size(); i++) {
+                            final String targetValue = args.get(i);
+                            values.add(targetValue);
+
+                            if (targetValue.endsWith("\"")) {
+                                break;
+                            }
+                        }
+
+                        for (int i = 0; i < values.size() - 1; i++) {
+                            args.remove(valueIndex);
+                        }
+
+                        flags.put(flagIndex,
+                                new Tag<String>(StringUtil.joinString(" ", ArrayUtil.toStringArray(values)).replace("\"", "")));
+                        break;
+                    }
+
                     found = true;
 
                     args.remove(valueIndex);
@@ -315,11 +364,13 @@ public class SimpleCommandManager implements CommandManager {
         return new ContextData(ArrayUtil.toStringArray(args), flags);
     }
 
-    private ContextData parseFlags(final CommandInfo cmd, final String[] args) throws IndexOutOfBoundsException {
+    private ContextData parseFlags(final CommandInfo cmd, final String[] args) throws IndexOutOfBoundsException,
+            NumberFormatException {
         return parseFlags(cmd, Arrays.asList(args));
     }
 
-    private ContextData parseArguments(final CommandInfo cmd, final String[] rawArgsArray, final Map<Character, Tag<?>> flags) {
+    private ContextData parseArguments(final CommandInfo cmd, final String[] rawArgsArray, final Map<Character, Tag<?>> flags)
+            throws IndexOutOfBoundsException, NumberFormatException {
         assert cmd != null : "Cmd cannot be null!";
         assert rawArgsArray != null : "RawArgsArray cannot be null!";
         assert flags != null : "Flags cannot be null!";
@@ -335,18 +386,20 @@ public class SimpleCommandManager implements CommandManager {
             }
         } else {
             for (int i = 0; i < syntax.getSyntax().size(); i++) {
+                final String arg = rawArgs.get(i).trim();
+
                 switch (syntax.getSyntax().get(i)) {
                 case DOUBLE:
-                    args.add(new Tag<Double>(Double.valueOf(rawArgs.get(i).trim())));
+                    args.add(new Tag<Double>(Double.valueOf(arg)));
                     break;
                 case INTEGER:
-                    args.add(new Tag<Integer>(Integer.valueOf(rawArgs.get(i).trim())));
+                    args.add(new Tag<Integer>(Integer.valueOf(arg)));
                     break;
                 case LONG:
-                    args.add(new Tag<Long>(Long.valueOf(rawArgs.get(i).trim())));
+                    args.add(new Tag<Long>(Long.valueOf(arg)));
                     break;
                 case STRING:
-                    args.add(new Tag<String>(rawArgs.get(i).trim()));
+                    args.add(new Tag<String>(arg));
                     break;
                 case STRING_VARARG:
                     args.add(new Tag<String>(StringUtil.joinString(i, " ", rawArgs)));
@@ -358,7 +411,8 @@ public class SimpleCommandManager implements CommandManager {
         return new ContextData(args, flags);
     }
 
-    private ContextData parseArguments(final CommandInfo cmd, final List<Tag<?>> rawArgs, final Map<Character, Tag<?>> flags) {
+    private ContextData parseArguments(final CommandInfo cmd, final List<Tag<?>> rawArgs, final Map<Character, Tag<?>> flags)
+            throws IndexOutOfBoundsException, NumberFormatException {
         List<String> args = new ArrayList<String>();
 
         for (Tag<?> target : rawArgs) {

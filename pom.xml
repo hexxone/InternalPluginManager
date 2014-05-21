@@ -4,7 +4,7 @@
 
 	<groupId>com.blockhaus2000</groupId>
 	<artifactId>InternalPluginManager</artifactId>
-	<version>1.7.2</version>
+	<version>1.8.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<!-- Fix encoding warnings -->

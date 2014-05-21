@@ -16,6 +16,9 @@
  */
 package com.blockhaus2000.test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,6 +29,7 @@ import com.blockhaus2000.minecraft.util.command.event.CommandEventPackage;
 import com.blockhaus2000.plugin.SimpleIpmPlugin;
 import com.blockhaus2000.util.CommandRegistrationUtil;
 import com.blockhaus2000.util.ExceptionHandler;
+import com.blockhaus2000.util.StringUtil;
 import com.blockhaus2000.util.resources.MainPluginResource;
 import com.blockhaus2000.util.resources.ResourceManager;
 
@@ -60,8 +64,12 @@ public class TestMain extends SimpleIpmPlugin implements Listener {
 
     @EventHandler
     public void onCommandEventPackage(final CommandEventPackage eventPackage) {
+        final List<String> events = new ArrayList<String>();
+
         for (CommandEvent<?> target : eventPackage) {
-            System.out.println(target.getEventName());
+            events.add(target.getEventName());
         }
+
+        System.out.println("Events: <" + StringUtil.joinString(",", events) + ">");
     }
 }
