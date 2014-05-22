@@ -27,11 +27,11 @@ import com.blockhaus2000.util.command.CommandContext;
 @SuppressWarnings("javadoc")
 public class TestCommands {
     @Command(aliases = { "test", "t" },
-            desc = "Do something :D",
-            permission = "ipmtest.test",
-            secondLevelCommand = "sl1",
-            flags = { "l", "m:", "i:Integer", "v:String..." },
-            syntax = "String...")
+             desc = "Do something :D",
+             permission = "ipmtest.test",
+             secondLevelCommand = "sl1",
+             flags = { "l", "m:", "i:Integer", "v:String...", "test:miauu" },
+             syntax = "String...")
     public void testCommandOne(final CommandContext context) {
         System.out.println(context.getLabel() + "1");
 
@@ -47,8 +47,8 @@ public class TestCommands {
     }
 
     @Command(aliases = { "test2", "t" },
-            desc = "Do something 2 :D",
-            secondLevelCommand = "sl2")
+             desc = "Do something 2 :D",
+             secondLevelCommand = "sl2")
     public void testCommand2(final CommandContext context) {
         System.out.println(context.getLabel() + "2");
 

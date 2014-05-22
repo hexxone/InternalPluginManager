@@ -29,6 +29,7 @@ import com.blockhaus2000.minecraft.util.command.event.IllegalSyntaxType;
 import com.blockhaus2000.minecraft.util.command.event.NoPermissionCommandEvent;
 import com.blockhaus2000.minecraft.util.command.event.NotEnoughArgumentsCommandEvent;
 import com.blockhaus2000.minecraft.util.command.event.TooManyArgumentsCommandEvent;
+import com.blockhaus2000.tagstoragesystem.Tag;
 
 /**
  * The annotation is used to tag methods, so they will be detected from the
@@ -129,7 +130,17 @@ public @interface Command {
      * be thrown with the type {@link IllegalSyntaxType#UNAVAILABLE_FLAG_VALUE}.
      *
      * <p>
-     * <b> NOTE: Flags have to matches the regex <code>[A-Za-z]:?</code>. </b>
+     * You can also enter a string that represents a type the value has to be.
+     * Available types are Integer, Double, String and String_VarArg
+     * (String...). If you use the String VarArg, the value has to be included
+     * in quotation marks (<code>""</code>) whilest the execution. The quotation
+     * marks will be removed in the available data stored in a {@link Tag}.
+     * </p>
+     *
+     * <p>
+     * <b> NOTE: Flags have to matches the regex
+     * <code>^[a-zA-Z](:(string|string_vararg|long|integer|double|string\.\.\.)?)?$</code>
+     * . </b>
      * </p>
      *
      * @return A {@link String}[] of flags for this command.

@@ -4,12 +4,19 @@
 
 	<groupId>com.blockhaus2000</groupId>
 	<artifactId>InternalPluginManager</artifactId>
-	<version>1.8.0-SNAPSHOT</version>
+	<version>1.8.0</version>
 	<packaging>jar</packaging>
 
-	<!-- Fix encoding warnings -->
+	<!-- Some important project properties -->
 	<properties>
+		<!-- Fix encoding warings -->
                 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<!-- The Bukkit version to use -->
+		<project.properties.bukkitVersion>1.7.9-R0.2-SNAPSHOT</project.properties.bukkitVersion>
+
+		<!-- The CraftBukkit jar name -->
+		<project.properties.craftbukkitJarName>craftbukkit-1.7.9-R0.2-20140520.082451-2.jar</project.properties.craftbukkitJarName>
         </properties>
 
 
@@ -87,7 +94,7 @@
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
-			<version>1.7.5-R0.1-SNAPSHOT</version>
+			<version>${project.properties.bukkitVersion}</version>
 			<scope>compile</scope>
 		</dependency>
 
@@ -176,6 +183,36 @@
 				<configuration>
 					<parallel>methods</parallel>
 					<threadCount>10</threadCount>
+				</configuration>
+			</plugin>
+
+			<!-- We want to test some commands within a Bukkit server -->
+			<plugin>
+				<groupId>com.blockhaus2000</groupId>
+				<artifactId>bukkit-tester-maven-plugin</artifactId>
+				<version>1.0</version>
+				<configuration>
+					<executionDirectory>target/dist/</executionDirectory>
+					<craftbukkitURL>http://repo.bukkit.org/content/repositories/public/org/bukkit/craftbukkit/${project.properties.bukkitVersion}/${project.properties.craftbukkitJarName}</craftbukkitURL>
+					<craftbukkitFile>cache/${project.properties.craftbukkitJarName}</craftbukkitFile>
+
+					<!-- We do not want this until we have real tests :) -->
+					<failOnTestFailure>false</failOnTestFailure>
+
+					<plugins>
+						<plugin>target/${project.artifactId}_v${project.version}-${buildNumber}.jar</plugin>
+					</plugins>
+					<testCommands>
+						<testCommand>plugins</testCommand>
+					</testCommands>
+					<successfulIndicators>
+						<successfulIndicator>[TEST SUCCESSFUL]</successfulIndicator>
+						<!-- This is only a dummy indicator until we have real tests :) -->
+						<successfulIndicator>InternalPluginManager</successfulIndicator>
+					</successfulIndicators>
+					<failureIndicators>
+						<failureIndicator>[TEST FAILED]</failureIndicator>
+					</failureIndicators>
 				</configuration>
 			</plugin>
 
