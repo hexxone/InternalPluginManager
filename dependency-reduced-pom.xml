@@ -4,7 +4,7 @@
   <groupId>com.blockhaus2000</groupId>
   <artifactId>InternalPluginManager</artifactId>
   <name>InternalPluginManager</name>
-  <version>1.8.0-SNAPSHOT</version>
+  <version>1.8.0</version>
   <description>An easy-to-use API that improves the command API from Bukkit. Also provides internal plugin management</description>
   <url>https://www.github.com/Blockhaus2000/InternalPluginManager/</url>
   <issueManagement>
@@ -93,11 +93,26 @@
             <plugin>target/${project.artifactId}_v${project.version}-${buildNumber}.jar</plugin>
           </plugins>
           <testCommands>
-            <testCommand>plugins</testCommand>
+            <testCommand>internalpluginmanager debug</testCommand>
+            <testCommand>testcase1</testCommand>
+            <testCommand>testcase2</testCommand>
+            <testCommand>testcase3 arg0</testCommand>
+            <testCommand>testcase4 arg0 arg1</testCommand>
+            <testCommand>testcase5 arg0</testCommand>
+            <testCommand>testcase6</testCommand>
+            <testCommand>testcase7 -a</testCommand>
+            <testCommand>testcase8 -b</testCommand>
+            <testCommand>testcase9 -b flag-b</testCommand>
+            <testCommand>testcase10 -c 123456</testCommand>
+            <testCommand>testcase11 -c int</testCommand>
+            <testCommand>testcase12 -d "Flag value of d"</testCommand>
+            <testCommand>testcase13</testCommand>
+            <testCommand>testcase14 arg0 123456</testCommand>
+            <testCommand>testcase15 arg0 arg1 vararg0</testCommand>
+            <testCommand>testcase arg0 123456 vararg0 vararg1 vararg2</testCommand>
           </testCommands>
           <successfulIndicators>
             <successfulIndicator>[TEST SUCCESSFUL]</successfulIndicator>
-            <successfulIndicator>InternalPluginManager</successfulIndicator>
           </successfulIndicators>
           <failureIndicators>
             <failureIndicator>[TEST FAILED]</failureIndicator>

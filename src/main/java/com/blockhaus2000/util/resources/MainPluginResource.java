@@ -21,7 +21,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.bukkit.plugin.Plugin;
+
 import com.blockhaus2000.main.bukkit.IpmMain;
+import com.blockhaus2000.plugin.IpmPlugin;
 
 /**
  * If you annotate a field with this, the field have to be of the type
@@ -33,7 +36,8 @@ import com.blockhaus2000.main.bukkit.IpmMain;
  *
  * <p>
  * <b> NOTE: Only use this if you really need the root/main plugin. For event
- * listening, use TODO instead. </b>
+ * listening, use your {@link IpmPlugin} (which is a Bukkit {@link Plugin})
+ * instead. </b>
  * </p>
  *
  * @author Blockhaus2000

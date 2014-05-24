@@ -16,8 +16,11 @@
  */
 package com.blockhaus2000.main.bukkit;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.blockhaus2000.commands.Commands;
+import com.blockhaus2000.commands.test.TestCommands;
 import com.blockhaus2000.plugin.SimpleIpmPluginLoader;
 import com.blockhaus2000.plugin.SimpleIpmPluginManager;
 import com.blockhaus2000.plugin.exception.PluginException;
@@ -51,6 +54,11 @@ public class IpmMain extends JavaPlugin {
         IpmMain.instance = this;
 
         CommandRegistrationUtil.registerCommands(new Commands(), this);
+
+        // for testing
+        final TestCommands testCommands = new TestCommands();
+        CommandRegistrationUtil.registerCommands(testCommands, this);
+        Bukkit.getServer().getPluginManager().registerEvents(testCommands, this);
     }
 
     /**

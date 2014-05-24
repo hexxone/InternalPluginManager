@@ -14,13 +14,15 @@
  *  see the License for the specific language governing permissions and
  *  Limitations under the License.
  */
-package com.blockhaus2000.main.bukkit;
+package com.blockhaus2000.commands;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.command.CommandSender;
 
+import com.blockhaus2000.commands.test.TestCommands;
+import com.blockhaus2000.main.bukkit.InternalPluginManager;
 import com.blockhaus2000.minecraft.util.command.Command;
 import com.blockhaus2000.plugin.IpmPlugin;
 import com.blockhaus2000.plugin.update.SimpleUpdater;
@@ -33,13 +35,13 @@ import com.blockhaus2000.util.command.CommandContext;
  *
  * @author Blockhaus2000
  */
+@SuppressWarnings("javadoc")
 public class Commands { // TODO
     @Command(aliases = { "internalpluginmanager", "ipm" },
              desc = "The basic InternalPluginManager command. Type \"/<internalpluginmanager|ipm> help\" for help.",
              secondLevelCommand = "update",
              permission = "internalpluginmanager.ipm.update",
              max = 0)
-    @SuppressWarnings("javadoc")
     public void updateAll(final CommandContext context) {
         List<Tag<?>> pluginNames = new ArrayList<Tag<?>>();
 
@@ -56,7 +58,6 @@ public class Commands { // TODO
              desc = "The basic InternalPluginManager command. Type \"/<internalpluginmanager|ipm> help\" for help.",
              secondLevelCommand = "update",
              permission = "internalpluginmanager.ipm.update")
-    @SuppressWarnings("javadoc")
     public void update(final CommandContext context) {
         final CommandSender sender = context.getSender();
 
@@ -92,8 +93,16 @@ public class Commands { // TODO
              desc = "The basic InternalPluginManager command. Type \"/<internalpluginmanager|ipm> help\" for help.",
              secondLevelCommand = "help",
              permission = "internalpluginmanager.ipm.help")
-    @SuppressWarnings("javadoc")
     public void help(final CommandContext context) {
         ChatOut.sendMessage(context.getSender(), "Not supported yet!"); // TODO
+    }
+
+    @Command(aliases = { "internalpluginmanager", "ipm" },
+             desc = "Toggles the debug-mode.",
+             secondLevelCommand = "debug",
+             permission = "internalpluginmanager.ipm.debug")
+    public void debug(final CommandContext context) {
+        ChatOut.sendMessage(context.getSender(), "Debug mode " + (TestCommands.toggleEnabled() ? "enabled" : "disabled") + "!");
+        ChatOut.sendMessage(context.getSender(), TestCommands.SUCCEED);
     }
 }
