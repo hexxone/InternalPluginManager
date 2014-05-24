@@ -13,6 +13,7 @@ The command system:
 -------------------
 With the command system, you can tag methods with an annotation (@Command) to mark them as a command executor. You only have to register the class that contains the executors.
 The annotations has a lot of functions, such as:
+
 	- Aliases (The first alias is the command, of course.)
 	- Easy selection of allowed senders
 	- Easy and lightweight flag system (toggle- and value-flags)
@@ -27,6 +28,7 @@ The plugin system:
 ------------------
 With the plugin system, you can load plugins without the direct usage of Bukkit (plugins are located in "plugins/InternalPluginManager/plugins/". If you use this, the other systems works as best as possible.
 Main features of the plugin system:
+
 	- Easy access to the command system
 	- Access to all Bukkit systems
 	- Higher performance because Bukkit doesn't have to load so much plugins
