@@ -88,7 +88,7 @@
           <executionDirectory>target/dist/</executionDirectory>
           <craftbukkitURL>http://repo.bukkit.org/content/repositories/public/org/bukkit/craftbukkit/${project.properties.bukkitVersion}/${project.properties.craftbukkitJarName}</craftbukkitURL>
           <craftbukkitFile>cache/${project.properties.craftbukkitJarName}</craftbukkitFile>
-          <failOnTestFailure>false</failOnTestFailure>
+          <failOnTestFailure>true</failOnTestFailure>
           <plugins>
             <plugin>target/${project.artifactId}_v${project.version}-${buildNumber}.jar</plugin>
           </plugins>
@@ -109,13 +109,15 @@
             <testCommand>testcase13</testCommand>
             <testCommand>testcase14 arg0 123456</testCommand>
             <testCommand>testcase15 arg0 arg1 vararg0</testCommand>
-            <testCommand>testcase arg0 123456 vararg0 vararg1 vararg2</testCommand>
+            <testCommand>testcase16 arg0 123456 vararg0 vararg1 vararg2</testCommand>
           </testCommands>
           <successfulIndicators>
             <successfulIndicator>[TEST SUCCESSFUL]</successfulIndicator>
           </successfulIndicators>
           <failureIndicators>
             <failureIndicator>[TEST FAILED]</failureIndicator>
+            <failureIndicator>Exception</failureIndicator>
+            <failureIndicator>Unknown Command.</failureIndicator>
           </failureIndicators>
         </configuration>
       </plugin>
