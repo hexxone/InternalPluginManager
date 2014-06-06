@@ -208,8 +208,11 @@ public class SimpleCommandManager implements CommandManager {
 
             try {
                 args = parseFlags(target, bArgs).getArgs();
-            } catch (IndexOutOfBoundsException ex) {
+            } catch (IndexOutOfBoundsException dummy) {
                 events.add(new IllegalSyntaxCommandEvent(rawContext, IllegalSyntaxType.UNAVAILABLE_FLAG_VALUE));
+                continue;
+            } catch (NumberFormatException dummy) {
+                events.add(new IllegalSyntaxCommandEvent(rawContext, IllegalSyntaxType.NUMBER_SYNTAX_IS_STRING));
                 continue;
             }
 
@@ -306,20 +309,20 @@ public class SimpleCommandManager implements CommandManager {
                     final String[] splitted = target.split(":");
                     switch (CommandSyntaxType.getTypeByString(splitted.length == 1 ? "String" : splitted[1])) {
                     case DOUBLE:
-                        flags.put(flagIndex, new Tag<Double>(Double.parseDouble(value)));
+                        flags.put(flagIndex, new Tag<Double>(Double.parseDouble(value.trim())));
                         break;
                     case INTEGER:
-                        flags.put(flagIndex, new Tag<Integer>(Integer.parseInt(value)));
+                        flags.put(flagIndex, new Tag<Integer>(Integer.parseInt(value.trim())));
                         break;
                     case LONG:
-                        flags.put(flagIndex, new Tag<Long>(Long.parseLong(value)));
+                        flags.put(flagIndex, new Tag<Long>(Long.parseLong(value.trim())));
                         break;
                     case STRING:
-                        flags.put(flagIndex, new Tag<String>(value));
+                        flags.put(flagIndex, new Tag<String>(value.trim()));
                         break;
                     case STRING_VARARG:
                         if (!value.startsWith("\"")) {
-                            flags.put(flagIndex, new Tag<String>(value));
+                            flags.put(flagIndex, new Tag<String>(value.trim()));
                             break;
                         }
 
@@ -339,7 +342,8 @@ public class SimpleCommandManager implements CommandManager {
                         }
 
                         flags.put(flagIndex,
-                                new Tag<String>(StringUtil.joinString(" ", ArrayUtil.toStringArray(values)).replace("\"", "")));
+                                new Tag<String>(StringUtil.joinString(" ", ArrayUtil.toStringArray(values)).replace("\"", "")
+                                        .trim()));
                         break;
                     }
 
@@ -378,10 +382,17 @@ public class SimpleCommandManager implements CommandManager {
 
         List<Tag<?>> args = new ArrayList<Tag<?>>();
 
-        CommandSyntax syntax = cmd.getSyntax();
-        if (syntax == null || syntax.getSyntax() == null) {
-            for (String targetArg : rawArgs) {
-                args.add(new Tag<String>(targetArg.trim()));
+        final CommandSyntax syntax = cmd.getSyntax();
+
+        if (syntax == null || syntax.isNull() || syntax.size() == 0) {
+            for (String targetRawArg : rawArgs) {
+                final String targetArg = targetRawArg.trim();
+
+                if (targetArg.length() == 0) {
+                    continue;
+                }
+
+                args.add(new Tag<String>(targetArg));
             }
         } else {
             for (int i = 0; i < syntax.getSyntax().size(); i++) {
@@ -389,19 +400,19 @@ public class SimpleCommandManager implements CommandManager {
 
                 switch (syntax.getSyntax().get(i)) {
                 case DOUBLE:
-                    args.add(new Tag<Double>(Double.valueOf(arg)));
+                    args.add(new Tag<Double>(Double.valueOf(arg.trim())));
                     break;
                 case INTEGER:
-                    args.add(new Tag<Integer>(Integer.valueOf(arg)));
+                    args.add(new Tag<Integer>(Integer.valueOf(arg.trim())));
                     break;
                 case LONG:
-                    args.add(new Tag<Long>(Long.valueOf(arg)));
+                    args.add(new Tag<Long>(Long.valueOf(arg.trim())));
                     break;
                 case STRING:
-                    args.add(new Tag<String>(arg));
+                    args.add(new Tag<String>(arg.trim()));
                     break;
                 case STRING_VARARG:
-                    args.add(new Tag<String>(StringUtil.joinString(i, " ", rawArgs)));
+                    args.add(new Tag<String>(StringUtil.joinString(i, " ", rawArgs).trim()));
                     break;
                 }
             }

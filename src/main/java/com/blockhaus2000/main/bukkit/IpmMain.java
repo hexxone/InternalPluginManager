@@ -52,13 +52,6 @@ public class IpmMain extends JavaPlugin {
         }
 
         IpmMain.instance = this;
-
-        CommandRegistrationUtil.registerCommands(new Commands(), this);
-
-        // for testing
-        final TestCommands testCommands = new TestCommands();
-        CommandRegistrationUtil.registerCommands(testCommands, this);
-        Bukkit.getServer().getPluginManager().registerEvents(testCommands, this);
     }
 
     /**
@@ -95,6 +88,14 @@ public class IpmMain extends JavaPlugin {
         }
 
         SimpleIpmPluginManager.getInstance().enableAll();
+
+        // register basic commands
+        CommandRegistrationUtil.registerCommands(new Commands(), this);
+
+        // register testing commands
+        final TestCommands testCommands = new TestCommands();
+        CommandRegistrationUtil.registerCommands(testCommands, this);
+        Bukkit.getServer().getPluginManager().registerEvents(testCommands, this);
 
         // Only for Testing (has to be commented for a release)
         // ipmTestPlugin.onEnable();

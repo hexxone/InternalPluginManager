@@ -420,7 +420,7 @@ Command-Settings:
 	- autoSetMaxOnSyntax	= true
 	- help			= "No help available!"
 
-Command: "/testcase arg0 123456 vararg0 vararg1 vararg2"
+Command: "/testcase16 arg0 123456 vararg0 vararg1 vararg2"
 
 Expected:
 	- args[0] => "arg0"

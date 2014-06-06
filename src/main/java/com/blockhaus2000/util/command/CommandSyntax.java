@@ -127,4 +127,14 @@ public class CommandSyntax implements Iterable<CommandSyntaxType> {
     public List<CommandSyntaxType> getSyntax() {
         return syntax;
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return getClass().getName() + "[syntax=" + syntax + "]";
+    }
 }

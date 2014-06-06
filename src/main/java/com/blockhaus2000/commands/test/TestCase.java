@@ -28,18 +28,21 @@ public enum TestCase {
     TEST_CASE_1("testcase1") {
         @Override
         public boolean asExpected(final CommandContext context, final CommandEvent<?> event) {
+            System.out.println(context);
             return event == null && context.getArgs().size() == 0 && context.getFlags().size() == 0;
         }
     },
     TEST_CASE_2("testcase2") {
         @Override
         public boolean asExpected(final CommandContext context, final CommandEvent<?> event) {
+            System.out.println(context);
             return event instanceof NotEnoughArgumentsCommandEvent;
         }
     },
     TEST_CASE_3("testcase3") {
         @Override
         public boolean asExpected(final CommandContext context, final CommandEvent<?> event) {
+            System.out.println(context);
             return event == null && ((String) context.getArgs().get(0).getData()).equals("arg0")
                     && context.getFlags().size() == 0;
         }
@@ -47,19 +50,22 @@ public enum TestCase {
     TEST_CASE_4("testcase4") {
         @Override
         public boolean asExpected(final CommandContext context, final CommandEvent<?> event) {
+            System.out.println(context);
             return event instanceof TooManyArgumentsCommandEvent;
         }
     },
     TEST_CASE_5("testcase5") {
         @Override
         public boolean asExpected(final CommandContext context, final CommandEvent<?> event) {
+            System.out.println(context);
             return event == null && ((String) context.getArgs().get(0).getData()).equals("arg0")
-                    && context.getFlags().size() == 1;
+                    && context.getFlags().size() == 0;
         }
     },
     TEST_CASE_6("testcase6") {
         @Override
         public boolean asExpected(final CommandContext context, final CommandEvent<?> event) {
+            System.out.println(context);
             return event == null && context.getArgs().size() == 0
                     && ((Boolean) context.getFlags().get('a').getData()).booleanValue() == false
                     && context.getFlags().get('b') == null && context.getFlags().get('c') == null
@@ -69,6 +75,7 @@ public enum TestCase {
     TEST_CASE_7("testcase7") {
         @Override
         public boolean asExpected(final CommandContext context, final CommandEvent<?> event) {
+            System.out.println(context);
             return event == null && context.getArgs().size() == 0
                     && ((Boolean) context.getFlags().get('a').getData()).booleanValue() == true
                     && context.getFlags().get('b') == null && context.getFlags().get('c') == null
@@ -78,6 +85,7 @@ public enum TestCase {
     TEST_CASE_8("testcase8") {
         @Override
         public boolean asExpected(final CommandContext context, final CommandEvent<?> event) {
+            System.out.println(context);
             return event instanceof IllegalSyntaxCommandEvent
                     && ((IllegalSyntaxCommandEvent) event).getIllegalSyntaxType() == IllegalSyntaxType.UNAVAILABLE_FLAG_VALUE;
         }
@@ -85,6 +93,7 @@ public enum TestCase {
     TEST_CASE_9("testcase9") {
         @Override
         public boolean asExpected(final CommandContext context, final CommandEvent<?> event) {
+            System.out.println(context);
             return event == null && context.getArgs().size() == 0
                     && ((Boolean) context.getFlags().get('a').getData()).booleanValue() == false
                     && ((String) context.getFlags().get('b').getData()).equals("flag-b") && context.getFlags().get('c') == null
@@ -94,6 +103,7 @@ public enum TestCase {
     TEST_CASE_10("testcase10") {
         @Override
         public boolean asExpected(final CommandContext context, final CommandEvent<?> event) {
+            System.out.println(context);
             return event == null && context.getArgs().size() == 0
                     && ((Boolean) context.getFlags().get('a').getData()).booleanValue() == false
                     && context.getFlags().get('b') == null
@@ -104,6 +114,7 @@ public enum TestCase {
     TEST_CASE_11("testcase11") {
         @Override
         public boolean asExpected(final CommandContext context, final CommandEvent<?> event) {
+            System.out.println(context);
             return event instanceof IllegalSyntaxCommandEvent
                     && ((IllegalSyntaxCommandEvent) event).getIllegalSyntaxType() == IllegalSyntaxType.NUMBER_SYNTAX_IS_STRING;
         }
@@ -111,6 +122,7 @@ public enum TestCase {
     TEST_CASE_12("testcase12") {
         @Override
         public boolean asExpected(final CommandContext context, final CommandEvent<?> event) {
+            System.out.println(context);
             return event == null && context.getArgs().size() == 0
                     && ((Boolean) context.getFlags().get('a').getData()).booleanValue() == false
                     && context.getFlags().get('b') == null && context.getFlags().get('c') == null
@@ -120,18 +132,21 @@ public enum TestCase {
     TEST_CASE_13("testcase13") {
         @Override
         public boolean asExpected(final CommandContext context, final CommandEvent<?> event) {
+            System.out.println(context);
             return event instanceof NotEnoughArgumentsCommandEvent;
         }
     },
     TEST_CASE_14("testcase14") {
         @Override
         public boolean asExpected(final CommandContext context, final CommandEvent<?> event) {
+            System.out.println(context);
             return event instanceof NotEnoughArgumentsCommandEvent;
         }
     },
     TEST_CASE_15("testcase15") {
         @Override
         public boolean asExpected(final CommandContext context, final CommandEvent<?> event) {
+            System.out.println(context);
             return event instanceof IllegalSyntaxCommandEvent
                     && ((IllegalSyntaxCommandEvent) event).getIllegalSyntaxType() == IllegalSyntaxType.NUMBER_SYNTAX_IS_STRING;
         }
@@ -139,6 +154,7 @@ public enum TestCase {
     TEST_CASE_16("testcase16") {
         @Override
         public boolean asExpected(final CommandContext context, final CommandEvent<?> event) {
+            System.out.println(context);
             return event == null && ((String) context.getArgs().get(0).getData()).equals("arg0")
                     && ((Integer) context.getArgs().get(1).getData()).intValue() == 123456
                     && ((String) context.getArgs().get(2).getData()).equals("vararg0 vararg1 vararg2");

@@ -195,15 +195,15 @@
 					<executionDirectory>target/dist/</executionDirectory>
 					<craftbukkitURL>http://repo.bukkit.org/content/repositories/public/org/bukkit/craftbukkit/${project.properties.bukkitVersion}/${project.properties.craftbukkitJarName}</craftbukkitURL>
 					<craftbukkitFile>cache/${project.properties.craftbukkitJarName}</craftbukkitFile>
-
-					<!-- We do not want this until we have real tests :) -->
-					<failOnTestFailure>false</failOnTestFailure>
+					<failOnTestFailure>true</failOnTestFailure>
 
 					<plugins>
 						<plugin>target/${project.artifactId}_v${project.version}-${buildNumber}.jar</plugin>
 					</plugins>
 					<testCommands>
+						<!-- Enable the test command output. This is not a real test. -->
 						<testCommand>internalpluginmanager debug</testCommand>
+
 						<testCommand>testcase1</testCommand>
 						<testCommand>testcase2</testCommand>
 						<testCommand>testcase3 arg0</testCommand>
@@ -219,13 +219,21 @@
 						<testCommand>testcase13</testCommand>
 						<testCommand>testcase14 arg0 123456</testCommand>
 						<testCommand>testcase15 arg0 arg1 vararg0</testCommand>
-						<testCommand>testcase arg0 123456 vararg0 vararg1 vararg2</testCommand>
+						<testCommand>testcase16 arg0 123456 vararg0 vararg1 vararg2</testCommand>
 					</testCommands>
 					<successfulIndicators>
+						<!-- This is our regular succeed indicator -->
 						<successfulIndicator>[TEST SUCCESSFUL]</successfulIndicator>
 					</successfulIndicators>
 					<failureIndicators>
+						<!-- This is our regular fail indicator -->
 						<failureIndicator>[TEST FAILED]</failureIndicator>
+
+						<!-- Also we want to mark a test as failed if an Exception occures -->
+						<failureIndicator>Exception</failureIndicator>
+
+						<!-- Also if a command cannot be found -->
+						<failureIndicator>Unknown Command.</failureIndicator>
 					</failureIndicators>
 				</configuration>
 			</plugin>
