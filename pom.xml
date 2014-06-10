@@ -195,6 +195,7 @@
 					<executionDirectory>target/dist/</executionDirectory>
 					<craftbukkitURL>http://repo.bukkit.org/content/repositories/public/org/bukkit/craftbukkit/${project.properties.bukkitVersion}/${project.properties.craftbukkitJarName}</craftbukkitURL>
 					<craftbukkitFile>cache/${project.properties.craftbukkitJarName}</craftbukkitFile>
+					<javaExecutionCommand>/usr/bin/java -Dinternalpluginmanager.debug-mode=true -jar craftbukkit.jar</javaExecutionCommand>
 					<failOnTestFailure>true</failOnTestFailure>
 
 					<plugins>
@@ -233,7 +234,7 @@
 						<failureIndicator>Exception</failureIndicator>
 
 						<!-- Also if a command cannot be found -->
-						<failureIndicator>Unknown Command.</failureIndicator>
+						<failureIndicator>Unknown command.</failureIndicator>
 					</failureIndicators>
 				</configuration>
 			</plugin>

@@ -23,6 +23,7 @@ import org.bukkit.command.CommandSender;
 
 import com.blockhaus2000.commands.test.TestCommands;
 import com.blockhaus2000.main.bukkit.InternalPluginManager;
+import com.blockhaus2000.main.bukkit.IpmMain;
 import com.blockhaus2000.minecraft.util.command.Command;
 import com.blockhaus2000.plugin.IpmPlugin;
 import com.blockhaus2000.plugin.update.SimpleUpdater;
@@ -102,7 +103,14 @@ public class Commands { // TODO
              secondLevelCommand = "debug",
              permission = "internalpluginmanager.ipm.debug")
     public void debug(final CommandContext context) {
-        ChatOut.sendMessage(context.getSender(), "Debug mode " + (TestCommands.toggleEnabled() ? "enabled" : "disabled") + "!");
-        ChatOut.sendMessage(context.getSender(), TestCommands.SUCCEED);
+        if (IpmMain.DEBUGGING_ENABLED) {
+            ChatOut.sendMessage(context.getSender(), "Debug mode " + (TestCommands.toggleEnabled() ? "enabled" : "disabled")
+                    + "!");
+            ChatOut.sendMessage(context.getSender(), TestCommands.SUCCEED);
+        } else {
+            ChatOut.sendMessage(context.getSender(),
+                    "Cannot toggle debug mode, because it was disable global with the system property \"internalpluginmanager.debug-mode\"!");
+            ChatOut.sendMessage(context.getSender(), TestCommands.FAILED);
+        }
     }
 }

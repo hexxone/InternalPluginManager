@@ -38,6 +38,17 @@ import com.blockhaus2000.util.resources.ResourceManager;
  * @see org.bukkit.plugin.java.JavaPlugin
  */
 public class IpmMain extends JavaPlugin {
+    /**
+     * Indicates that the debug mode is enabled (for unit tests with the
+     * bukkit-tester-maven-plugin, it has to be <code>true</code>). For normal
+     * usage, this should be false. You can set it with the system property
+     * <code>internalpluginmanager.debug-mode</code>. You have to set it to
+     * <code>true</code>.
+     *
+     */
+    public static final boolean DEBUGGING_ENABLED = Boolean.valueOf(System.getProperty("internalpluginmanager.debug-mode",
+            "false"));
+
     private static IpmMain instance;
 
     // Only for Testing (has to be commented for a release)
@@ -93,9 +104,11 @@ public class IpmMain extends JavaPlugin {
         CommandRegistrationUtil.registerCommands(new Commands(), this);
 
         // register testing commands
-        final TestCommands testCommands = new TestCommands();
-        CommandRegistrationUtil.registerCommands(testCommands, this);
-        Bukkit.getServer().getPluginManager().registerEvents(testCommands, this);
+        if (IpmMain.DEBUGGING_ENABLED) {
+            final TestCommands testCommands = new TestCommands();
+            CommandRegistrationUtil.registerCommands(testCommands, this);
+            Bukkit.getServer().getPluginManager().registerEvents(testCommands, this);
+        }
 
         // Only for Testing (has to be commented for a release)
         // ipmTestPlugin.onEnable();
