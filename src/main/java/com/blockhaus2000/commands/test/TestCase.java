@@ -160,6 +160,16 @@ public enum TestCase {
                     && ((String) context.getArgs().get(2).getData()).equals("vararg0 vararg1 vararg2");
         }
     };
+    // This test case does not work with unit tests
+    // TEST_CASE_17("testcase17") {
+    // @Override
+    // public boolean asExpected(final CommandContext context, final
+    // CommandEvent<?> event) {
+    // System.out.println(context);
+    // return event == null && context.getArgs().size() == 0 &&
+    // context.getFlags().size() == 0;
+    // }
+    // };
 
     private final String command;
 

@@ -17,10 +17,12 @@
 package com.blockhaus2000.bukkit.util;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -67,6 +69,22 @@ public class SimpleDynamicPluginCommand extends Command implements DynamicPlugin
     @Override
     public boolean execute(final CommandSender sender, final String label, final String[] args) {
         return executor.onCommand(sender, this, label, args);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see org.bukkit.command.Command#tabComplete(org.bukkit.command.CommandSender,
+     *      java.lang.String, java.lang.String[])
+     */
+    @Override
+    public List<String> tabComplete(final CommandSender sender, final String label, final String[] args)
+            throws IllegalArgumentException {
+        if (executor instanceof TabExecutor) {
+            return ((TabExecutor) executor).onTabComplete(sender, this, label, args);
+        }
+
+        return super.tabComplete(sender, label, args);
     }
 
     /**

@@ -111,6 +111,7 @@
             <testCommand>testcase14 arg0 123456</testCommand>
             <testCommand>testcase15 arg0 arg1 vararg0</testCommand>
             <testCommand>testcase16 arg0 123456 vararg0 vararg1 vararg2</testCommand>
+            <testCommand>testcase17 \t</testCommand>
           </testCommands>
           <successfulIndicators>
             <successfulIndicator>[TEST SUCCESSFUL]</successfulIndicator>

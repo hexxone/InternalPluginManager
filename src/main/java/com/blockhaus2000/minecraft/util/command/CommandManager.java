@@ -19,6 +19,7 @@ package com.blockhaus2000.minecraft.util.command;
 import java.util.Set;
 
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.TabExecutor;
 
 import com.blockhaus2000.util.command.CommandInfo;
 
@@ -29,7 +30,7 @@ import com.blockhaus2000.util.command.CommandInfo;
  * @author Blockhaus2000
  * @see org.bukkit.command.CommandExecutor
  */
-public interface CommandManager extends CommandExecutor {
+public interface CommandManager extends TabExecutor {
     /**
      * Registers all of the methods in the given {@link Class} that are tagged
      * with the {@link Command} annotation.

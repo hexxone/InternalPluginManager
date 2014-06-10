@@ -68,7 +68,7 @@ public class SimpleCommandManager implements CommandManager {
 
     private final String flagRegex = "^[a-zA-Z](:("
             + (StringUtil.joinString("|", ArrayUtil.toStringArray(Arrays.asList(CommandSyntaxType.values()))) + "|String...")
-                    .replace(".", "\\.").toLowerCase() + ")?)?$";
+            .replace(".", "\\.").toLowerCase() + ")?)?$";
     private final Map<String, ArrayList<CommandInfo>> cmds = new HashMap<String, ArrayList<CommandInfo>>();
 
     private SimpleCommandManager() {
@@ -95,8 +95,8 @@ public class SimpleCommandManager implements CommandManager {
             assert Modifier.isStatic(targetMethod.getModifiers()) || obj != null : "The method \"" + targetMethod
                     + "\" is non-static and the given Object is null.";
             assert targetMethod.toString().split("\\(")[1].equals("com.blockhaus2000.util.command.CommandContext)") : "The "
-            + "arguments of the method \"" + targetMethod
-            + "\" are not correct. The only argument has to be \"CommandContext\"";
+                    + "arguments of the method \"" + targetMethod
+                    + "\" are not correct. The only argument has to be \"CommandContext\"";
 
             Command cmdAnot = targetMethod.getAnnotation(Command.class);
 
@@ -107,11 +107,13 @@ public class SimpleCommandManager implements CommandManager {
 
                 targetFlag = targetFlag.trim().toLowerCase();
                 assert targetFlag.matches(flagRegex) : "The flag \"" + targetFlag + "\" does not match the regex \"" + flagRegex
-                + "\"!";
+                        + "\"!";
             }
 
-            for (String targetAlias : cmdAnot.aliases()) {
-                if (targetAlias.equals("")) {
+            for (String rawTargetAlias : cmdAnot.aliases()) {
+                final String targetAlias = rawTargetAlias.toLowerCase();
+
+                if (targetAlias.length() == 0) {
                     continue;
                 }
 
@@ -166,6 +168,7 @@ public class SimpleCommandManager implements CommandManager {
         assert label.length() != 0 : "Label cannot be empty!";
 
         label = label.contains(":") ? label.split(":")[1] : label;
+        label = label.toLowerCase();
 
         if (!cmds.containsKey(label)) {
             throw new CommandException("The given command \"" + label + "\" is not registered.");
@@ -264,8 +267,49 @@ public class SimpleCommandManager implements CommandManager {
         return executed;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @see org.bukkit.command.TabCompleter#onTabComplete(org.bukkit.command.CommandSender,
+     *      org.bukkit.command.Command, java.lang.String, java.lang.String[])
+     */
+    @Override
+    public List<String> onTabComplete(final CommandSender sender, final org.bukkit.command.Command cmd, String label,
+            final String[] args) {
+        assert sender != null : "Sender cannot be null!";
+        assert cmd != null : "Cmd cannot be null!";
+        assert args != null : "Args cannot be null!";
+        assert label != null : "Label cannot be null!";
+        assert label.length() != 0 : "Label cannot be empty!";
+
+        label = label.contains(":") ? label.split(":")[1] : label;
+        label = label.toLowerCase();
+
+        final List<String> result = new ArrayList<String>();
+
+        if (!cmds.containsKey(label)) {
+            return result; // return empty list if the command can not be found
+        }
+
+        final List<CommandInfo> cmdInfos = cmds.get(label);
+
+        for (CommandInfo targetCmdInfo : cmdInfos) {
+            final String secLevCmd = targetCmdInfo.getCommandAnot().secondLevelCommand();
+
+            if (secLevCmd == null || secLevCmd.length() == 0 || !secLevCmd.startsWith(args[0].toLowerCase())) {
+                continue;
+            }
+
+            result.add(secLevCmd);
+        }
+
+        // TODO Add syntax completion?
+
+        return result;
+    }
+
     private ContextData parseCommand(final CommandInfo cmd, final List<String> rawArgs) throws IndexOutOfBoundsException,
-    NumberFormatException {
+            NumberFormatException {
         assert cmd != null : "Cmd cannot be null!";
         assert rawArgs != null : "RawArgs cannot be null!";
 
@@ -275,12 +319,12 @@ public class SimpleCommandManager implements CommandManager {
     }
 
     private ContextData parseCommand(final CommandInfo cmd, final String... args) throws IndexOutOfBoundsException,
-    NumberFormatException {
+            NumberFormatException {
         return parseCommand(cmd, Arrays.asList(args));
     }
 
     private ContextData parseFlags(final CommandInfo cmd, final List<String> rawArgs) throws IndexOutOfBoundsException,
-    NumberFormatException {
+            NumberFormatException {
         assert cmd != null : "Cmd cannot be null!";
         assert rawArgs != null : "RawArgs cannot be null!";
 
@@ -368,7 +412,7 @@ public class SimpleCommandManager implements CommandManager {
     }
 
     private ContextData parseFlags(final CommandInfo cmd, final String[] args) throws IndexOutOfBoundsException,
-    NumberFormatException {
+            NumberFormatException {
         return parseFlags(cmd, Arrays.asList(args));
     }
 

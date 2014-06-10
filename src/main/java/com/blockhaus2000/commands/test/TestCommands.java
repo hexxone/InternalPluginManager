@@ -34,276 +34,295 @@ public class TestCommands implements Listener {
     private static boolean enabled = false;
 
     @Command(aliases = { "testcase1", "tc1" },
-            permission = "",
-            desc = "Testcase 1 for use in unit tests.",
-            usage = "In unit tests.",
-            min = 0,
-            max = -1,
-            priority = CommandPriority.NORMAL,
-            flags = { "" },
-            syntax = "",
-            sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
-            secondLevelCommand = "",
-            autoSetMaxOnSyntax = true,
-            help = "No help available!")
+             permission = "",
+             desc = "Testcase 1 for use in unit tests.",
+             usage = "In unit tests.",
+             min = 0,
+             max = -1,
+             priority = CommandPriority.NORMAL,
+             flags = { "" },
+             syntax = "",
+             sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
+             secondLevelCommand = "",
+             autoSetMaxOnSyntax = true,
+             help = "No help available!")
     public void testcase1(final CommandContext context) {
         testFor(context);
     }
 
     @Command(aliases = { "testcase2", "tc2" },
-            permission = "",
-            desc = "Testcase 2 for use in unit tests.",
-            usage = "In unit tests.",
-            min = 1,
-            max = -1,
-            priority = CommandPriority.NORMAL,
-            flags = { "" },
-            syntax = "",
-            sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
-            secondLevelCommand = "",
-            autoSetMaxOnSyntax = true,
-            help = "No help available!")
+             permission = "",
+             desc = "Testcase 2 for use in unit tests.",
+             usage = "In unit tests.",
+             min = 1,
+             max = -1,
+             priority = CommandPriority.NORMAL,
+             flags = { "" },
+             syntax = "",
+             sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
+             secondLevelCommand = "",
+             autoSetMaxOnSyntax = true,
+             help = "No help available!")
     public void testcase2(final CommandContext context) {
         testFor(context);
     }
 
     @Command(aliases = { "testcase3", "tc3" },
-            permission = "",
-            desc = "Testcase 3 for use in unit tests.",
-            usage = "In unit tests.",
-            min = 1,
-            max = -1,
-            priority = CommandPriority.NORMAL,
-            flags = { "" },
-            syntax = "",
-            sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
-            secondLevelCommand = "",
-            autoSetMaxOnSyntax = true,
-            help = "No help available!")
+             permission = "",
+             desc = "Testcase 3 for use in unit tests.",
+             usage = "In unit tests.",
+             min = 1,
+             max = -1,
+             priority = CommandPriority.NORMAL,
+             flags = { "" },
+             syntax = "",
+             sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
+             secondLevelCommand = "",
+             autoSetMaxOnSyntax = true,
+             help = "No help available!")
     public void testcase3(final CommandContext context) {
         testFor(context);
     }
 
     @Command(aliases = { "testcase4", "tc4" },
-            permission = "",
-            desc = "Testcase 4 for use in unit tests.",
-            usage = "In unit tests.",
-            min = 0,
-            max = 1,
-            priority = CommandPriority.NORMAL,
-            flags = { "" },
-            syntax = "",
-            sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
-            secondLevelCommand = "",
-            autoSetMaxOnSyntax = true,
-            help = "No help available!")
+             permission = "",
+             desc = "Testcase 4 for use in unit tests.",
+             usage = "In unit tests.",
+             min = 0,
+             max = 1,
+             priority = CommandPriority.NORMAL,
+             flags = { "" },
+             syntax = "",
+             sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
+             secondLevelCommand = "",
+             autoSetMaxOnSyntax = true,
+             help = "No help available!")
     public void testcase4(final CommandContext context) {
         testFor(context);
     }
 
     @Command(aliases = { "testcase5", "tc5" },
-            permission = "",
-            desc = "Testcase 5 for use in unit tests.",
-            usage = "In unit tests.",
-            min = 0,
-            max = 1,
-            priority = CommandPriority.NORMAL,
-            flags = { "" },
-            syntax = "",
-            sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
-            secondLevelCommand = "",
-            autoSetMaxOnSyntax = true,
-            help = "No help available!")
+             permission = "",
+             desc = "Testcase 5 for use in unit tests.",
+             usage = "In unit tests.",
+             min = 0,
+             max = 1,
+             priority = CommandPriority.NORMAL,
+             flags = { "" },
+             syntax = "",
+             sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
+             secondLevelCommand = "",
+             autoSetMaxOnSyntax = true,
+             help = "No help available!")
     public void testcase5(final CommandContext context) {
         testFor(context);
     }
 
     @Command(aliases = { "testcase6", "tc6" },
-            permission = "",
-            desc = "Testcase 6 for use in unit tests.",
-            usage = "In unit tests.",
-            min = 0,
-            max = -1,
-            priority = CommandPriority.NORMAL,
-            flags = { "a", "b:", "c:Integer", "d:String..." },
-            syntax = "",
-            sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
-            secondLevelCommand = "",
-            autoSetMaxOnSyntax = true,
-            help = "No help available!")
+             permission = "",
+             desc = "Testcase 6 for use in unit tests.",
+             usage = "In unit tests.",
+             min = 0,
+             max = -1,
+             priority = CommandPriority.NORMAL,
+             flags = { "a", "b:", "c:Integer", "d:String..." },
+             syntax = "",
+             sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
+             secondLevelCommand = "",
+             autoSetMaxOnSyntax = true,
+             help = "No help available!")
     public void testcase6(final CommandContext context) {
         testFor(context);
     }
 
     @Command(aliases = { "testcase7", "tc7" },
-            permission = "",
-            desc = "Testcase 7 for use in unit tests.",
-            usage = "In unit tests.",
-            min = 0,
-            max = -1,
-            priority = CommandPriority.NORMAL,
-            flags = { "a", "b:", "c:Integer", "d:String..." },
-            syntax = "",
-            sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
-            secondLevelCommand = "",
-            autoSetMaxOnSyntax = true,
-            help = "No help available!")
+             permission = "",
+             desc = "Testcase 7 for use in unit tests.",
+             usage = "In unit tests.",
+             min = 0,
+             max = -1,
+             priority = CommandPriority.NORMAL,
+             flags = { "a", "b:", "c:Integer", "d:String..." },
+             syntax = "",
+             sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
+             secondLevelCommand = "",
+             autoSetMaxOnSyntax = true,
+             help = "No help available!")
     public void testcase7(final CommandContext context) {
         testFor(context);
     }
 
     @Command(aliases = { "testcase8", "tc8" },
-            permission = "",
-            desc = "Testcase 8 for use in unit tests.",
-            usage = "In unit tests.",
-            min = 0,
-            max = -1,
-            priority = CommandPriority.NORMAL,
-            flags = { "a", "b:", "c:Integer", "d:String..." },
-            syntax = "",
-            sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
-            secondLevelCommand = "",
-            autoSetMaxOnSyntax = true,
-            help = "No help available!")
+             permission = "",
+             desc = "Testcase 8 for use in unit tests.",
+             usage = "In unit tests.",
+             min = 0,
+             max = -1,
+             priority = CommandPriority.NORMAL,
+             flags = { "a", "b:", "c:Integer", "d:String..." },
+             syntax = "",
+             sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
+             secondLevelCommand = "",
+             autoSetMaxOnSyntax = true,
+             help = "No help available!")
     public void testcase8(final CommandContext context) {
         testFor(context);
     }
 
     @Command(aliases = { "testcase9", "tc9" },
-            permission = "",
-            desc = "Testcase 9 for use in unit tests.",
-            usage = "In unit tests.",
-            min = 0,
-            max = -1,
-            priority = CommandPriority.NORMAL,
-            flags = { "a", "b:", "c:Integer", "d:String..." },
-            syntax = "",
-            sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
-            secondLevelCommand = "",
-            autoSetMaxOnSyntax = true,
-            help = "No help available!")
+             permission = "",
+             desc = "Testcase 9 for use in unit tests.",
+             usage = "In unit tests.",
+             min = 0,
+             max = -1,
+             priority = CommandPriority.NORMAL,
+             flags = { "a", "b:", "c:Integer", "d:String..." },
+             syntax = "",
+             sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
+             secondLevelCommand = "",
+             autoSetMaxOnSyntax = true,
+             help = "No help available!")
     public void testcase9(final CommandContext context) {
         testFor(context);
     }
 
     @Command(aliases = { "testcase10", "tc10" },
-            permission = "",
-            desc = "Testcase 10 for use in unit tests.",
-            usage = "In unit tests.",
-            min = 0,
-            max = -1,
-            priority = CommandPriority.NORMAL,
-            flags = { "a", "b:", "c:Integer", "d:String..." },
-            syntax = "",
-            sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
-            secondLevelCommand = "",
-            autoSetMaxOnSyntax = true,
-            help = "No help available!")
+             permission = "",
+             desc = "Testcase 10 for use in unit tests.",
+             usage = "In unit tests.",
+             min = 0,
+             max = -1,
+             priority = CommandPriority.NORMAL,
+             flags = { "a", "b:", "c:Integer", "d:String..." },
+             syntax = "",
+             sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
+             secondLevelCommand = "",
+             autoSetMaxOnSyntax = true,
+             help = "No help available!")
     public void testcase10(final CommandContext context) {
         testFor(context);
     }
 
     @Command(aliases = { "testcase11", "tc11" },
-            permission = "",
-            desc = "Testcase 11 for use in unit tests.",
-            usage = "In unit tests.",
-            min = 0,
-            max = -1,
-            priority = CommandPriority.NORMAL,
-            flags = { "a", "b:", "c:Integer", "d:String..." },
-            syntax = "",
-            sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
-            secondLevelCommand = "",
-            autoSetMaxOnSyntax = true,
-            help = "No help available!")
+             permission = "",
+             desc = "Testcase 11 for use in unit tests.",
+             usage = "In unit tests.",
+             min = 0,
+             max = -1,
+             priority = CommandPriority.NORMAL,
+             flags = { "a", "b:", "c:Integer", "d:String..." },
+             syntax = "",
+             sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
+             secondLevelCommand = "",
+             autoSetMaxOnSyntax = true,
+             help = "No help available!")
     public void testcase11(final CommandContext context) {
         testFor(context);
     }
 
     @Command(aliases = { "testcase12", "tc12" },
-            permission = "",
-            desc = "Testcase 12 for use in unit tests.",
-            usage = "In unit tests.",
-            min = 0,
-            max = -1,
-            priority = CommandPriority.NORMAL,
-            flags = { "a", "b:", "c:Integer", "d:String..." },
-            syntax = "",
-            sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
-            secondLevelCommand = "",
-            autoSetMaxOnSyntax = true,
-            help = "No help available!")
+             permission = "",
+             desc = "Testcase 12 for use in unit tests.",
+             usage = "In unit tests.",
+             min = 0,
+             max = -1,
+             priority = CommandPriority.NORMAL,
+             flags = { "a", "b:", "c:Integer", "d:String..." },
+             syntax = "",
+             sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
+             secondLevelCommand = "",
+             autoSetMaxOnSyntax = true,
+             help = "No help available!")
     public void testcase12(final CommandContext context) {
         testFor(context);
     }
 
     @Command(aliases = { "testcase13", "tc13" },
-            permission = "",
-            desc = "Testcase 13 for use in unit tests.",
-            usage = "In unit tests.",
-            min = 0,
-            max = -1,
-            priority = CommandPriority.NORMAL,
-            flags = { "" },
-            syntax = "String Integer String...",
-            sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
-            secondLevelCommand = "",
-            autoSetMaxOnSyntax = true,
-            help = "No help available!")
+             permission = "",
+             desc = "Testcase 13 for use in unit tests.",
+             usage = "In unit tests.",
+             min = 0,
+             max = -1,
+             priority = CommandPriority.NORMAL,
+             flags = { "" },
+             syntax = "String Integer String...",
+             sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
+             secondLevelCommand = "",
+             autoSetMaxOnSyntax = true,
+             help = "No help available!")
     public void testcas13(final CommandContext context) {
         testFor(context);
     }
 
     @Command(aliases = { "testcase14", "tc14" },
-            permission = "",
-            desc = "Testcase 14 for use in unit tests.",
-            usage = "In unit tests.",
-            min = 0,
-            max = -1,
-            priority = CommandPriority.NORMAL,
-            flags = { "" },
-            syntax = "String Integer String...",
-            sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
-            secondLevelCommand = "",
-            autoSetMaxOnSyntax = true,
-            help = "No help available!")
+             permission = "",
+             desc = "Testcase 14 for use in unit tests.",
+             usage = "In unit tests.",
+             min = 0,
+             max = -1,
+             priority = CommandPriority.NORMAL,
+             flags = { "" },
+             syntax = "String Integer String...",
+             sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
+             secondLevelCommand = "",
+             autoSetMaxOnSyntax = true,
+             help = "No help available!")
     public void testcase14(final CommandContext context) {
         testFor(context);
     }
 
     @Command(aliases = { "testcase15", "tc15" },
-            permission = "",
-            desc = "Testcase 15 for use in unit tests.",
-            usage = "In unit tests.",
-            min = 0,
-            max = -1,
-            priority = CommandPriority.NORMAL,
-            flags = { "" },
-            syntax = "String Integer String...",
-            sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
-            secondLevelCommand = "",
-            autoSetMaxOnSyntax = true,
-            help = "No help available!")
+             permission = "",
+             desc = "Testcase 15 for use in unit tests.",
+             usage = "In unit tests.",
+             min = 0,
+             max = -1,
+             priority = CommandPriority.NORMAL,
+             flags = { "" },
+             syntax = "String Integer String...",
+             sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
+             secondLevelCommand = "",
+             autoSetMaxOnSyntax = true,
+             help = "No help available!")
     public void testcase15(final CommandContext context) {
         testFor(context);
     }
 
     @Command(aliases = { "testcase16", "tc16" },
-            permission = "",
-            desc = "Testcase 16 for use in unit tests.",
-            usage = "In unit tests.",
-            min = 0,
-            max = -1,
-            priority = CommandPriority.NORMAL,
-            flags = { "" },
-            syntax = "String Integer String...",
-            sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
-            secondLevelCommand = "",
-            autoSetMaxOnSyntax = true,
-            help = "No help available!")
+             permission = "",
+             desc = "Testcase 16 for use in unit tests.",
+             usage = "In unit tests.",
+             min = 0,
+             max = -1,
+             priority = CommandPriority.NORMAL,
+             flags = { "" },
+             syntax = "String Integer String...",
+             sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE, CommandSenderType.COMMAND_BLOCK },
+             secondLevelCommand = "",
+             autoSetMaxOnSyntax = true,
+             help = "No help available!")
     public void testcase16(final CommandContext context) {
         testFor(context);
     }
+
+    // This test case does not work with unit tests
+    // @Command(aliases = { "testcase17", "tc17" },
+    // permission = "",
+    // desc = "Testcase 16 for use in unit tests.",
+    // usage = "In unit tests.",
+    // min = 0,
+    // max = -1,
+    // priority = CommandPriority.NORMAL,
+    // flags = { "" },
+    // syntax = "",
+    // sender = { CommandSenderType.PLAYER, CommandSenderType.CONSOLE,
+    // CommandSenderType.COMMAND_BLOCK },
+    // secondLevelCommand = "second-level-command",
+    // autoSetMaxOnSyntax = true,
+    // help = "No help available!")
+    // public void testcase17(final CommandContext context) {
+    // testFor(context);
+    // }
 
     @EventHandler
     public void onCommandEventPackage(final CommandEventPackage eventPackage) {

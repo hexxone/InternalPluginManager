@@ -103,7 +103,7 @@ public class IpmMain extends JavaPlugin {
         // register basic commands
         CommandRegistrationUtil.registerCommands(new Commands(), this);
 
-        // register testing commands
+        // register testing commands if debug mode enabled
         if (IpmMain.DEBUGGING_ENABLED) {
             final TestCommands testCommands = new TestCommands();
             CommandRegistrationUtil.registerCommands(testCommands, this);
