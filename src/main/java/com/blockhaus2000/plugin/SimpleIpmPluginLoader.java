@@ -58,7 +58,7 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
         try {
             ResourceManager.initializeResources(this);
         } catch (IllegalAccessException ex) {
-            ExceptionHandler.handle(ex, true);
+            ExceptionHandler.handle(ex);
         }
 
         pluginFolder = new File(main.getDataFolder() + File.separator + "plugins" + File.separator);
@@ -96,7 +96,7 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
             try {
                 jarFile.close();
             } catch (IOException ex1) {
-                ExceptionHandler.handle(ex);
+                ExceptionHandler.handle(ex1);
             }
 
             throw new PluginException(ex);

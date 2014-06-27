@@ -50,7 +50,7 @@ public class SimpleUpdater implements Updater {
         try {
             ResourceManager.initializeResources(this);
         } catch (IllegalAccessException ex) {
-            ExceptionHandler.handle(ex, true);
+            ExceptionHandler.handle(ex);
         }
 
         updateFolder = new File(main.getDataFolder() + File.separator + "updates" + File.separator);

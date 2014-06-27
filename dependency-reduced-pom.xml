@@ -4,7 +4,7 @@
   <groupId>com.blockhaus2000</groupId>
   <artifactId>InternalPluginManager</artifactId>
   <name>InternalPluginManager</name>
-  <version>1.8.0</version>
+  <version>1.8.1</version>
   <description>An easy-to-use API that improves the command API from Bukkit. Also provides internal plugin management</description>
   <url>https://www.github.com/Blockhaus2000/InternalPluginManager/</url>
   <issueManagement>
@@ -111,7 +111,6 @@
             <testCommand>testcase14 arg0 123456</testCommand>
             <testCommand>testcase15 arg0 arg1 vararg0</testCommand>
             <testCommand>testcase16 arg0 123456 vararg0 vararg1 vararg2</testCommand>
-            <testCommand>testcase17 \t</testCommand>
           </testCommands>
           <successfulIndicators>
             <successfulIndicator>[TEST SUCCESSFUL]</successfulIndicator>

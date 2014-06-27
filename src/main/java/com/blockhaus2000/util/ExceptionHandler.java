@@ -34,7 +34,8 @@ public final class ExceptionHandler {
     private static IpmMain main;
 
     private ExceptionHandler() {
-        // Utility classes should not have a public, protected or visible
+        // Utility classes should not have a visible (public, protected or
+        // package-private)
         // constructor.
     }
 
@@ -78,7 +79,7 @@ public final class ExceptionHandler {
      * @see ExceptionHandler#handle(Exception, boolean)
      */
     public static void handle(final Exception ex) {
-        ExceptionHandler.handle(ex, false);
+        ExceptionHandler.handle(ex);
     }
 
     /**
@@ -93,6 +94,8 @@ public final class ExceptionHandler {
     public static void handle(final Exception ex, final IpmPlugin plugin) {
         ExceptionHandler.handle(ex);
 
-        InternalPluginManager.getServer().getPluginManager().disable(plugin);
+        if (plugin != null) {
+            InternalPluginManager.getServer().getPluginManager().disable(plugin);
+        }
     }
 }

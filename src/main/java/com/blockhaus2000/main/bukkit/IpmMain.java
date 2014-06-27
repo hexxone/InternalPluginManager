@@ -20,6 +20,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.blockhaus2000.commands.Commands;
+import com.blockhaus2000.commands.PluginManagerCommands;
 import com.blockhaus2000.commands.test.TestCommands;
 import com.blockhaus2000.plugin.SimpleIpmPluginLoader;
 import com.blockhaus2000.plugin.SimpleIpmPluginManager;
@@ -50,6 +51,9 @@ public class IpmMain extends JavaPlugin {
             "false"));
 
     private static IpmMain instance;
+
+    private final String sendErrorReportsPath = "send_error_reports";
+    private boolean sendErrorReports = false;
 
     // Only for Testing (has to be commented for a release)
     // private final IpmPlugin ipmTestPlugin = new TestMain();
@@ -82,6 +86,11 @@ public class IpmMain extends JavaPlugin {
      */
     @Override
     public void onEnable() {
+        getConfig().addDefault(sendErrorReportsPath, false);
+        saveConfig();
+
+        sendErrorReports = getConfig().getBoolean(sendErrorReportsPath);
+
         try {
             ResourceManager.initializeResources(ExceptionHandler.class);
         } catch (IllegalArgumentException ex) {
@@ -102,6 +111,7 @@ public class IpmMain extends JavaPlugin {
 
         // register basic commands
         CommandRegistrationUtil.registerCommands(new Commands(), this);
+        CommandRegistrationUtil.registerCommands(new PluginManagerCommands(), this);
 
         // register testing commands if debug mode enabled
         if (IpmMain.DEBUGGING_ENABLED) {
@@ -121,6 +131,14 @@ public class IpmMain extends JavaPlugin {
     public void onLoad() {
         // Only for Testing (has to be commented for a release)
         // ipmTestPlugin.onLoad();
+    }
+
+    /**
+     *
+     * @return An indicator whether error report sending is enabled/disabled.
+     */
+    public boolean sendErrorReports() {
+        return sendErrorReports;
     }
 
     /**
