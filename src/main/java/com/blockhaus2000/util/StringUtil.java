@@ -151,4 +151,33 @@ public class StringUtil {
 
         return buffer.toString();
     }
+
+    /**
+     * This method replaces the last char sequence that matches the given regex.
+     * It works such like {@link String#replaceFirst(String, String)}.
+     *
+     * @param regex
+     *            The regex to replace.
+     * @param replacement
+     *            The replacement for the given regex.
+     * @param str
+     *            The String that contains the regex to replace.
+     * @return The "replaced" String.
+     * @see java.lang.String#replaceFirst(java.lang.String, java.lang.String)
+     */
+    public static String replaceLast(final String regex, final String replacement, final String str) {
+        final StringBuffer buffer = new StringBuffer();
+
+        final String[] splitted = str.split(regex);
+        final int length = splitted.length;
+        for (int i = 0; i < length; i++) {
+            if (i == length - 1) {
+                continue;
+            }
+
+            buffer.append(splitted[i]);
+        }
+
+        return buffer.toString();
+    }
 }
