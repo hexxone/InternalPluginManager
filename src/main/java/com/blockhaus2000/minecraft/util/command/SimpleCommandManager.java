@@ -35,6 +35,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
+import com.blockhaus2000.main.bukkit.InternalPluginManager;
 import com.blockhaus2000.minecraft.util.command.event.CommandEvent;
 import com.blockhaus2000.minecraft.util.command.event.CommandEventPackage;
 import com.blockhaus2000.minecraft.util.command.event.IllegalSenderCommandEvent;
@@ -287,23 +288,37 @@ public class SimpleCommandManager implements CommandManager {
 
         final List<String> result = new ArrayList<String>();
 
-        if (!cmds.containsKey(label) || args.length == 2) {
+        if (!cmds.containsKey(label)) {
             return result; // return empty list if the command can not be found
-            // or the second-level-command is already entered
         }
 
         final List<CommandInfo> cmdInfos = cmds.get(label);
 
-        for (CommandInfo targetCmdInfo : cmdInfos) {
-            final String secLevCmd = targetCmdInfo.getCommandAnot().secondLevelCommand();
+        if (args.length < 2) {
+            for (CommandInfo cmdInfo : cmdInfos) {
+                final String secLevCmd = cmdInfo.getCommandAnot().secondLevelCommand();
 
-            if (secLevCmd == null || secLevCmd.length() == 0 || !secLevCmd.startsWith(args[0].toLowerCase())) {
-                continue;
+                if (secLevCmd == null || secLevCmd.length() == 0 || !secLevCmd.startsWith(args[0].toLowerCase())) {
+                    continue;
+                }
+
+                result.add(secLevCmd);
             }
 
-            result.add(secLevCmd);
+            if (result.size() > 0) {
+                return result;
+            }
         }
 
+        for (CommandInfo cmdInfo : cmdInfos) {
+            final String secondLevelCommand = cmdInfo.getCommandAnot().secondLevelCommand();
+            if (secondLevelCommand == null || secondLevelCommand.length() == 0 || secondLevelCommand.equalsIgnoreCase(args[0])) {
+                for (String str : InternalPluginManager.getServer().getTabCompletionManager()
+                        .performTabComplete(cmdInfo, sender, cmd, label, args)) {
+                    result.add(str);
+                }
+            }
+        }
         return result;
     }
 

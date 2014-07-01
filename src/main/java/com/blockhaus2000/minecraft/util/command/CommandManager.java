@@ -25,9 +25,11 @@ import com.blockhaus2000.util.command.CommandInfo;
 
 /**
  * This command manager is used to execute the commands tagged with the
- * {@link Command} annotation. This is a {@link CommandExecutor}.
+ * {@link Command} annotation. This is a {@link TabExecutor}, which extends the
+ * {@link CommandExecutor}.
  *
  * @author Blockhaus2000
+ * @see org.bukkit.command.TabExecutor
  * @see org.bukkit.command.CommandExecutor
  */
 public interface CommandManager extends TabExecutor {

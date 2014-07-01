@@ -19,6 +19,9 @@ package com.blockhaus2000.plugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 
+import com.blockhaus2000.minecraft.util.tabcompl.SimpleTabCompletionManager;
+import com.blockhaus2000.minecraft.util.tabcompl.TabCompletionManager;
+
 /**
  * An implementation of {@link IpmServer}.
  *
@@ -35,6 +38,16 @@ public class SimpleIpmServer implements IpmServer {
     @Override
     public IpmPluginManager getPluginManager() {
         return SimpleIpmPluginManager.getInstance();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.plugin.IpmServer#getTabCompletionManager()
+     */
+    @Override
+    public TabCompletionManager getTabCompletionManager() {
+        return SimpleTabCompletionManager.getInstance();
     }
 
     /**

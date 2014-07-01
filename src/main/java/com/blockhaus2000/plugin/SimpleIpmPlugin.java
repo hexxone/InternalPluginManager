@@ -45,6 +45,7 @@ import com.blockhaus2000.main.bukkit.IpmMain;
 import com.blockhaus2000.util.ChatOut;
 import com.blockhaus2000.util.CommandRegistrationUtil;
 import com.blockhaus2000.util.ExceptionHandler;
+import com.blockhaus2000.util.TabCompleterRegistrationUtil;
 
 /**
  * An implmenetation of {@link IpmPlugin}.
@@ -200,6 +201,37 @@ public class SimpleIpmPlugin implements IpmPlugin {
     @Override
     public void registerCommands(final Class<?> clazz) {
         registerCommands(clazz, null);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.plugin.IpmPlugin#registerTabCompletions(java.lang.Class,
+     *      java.lang.Object)
+     */
+    @Override
+    public void registerTabCompletions(final Class<?> clazz, final Object obj) {
+        TabCompleterRegistrationUtil.registerTabCompleters(clazz, obj);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.plugin.IpmPlugin#registerTabCompletions(java.lang.Class)
+     */
+    @Override
+    public void registerTabCompletions(final Class<?> clazz) {
+        registerCommands(clazz, null);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.plugin.IpmPlugin#registerTabCompletions(java.lang.Object)
+     */
+    @Override
+    public void registerTabCompletions(final Object obj) {
+        registerCommands(obj.getClass(), obj);
     }
 
     /**

@@ -21,6 +21,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.blockhaus2000.commands.Commands;
 import com.blockhaus2000.commands.PluginManagerCommands;
+import com.blockhaus2000.commands.PluginManagerTabCompleter;
 import com.blockhaus2000.commands.test.TestCommands;
 import com.blockhaus2000.plugin.SimpleIpmPluginLoader;
 import com.blockhaus2000.plugin.SimpleIpmPluginManager;
@@ -28,6 +29,7 @@ import com.blockhaus2000.plugin.exception.PluginException;
 import com.blockhaus2000.util.CommandRegistrationUtil;
 import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.PluginUtil;
+import com.blockhaus2000.util.TabCompleterRegistrationUtil;
 import com.blockhaus2000.util.resources.MainPluginResource;
 import com.blockhaus2000.util.resources.ResourceManager;
 
@@ -112,6 +114,9 @@ public class IpmMain extends JavaPlugin {
         // register basic commands
         CommandRegistrationUtil.registerCommands(new Commands(), this);
         CommandRegistrationUtil.registerCommands(new PluginManagerCommands(), this);
+
+        // register basic tab completer
+        TabCompleterRegistrationUtil.registerTabCompleters(new PluginManagerTabCompleter());
 
         // register testing commands if debug mode enabled
         if (IpmMain.DEBUGGING_ENABLED) {

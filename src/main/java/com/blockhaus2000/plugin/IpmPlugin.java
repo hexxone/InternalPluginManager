@@ -155,6 +155,12 @@ public interface IpmPlugin extends Plugin, PropertyChangeListener {
      */
     public void registerCommands(final Object obj);
 
+    public void registerTabCompletions(final Class<?> clazz, final Object obj);
+
+    public void registerTabCompletions(final Class<?> clazz);
+
+    public void registerTabCompletions(final Object obj);
+
     /**
      *
      * @return If <code>true</code>, the plugin is enabled, if

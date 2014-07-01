@@ -18,6 +18,8 @@ package com.blockhaus2000.plugin;
 
 import org.bukkit.Server;
 
+import com.blockhaus2000.minecraft.util.tabcompl.TabCompletionManager;
+
 /**
  * The {@link IpmServer} provides some methods for the usage if the
  * InternalPluginManager.
@@ -30,6 +32,12 @@ public interface IpmServer {
      * @return An instance of the {@link IpmPluginManager}.
      */
     public IpmPluginManager getPluginManager();
+
+    /**
+     *
+     * @return An instance of the {@link TabCompletionManager}.
+     */
+    public TabCompletionManager getTabCompletionManager();
 
     /**
      *
