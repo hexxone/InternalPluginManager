@@ -67,9 +67,7 @@ public class TabCompleterContext extends TabCompleterInfo {
     }
 
     /**
-     * Calls
-     * <code>this(TabCompleter, Class<?>, Onbject, Method, CommandSender, Command, String, String[])</code>
-     * .
+     * Calls the other constructor.
      *
      * @param tabCompleterInfo
      *            Will be used to get the required information for the

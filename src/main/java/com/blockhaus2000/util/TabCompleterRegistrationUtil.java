@@ -39,7 +39,7 @@ public class TabCompleterRegistrationUtil {
      *            The {@link Class} where the tab completers are located.
      * @param obj
      *            An {@link Object} of the given {@link Class}.
-     * @see com.blockhaus2000.minecraft.util.tabcompl#register(java.lang.Class,
+     * @see com.blockhaus2000.minecraft.util.tabcompl.TabCompletionManager#register(java.lang.Class,
      *      java.lang.Object)
      */
     public static void registerTabCompleters(final Class<?> clazz, final Object obj) {
