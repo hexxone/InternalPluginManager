@@ -16,17 +16,13 @@
  */
 package com.blockhaus2000.commands;
 
-import java.util.List;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import com.blockhaus2000.main.bukkit.InternalPluginManager;
 import com.blockhaus2000.minecraft.util.command.Command;
 import com.blockhaus2000.plugin.IpmPlugin;
-import com.blockhaus2000.plugin.update.SimpleUpdater;
 import com.blockhaus2000.util.ChatOut;
-import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.StringUtil;
 import com.blockhaus2000.util.command.CommandContext;
 
@@ -62,7 +58,6 @@ public class PluginManagerCommands {
     }
 
     // Cast to List<String>
-    @SuppressWarnings("unchecked")
     @Command(aliases = { "internalpluginmanager", "ipm" },
              desc = "Updates the specified plugins to the latest available versions.",
              usage = "/<internalpluginmanager|ipm> update <plugins...>",
@@ -72,33 +67,39 @@ public class PluginManagerCommands {
     public void update(final CommandContext context) { // TODO
         ChatOut.sendMessage(context.getSender(), "Not supported yet!");
 
-        final CommandSender sender = context.getSender();
-
-        for (String target : (List<String>) context.getArgs().get(0).getData()) {
-            final IpmPlugin targetPlugin = InternalPluginManager.getServer().getPluginManager().getPlugin(target);
-
-            if (targetPlugin == null) {
-                ChatOut.sendMessage(sender, "Cannot find plugin \"" + target + "\"!");
-                continue;
-            }
-
-            final String targetPluginName = targetPlugin.getName();
-
-            try {
-                if (!SimpleUpdater.getInstance().hasUpdate(targetPlugin)) {
-                    ChatOut.sendMessage(sender, "No update is available for \"" + targetPluginName + "\"!");
-                    return;
-                }
-
-                SimpleUpdater.getInstance().update(targetPlugin);
-            } catch (Exception ex) {
-                ChatOut.sendMessage(sender, "Cannot update \"" + targetPluginName + "\". See server log for a full error report.");
-                ExceptionHandler.handle(ex);
-                continue;
-            }
-
-            ChatOut.sendMessage(sender, "Updated \"" + targetPluginName + "\" to the latest version!");
-        }
+        // final CommandSender sender = context.getSender();
+        //
+        // for (String target : (List<String>)
+        // context.getArgs().get(0).getData()) {
+        // final IpmPlugin targetPlugin =
+        // InternalPluginManager.getServer().getPluginManager().getPlugin(target);
+        //
+        // if (targetPlugin == null) {
+        // ChatOut.sendMessage(sender, "Cannot find plugin \"" + target +
+        // "\"!");
+        // continue;
+        // }
+        //
+        // final String targetPluginName = targetPlugin.getName();
+        //
+        // try {
+        // if (!SimpleUpdater.getInstance().hasUpdate(targetPlugin)) {
+        // ChatOut.sendMessage(sender, "No update is available for \"" +
+        // targetPluginName + "\"!");
+        // return;
+        // }
+        //
+        // SimpleUpdater.getInstance().update(targetPlugin);
+        // } catch (Exception ex) {
+        // ChatOut.sendMessage(sender, "Cannot update \"" + targetPluginName +
+        // "\". See server log for a full error report.");
+        // ExceptionHandler.handle(ex);
+        // continue;
+        // }
+        //
+        // ChatOut.sendMessage(sender, "Updated \"" + targetPluginName +
+        // "\" to the latest version!");
+        // }
     }
 
     @Command(aliases = { "internalpluginmanager", "ipm" },

@@ -37,10 +37,10 @@ public class CommandRegistrationUtil {
      * {@link Object} for the given {@link Plugin}.
      *
      * @param clazz
-     *            The {@link Class} where the commands are placed.
+     *            The {@link Class} where the commands are located.
      * @param obj
      *            An {@link Object} of the {@link Class} where the commands are
-     *            placed (only for non-static methods, can be <code>null</code>
+     *            located (only for non-static methods, can be <code>null</code>
      *            ).
      * @param plugin
      *            The {@link Plugin} that is associated with the commands.
@@ -58,7 +58,7 @@ public class CommandRegistrationUtil {
      * with <code>obj = null</code>.
      *
      * @param clazz
-     *            The {@link Class} where the commands are placed.
+     *            The {@link Class} where the commands are located.
      * @param plugin
      *            The {@link Plugin} that is associated with the commands.
      * @see com.blockhaus2000.util.CommandRegistrationUtil#registerCommands(java.lang.Class,
@@ -74,7 +74,7 @@ public class CommandRegistrationUtil {
      * with the {@link Class} of the given {@link Object}.
      *
      * @param obj
-     *            The {@link Object} where the commands are placed.
+     *            The {@link Object} where the commands are located.
      * @param plugin
      *            The {@link Plugin} that is associated with the commands.
      * @see com.blockhaus2000.util.CommandRegistrationUtil#registerCommands(java.lang.Class,

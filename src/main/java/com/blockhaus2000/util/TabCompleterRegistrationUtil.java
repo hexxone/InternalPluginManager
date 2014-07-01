@@ -17,6 +17,7 @@
 package com.blockhaus2000.util;
 
 import com.blockhaus2000.main.bukkit.InternalPluginManager;
+import com.blockhaus2000.minecraft.util.tabcompl.TabCompletionManager;
 
 /**
  * The tab completer registration util help you to register your tab completer
@@ -28,14 +29,47 @@ public class TabCompleterRegistrationUtil {
         // utility should not have a visible constructor
     }
 
+    /**
+     * Registers the given tab completer {@link Class} with the given
+     * {@link Object}. Will call
+     * {@link TabCompletionManager#register(Class, Object)} with
+     * <code>plugin</code> as the target plugin.
+     *
+     * @param clazz
+     *            The {@link Class} where the tab completers are located.
+     * @param obj
+     *            An {@link Object} of the given {@link Class}.
+     * @see com.blockhaus2000.minecraft.util.tabcompl#register(java.lang.Class,
+     *      java.lang.Object)
+     */
     public static void registerTabCompleters(final Class<?> clazz, final Object obj) {
         InternalPluginManager.getServer().getTabCompletionManager().register(clazz, obj);
     }
 
+    /**
+     * Registers commands. Will call
+     * {@link TabCompleterRegistrationUtil#registerTabCompleters(Class, Object)}
+     * with <code>obj = null</code>.
+     *
+     * @param clazz
+     *            The {@link Class} where the commands are located.
+     * @see com.blockhaus2000.util.TabCompleterRegistrationUtil#registerTabCompleters(java.lang.Class,
+     *      java.lang.Object)
+     */
     public static void registerTabCompleters(final Class<?> clazz) {
         TabCompleterRegistrationUtil.registerTabCompleters(clazz, null);
     }
 
+    /**
+     * Registers commands. Will call
+     * {@link TabCompleterRegistrationUtil#registerTabCompleters(Class, Object)}
+     * with the {@link Class} of the given {@link Object}.
+     *
+     * @param obj
+     *            The {@link Object} where the commands are located.
+     * @see com.blockhaus2000.util.TabCompleterRegistrationUtil#registerTabCompleters(java.lang.Class,
+     *      java.lang.Object)
+     */
     public static void registerTabCompleters(final Object obj) {
         TabCompleterRegistrationUtil.registerTabCompleters(obj.getClass(), obj);
     }

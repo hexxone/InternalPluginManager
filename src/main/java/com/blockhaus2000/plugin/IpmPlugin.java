@@ -27,6 +27,7 @@ import org.bukkit.plugin.Plugin;
 
 import com.blockhaus2000.util.ChatOut;
 import com.blockhaus2000.util.CommandRegistrationUtil;
+import com.blockhaus2000.util.TabCompleterRegistrationUtil;
 
 /**
  * The main class that is used for plugin.
@@ -155,10 +156,45 @@ public interface IpmPlugin extends Plugin, PropertyChangeListener {
      */
     public void registerCommands(final Object obj);
 
+    /**
+     * Registers the given tab completer {@link Class} with the given
+     * {@link Object}. Will call
+     * {@link TabCompleterRegistrationUtil#registerTabCompleters(Class, Object)}
+     * with <code>plugin</code> as the target plugin.
+     *
+     * @param clazz
+     *            The {@link Class} where the tab completers are located.
+     * @param obj
+     *            An {@link Object} of the given {@link Class}.
+     * @see com.blockhaus2000.util.TabCompleterRegistrationUtil#registerTabCompleters(java.lang.Class,
+     *      java.lang.Object)
+     */
     public void registerTabCompletions(final Class<?> clazz, final Object obj);
 
+    /**
+     * Registers the given tab completer {@link Class}. Will call
+     * {@link IpmPlugin#registerTabCompletions(Class, Object)} with
+     * <code>obj = null</code>.
+     *
+     * @param clazz
+     *            The {@link Class} where the registerTabCompletions are
+     *            located.
+     * @see com.blockhaus2000.plugin.IpmPlugin#registerTabCompletions(java.lang.Class,
+     *      java.lang.Object)
+     */
     public void registerTabCompletions(final Class<?> clazz);
 
+    /**
+     * Registers the given tab completer {@link Object}. Will call
+     * {@link IpmPlugin#registerTabCompletions(Class, Object)} with
+     * <code>clazz = {@link Object#getClass()}</code>.
+     *
+     * @param obj
+     *            The {@link Object} where the registerTabCompletions are
+     *            located.
+     * @see com.blockhaus2000.plugin.IpmPlugin#registerTabCompletions(java.lang.Class,
+     *      java.lang.Object)
+     */
     public void registerTabCompletions(final Object obj);
 
     /**
