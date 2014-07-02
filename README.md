@@ -36,8 +36,7 @@ Main features of the plugin system:
 
 Upcoming features:
 ------------------
-	- An update system for the plugin system (You place the updated jar in the "plugins/InternalPluginManager/updates/" folder an execute the command "/ipm update", then the plugin to update will be updated to the latest version.)
-	- Type-specific value flags
+	- An update system for the plugin system (You place the updated jar in the "plugins/InternalPluginManager/updates/" folder an execute the command "/ipm update", then the plugin to update will be updated to the latest version.).
 
 
 NOTE: This README document is still work in progress!

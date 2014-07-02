@@ -63,3 +63,4 @@ Commit conventions
 		4. Line: "? fixed XXXXX"
 		5. Line: "? fixed XXXXX"
 		6. Line: "? fixes XXXXX"
+	- Only create a pull request for the dev branch!
