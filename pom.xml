@@ -10,21 +10,17 @@
 	<!-- Some important project properties -->
 	<properties>
 		<!-- Fix encoding warings -->
-                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<!-- The Bukkit version to use -->
 		<project.properties.bukkitVersion>1.7.9-R0.2-SNAPSHOT</project.properties.bukkitVersion>
 
 		<!-- The CraftBukkit jar name -->
 		<project.properties.craftbukkitJarName>craftbukkit-1.7.9-R0.2-20140520.082451-2.jar</project.properties.craftbukkitJarName>
-        </properties>
+	</properties>
 
 
-	<!--
-	===============================
-	===== Project Information =====
-	===============================
-	-->
+	<!-- ===== Project Information ===== -->
 
 	<name>InternalPluginManager</name>
 	<inceptionYear>2014</inceptionYear>
@@ -51,18 +47,12 @@
 	</scm>
 
 
-	<!--
-	===================================
-	===== Distribution Management =====
-	===================================
-	-->
+	<!-- ===== Distribution Management ===== -->
 
 	<distributionManagement>
 		<!-- The site will be deployed here -->
-		<!--<site>
-			<id>blockhaus2000-site-ftp</id>
-			<url>ftp://docs.blockhaus2000.com/internalpluginmanager/</url>
-		</site>-->
+		<!--<site> <id>blockhaus2000-site-ftp</id> <url>ftp://docs.blockhaus2000.com/internalpluginmanager/</url> 
+			</site> -->
 
 		<!-- Releases will be deployed here -->
 		<repository>
@@ -72,11 +62,7 @@
 	</distributionManagement>
 
 
-	<!--
-	========================
-	===== Dependencies =====
-	========================
-	-->
+	<!-- ===== Dependencies ===== -->
 
 	<repositories>
 		<repository>
@@ -115,28 +101,14 @@
 	</dependencies>
 
 
-	<!--
-	=====================
-	===== Reporting =====
-	=====================
-	-->
+	<!-- ===== Reporting ===== -->
 
-	<!--<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.9.1</version>
-			</plugin>
-		</plugins>
-	</reporting>-->
+	<!--<reporting> <plugins> <plugin> <groupId>org.apache.maven.plugins</groupId> 
+		<artifactId>maven-javadoc-plugin</artifactId> <version>2.9.1</version> </plugin> 
+		</plugins> </reporting> -->
 
 
-	<!--
-	=================
-	===== Build =====
-	=================
-	-->
+	<!-- ===== Build ===== -->
 
 	<build>
 		<directory>target</directory>
@@ -195,7 +167,8 @@
 					<executionDirectory>target/dist/</executionDirectory>
 					<craftbukkitURL>http://repo.bukkit.org/content/repositories/public/org/bukkit/craftbukkit/${project.properties.bukkitVersion}/${project.properties.craftbukkitJarName}</craftbukkitURL>
 					<craftbukkitFile>cache/${project.properties.craftbukkitJarName}</craftbukkitFile>
-					<javaExecutionCommand>/usr/bin/java -Dinternalpluginmanager.debug-mode=true -jar craftbukkit.jar</javaExecutionCommand>
+					<javaExecutionCommand>/usr/bin/java
+						-Dinternalpluginmanager.debug-mode=true -jar craftbukkit.jar</javaExecutionCommand>
 					<failOnTestFailure>true</failOnTestFailure>
 
 					<plugins>
@@ -308,7 +281,7 @@
 				<executions>
 					<execution>
 						<id>verify-style</id>
-						<!--phase>validate</phase-->
+						<!--phase>validate</phase -->
 						<goals>
 							<goal>check</goal>
 						</goals>
@@ -347,7 +320,8 @@
 									<property name="option" value="eol" />
 								</module>
 
-								<!-- In a switch...case structure, the default case comes at the end -->
+								<!-- In a switch...case structure, the default case comes at the 
+									end -->
 								<module name="DefaultComesLast" />
 
 								<module name="GenericWhitespace" />
@@ -393,43 +367,24 @@
 					</execution>
 				</executions>
 				<configuration>
-					<!--doCheck>true</doCheck>
-					<doUpdate>true</doUpdate-->
+					<!--doCheck>true</doCheck> <doUpdate>true</doUpdate -->
 					<item>timestamp</item>
 					<shortRevisionLength>5</shortRevisionLength>
 				</configuration>
 			</plugin>
 
 			<!-- Site builder -->
-			<!--<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-site-plugin</artifactId>
-				<version>3.1</version>
-				<configuration>-->
-					<!-- Project information -->
-					<!--<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>mavan-project-info-reports-plugin</artifactId>
-						<version>2.5</version>
-						<reportSets>
-							<reportSet>
-								<reports>
-									<report>license</report>
-									<report>index</report>
-									<report>javadoc</report>
-								</reports>
-							</reportSet>
-						</reportSets>
-					</plugin>-->
+			<!--<plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-site-plugin</artifactId> 
+				<version>3.1</version> <configuration> -->
+			<!-- Project information -->
+			<!--<plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>mavan-project-info-reports-plugin</artifactId> 
+				<version>2.5</version> <reportSets> <reportSet> <reports> <report>license</report> 
+				<report>index</report> <report>javadoc</report> </reports> </reportSet> </reportSets> 
+				</plugin> -->
 
-					<!-- JavaDoc -->
-					<!--<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>mavan-javadoc-plugin</artifactId>
-						<version>2.8.1</version>
-					</plugin>
-				</configuration>
-			</plugin>-->
+			<!-- JavaDoc -->
+			<!--<plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>mavan-javadoc-plugin</artifactId> 
+				<version>2.8.1</version> </plugin> </configuration> </plugin> -->
 		</plugins>
 
 		<resources>
@@ -442,8 +397,8 @@
 			<resource>
 				<directory>target/generated-resources/</directory>
 				<includes>
-                                        <include>plugin.yml</include> <!-- We want to use the plugin.yml with the corrent project version -->
-                                </includes>
+					<include>plugin.yml</include> <!-- We want to use the plugin.yml with the corrent project version -->
+				</includes>
 			</resource>
 		</resources>
 
