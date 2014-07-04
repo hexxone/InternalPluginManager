@@ -39,8 +39,6 @@ public class MockConsoleCommandSender implements ConsoleCommandSender {
      */
     @Override
     public void sendMessage(final String message) {
-        // TODO Auto-generated method stub
-
     }
 
     /**
@@ -50,8 +48,6 @@ public class MockConsoleCommandSender implements ConsoleCommandSender {
      */
     @Override
     public void sendMessage(final String[] messages) {
-        // TODO Auto-generated method stub
-
     }
 
     /**
@@ -61,7 +57,6 @@ public class MockConsoleCommandSender implements ConsoleCommandSender {
      */
     @Override
     public Server getServer() {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -72,7 +67,6 @@ public class MockConsoleCommandSender implements ConsoleCommandSender {
      */
     @Override
     public String getName() {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -83,7 +77,6 @@ public class MockConsoleCommandSender implements ConsoleCommandSender {
      */
     @Override
     public boolean isPermissionSet(final String name) {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -94,7 +87,6 @@ public class MockConsoleCommandSender implements ConsoleCommandSender {
      */
     @Override
     public boolean isPermissionSet(final Permission perm) {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -105,7 +97,6 @@ public class MockConsoleCommandSender implements ConsoleCommandSender {
      */
     @Override
     public boolean hasPermission(final String name) {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -116,7 +107,6 @@ public class MockConsoleCommandSender implements ConsoleCommandSender {
      */
     @Override
     public boolean hasPermission(final Permission perm) {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -128,7 +118,6 @@ public class MockConsoleCommandSender implements ConsoleCommandSender {
      */
     @Override
     public PermissionAttachment addAttachment(final Plugin plugin, final String name, final boolean value) {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -139,7 +128,6 @@ public class MockConsoleCommandSender implements ConsoleCommandSender {
      */
     @Override
     public PermissionAttachment addAttachment(final Plugin plugin) {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -151,7 +139,6 @@ public class MockConsoleCommandSender implements ConsoleCommandSender {
      */
     @Override
     public PermissionAttachment addAttachment(final Plugin plugin, final String name, final boolean value, final int ticks) {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -163,7 +150,6 @@ public class MockConsoleCommandSender implements ConsoleCommandSender {
      */
     @Override
     public PermissionAttachment addAttachment(final Plugin plugin, final int ticks) {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -174,7 +160,6 @@ public class MockConsoleCommandSender implements ConsoleCommandSender {
      */
     @Override
     public void removeAttachment(final PermissionAttachment attachment) {
-        // TODO Auto-generated method stub
 
     }
 
@@ -185,7 +170,6 @@ public class MockConsoleCommandSender implements ConsoleCommandSender {
      */
     @Override
     public void recalculatePermissions() {
-        // TODO Auto-generated method stub
 
     }
 
@@ -196,7 +180,6 @@ public class MockConsoleCommandSender implements ConsoleCommandSender {
      */
     @Override
     public Set<PermissionAttachmentInfo> getEffectivePermissions() {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -207,7 +190,6 @@ public class MockConsoleCommandSender implements ConsoleCommandSender {
      */
     @Override
     public boolean isOp() {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -218,8 +200,6 @@ public class MockConsoleCommandSender implements ConsoleCommandSender {
      */
     @Override
     public void setOp(final boolean value) {
-        // TODO Auto-generated method stub
-
     }
 
     /**
@@ -229,7 +209,6 @@ public class MockConsoleCommandSender implements ConsoleCommandSender {
      */
     @Override
     public boolean isConversing() {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -240,8 +219,6 @@ public class MockConsoleCommandSender implements ConsoleCommandSender {
      */
     @Override
     public void acceptConversationInput(final String input) {
-        // TODO Auto-generated method stub
-
     }
 
     /**
@@ -251,7 +228,6 @@ public class MockConsoleCommandSender implements ConsoleCommandSender {
      */
     @Override
     public boolean beginConversation(final Conversation conversation) {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -262,8 +238,6 @@ public class MockConsoleCommandSender implements ConsoleCommandSender {
      */
     @Override
     public void abandonConversation(final Conversation conversation) {
-        // TODO Auto-generated method stub
-
     }
 
     /**
@@ -274,8 +248,6 @@ public class MockConsoleCommandSender implements ConsoleCommandSender {
      */
     @Override
     public void abandonConversation(final Conversation conversation, final ConversationAbandonedEvent details) {
-        // TODO Auto-generated method stub
-
     }
 
     /**
@@ -285,7 +257,5 @@ public class MockConsoleCommandSender implements ConsoleCommandSender {
      */
     @Override
     public void sendRawMessage(final String message) {
-        // TODO Auto-generated method stub
-
     }
 }

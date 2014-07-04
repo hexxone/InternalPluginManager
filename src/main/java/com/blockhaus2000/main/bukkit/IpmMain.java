@@ -52,9 +52,28 @@ public class IpmMain extends JavaPlugin {
     public static final boolean DEBUGGING_ENABLED = Boolean.valueOf(System.getProperty("internalpluginmanager.debug-mode",
             "false"));
 
+    /**
+     * This is the path that is used in the Bukkit configuration (config.yml) to
+     * enable/disable the integrated plugin manager. By default, the integrated
+     * plugin manager is enabled.
+     *
+     */
+    public static final String PLUGIN_MANAGER_ENABLED_PATH = "settings.plugin_manager_enabled";
+
+    /**
+     * This is the path that is used in the Bukkit configuration (config.cml) to
+     * enable/disable error report sending.
+     *
+     * <p>
+     * <b> NOTE: Error report sending is NOT possible yet. </b>
+     * </p>
+     *
+     */
+    // TODO Implement error report sending.
+    public static final String SEND_ERROR_REPORTS_PATH = "send_error_reports";
+
     private static IpmMain instance;
 
-    private final String sendErrorReportsPath = "send_error_reports";
     private boolean sendErrorReports = false;
 
     // Only for Testing (has to be commented for a release)
@@ -88,10 +107,12 @@ public class IpmMain extends JavaPlugin {
      */
     @Override
     public void onEnable() {
-        getConfig().addDefault(sendErrorReportsPath, false);
+        getConfig().addDefault(IpmMain.PLUGIN_MANAGER_ENABLED_PATH, true);
+        // TODO Error report sending is not implemented yet.
+        // getConfig().addDefault(IpmMain.SEND_ERROR_REPORTS_PATH, false);
         saveConfig();
 
-        sendErrorReports = getConfig().getBoolean(sendErrorReportsPath);
+        sendErrorReports = getConfig().getBoolean(IpmMain.SEND_ERROR_REPORTS_PATH);
 
         try {
             ResourceManager.initializeResources(ExceptionHandler.class);
@@ -113,7 +134,12 @@ public class IpmMain extends JavaPlugin {
 
         // register basic commands
         CommandRegistrationUtil.registerCommands(new Commands(), this);
-        CommandRegistrationUtil.registerCommands(new PluginManagerCommands(), this);
+
+        // only register plugin manager commands if the plugin manager is
+        // enabled
+        if (getConfig().getBoolean(IpmMain.PLUGIN_MANAGER_ENABLED_PATH)) {
+            CommandRegistrationUtil.registerCommands(new PluginManagerCommands(), this);
+        }
 
         // register basic tab completer
         TabCompleterRegistrationUtil.registerTabCompleters(new PluginManagerTabCompleter());

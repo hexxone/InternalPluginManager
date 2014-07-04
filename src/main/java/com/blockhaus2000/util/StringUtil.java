@@ -166,18 +166,6 @@ public class StringUtil {
      * @see java.lang.String#replaceFirst(java.lang.String, java.lang.String)
      */
     public static String replaceLast(final String regex, final String replacement, final String str) {
-        final StringBuffer buffer = new StringBuffer();
-
-        final String[] splitted = str.split(regex);
-        final int length = splitted.length;
-        for (int i = 0; i < length; i++) {
-            if (i == length - 1) {
-                continue;
-            }
-
-            buffer.append(splitted[i]);
-        }
-
-        return buffer.toString();
+        return str.replaceAll("(.*)" + regex + "(.*)", "$1" + replacement + "$2");
     }
 }
