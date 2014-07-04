@@ -137,10 +137,9 @@ public class SimpleTabCompletionManager implements TabCompletionManager {
             secondLevelCommand = secondLevelCommand.toLowerCase().trim();
         }
 
-        if (tabCompleters.get(label) == null || tabCompleters.get(label).get(secondLevelCommand) == null) {
-            if (tabCompleters.get(label).get(null) == null) {
-                return new ArrayList<String>();
-            }
+        if (tabCompleters.get(label) == null || tabCompleters.get(label).get(secondLevelCommand) == null
+                && tabCompleters.get(label).get(null) == null) {
+            return new ArrayList<String>();
         }
 
         final List<String> secLevCmds = new ArrayList<String>();
