@@ -29,9 +29,9 @@ import com.blockhaus2000.util.command.CommandContext;
 @SuppressWarnings("javadoc")
 public class Commands {
     @Command(aliases = { "internalpluginmanager", "ipm" },
-            desc = "Toggles the debug-mode.",
-            secondLevelCommand = "debug",
-            permission = "internalpluginmanager.ipm.debug")
+             desc = "Toggles the debug-mode.",
+             secondLevelCommand = "debug",
+             permission = "internalpluginmanager.ipm.debug")
     public void debug(final CommandContext context) {
         if (IpmMain.DEBUGGING_ENABLED) {
             ChatOut.sendMessage(context.getSender(), "Debug mode " + (TestCommands.toggleEnabled() ? "enabled" : "disabled")
@@ -39,7 +39,8 @@ public class Commands {
             ChatOut.sendMessage(context.getSender(), TestCommands.SUCCEED);
         } else {
             ChatOut.sendMessage(context.getSender(),
-                    "Cannot toggle debug mode, because it was disable global with the system property \"internalpluginmanager.debug-mode\"!");
+                    "Cannot toggle debug mode, because it was disable global with the system property "
+                            + "\"internalpluginmanager.debug-mode\"!");
             ChatOut.sendMessage(context.getSender(), TestCommands.FAILED);
         }
     }
