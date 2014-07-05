@@ -28,7 +28,6 @@ import com.blockhaus2000.util.command.CommandInfo;
  * {@link Command} annotation. This is a {@link TabExecutor}, which extends the
  * {@link CommandExecutor}.
  *
- * @author Blockhaus2000
  * @see org.bukkit.command.TabExecutor
  * @see org.bukkit.command.CommandExecutor
  */

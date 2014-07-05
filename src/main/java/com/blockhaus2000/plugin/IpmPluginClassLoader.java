@@ -32,7 +32,6 @@ import com.blockhaus2000.util.CommandRegistrationUtil;
  * classses of the jar and the main classes (like
  * {@link CommandRegistrationUtil}).
  *
- * @author Blockhaus2000
  */
 public class IpmPluginClassLoader extends URLClassLoader {
     private final Map<String, Class<?>> classes = new HashMap<String, Class<?>>();

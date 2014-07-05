@@ -19,7 +19,6 @@ package com.blockhaus2000.minecraft.util.command.event;
 /**
  * Specifies the illegal syntax type in the {@link IllegalSyntaxCommandEvent}.
  *
- * @author Blockhaus2000
  */
 public enum IllegalSyntaxType {
     /**

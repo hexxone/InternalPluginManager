@@ -27,7 +27,6 @@ import com.blockhaus2000.util.resources.MainPluginResource;
  * {@link IllegalArgumentException} if an given {@link Exception} is
  * <code>null</code>.
  *
- * @author Blockhaus2000
  */
 public final class ExceptionHandler {
     @MainPluginResource

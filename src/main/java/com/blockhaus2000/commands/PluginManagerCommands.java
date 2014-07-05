@@ -30,17 +30,16 @@ import com.blockhaus2000.util.command.CommandContext;
  * This class provides some command for the integrated, disableble plugin
  * manager.
  *
- * @author Blockhaus2000
  */
 @SuppressWarnings("javadoc")
 public class PluginManagerCommands {
     // Updates all plugins (!!! NOT WORKING YET !!!).
     @Command(aliases = { "internalpluginmanager", "ipm" },
-             desc = "Updates all plugins to the latest available version.",
-             usage = "/<internalpluginmanager|ipm> update",
-             secondLevelCommand = "update",
-             permission = "internalpluginmanager.ipm.update",
-             max = 0)
+            desc = "Updates all plugins to the latest available version.",
+            usage = "/<internalpluginmanager|ipm> update",
+            secondLevelCommand = "update",
+            permission = "internalpluginmanager.ipm.update",
+            max = 0)
     public void updateAll(final CommandContext context) { // TODO
         ChatOut.sendMessage(context.getSender(), "Not supported yet!");
 
@@ -59,11 +58,11 @@ public class PluginManagerCommands {
 
     // Cast to List<String>
     @Command(aliases = { "internalpluginmanager", "ipm" },
-             desc = "Updates the specified plugins to the latest available versions.",
-             usage = "/<internalpluginmanager|ipm> update <plugins...>",
-             secondLevelCommand = "update",
-             permission = "internalpluginmanager.ipm.update",
-             syntax = "String...")
+            desc = "Updates the specified plugins to the latest available versions.",
+            usage = "/<internalpluginmanager|ipm> update <plugins...>",
+            secondLevelCommand = "update",
+            permission = "internalpluginmanager.ipm.update",
+            syntax = "String...")
     public void update(final CommandContext context) { // TODO
         ChatOut.sendMessage(context.getSender(), "Not supported yet!");
 
@@ -103,10 +102,10 @@ public class PluginManagerCommands {
     }
 
     @Command(aliases = { "internalpluginmanager", "ipm" },
-             desc = "Lists all loaded plugins.",
-             usage = "/<internalpluginmanager|ipm> list",
-             secondLevelCommand = "list",
-             permission = "internalpluginmanager.ipm.list")
+            desc = "Lists all loaded plugins.",
+            usage = "/<internalpluginmanager|ipm> list",
+            secondLevelCommand = "list",
+            permission = "internalpluginmanager.ipm.list")
     public void list(final CommandContext context) {
         final StringBuffer buffer = new StringBuffer("Loaded Plugins: ");
         for (IpmPlugin target : InternalPluginManager.getServer().getPluginManager().getPlugins()) {
@@ -117,32 +116,32 @@ public class PluginManagerCommands {
     }
 
     @Command(aliases = { "internalpluginmanager", "ipm" },
-             desc = "Disables all given plugins.",
-             usage = "/<internalpluginmanager|ipm> disable <plugins...>",
-             secondLevelCommand = "disable",
-             permission = "internalpluginmanager.ipm.disable",
-             syntax = "String...")
+            desc = "Disables all given plugins.",
+            usage = "/<internalpluginmanager|ipm> disable <plugins...>",
+            secondLevelCommand = "disable",
+            permission = "internalpluginmanager.ipm.disable",
+            syntax = "String...")
     public void disable(final CommandContext context) {
         doEnableDisableAction(context, EnableDisableAction.DISABLE);
     }
 
     @Command(aliases = { "internalpluginmanager", "ipm" },
-             desc = "Enables all given plugins.",
-             usage = "/<internalpluginmanager|ipm> enable <plugins...>",
-             secondLevelCommand = "enable",
-             permission = "internalpluginmanager.ipm.enabled",
-             syntax = "String...")
+            desc = "Enables all given plugins.",
+            usage = "/<internalpluginmanager|ipm> enable <plugins...>",
+            secondLevelCommand = "enable",
+            permission = "internalpluginmanager.ipm.enabled",
+            syntax = "String...")
     public void enable(final CommandContext context) {
         doEnableDisableAction(context, EnableDisableAction.ENABLE);
     }
 
     @Command(aliases = { "internalpluginmanager", "ipm" },
-             desc = "Reloads (soft or hard) all given plugins.",
-             usage = "/<internalpluginmanager|ipm> reload [-h: Hard Reload] <plugins...>",
-             secondLevelCommand = "reload",
-             permission = "internalpluginmanager.ipm.reload",
-             syntax = "String...",
-             flags = "h")
+            desc = "Reloads (soft or hard) all given plugins.",
+            usage = "/<internalpluginmanager|ipm> reload [-h: Hard Reload] <plugins...>",
+            secondLevelCommand = "reload",
+            permission = "internalpluginmanager.ipm.reload",
+            syntax = "String...",
+            flags = "h")
     public void reload(final CommandContext context) {
         if ((Boolean) context.getFlags().get('h').getData()) {
             doEnableDisableAction(context, EnableDisableAction.RELOAD_HARD);

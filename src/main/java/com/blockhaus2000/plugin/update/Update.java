@@ -23,8 +23,8 @@ import com.blockhaus2000.plugin.IpmPlugin;
 import com.blockhaus2000.plugin.IpmPluginDescription;
 
 /**
+ * This update class stores important information about an update, like.
  *
- * @author Blockhaus2000
  */
 public class Update {
     private final IpmPlugin oldPlugin;

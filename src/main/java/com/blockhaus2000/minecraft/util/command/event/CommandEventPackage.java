@@ -29,7 +29,6 @@ import org.bukkit.event.HandlerList;
  * execution. Use this and not the raw {@link CommandEvent}s to handle
  * {@link CommandEvent}s.
  *
- * @author Blockhaus2000
  */
 public class CommandEventPackage extends Event implements Iterable<CommandEvent<?>> {
     private static final HandlerList handlers = new HandlerList();

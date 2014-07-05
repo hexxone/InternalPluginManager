@@ -42,7 +42,6 @@ import com.blockhaus2000.util.resources.ResourceManager;
 /**
  * An implementation of {@link IpmPluginLoader}.
  *
- * @author Blockhaus2000
  */
 public class SimpleIpmPluginLoader implements IpmPluginLoader {
     // This should be a singleton.

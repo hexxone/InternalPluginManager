@@ -21,7 +21,6 @@ import java.lang.reflect.Field;
 /**
  * This class is to simplify the usage of reflection.
  *
- * @author Blockhaus2000
  */
 public class ReflectionUtil {
     private ReflectionUtil() {
@@ -66,7 +65,7 @@ public class ReflectionUtil {
 
                 /*
                  * This fails silent.
-                 * 
+                 *
                  * See JavaDoc for explanation.
                  */
             }
@@ -108,7 +107,7 @@ public class ReflectionUtil {
         } catch (Exception e) {
             /*
              * This fails silent.
-             * 
+             *
              * This is because thid method does not throw any exception
              * (excepted IllegalArgumentException), because it returns null if
              * nothing can be found.

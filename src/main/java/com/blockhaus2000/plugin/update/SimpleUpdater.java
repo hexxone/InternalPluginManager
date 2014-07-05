@@ -35,8 +35,9 @@ import com.blockhaus2000.util.resources.ResourceManager;
 import com.google.common.io.Files;
 
 /**
+ * The {@link SimpleUpdater} is an implementation of {@link Updater}.
  *
- * @author Blockhaus2000
+ * @see com.blockhaus2000.plugin.update.Update
  */
 public class SimpleUpdater implements Updater {
     private static final Updater instance = new SimpleUpdater();

@@ -22,7 +22,6 @@ import java.util.Set;
  * The plugin manager that manages all enable, disable, register and unregister
  * logics.
  *
- * @author Blockhaus2000
  */
 public interface IpmPluginManager {
     /**

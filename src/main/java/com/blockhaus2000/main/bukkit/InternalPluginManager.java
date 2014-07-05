@@ -22,7 +22,6 @@ import com.blockhaus2000.plugin.SimpleIpmServer;
 /**
  * This is a utility class with static methods.
  *
- * @author Blockhaus2000
  */
 public class InternalPluginManager {
     private InternalPluginManager() {

@@ -20,7 +20,6 @@ package com.blockhaus2000.util;
  * This class represents a caller (for use in the {@link StackUtil}). It
  * contains the name of the class that contains the caller method.
  *
- * @author Blockhaus2000
  */
 public class Caller {
     private final String className;

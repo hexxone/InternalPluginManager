@@ -25,7 +25,6 @@ import com.blockhaus2000.minecraft.util.tabcompl.TabCompletionManager;
 /**
  * An implementation of {@link IpmServer}.
  *
- * @author Blockhaus2000
  */
 public class SimpleIpmServer implements IpmServer {
     private static final IpmServer instance = new SimpleIpmServer();

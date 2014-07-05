@@ -26,7 +26,6 @@ import com.blockhaus2000.util.command.CommandInfo;
  * This command manager enables dynamic command registration in Bukkit, so you
  * do not have to describe all of your commands in the <code>plugin.yml</code>.
  *
- * @author Blockhaus2000
  */
 public interface DynamicPluginCommandManager {
     /**

@@ -29,7 +29,6 @@ import com.blockhaus2000.util.resources.ResourceManager;
  * Provides some static methods to create a new
  * {@link DynamicPluginCommandManager}.
  *
- * @author Blockhaus2000
  */
 public class DynamicPluginCommandManagerFactory {
     @MainPluginResource

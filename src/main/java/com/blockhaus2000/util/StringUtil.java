@@ -24,7 +24,6 @@ import java.util.List;
  * static methods in this class for basic {@link String} operations that are not
  * implemented in the Java SE, such as joinString or something else.
  *
- * @author Blockhaus2000
  */
 public class StringUtil {
     private StringUtil() {

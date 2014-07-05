@@ -24,6 +24,5 @@
  * Also NOTHING will be used in some internals. </b>
  * </p>
  *
- * @author Blockhaus2000
  */
 package com.blockhaus2000.util.minecraft;

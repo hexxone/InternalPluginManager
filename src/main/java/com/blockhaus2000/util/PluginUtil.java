@@ -26,7 +26,6 @@ import org.bukkit.plugin.PluginManager;
  * This class is a utility class for easy disableing and enabling of Bukkit (!)
  * plugins.
  *
- * @author Blockhaus2000
  */
 public class PluginUtil {
     private PluginUtil() {

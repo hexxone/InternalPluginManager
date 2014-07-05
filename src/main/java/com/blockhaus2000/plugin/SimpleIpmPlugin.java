@@ -50,7 +50,6 @@ import com.blockhaus2000.util.TabCompleterRegistrationUtil;
 /**
  * An implmenetation of {@link IpmPlugin}.
  *
- * @author Blockhaus2000
  */
 public class SimpleIpmPlugin implements IpmPlugin {
     protected final PropertyChangeSupport changes = new PropertyChangeSupport(this);

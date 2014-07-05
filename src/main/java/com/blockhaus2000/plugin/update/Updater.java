@@ -23,8 +23,8 @@ import com.blockhaus2000.plugin.IpmPlugin;
 import com.blockhaus2000.plugin.exception.PluginException;
 
 /**
+ * With the updater, you can update plugins in runtime.
  *
- * @author Blockhaus2000
  */
 public interface Updater {
     /**

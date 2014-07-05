@@ -33,7 +33,6 @@ import com.blockhaus2000.util.command.CommandInfo;
 /**
  * Represents a {@link DynamicPluginCommandManager}.
  *
- * @author Blockhaus2000
  * @see com.blockhaus2000.bukkit.util.DynamicPluginCommandManager
  */
 public class SimpleDynamicPluginCommandManager implements DynamicPluginCommandManager {

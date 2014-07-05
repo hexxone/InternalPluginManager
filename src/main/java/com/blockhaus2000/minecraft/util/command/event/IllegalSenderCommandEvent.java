@@ -16,14 +16,17 @@
  */
 package com.blockhaus2000.minecraft.util.command.event;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import com.blockhaus2000.util.command.RawCommandContext;
 
 /**
+ * This event will be fired if a {@link CommandSender} executes a command that
+ * can not be used by the specific {@link CommandSender}. For example, if a
+ * command is executed in the console but can only be executed by a player.
  *
- * @author Blockhaus2000
  */
 public class IllegalSenderCommandEvent extends CommandEvent<RawCommandContext> {
     private static final HandlerList handlers = new HandlerList();

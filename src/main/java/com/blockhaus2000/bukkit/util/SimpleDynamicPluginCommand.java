@@ -28,7 +28,6 @@ import org.bukkit.plugin.Plugin;
 /**
  * Represents a {@link DynamicPluginCommand}.
  *
- * @author Blockhaus2000
  * @see org.bukkit.command.Command
  * @see com.blockhaus2000.bukkit.util.DynamicPluginCommand
  */

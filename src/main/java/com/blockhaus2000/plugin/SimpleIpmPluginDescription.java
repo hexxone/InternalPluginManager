@@ -30,7 +30,6 @@ import com.blockhaus2000.plugin.exception.PluginException;
 /**
  * An implementation of {@link IpmPluginDescription}.
  *
- * @author Blockhaus2000
  */
 public class SimpleIpmPluginDescription implements IpmPluginDescription {
     /**
@@ -119,7 +118,7 @@ public class SimpleIpmPluginDescription implements IpmPluginDescription {
 
     private Map<?, ?> asMap(final Object obj) {
         assert obj instanceof Map : "Obj has to be an instance of Map!";
-    return (Map<?, ?>) obj;
+        return (Map<?, ?>) obj;
     }
 
     // Getter

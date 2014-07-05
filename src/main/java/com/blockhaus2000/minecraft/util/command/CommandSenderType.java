@@ -21,8 +21,9 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 /**
+ * Simplifies the usage of command senders ({@link Player},
+ * {@link ConsoleCommandSender}, {@link BlockCommandSender}).
  *
- * @author Blockhaus2000
  */
 public enum CommandSenderType {
     /**

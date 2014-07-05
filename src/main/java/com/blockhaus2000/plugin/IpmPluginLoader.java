@@ -24,7 +24,6 @@ import com.blockhaus2000.plugin.exception.PluginException;
 /**
  * The plugin loader is used to load {@link IpmPlugin}s.
  *
- * @author Blockhaus2000
  */
 public interface IpmPluginLoader {
     /**

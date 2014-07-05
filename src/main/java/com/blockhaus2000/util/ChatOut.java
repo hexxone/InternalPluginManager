@@ -29,7 +29,6 @@ import org.bukkit.entity.Player;
 /**
  * This class is a utility class to simplify the message system.
  *
- * @author Blockhaus2000
  */
 public class ChatOut {
     private static Logger logger = Bukkit.getServer().getLogger();

@@ -26,7 +26,6 @@ import com.blockhaus2000.util.Tag;
  * This class represents the data from a {@link CommandContext}. That includes
  * the arguments and flags.
  *
- * @author Blockhaus2000
  */
 public class ContextData {
     private final List<Tag<?>> args;

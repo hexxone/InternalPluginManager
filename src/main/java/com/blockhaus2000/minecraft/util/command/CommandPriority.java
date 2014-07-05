@@ -28,7 +28,6 @@ package com.blockhaus2000.minecraft.util.command;
  * <li>{@link #MONITOR}</li>
  * </ul>
  *
- * @author Blockhaus2000
  */
 public enum CommandPriority {
     /**

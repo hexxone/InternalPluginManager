@@ -25,7 +25,6 @@ import java.util.List;
  * This class provides some static methods for the usage of arrays. See the
  * methods below for the full documentation what the specific method does.
  *
- * @author Blockhaus2000
  */
 public class ArrayUtil {
     private ArrayUtil() {

@@ -25,7 +25,6 @@ import com.blockhaus2000.minecraft.util.command.CommandPriority;
  * This class contains the basic options of a command. Implements
  * {@link Comparable} to sort commands by the {@link CommandPriority}.
  *
- * @author Blockhaus2000
  */
 public class CommandInfo implements Comparable<CommandInfo> {
     private final Command commandAnot;

@@ -28,8 +28,8 @@ import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 
 /**
+ * This is only a mock implementation of {@link ConsoleCommandSender}.
  *
- * @author Blockhaus2000
  */
 public class MockConsoleCommandSender implements ConsoleCommandSender {
     /**

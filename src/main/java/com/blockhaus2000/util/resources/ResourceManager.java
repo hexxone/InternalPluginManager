@@ -25,7 +25,6 @@ import java.util.Map;
  * This class will initialize the resources from the given {@link Object}s. See
  * JavaDoc below to see the exact implementation.
  *
- * @author Blockhaus2000
  */
 public class ResourceManager {
     private static final ResourceManager instance = new ResourceManager();
@@ -52,7 +51,7 @@ public class ResourceManager {
      *             throw it.
      */
     public static void initializeResources(final Class<?> clazz, final Object obj) throws IllegalArgumentException,
-    IllegalAccessException {
+            IllegalAccessException {
         assert clazz != null : "The given class is null!";
 
         for (Field target : clazz.getDeclaredFields()) {

@@ -19,7 +19,6 @@ package com.blockhaus2000.util;
 /**
  * This is a utility class for the usage of the stack.
  *
- * @author Blockhaus2000
  */
 public class StackUtil {
     private StackUtil() {

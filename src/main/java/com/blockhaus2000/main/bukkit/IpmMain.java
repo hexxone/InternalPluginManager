@@ -36,7 +36,6 @@ import com.blockhaus2000.util.resources.ResourceManager;
 /**
  * Represents the main plugin of the InternalPluginManager.
  *
- * @author Blockhaus2000
  * @see org.bukkit.plugin.Plugin
  * @see org.bukkit.plugin.java.JavaPlugin
  */

@@ -25,7 +25,6 @@ import org.bukkit.command.PluginIdentifiableCommand;
  * This will represent a {@link Command} that can be dynamicly registered in the
  * {@link DynamicPluginCommandManager}.
  *
- * @author Blockhaus2000
  */
 public interface DynamicPluginCommand extends PluginIdentifiableCommand {
     /**

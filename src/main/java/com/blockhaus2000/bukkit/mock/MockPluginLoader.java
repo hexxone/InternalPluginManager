@@ -39,7 +39,6 @@ import com.blockhaus2000.plugin.exception.PluginException;
 /**
  * This class is a mock implementation of {@link PluginLoader}.
  *
- * @author Blockhaus2000
  */
 public class MockPluginLoader implements PluginLoader {
     private static final PluginLoader instance = new MockPluginLoader();

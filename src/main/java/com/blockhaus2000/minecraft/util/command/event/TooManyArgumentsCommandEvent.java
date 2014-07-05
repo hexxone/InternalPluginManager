@@ -26,7 +26,6 @@ import com.blockhaus2000.util.command.RawCommandContext;
  * This {@link CommandEvent} will be fired if a command has been executed but
  * the {@link CommandSender} does have too many arguments.
  *
- * @author Blockhaus2000
  */
 public class TooManyArgumentsCommandEvent extends CommandEvent<RawCommandContext> {
     private static final HandlerList handlers = new HandlerList();

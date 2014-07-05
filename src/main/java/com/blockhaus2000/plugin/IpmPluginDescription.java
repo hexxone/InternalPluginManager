@@ -26,7 +26,6 @@ import com.blockhaus2000.plugin.exception.PluginException;
  * The plugin description file that contains the main information of a
  * {@link IpmPlugin}.
  *
- * @author Blockhaus2000
  */
 public interface IpmPluginDescription {
     /**
