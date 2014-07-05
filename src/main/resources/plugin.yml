@@ -1,4 +1,5 @@
 name: InternalPluginManager
 version: $project_version$
-main: com.blockhaus2000.main.bukkit.IpmMain
 author: Blockhaus2000
+
+main: com.blockhaus2000.main.bukkit.IpmMain
