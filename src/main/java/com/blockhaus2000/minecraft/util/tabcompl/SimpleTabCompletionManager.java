@@ -42,6 +42,11 @@ import com.blockhaus2000.util.tabcompl.TabCompleterInfo;
 public class SimpleTabCompletionManager implements TabCompletionManager {
     private static final TabCompletionManager instance = new SimpleTabCompletionManager();
 
+    // We have to store the tab completers seperatly for each command and
+    // second-level-command. And then, we can have multible tab completers. So,
+    // the organization is like: (M = Map; L = List)
+    // M<CommandName, M<SecondLevelCommandName,
+    // L<TabCompleters>>
     private final Map<String, HashMap<String, ArrayList<TabCompleterInfo>>> tabCompleters = new HashMap<String, HashMap<String, ArrayList<TabCompleterInfo>>>();
 
     private SimpleTabCompletionManager() {
@@ -56,6 +61,7 @@ public class SimpleTabCompletionManager implements TabCompletionManager {
      */
     @Override
     public void register(final Class<?> clazz, final Object obj) {
+        // Here, "meth" is a shortcut of "Method", not for "Crystal Meth" ;)
         for (Method meth : clazz.getMethods()) {
             if (!meth.isAnnotationPresent(TabCompleter.class)) {
                 continue;
@@ -174,6 +180,7 @@ public class SimpleTabCompletionManager implements TabCompletionManager {
                 result.add(obj.toString());
             }
         }
+
         return result;
     }
 

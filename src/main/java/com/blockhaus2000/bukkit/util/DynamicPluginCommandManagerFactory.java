@@ -42,6 +42,8 @@ public class DynamicPluginCommandManagerFactory {
 
     static {
         try {
+            // We want use the resource management system, not the deprecated
+            // getInstance() method of the IpmMain class.
             ResourceManager.initializeResources(DynamicPluginCommandManagerFactory.class);
         } catch (IllegalArgumentException ex) {
             ExceptionHandler.handle(ex);

@@ -74,10 +74,15 @@ public class SimpleDynamicPluginCommandManager implements DynamicPluginCommandMa
     public void register(final CommandInfo registered) {
         assert registered != null : "Registered cannot be null!";
 
-        Command cmdAnot = registered.getCommandAnot();
-        SimpleDynamicPluginCommand cmd = new SimpleDynamicPluginCommand(cmdAnot.aliases(), cmdAnot.desc(), cmdAnot.usage(),
+        final Command cmdAnot = registered.getCommandAnot();
+        final SimpleDynamicPluginCommand cmd = new SimpleDynamicPluginCommand(cmdAnot.aliases(), cmdAnot.desc(), cmdAnot.usage(),
                 executor, plugin);
         cmd.setPermission(cmdAnot.permission());
+
+        // We have to register the command in the command map, cause otherwise,
+        // Bukkit does not know that there is a command. This is the same
+        // procedure as the procedure when Bukkit registers all plugins commands
+        // (from the plugin.yml).
         getCommandMap().register(plugin.getDescription().getName(), cmd);
     }
 
@@ -99,10 +104,14 @@ public class SimpleDynamicPluginCommandManager implements DynamicPluginCommandMa
         CommandMap commandMap = ReflectionUtil.getFieldValue(Bukkit.getServer().getPluginManager(), "commandMap");
 
         if (commandMap == null) {
-            if (fallbackCommandMap != null) {
+            // If something fails, we have our own command handling system. But
+            // it should not fail.
+            if (fallbackCommandMap == null) {
                 ChatOut.log(Level.SEVERE, "Could not retrieve server CommandMap, using fallback instead!");
                 commandMap = fallbackCommandMap = new SimpleCommandMap(Bukkit.getServer());
                 Bukkit.getServer().getPluginManager().registerEvents(new PlayerCommandPreprocessListener(commandMap), plugin);
+            } else {
+                commandMap = fallbackCommandMap;
             }
         }
 

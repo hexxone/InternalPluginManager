@@ -45,6 +45,7 @@ import com.blockhaus2000.util.resources.ResourceManager;
  * @author Blockhaus2000
  */
 public class SimpleIpmPluginLoader implements IpmPluginLoader {
+    // This should be a singleton.
     private static IpmPluginLoader instance = new SimpleIpmPluginLoader();
 
     @MainPluginResource
@@ -74,22 +75,19 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
     public IpmPlugin load(final File file) throws PluginException {
         assert file.exists() : "File does not exist!";
 
-        JarFile jarFile;
-
+        final JarFile jarFile;
         try {
             jarFile = new JarFile(file);
         } catch (IOException ex) {
             throw new PluginException(ex);
         }
 
-        InputStream stream;
-
-        ZipEntry pluginYml = jarFile.getEntry("plugin.yml");
-
+        final ZipEntry pluginYml = jarFile.getEntry("plugin.yml");
         if (pluginYml == null) {
             throw new InvalidPluginDescriptionException("The plugin.yml cannot be found in \"" + file.getAbsolutePath() + "\"!");
         }
 
+        final InputStream stream;
         try {
             stream = jarFile.getInputStream(pluginYml);
         } catch (IOException ex) {
@@ -102,7 +100,7 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
             throw new PluginException(ex);
         }
 
-        IpmPluginDescription desc = new SimpleIpmPluginDescription();
+        final IpmPluginDescription desc = new SimpleIpmPluginDescription();
         desc.load(stream);
 
         try {
@@ -117,16 +115,14 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
             ExceptionHandler.handle(ex);
         }
 
-        IpmPluginClassLoader classLoader;
-
+        final IpmPluginClassLoader classLoader;
         try {
             classLoader = new IpmPluginClassLoader(this, file, Thread.currentThread().getContextClassLoader());
         } catch (MalformedURLException ex) {
             throw new PluginException(ex);
         }
 
-        Class<? extends SimpleIpmPlugin> pluginClass;
-
+        final Class<? extends SimpleIpmPlugin> pluginClass;
         try {
             pluginClass = Class.forName(desc.getMain(), true, classLoader).asSubclass(SimpleIpmPlugin.class);
         } catch (ClassNotFoundException ex) {
@@ -137,7 +133,7 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
 
         }
 
-        IpmPlugin plugin;
+        final IpmPlugin plugin;
 
         try {
             plugin = pluginClass.newInstance();
@@ -147,7 +143,7 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
             throw new PluginException(ex);
         }
 
-        String pluginName = desc.getName();
+        final String pluginName = desc.getName();
 
         classLoaders.put(pluginName, classLoader);
 
@@ -177,7 +173,7 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
      */
     @Override
     public Set<IpmPlugin> loadAll() throws PluginException {
-        Set<IpmPlugin> plugins = new HashSet<IpmPlugin>();
+        final Set<IpmPlugin> plugins = new HashSet<IpmPlugin>();
 
         for (File target : pluginFolder.listFiles()) {
             if (target.isDirectory() || !target.getName().endsWith(".jar")) {
@@ -203,7 +199,7 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
             try {
                 clazz = classLoaders.get(targetKey).findClass(className, false);
                 break;
-            } catch (ClassNotFoundException ex) {
+            } catch (ClassNotFoundException dummy) {
                 // fails silent
             }
         }
@@ -236,7 +232,7 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
      */
     private void addPlugin(final IpmPlugin plugin) {
         try {
-            List<Plugin> plugins = ReflectionUtil.getFieldValue(Bukkit.getServer().getPluginManager(), "plugins");
+            final List<Plugin> plugins = ReflectionUtil.getFieldValue(Bukkit.getServer().getPluginManager(), "plugins");
 
             for (Plugin target : plugins) {
                 if (target.getName().equalsIgnoreCase(plugin.getName())) {

@@ -37,6 +37,7 @@ public class PlayerCommandPreprocessListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerCommandPreprocess(final PlayerCommandPreprocessEvent event) {
+        // Only if our execution was successful, we want to cancle the event.
         if (commandMap.dispatch(event.getPlayer(), event.getMessage())) {
             event.setCancelled(true);
         }

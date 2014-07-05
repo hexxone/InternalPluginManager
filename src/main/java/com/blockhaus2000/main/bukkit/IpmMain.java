@@ -92,6 +92,7 @@ public class IpmMain extends JavaPlugin {
 
     /**
      * {@inheritDoc}
+     *
      */
     @Override
     public void onDisable() {
@@ -104,6 +105,7 @@ public class IpmMain extends JavaPlugin {
 
     /**
      * {@inheritDoc}
+     *
      */
     @Override
     public void onEnable() {
@@ -157,6 +159,7 @@ public class IpmMain extends JavaPlugin {
 
     /**
      * {@inheritDoc}
+     *
      */
     @Override
     public void onLoad() {
@@ -187,7 +190,8 @@ public class IpmMain extends JavaPlugin {
     @Deprecated
     public static IpmMain getInstance() {
         if (IpmMain.instance == null) {
-            return IpmMain.instance = new IpmMain();
+            throw new IllegalStateException(
+                    "You can not get an instance of IpmMain until Bukkit has loaded the InternalPluginManager!");
         }
 
         return IpmMain.instance;

@@ -36,11 +36,19 @@ public class Commands {
         if (IpmMain.DEBUGGING_ENABLED) {
             ChatOut.sendMessage(context.getSender(), "Debug mode " + (TestCommands.toggleEnabled() ? "enabled" : "disabled")
                     + "!");
+
+            // Because of the bukkit-tester-maven-plugin, we have to return the
+            // successful String to show that debugging was successfully
+            // enabled.
             ChatOut.sendMessage(context.getSender(), TestCommands.SUCCEED);
         } else {
             ChatOut.sendMessage(context.getSender(),
                     "Cannot toggle debug mode, because it was disable global with the system property "
                             + "\"internalpluginmanager.debug-mode\"!");
+
+            // Because of the bukkit-tester-maven-plugin, we have to return the
+            // failed String to show that debugging was NOT successfully
+            // enabled.
             ChatOut.sendMessage(context.getSender(), TestCommands.FAILED);
         }
     }

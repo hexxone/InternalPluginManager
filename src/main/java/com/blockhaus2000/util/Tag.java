@@ -83,7 +83,7 @@ public class Tag<T> {
             return false;
         }
 
-        Tag<?> other = (Tag<?>) obj;
+        final Tag<?> other = (Tag<?>) obj;
 
         if (data == null) {
             if (other.getData() != null) {

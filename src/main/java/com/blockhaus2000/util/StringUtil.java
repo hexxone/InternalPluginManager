@@ -60,7 +60,7 @@ public class StringUtil {
             return "";
         }
 
-        StringBuffer buffer = new StringBuffer(list.get(i));
+        final StringBuffer buffer = new StringBuffer(list.get(i));
 
         for (i++; i < list.size(); i++) {
             buffer.append(delimiter + list.get(i));
@@ -143,7 +143,7 @@ public class StringUtil {
      * @return The escaped {@link String}.
      */
     public static String escape(final String str) {
-        StringBuffer buffer = new StringBuffer();
+        final StringBuffer buffer = new StringBuffer();
 
         for (int i = 0; i < str.length(); i++) {
             buffer.append("\\" + str.charAt(i));

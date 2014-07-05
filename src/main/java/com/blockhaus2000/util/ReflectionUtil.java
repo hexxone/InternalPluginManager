@@ -56,7 +56,7 @@ public class ReflectionUtil {
 
         while (clazz != null) {
             try {
-                Field field = clazz.getDeclaredField(fieldName);
+                final Field field = clazz.getDeclaredField(fieldName);
 
                 clazz = clazz.getSuperclass();
 
@@ -67,7 +67,7 @@ public class ReflectionUtil {
                 /*
                  * This fails silent.
                  * 
-                 * Se JavaDoc for explanation.
+                 * See JavaDoc for explanation.
                  */
             }
         }
@@ -100,7 +100,7 @@ public class ReflectionUtil {
         assert fieldName != null : "FieldName cannot be null!";
         assert fieldName.length() != 0 : "FieldName cannot be empty!";
 
-        Field field = ReflectionUtil.getField(obj.getClass(), fieldName);
+        final Field field = ReflectionUtil.getField(obj.getClass(), fieldName);
         field.setAccessible(true);
 
         try {
@@ -140,7 +140,7 @@ public class ReflectionUtil {
         assert fieldName.length() != 0 : "FieldName cannot be empty!";
         assert value != null : "Value cannot be null!";
 
-        Field field = ReflectionUtil.getField(obj.getClass(), fieldName);
+        final Field field = ReflectionUtil.getField(obj.getClass(), fieldName);
         field.setAccessible(true);
         field.set(obj, value);
     }

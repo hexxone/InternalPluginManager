@@ -137,14 +137,14 @@ public class SimpleUpdater implements Updater {
     }
 
     private Set<Update> getUpdates() throws PluginException {
-        Set<Update> updates = new HashSet<Update>();
+        final Set<Update> updates = new HashSet<Update>();
 
         for (File target : updateFolder.listFiles()) {
             if (target.isDirectory() || !target.getName().endsWith(".jar")) {
                 continue;
             }
 
-            JarFile jarFile;
+            final JarFile jarFile;
 
             try {
                 jarFile = new JarFile(target);
@@ -153,7 +153,7 @@ public class SimpleUpdater implements Updater {
                 continue;
             }
 
-            IpmPluginDescription desc = getDescription(jarFile);
+            final IpmPluginDescription desc = getDescription(jarFile);
             updates.add(new Update(InternalPluginManager.getServer().getPluginManager().getPlugin(desc.getName()), desc, jarFile,
                     target));
         }
@@ -162,14 +162,14 @@ public class SimpleUpdater implements Updater {
     }
 
     private IpmPluginDescription getDescription(final JarFile jarFile) throws PluginException {
-        ZipEntry pluginYml = jarFile.getEntry("plugin.yml");
+        final ZipEntry pluginYml = jarFile.getEntry("plugin.yml");
 
         if (pluginYml == null) {
             throw new PluginException("The plugin \"" + jarFile.getName()
                     + "\" to update does not contains the \"plugin.yml\" in the root folder!");
         }
 
-        IpmPluginDescription desc = new SimpleIpmPluginDescription();
+        final IpmPluginDescription desc = new SimpleIpmPluginDescription();
 
         try {
             desc.load(jarFile.getInputStream(pluginYml));
