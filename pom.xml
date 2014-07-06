@@ -292,64 +292,61 @@
 					<failsOnError>true</failsOnError>
 					<logViolationsToConsole>true</logViolationsToConsole>
 
-					<checkstyleRules>
-						<module name="Checker">
-							<!-- Do not use tabs! -->
-							<module name="FileTabCharacter" />
+					<module name="Checker">
+						<!-- Do not use tabs! -->
+						<module name="FileTabCharacter" />
 
-							<module name="TreeWalker">
-								<module name="OuterTypeFilename" />
+						<module name="TreeWalker">
+							<module name="OuterTypeFilename" />
 
-								<!-- Utility classes will not have a constructor -->
-								<module name="HideUtilityClassConstructor" />
-								<module name="CovariantEquals" />
+							<!-- Utility classes will not have a constructor -->
+							<module name="HideUtilityClassConstructor" />
+							<module name="CovariantEquals" />
 
-								<!-- You have to implement both equals() and hashCode() -->
-								<module name="EqualsHashCode" />
+							<!-- You have to implement both equals() and hashCode() -->
+							<module name="EqualsHashCode" />
 
-								<module name="NestedTryDepth">
-									<property name="max" value="2" />
-								</module>
-
-								<!-- If you override finalize(), you have to call super.finalize() -->
-								<module name="SuperFinalize" />
-								<module name="JUnitTestCase" />
-
-								<!-- Left curly braces never goes to a new line -->
-								<module name="LeftCurly">
-									<property name="option" value="eol" />
-								</module>
-
-								<!-- In a switch...case structure, the default case comes at the 
-									end -->
-								<module name="DefaultComesLast" />
-
-								<module name="GenericWhitespace" />
-
-								<!-- You have to follow these contributions! -->
-								<module name="ClassTypeParameterName">
-									<property name="format" value="^[A-Z][a-zA-Z0-9]*$" />
-								</module>
-								<module name="LocalFinalVariableName" />
-								<module name="LocalVariableName">
-									<property name="format" value="^[a-z_][a-zA-Z0-9]*$" />
-								</module>
-								<module name="MemberName">
-									<property name="format" value="^[a-z_][a-zA-Z0-9]*$" />
-								</module>
-								<module name="MethodName">
-									<property name="format" value="^(_INVALID_)?[a-z][a-zA-Z0-9]*$" />
-								</module>
-								<module name="ParameterName" />
+							<module name="NestedTryDepth">
+								<property name="max" value="2" />
 							</module>
 
-							<!-- Please include the header in each file! -->
-							<module name="Header">
-								<property name="headerFile" value="src/main/build/header.txt" />
-								<property name="fileExtensions" value="java" />
+							<!-- If you override finalize(), you have to call super.finalize() -->
+							<module name="SuperFinalize" />
+							<module name="JUnitTestCase" />
+
+							<!-- Left curly braces never goes to a new line -->
+							<module name="LeftCurly">
+								<property name="option" value="eol" />
 							</module>
+
+							<!-- In a switch...case structure, the default case comes at the end -->
+							<module name="DefaultComesLast" />
+
+							<module name="GenericWhitespace" />
+
+							<!-- You have to follow these contributions! -->
+							<module name="ClassTypeParameterName">
+								<property name="format" value="^[A-Z][a-zA-Z0-9]*$" />
+							</module>
+							<module name="LocalFinalVariableName" />
+							<module name="LocalVariableName">
+								<property name="format" value="^[a-z_][a-zA-Z0-9]*$" />
+							</module>
+							<module name="MemberName">
+								<property name="format" value="^[a-z_][a-zA-Z0-9]*$" />
+							</module>
+							<module name="MethodName">
+								<property name="format" value="^(_INVALID_)?[a-z][a-zA-Z0-9]*$" />
+							</module>
+							<module name="ParameterName" />
 						</module>
-					</checkstyleRules>
+
+						<!-- Please include the header in each file! -->
+						<module name="Header">
+							<property name="headerFile" value="src/main/build/header.txt" />
+							<property name="fileExtensions" value="java" />
+						</module>
+					</module>
 				</configuration>
 			</plugin>
 
