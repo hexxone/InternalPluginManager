@@ -131,7 +131,16 @@ public class IpmMain extends JavaPlugin {
             ExceptionHandler.handle(ex);
         }
 
-        SimpleIpmPluginManager.getInstance().enableAll();
+        // We do not really to delay the plugin enabling, but we want to enable
+        // all plugins after Bukkit has enabled all other plugins. With this,
+        // the enable process of the internal plugins will be started one tick
+        // after the server has started finally (with all plugins enabled).
+        Bukkit.getServer().getScheduler().runTaskLater(this, new Runnable() {
+            @Override
+            public void run() {
+                SimpleIpmPluginManager.getInstance().enableAll();
+            }
+        }, 1);
 
         // register basic commands
         CommandRegistrationUtil.registerCommands(new Commands(), this);
