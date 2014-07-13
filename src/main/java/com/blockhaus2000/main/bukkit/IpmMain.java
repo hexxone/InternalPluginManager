@@ -48,8 +48,8 @@ public class IpmMain extends JavaPlugin {
      * <code>true</code>.
      *
      */
-    public static final boolean DEBUGGING_ENABLED = Boolean.valueOf(System
-            .getProperty("internalpluginmanager.debug-mode", "true"));
+    public static final boolean DEBUGGING_ENABLED = Boolean.valueOf(System.getProperty("internalpluginmanager.debug-mode",
+            "false"));
 
     /**
      * This is the path that is used in the Bukkit configuration (config.yml) to
