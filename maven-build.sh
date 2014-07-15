@@ -5,6 +5,11 @@
 SCRIPT="$(pwd)/maven.sh"
 
 case $1 in
+    release)
+	echo "Starting Maven BUILD and RELEASE process in 5 seconds! Last possibility to abort!"
+	sleep 5s
+	mvn clean buildnumber:create source:jar javadoc:jar compile replacer:replace package bukkit-tester-maven-plugin:bukkit-test wagon:upload deploy
+	;;
     deploy)
 	echo "Starting Maven BUILD and DEPLOY process in 5 seconds! Last possibility to abort!"
 	sleep 5s
@@ -16,6 +21,6 @@ case $1 in
 	mvn clean buildnumber:create source:jar javadoc:jar compile replacer:replace package bukkit-tester-maven-plugin:bukkit-test
 	;;
     *)
-	echo "$SCRIPT <deploy|package>"
+	echo "$SCRIPT <release|deploy|package>"
 	;;
 esac

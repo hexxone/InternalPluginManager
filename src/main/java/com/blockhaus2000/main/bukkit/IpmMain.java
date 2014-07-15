@@ -139,6 +139,10 @@ public class IpmMain extends JavaPlugin {
             @Override
             public void run() {
                 SimpleIpmPluginManager.getInstance().enableAll();
+
+                if (IpmMain.DEBUGGING_ENABLED) {
+                    System.out.println(TestCommands.START_TESTS);
+                }
             }
         }, 1);
 

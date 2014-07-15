@@ -162,14 +162,16 @@
 			<plugin>
 				<groupId>com.blockhaus2000</groupId>
 				<artifactId>bukkit-tester-maven-plugin</artifactId>
-				<version>1.0</version>
+				<version>1.1.1</version>
 				<configuration>
 					<executionDirectory>target/dist/</executionDirectory>
 					<craftbukkitURL>http://repo.bukkit.org/content/repositories/public/org/bukkit/craftbukkit/${project.properties.bukkitVersion}/${project.properties.craftbukkitJarName}</craftbukkitURL>
 					<craftbukkitFile>cache/${project.properties.craftbukkitJarName}</craftbukkitFile>
-					<javaExecutionCommand>/usr/bin/java
-						-Dinternalpluginmanager.debug-mode=true -jar craftbukkit.jar</javaExecutionCommand>
+					<!-- Sometimes, the Eclipse formatter creates a new line behind "/usr/bin/java". If ti does, please remove that new line. It will break the testing process. -->
+					<javaExecutionCommand>/usr/bin/java -Dinternalpluginmanager.debug-mode=true -jar craftbukkit.jar</javaExecutionCommand>
 					<failOnTestFailure>true</failOnTestFailure>
+					<bukkitServerStartedIndicator>[START TESTS]</bukkitServerStartedIndicator>
+					<testStartDelay>1000</testStartDelay>
 
 					<plugins>
 						<plugin>target/${project.artifactId}_v${project.version}-${buildNumber}.jar</plugin>
@@ -367,6 +369,17 @@
 					<!--doCheck>true</doCheck> <doUpdate>true</doUpdate -->
 					<item>timestamp</item>
 					<shortRevisionLength>5</shortRevisionLength>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>wagon-maven-plugin</artifactId>
+				<version>1.0-beta-5</version>
+				<configuration>
+					<serverId>blockhaus2000-docs-ftp</serverId>
+					<url>ftp://docs.blockhaus2000.com</url>
+					<fromDir>target/apidocs/</fromDir>
+					<toDir>internalpluginmanager/${project.version}</toDir>
 				</configuration>
 			</plugin>
 
