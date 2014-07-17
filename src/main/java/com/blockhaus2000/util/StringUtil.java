@@ -25,7 +25,7 @@ import java.util.List;
  * implemented in the Java SE, such as joinString or something else.
  *
  */
-public class StringUtil {
+public final class StringUtil {
     private StringUtil() {
         // Utility classes should not have a public, protected or visible
         // constructor.

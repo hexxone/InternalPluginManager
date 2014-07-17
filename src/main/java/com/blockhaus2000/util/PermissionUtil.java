@@ -26,7 +26,7 @@ import com.blockhaus2000.bukkit.util.SimpleDynamicPluginCommand;
  * This class is a utility class for easy permission check.
  *
  */
-public class PermissionUtil {
+public final class PermissionUtil {
     private PermissionUtil() {
         // Utility classes should not have a public, protected or visible
         // constructor.

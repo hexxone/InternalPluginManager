@@ -24,7 +24,7 @@ import java.util.List;
  * operations.
  *
  */
-public class CollectionUtil {
+public final class CollectionUtil {
     private CollectionUtil() {
         // utlility classes should not have a visible constructor.
     }

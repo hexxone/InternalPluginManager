@@ -30,7 +30,7 @@ import com.blockhaus2000.util.resources.ResourceManager;
  * {@link DynamicPluginCommandManager}.
  *
  */
-public class DynamicPluginCommandManagerFactory {
+public final class DynamicPluginCommandManagerFactory {
     @MainPluginResource
     private static IpmMain main;
 

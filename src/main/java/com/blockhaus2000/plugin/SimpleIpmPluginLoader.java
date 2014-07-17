@@ -34,6 +34,7 @@ import org.bukkit.plugin.Plugin;
 import com.blockhaus2000.main.bukkit.IpmMain;
 import com.blockhaus2000.plugin.exception.InvalidPluginDescriptionException;
 import com.blockhaus2000.plugin.exception.PluginException;
+import com.blockhaus2000.util.CheckstyleUtil;
 import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.ReflectionUtil;
 import com.blockhaus2000.util.resources.MainPluginResource;
@@ -43,7 +44,7 @@ import com.blockhaus2000.util.resources.ResourceManager;
  * An implementation of {@link IpmPluginLoader}.
  *
  */
-public class SimpleIpmPluginLoader implements IpmPluginLoader {
+public final class SimpleIpmPluginLoader implements IpmPluginLoader {
     // This should be a singleton.
     private static IpmPluginLoader instance = new SimpleIpmPluginLoader();
 
@@ -199,7 +200,8 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
                 clazz = classLoaders.get(targetKey).findClass(className, false);
                 break;
             } catch (ClassNotFoundException dummy) {
-                // fails silent
+                // This fails silent. Suppressing warnings from checkstyle.
+                CheckstyleUtil.failsSilent();
             }
         }
 
@@ -247,7 +249,8 @@ public class SimpleIpmPluginLoader implements IpmPluginLoader {
                 ex.printStackTrace();
             }
         } catch (Throwable ex) {
-            // fails silent (see JavaDoc)
+            // This fails silent. Suppressing warnings from checkstyle.
+            CheckstyleUtil.failsSilent();
         }
     }
 

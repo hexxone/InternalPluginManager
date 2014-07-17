@@ -26,7 +26,7 @@ import java.util.List;
  * methods below for the full documentation what the specific method does.
  *
  */
-public class ArrayUtil {
+public final class ArrayUtil {
     private ArrayUtil() {
         // Utility classes should not have a public, protected or visible
         // constructor.

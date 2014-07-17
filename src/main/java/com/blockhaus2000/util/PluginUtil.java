@@ -27,7 +27,7 @@ import org.bukkit.plugin.PluginManager;
  * plugins.
  *
  */
-public class PluginUtil {
+public final class PluginUtil {
     private PluginUtil() {
         // Utility classes should not have a public, protected or visible
         // constructor.

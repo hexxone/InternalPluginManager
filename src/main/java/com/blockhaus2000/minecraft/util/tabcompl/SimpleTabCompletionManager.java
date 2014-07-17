@@ -39,7 +39,7 @@ import com.blockhaus2000.util.tabcompl.TabCompleterInfo;
  *
  * @see com.blockhaus2000.minecraft.util.tabcompl.TabCompletionManager
  */
-public class SimpleTabCompletionManager implements TabCompletionManager {
+public final class SimpleTabCompletionManager implements TabCompletionManager {
     private static final TabCompletionManager instance = new SimpleTabCompletionManager();
 
     // We have to store the tab completers seperatly for each command and
@@ -70,8 +70,8 @@ public class SimpleTabCompletionManager implements TabCompletionManager {
             assert Modifier.isStatic(meth.getModifiers()) || obj != null : "The method \"" + meth
                     + "\" is non-static and the given Object is null.";
             assert meth.toString().split("\\(")[1].equals("com.blockhaus2000.util.tabcompl.TabCompleterContext)") : "The "
-            + "arguments of the method \"" + meth
-            + "\" are not correct. The only argument has to be \"TabCompleterContext\"";
+                    + "arguments of the method \"" + meth
+                    + "\" are not correct. The only argument has to be \"TabCompleterContext\"";
             assert meth.getReturnType() == List.class : "The return type of the method has to be java.util.List!";
 
             final TabCompleter tabCompleter = meth.getAnnotation(TabCompleter.class);

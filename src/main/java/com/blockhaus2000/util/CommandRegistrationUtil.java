@@ -25,7 +25,7 @@ import com.blockhaus2000.minecraft.util.command.SimpleCommandManager;
  * This class is an util class to facilitate the command registration.
  *
  */
-public class CommandRegistrationUtil {
+public final class CommandRegistrationUtil {
     private CommandRegistrationUtil() {
         // Utility classes should not have a public, protected or visible
         // constructor.

@@ -416,14 +416,6 @@
 					<url>ftp://snap-repo.blockhaus2000.com/</url>
 				</repository>
 			</distributionManagement>
-
-
-			<!-- ===== Build Management ===== -->
-
-			<!-- <build> -->
-			<!-- Appends "-SNAP" -->
-			<!-- <finalName>${project.artifactId}_v${project.version}-${buildNumber}-SNAP</finalName> 
-				</build> -->
 		</profile>
 
 		<!-- Use this profile if you want to publish a nightly build -->
@@ -443,14 +435,6 @@
 					<url>ftp://snap-repo.blockhaus2000.com/</url>
 				</repository>
 			</distributionManagement>
-
-
-			<!-- ===== Build Management ==== -->
-
-			<!-- <build> -->
-			<!-- Appends "-NIGHTLY" -->
-			<!-- <finalName>${project.artifactId}_v${project.version}-${buildNumber}-NIGHTLY</finalName> 
-				</build> -->
 		</profile>
 	</profiles>
 </project>

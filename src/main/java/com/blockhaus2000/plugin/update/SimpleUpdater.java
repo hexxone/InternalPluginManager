@@ -39,7 +39,7 @@ import com.google.common.io.Files;
  *
  * @see com.blockhaus2000.plugin.update.Update
  */
-public class SimpleUpdater implements Updater {
+public final class SimpleUpdater implements Updater {
     private static final Updater instance = new SimpleUpdater();
 
     @MainPluginResource

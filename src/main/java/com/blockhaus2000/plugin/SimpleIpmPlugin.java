@@ -43,6 +43,7 @@ import com.blockhaus2000.bukkit.mock.MockPluginLoader;
 import com.blockhaus2000.main.bukkit.InternalPluginManager;
 import com.blockhaus2000.main.bukkit.IpmMain;
 import com.blockhaus2000.util.ChatOut;
+import com.blockhaus2000.util.CheckstyleUtil;
 import com.blockhaus2000.util.CommandRegistrationUtil;
 import com.blockhaus2000.util.ExceptionHandler;
 import com.blockhaus2000.util.TabCompleterRegistrationUtil;
@@ -153,7 +154,8 @@ public class SimpleIpmPlugin implements IpmPlugin {
         try {
             config.load(configFile);
         } catch (FileNotFoundException ex) {
-            // fails silent
+            // This fails silent. Suppressing warnings from checkstyle.
+            CheckstyleUtil.failsSilent();
         } catch (IOException ex) {
             ExceptionHandler.handle(ex);
         } catch (InvalidConfigurationException ex) {
