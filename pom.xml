@@ -6,8 +6,8 @@
 
 	<groupId>com.blockhaus2000</groupId>
 	<artifactId>InternalPluginManager</artifactId>
-	<!-- The version has to stand in the 8. line! Otherwise, nightly builds 
-		will break! -->
+	<!-- The version has to stand in the 11. line! Otherwise,
+		nightly builds will break! -->
 	<version>1.9.1</version>
 	<packaging>jar</packaging>
 

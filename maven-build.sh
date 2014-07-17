@@ -16,9 +16,9 @@ function printHelp {
 
 function editVersion {
 	mv pom.xml pom.xml~
-	head -n 7 pom.xml~ > pom.xml
-	sed -ne '8,8p' pom.xml~ | sed -e 's/<\/version>$/-'$1'<\/version>/' >> pom.xml
-	cat pom.xml~ | awk 'NR > 8 {print $0}' >> pom.xml
+	head -n 10 pom.xml~ > pom.xml
+	sed -ne '11,11p' pom.xml~ | sed -e 's/<\/version>$/-'$1'<\/version>/' >> pom.xml
+	cat pom.xml~ | awk 'NR > 11 {print $0}' >> pom.xml
 }
 
 function clearVersion {
