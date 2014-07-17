@@ -25,7 +25,6 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
  * Will be used for command execution if something goes wrong with the
  * {@link DynamicPluginCommandManager} reflection usage.
  *
- * @author Blockhaus2000
  */
 @SuppressWarnings("javadoc")
 public class PlayerCommandPreprocessListener implements Listener {
@@ -37,6 +36,7 @@ public class PlayerCommandPreprocessListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerCommandPreprocess(final PlayerCommandPreprocessEvent event) {
+        // Only if our execution was successful, we want to cancle the event.
         if (commandMap.dispatch(event.getPlayer(), event.getMessage())) {
             event.setCancelled(true);
         }

@@ -29,9 +29,8 @@ import com.blockhaus2000.util.resources.ResourceManager;
  * Provides some static methods to create a new
  * {@link DynamicPluginCommandManager}.
  *
- * @author Blockhaus2000
  */
-public class DynamicPluginCommandManagerFactory {
+public final class DynamicPluginCommandManagerFactory {
     @MainPluginResource
     private static IpmMain main;
 
@@ -42,6 +41,8 @@ public class DynamicPluginCommandManagerFactory {
 
     static {
         try {
+            // We want use the resource management system, not the deprecated
+            // getInstance() method of the IpmMain class.
             ResourceManager.initializeResources(DynamicPluginCommandManagerFactory.class);
         } catch (IllegalArgumentException ex) {
             ExceptionHandler.handle(ex);

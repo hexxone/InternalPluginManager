@@ -24,9 +24,8 @@ import java.util.List;
  * static methods in this class for basic {@link String} operations that are not
  * implemented in the Java SE, such as joinString or something else.
  *
- * @author Blockhaus2000
  */
-public class StringUtil {
+public final class StringUtil {
     private StringUtil() {
         // Utility classes should not have a public, protected or visible
         // constructor.
@@ -60,7 +59,7 @@ public class StringUtil {
             return "";
         }
 
-        StringBuffer buffer = new StringBuffer(list.get(i));
+        final StringBuffer buffer = new StringBuffer(list.get(i));
 
         for (i++; i < list.size(); i++) {
             buffer.append(delimiter + list.get(i));
@@ -143,7 +142,7 @@ public class StringUtil {
      * @return The escaped {@link String}.
      */
     public static String escape(final String str) {
-        StringBuffer buffer = new StringBuffer();
+        final StringBuffer buffer = new StringBuffer();
 
         for (int i = 0; i < str.length(); i++) {
             buffer.append("\\" + str.charAt(i));
@@ -166,18 +165,6 @@ public class StringUtil {
      * @see java.lang.String#replaceFirst(java.lang.String, java.lang.String)
      */
     public static String replaceLast(final String regex, final String replacement, final String str) {
-        final StringBuffer buffer = new StringBuffer();
-
-        final String[] splitted = str.split(regex);
-        final int length = splitted.length;
-        for (int i = 0; i < length; i++) {
-            if (i == length - 1) {
-                continue;
-            }
-
-            buffer.append(splitted[i]);
-        }
-
-        return buffer.toString();
+        return str.replaceAll("(.*)" + regex + "(.*)", "$1" + replacement + "$2");
     }
 }

@@ -30,9 +30,14 @@ import com.blockhaus2000.plugin.exception.PluginException;
 /**
  * An implementation of {@link IpmPluginDescription}.
  *
- * @author Blockhaus2000
  */
 public class SimpleIpmPluginDescription implements IpmPluginDescription {
+    /**
+     * The regex that the plugin name has to match.
+     *
+     */
+    public static final String pluginNameRegex = "^[A-Za-z0-9_.-]+$";
+
     private final Yaml yaml = new Yaml(new SafeConstructor());
 
     private String name;
@@ -51,20 +56,21 @@ public class SimpleIpmPluginDescription implements IpmPluginDescription {
     public void load(final InputStream stream) throws PluginException {
         assert stream != null : "Stream cannot be null!";
 
-        Map<?, ?> data = asMap(yaml.load(stream));
+        // We do not know what types we get.
+        final Map<?, ?> data = asMap(yaml.load(stream));
 
         // load name
-        String name = data.get("name").toString();
+        final String name = data.get("name").toString();
 
-        if (name == null || name.length() == 0 || !name.matches("^[A-Za-z0-9_.-]+$")) {
-            throw new InvalidPluginDescriptionException(
-                    "The name is not set, empty or does not match the regex \"^[A-Za-z0-9_.-]+$\"!");
+        if (name == null || name.length() == 0 || !name.matches(SimpleIpmPluginDescription.pluginNameRegex)) {
+            throw new InvalidPluginDescriptionException("The name is not set, empty or does not match the regex \""
+                    + SimpleIpmPluginDescription.pluginNameRegex + "\"!");
         }
 
         this.name = name;
 
         // load version
-        String version = data.get("version").toString();
+        final String version = data.get("version").toString();
 
         if (version == null || version.length() == 0) {
             throw new InvalidPluginDescriptionException("The version is not set or empty!");
@@ -73,7 +79,7 @@ public class SimpleIpmPluginDescription implements IpmPluginDescription {
         this.version = version;
 
         // load main
-        String main = data.get("main").toString();
+        final String main = data.get("main").toString();
 
         if (main == null || version.length() == 0) {
             throw new InvalidPluginDescriptionException("The main class is not set or empty!");
@@ -82,7 +88,7 @@ public class SimpleIpmPluginDescription implements IpmPluginDescription {
         this.main = main;
 
         // load authors
-        Object authorsObj = data.get("authors");
+        final Object authorsObj = data.get("authors");
         if (authors != null) {
             String[] authors = authorsObj.toString().split(", +");
             this.authors = authors == null || authors.length == 0 ? null : authors;
@@ -91,7 +97,7 @@ public class SimpleIpmPluginDescription implements IpmPluginDescription {
         }
 
         // load depends
-        Object dependsObj = data.get("depends");
+        final Object dependsObj = data.get("depends");
         if (depends != null) {
             String[] depends = dependsObj.toString().split(", +");
             this.depends = depends == null || depends.length == 0 ? null : depends;
@@ -112,7 +118,7 @@ public class SimpleIpmPluginDescription implements IpmPluginDescription {
 
     private Map<?, ?> asMap(final Object obj) {
         assert obj instanceof Map : "Obj has to be an instance of Map!";
-    return (Map<?, ?>) obj;
+        return (Map<?, ?>) obj;
     }
 
     // Getter

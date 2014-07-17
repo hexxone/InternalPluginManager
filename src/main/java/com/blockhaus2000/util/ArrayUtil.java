@@ -25,9 +25,8 @@ import java.util.List;
  * This class provides some static methods for the usage of arrays. See the
  * methods below for the full documentation what the specific method does.
  *
- * @author Blockhaus2000
  */
-public class ArrayUtil {
+public final class ArrayUtil {
     private ArrayUtil() {
         // Utility classes should not have a public, protected or visible
         // constructor.
@@ -47,7 +46,7 @@ public class ArrayUtil {
      * @return The converted {@link String}[].
      */
     public static <E> String[] toStringArray(final Collection<E> col) {
-        String[] array = new String[col.size()];
+        final String[] array = new String[col.size()];
 
         int i = 0;
         for (Object target : col.toArray()) {
@@ -75,7 +74,7 @@ public class ArrayUtil {
      *             array.
      */
     public static String[] removeFromArray(final String[] array, final int index) throws ArrayIndexOutOfBoundsException {
-        String[] edited = new String[array.length - 1];
+        final String[] edited = new String[array.length - 1];
 
         // boolean removed = false;
         // for (int i = 0; i < array.length; i++) {
@@ -120,7 +119,7 @@ public class ArrayUtil {
     @SuppressWarnings("unchecked")
     public static <T> List<Tag<? extends T>> toTagList(final Collection<? extends T> col,
             @SuppressWarnings("rawtypes") final Class<? extends List> listClass) {
-        List<Tag<? extends T>> list = null;
+        final List<Tag<? extends T>> list;
 
         try {
             list = listClass.newInstance();

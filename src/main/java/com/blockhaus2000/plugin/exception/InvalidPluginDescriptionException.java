@@ -16,10 +16,6 @@
  */
 package com.blockhaus2000.plugin.exception;
 
-/**
- *
- * @author Blockhaus2000
- */
 @SuppressWarnings("javadoc")
 public class InvalidPluginDescriptionException extends PluginException {
     private static final long serialVersionUID = 8398530293535767863L;

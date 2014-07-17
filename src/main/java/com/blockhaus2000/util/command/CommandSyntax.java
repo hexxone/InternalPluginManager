@@ -25,7 +25,6 @@ import com.blockhaus2000.minecraft.util.command.Command;
 /**
  * The {@link CommandSyntax} for internal use of {@link Command#syntax()}.
  *
- * @author Blockhaus2000
  */
 public class CommandSyntax implements Iterable<CommandSyntaxType> {
     private final List<CommandSyntaxType> syntax;

@@ -22,7 +22,6 @@ import com.blockhaus2000.minecraft.util.command.Command;
  * This {@link CommandSyntaxType} is for internal usage of
  * {@link Command#syntax()}.
  *
- * @author Blockhaus2000
  */
 @SuppressWarnings("javadoc")
 public enum CommandSyntaxType {

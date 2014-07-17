@@ -18,8 +18,8 @@ General contributing conventions
 Code conventions
 ----------------
 
-	- Follow the Oracle code conventions, excluding the maximum line width. Use a maximum line width of 130 insted.
-	- Document every public and protected method and check for spelling. The apidocs will be generated out of the method documention.
+	- Follow the Oracle code conventions, excluding the maximum line width. Use a maximum line width of 130 instead.
+	- Document every public and protected method and check for spelling. The apidocs will be generated out of the method documentation.
 	- Document everything (including @param, @return, @throws, etc.).
 	- Tag overriding methods with @Override.
 	- Place curly brackets in the same line as the expression.
@@ -28,7 +28,7 @@ Code conventions
 	- Utility classes shouldn't have a visible constructor (create a private one).
 	- Don't test for boolean values with the "==" operator. Use direct expressions instead.
 	- Use as less as possible brackets in expressions.
-	- Don't use to many "return", "continue" and "break" expressions.
+	- Don't use to many "return", "continue" and "break" expressions (Keep below 5!).
 	- Do NOT use labels.
 	- Use four blanks instead of one tab.
 	- Indent your expressions/lines correct.
@@ -50,7 +50,7 @@ Commit conventions
 		+ Use "?" for "fixed"
 		+ Use "~" for "changed"
 		+ Use "^" for "improved" or "updated"
-	- In the headerline of each commit (which is the first line), write which tickets do you have worked on. Seperate types with a semicolon (";") and seperate tickets with the same type with a comma (",") and the last with a "and". Sort types in the following order and tickets within one type ina rising structure.
+	- In the header line of each commit (which is the first line), write which tickets do you have worked on. Different types with a semicolon (";") and different tickets with the same type with a comma (",") and the last with a "and". Sort types in the following order and tickets within one type in a rising structure.
 		+ "ADDS IPM-####"
 		+ "REMOVES IPM-####"
 		+ "FIXES IPM-####"

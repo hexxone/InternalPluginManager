@@ -26,7 +26,6 @@ import com.blockhaus2000.util.command.RawCommandContext;
  * This {@link CommandEvent} will be fired if a command has been executed but
  * the {@link CommandSender} does not have the required permission.
  *
- * @author Blockhaus2000
  */
 public class NoPermissionCommandEvent extends CommandEvent<RawCommandContext> {
     private static final HandlerList handlers = new HandlerList();

@@ -61,15 +61,20 @@ import com.blockhaus2000.util.command.RawCommandContext;
 /**
  * Represents a {@link CommandManager}.
  *
- * @author Blockhaus2000
  * @see com.blockhaus2000.minecraft.util.command.CommandManager
  */
-public class SimpleCommandManager implements CommandManager {
+public final class SimpleCommandManager implements CommandManager {
     private static SimpleCommandManager instance;
 
-    private final String flagRegex = "^[a-zA-Z](:("
+    /**
+     * The regex that flags has to match with this {@link CommandManager}
+     * implementation.
+     *
+     */
+    public static final String flagRegex = "^[a-zA-Z](:("
             + (StringUtil.joinString("|", ArrayUtil.toStringArray(Arrays.asList(CommandSyntaxType.values()))) + "|String...")
                     .replace(".", "\\.").toLowerCase() + ")?)?$";
+
     private final Map<String, ArrayList<CommandInfo>> cmds = new HashMap<String, ArrayList<CommandInfo>>();
 
     private SimpleCommandManager() {
@@ -86,7 +91,7 @@ public class SimpleCommandManager implements CommandManager {
     public Set<CommandInfo> register(final Class<?> clazz, final Object obj) throws CommandException {
         assert clazz != null : "Clazz cannot be null!";
 
-        Set<CommandInfo> registered = new HashSet<CommandInfo>();
+        final Set<CommandInfo> registered = new HashSet<CommandInfo>();
 
         for (Method targetMethod : clazz.getMethods()) {
             if (!targetMethod.isAnnotationPresent(Command.class)) {
@@ -96,24 +101,28 @@ public class SimpleCommandManager implements CommandManager {
             assert Modifier.isStatic(targetMethod.getModifiers()) || obj != null : "The method \"" + targetMethod
                     + "\" is non-static and the given Object is null.";
             assert targetMethod.toString().split("\\(")[1].equals("com.blockhaus2000.util.command.CommandContext)") : "The "
-            + "arguments of the method \"" + targetMethod
-            + "\" are not correct. The only argument has to be \"CommandContext\"";
+                    + "arguments of the method \"" + targetMethod
+                    + "\" are not correct. The only argument has to be \"CommandContext\"";
 
-            Command cmdAnot = targetMethod.getAnnotation(Command.class);
+            final Command cmdAnot = targetMethod.getAnnotation(Command.class);
 
             for (String targetFlag : cmdAnot.flags()) {
+                // We have to check for it, because maybe a developer thinks
+                // "Oh, why don't add an empty flag?". So we have to skip them.
                 if (targetFlag.length() == 0) {
                     continue;
                 }
 
                 targetFlag = targetFlag.trim().toLowerCase();
-                assert targetFlag.matches(flagRegex) : "The flag \"" + targetFlag + "\" does not match the regex \"" + flagRegex
-                + "\"!";
+                assert targetFlag.matches(SimpleCommandManager.flagRegex) : "The flag \"" + targetFlag
+                        + "\" does not match the regex \"" + SimpleCommandManager.flagRegex + "\"!";
             }
 
             for (String rawTargetAlias : cmdAnot.aliases()) {
                 final String targetAlias = rawTargetAlias.toLowerCase();
 
+                // We have to check for it, because maybe a developer thinks
+                // "Oh, why don't add an empty alias?". So we have to skip them.
                 if (targetAlias.length() == 0) {
                     continue;
                 }
@@ -122,9 +131,11 @@ public class SimpleCommandManager implements CommandManager {
                     cmds.put(targetAlias, new ArrayList<CommandInfo>());
                 }
 
-                CommandInfo commandInfo = new CommandInfo(cmdAnot, clazz, obj, targetMethod, new CommandSyntax(cmdAnot.syntax()));
+                final CommandInfo commandInfo = new CommandInfo(cmdAnot, clazz, obj, targetMethod, new CommandSyntax(
+                        cmdAnot.syntax()));
 
                 cmds.get(targetAlias).add(commandInfo);
+                // We have to sort them to enable the command priority.
                 Collections.sort(cmds.get(targetAlias));
 
                 registered.add(commandInfo);
@@ -177,27 +188,29 @@ public class SimpleCommandManager implements CommandManager {
 
         boolean executed = false;
 
-        List<CommandEvent<?>> events = new ArrayList<CommandEvent<?>>();
+        final List<CommandEvent<?>> events = new ArrayList<CommandEvent<?>>();
 
         for (CommandInfo target : cmds.get(label)) {
-            Command cmdAnot = target.getCommandAnot();
+            final Command cmdAnot = target.getCommandAnot();
 
-            RawCommandContext rawContext = new RawCommandContext(target, sender, cmd, label, bArgs);
+            final RawCommandContext rawContext = new RawCommandContext(target, sender, cmd, label, bArgs);
 
             if (!isSenderCorrect(sender, cmdAnot)) {
                 events.add(new IllegalSenderCommandEvent(rawContext));
                 continue;
             }
 
-            CommandSyntax syntax = target.getSyntax();
+            final CommandSyntax syntax = target.getSyntax();
 
-            int min = syntax.isNull() ? cmdAnot.min() : syntax.size();
-            int max = syntax.isNull() ? cmdAnot.max() : syntax.endsWithVarArg() && cmdAnot.autoSetMaxOnSyntax() ? -1 : syntax
-                    .size();
+            final int min = syntax.isNull() ? cmdAnot.min() : syntax.size();
+            final int max = syntax.isNull() ? cmdAnot.max() : syntax.endsWithVarArg() && cmdAnot.autoSetMaxOnSyntax() ? -1
+                    : syntax.size();
 
             final boolean secondLevelCmdSet = cmdAnot.secondLevelCommand().length() != 0;
 
             if (secondLevelCmdSet) {
+                // Thanks to the shortcuts in expressions, we do not have to
+                // check for the length of the array bArgs before.
                 if (bArgs.length >= 1 && cmdAnot.secondLevelCommand().equalsIgnoreCase(bArgs[0])) {
                     List<String> tempArgs = new LinkedList<String>(Arrays.asList(bArgs));
                     tempArgs.remove(0);
@@ -208,7 +221,7 @@ public class SimpleCommandManager implements CommandManager {
                 }
             }
 
-            List<Tag<?>> args = null;
+            final List<Tag<?>> args;
 
             try {
                 args = parseFlags(target, bArgs).getArgs();
@@ -230,7 +243,7 @@ public class SimpleCommandManager implements CommandManager {
                 continue;
             }
 
-            ContextData contextData = null;
+            final ContextData contextData;
 
             try {
                 contextData = parseCommand(target, bArgs);
@@ -294,6 +307,8 @@ public class SimpleCommandManager implements CommandManager {
 
         final List<CommandInfo> cmdInfos = cmds.get(label);
 
+        // Only if the args-length if beneath 2, the user has not entered the
+        // second-level-command yet.
         if (args.length < 2) {
             for (CommandInfo cmdInfo : cmdInfos) {
                 final String secLevCmd = cmdInfo.getCommandAnot().secondLevelCommand();
@@ -323,28 +338,27 @@ public class SimpleCommandManager implements CommandManager {
     }
 
     private ContextData parseCommand(final CommandInfo cmd, final List<String> rawArgs) throws IndexOutOfBoundsException,
-    NumberFormatException {
+            NumberFormatException {
         assert cmd != null : "Cmd cannot be null!";
         assert rawArgs != null : "RawArgs cannot be null!";
 
-        ContextData contextData = parseFlags(cmd, rawArgs);
-
+        final ContextData contextData = parseFlags(cmd, rawArgs);
         return parseArguments(cmd, contextData.getArgs(), contextData.getFlags());
     }
 
     private ContextData parseCommand(final CommandInfo cmd, final String... args) throws IndexOutOfBoundsException,
-    NumberFormatException {
+            NumberFormatException {
         return parseCommand(cmd, Arrays.asList(args));
     }
 
     private ContextData parseFlags(final CommandInfo cmd, final List<String> rawArgs) throws IndexOutOfBoundsException,
-    NumberFormatException {
+            NumberFormatException {
         assert cmd != null : "Cmd cannot be null!";
         assert rawArgs != null : "RawArgs cannot be null!";
 
-        List<String> args = new LinkedList<String>(rawArgs);
+        final List<String> args = new LinkedList<String>(rawArgs);
 
-        Map<Character, Tag<?>> flags = new HashMap<Character, Tag<?>>();
+        final Map<Character, Tag<?>> flags = new HashMap<Character, Tag<?>>();
 
         for (String target : cmd.getCommandAnot().flags()) {
             if (target.length() == 0) {
@@ -353,8 +367,8 @@ public class SimpleCommandManager implements CommandManager {
 
             boolean found = false;
 
-            char flagIndex = target.charAt(0);
-            String argFlag = "-" + flagIndex;
+            final char flagIndex = target.charAt(0);
+            final String argFlag = "-" + flagIndex;
 
             flags.put(flagIndex, null);
 
@@ -426,7 +440,7 @@ public class SimpleCommandManager implements CommandManager {
     }
 
     private ContextData parseFlags(final CommandInfo cmd, final String[] args) throws IndexOutOfBoundsException,
-    NumberFormatException {
+            NumberFormatException {
         return parseFlags(cmd, Arrays.asList(args));
     }
 
@@ -436,9 +450,9 @@ public class SimpleCommandManager implements CommandManager {
         assert rawArgsArray != null : "RawArgsArray cannot be null!";
         assert flags != null : "Flags cannot be null!";
 
-        List<String> rawArgs = Arrays.asList(rawArgsArray);
+        final List<String> rawArgs = Arrays.asList(rawArgsArray);
 
-        List<Tag<?>> args = new ArrayList<Tag<?>>();
+        final List<Tag<?>> args = new ArrayList<Tag<?>>();
 
         final CommandSyntax syntax = cmd.getSyntax();
 
@@ -481,7 +495,7 @@ public class SimpleCommandManager implements CommandManager {
 
     private ContextData parseArguments(final CommandInfo cmd, final List<Tag<?>> rawArgs, final Map<Character, Tag<?>> flags)
             throws IndexOutOfBoundsException, NumberFormatException {
-        List<String> args = new ArrayList<String>();
+        final List<String> args = new ArrayList<String>();
 
         for (Tag<?> target : rawArgs) {
             args.add((String) target.getData());

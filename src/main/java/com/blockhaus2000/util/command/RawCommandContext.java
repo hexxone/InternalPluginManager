@@ -24,7 +24,6 @@ import org.bukkit.command.CommandSender;
 /**
  * An extended {@link CommandInfo}.
  *
- * @author Blockhaus2000
  */
 public class RawCommandContext extends CommandInfo {
     private final CommandSender sender;

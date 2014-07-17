@@ -23,7 +23,6 @@ import com.blockhaus2000.util.command.CommandInfo;
 /**
  * This is the main class for all {@link CommandEvent}s.
  *
- * @author Blockhaus2000
  * @param <T>
  *            The specific {@link CommandInfo}.
  */

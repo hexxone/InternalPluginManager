@@ -26,11 +26,6 @@ import org.junit.Test;
 @SuppressWarnings("javadoc")
 public class StringUtilTest {
     @Test
-    public void escape() {
-        Assert.assertEquals("\\H\\e\\l\\l\\o\\ \\W\\o\\r\\l\\d\\!", StringUtil.escape("Hello World!"));
-    }
-
-    @Test
     public void joinString() {
         final String[] array = new String[] { "e0", "e1", "e2", "e3", "e4" };
 
@@ -39,5 +34,20 @@ public class StringUtilTest {
         Assert.assertEquals("e2, e3, e4", StringUtil.joinString(2, ", ", array));
         Assert.assertEquals("e3, e4", StringUtil.joinString(3, ", ", array));
         Assert.assertEquals("e4", StringUtil.joinString(4, ", ", array));
+    }
+
+    @Test
+    public void escape() {
+        Assert.assertEquals("\\H\\e\\l\\l\\o\\ \\W\\o\\r\\l\\d\\!", StringUtil.escape("Hello World!"));
+    }
+
+    @Test
+    public void replaceLast() {
+        final String str = "Hello World!";
+
+        Assert.assertEquals("Hello !", StringUtil.replaceLast("World", "", str));
+        Assert.assertEquals("Hello rld!", StringUtil.replaceLast("[A-Z][a-z]", "", str));
+        Assert.assertEquals("Hello WXrld!", StringUtil.replaceLast("o", "X", str));
+        Assert.assertEquals("Hello Worl-", StringUtil.replaceLast(".{2,3}", "-", str));
     }
 }

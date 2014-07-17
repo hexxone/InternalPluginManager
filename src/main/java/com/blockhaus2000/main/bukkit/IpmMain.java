@@ -36,7 +36,6 @@ import com.blockhaus2000.util.resources.ResourceManager;
 /**
  * Represents the main plugin of the InternalPluginManager.
  *
- * @author Blockhaus2000
  * @see org.bukkit.plugin.Plugin
  * @see org.bukkit.plugin.java.JavaPlugin
  */
@@ -52,9 +51,28 @@ public class IpmMain extends JavaPlugin {
     public static final boolean DEBUGGING_ENABLED = Boolean.valueOf(System.getProperty("internalpluginmanager.debug-mode",
             "false"));
 
+    /**
+     * This is the path that is used in the Bukkit configuration (config.yml) to
+     * enable/disable the integrated plugin manager. By default, the integrated
+     * plugin manager is enabled.
+     *
+     */
+    public static final String PLUGIN_MANAGER_ENABLED_PATH = "settings.plugin_manager_enabled";
+
+    /**
+     * This is the path that is used in the Bukkit configuration (config.cml) to
+     * enable/disable error report sending.
+     *
+     * <p>
+     * <b> NOTE: Error report sending is NOT possible yet. </b>
+     * </p>
+     *
+     */
+    // TODO Implement error report sending.
+    public static final String SEND_ERROR_REPORTS_PATH = "send_error_reports";
+
     private static IpmMain instance;
 
-    private final String sendErrorReportsPath = "send_error_reports";
     private boolean sendErrorReports = false;
 
     // Only for Testing (has to be commented for a release)
@@ -73,6 +91,7 @@ public class IpmMain extends JavaPlugin {
 
     /**
      * {@inheritDoc}
+     *
      */
     @Override
     public void onDisable() {
@@ -85,13 +104,16 @@ public class IpmMain extends JavaPlugin {
 
     /**
      * {@inheritDoc}
+     *
      */
     @Override
     public void onEnable() {
-        getConfig().addDefault(sendErrorReportsPath, false);
+        getConfig().addDefault(IpmMain.PLUGIN_MANAGER_ENABLED_PATH, true);
+        // TODO Error report sending is not implemented yet.
+        // getConfig().addDefault(IpmMain.SEND_ERROR_REPORTS_PATH, false);
         saveConfig();
 
-        sendErrorReports = getConfig().getBoolean(sendErrorReportsPath);
+        sendErrorReports = getConfig().getBoolean(IpmMain.SEND_ERROR_REPORTS_PATH);
 
         try {
             ResourceManager.initializeResources(ExceptionHandler.class);
@@ -109,11 +131,29 @@ public class IpmMain extends JavaPlugin {
             ExceptionHandler.handle(ex);
         }
 
-        SimpleIpmPluginManager.getInstance().enableAll();
+        // We do not really to delay the plugin enabling, but we want to enable
+        // all plugins after Bukkit has enabled all other plugins. With this,
+        // the enable process of the internal plugins will be started one tick
+        // after the server has started finally (with all plugins enabled).
+        Bukkit.getServer().getScheduler().runTaskLater(this, new Runnable() {
+            @Override
+            public void run() {
+                SimpleIpmPluginManager.getInstance().enableAll();
+
+                if (IpmMain.DEBUGGING_ENABLED) {
+                    System.out.println(TestCommands.START_TESTS);
+                }
+            }
+        }, 1);
 
         // register basic commands
         CommandRegistrationUtil.registerCommands(new Commands(), this);
-        CommandRegistrationUtil.registerCommands(new PluginManagerCommands(), this);
+
+        // only register plugin manager commands if the plugin manager is
+        // enabled
+        if (getConfig().getBoolean(IpmMain.PLUGIN_MANAGER_ENABLED_PATH)) {
+            CommandRegistrationUtil.registerCommands(new PluginManagerCommands(), this);
+        }
 
         // register basic tab completer
         TabCompleterRegistrationUtil.registerTabCompleters(new PluginManagerTabCompleter());
@@ -131,6 +171,7 @@ public class IpmMain extends JavaPlugin {
 
     /**
      * {@inheritDoc}
+     *
      */
     @Override
     public void onLoad() {
@@ -161,7 +202,8 @@ public class IpmMain extends JavaPlugin {
     @Deprecated
     public static IpmMain getInstance() {
         if (IpmMain.instance == null) {
-            return IpmMain.instance = new IpmMain();
+            throw new IllegalStateException(
+                    "You can not get an instance of IpmMain until Bukkit has loaded the InternalPluginManager!");
         }
 
         return IpmMain.instance;

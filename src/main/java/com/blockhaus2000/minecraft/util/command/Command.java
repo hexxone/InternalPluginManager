@@ -35,7 +35,6 @@ import com.blockhaus2000.tagstoragesystem.Tag;
  * The annotation is used to tag methods, so they will be detected from the
  * {@link CommandManager} to register the implemented commands.
  *
- * @author Blockhaus2000
  */
 @Documented
 @Target(ElementType.METHOD)
@@ -179,40 +178,40 @@ public @interface Command {
      * @return The allowed {@link CommandSender}s.
      */
     public CommandSenderType[] sender() default { CommandSenderType.PLAYER, CommandSenderType.CONSOLE,
-            CommandSenderType.COMMAND_BLOCK };
+        CommandSenderType.COMMAND_BLOCK };
 
-    /**
-     * This is the second-level-command of the command. So the command method
-     * calling will be extended so the second-level-command has to equals the
-     * second arguments of the executed command. (for example, this is
-     * <code>all</code> and one of the command alisas is <code>kill</code>,
-     * <code>/kill all</code> has to be executed o enter the method that is
-     * tagged with this annotation).
-     *
-     * <p>
-     * <b> NOTE: This will not effect the max. argument setting, the min.
-     * argument setting or the command syntax setting! The second-level-command
-     * will be removed completly. </b>
-     * </p>
-     *
-     * @return The second-level-command for this command.
-     */
-    public String secondLevelCommand() default "";
+        /**
+         * This is the second-level-command of the command. So the command method
+         * calling will be extended so the second-level-command has to equals the
+         * second arguments of the executed command. (for example, this is
+         * <code>all</code> and one of the command alisas is <code>kill</code>,
+         * <code>/kill all</code> has to be executed o enter the method that is
+         * tagged with this annotation).
+         *
+         * <p>
+         * <b> NOTE: This will not effect the max. argument setting, the min.
+         * argument setting or the command syntax setting! The second-level-command
+         * will be removed completly. </b>
+         * </p>
+         *
+         * @return The second-level-command for this command.
+         */
+        public String secondLevelCommand() default "";
 
-    /**
-     * Enables the auto maximal setting if you use a specific command syntax
-     * (sepcified in {@link Command#syntax()}).
-     *
-     * @return The boolean value that auto maximal setting on syntax
-     *         specification is enabled.
-     * @see Command#syntax()
-     */
-    public boolean autoSetMaxOnSyntax() default true;
+        /**
+         * Enables the auto maximal setting if you use a specific command syntax
+         * (sepcified in {@link Command#syntax()}).
+         *
+         * @return The boolean value that auto maximal setting on syntax
+         *         specification is enabled.
+         * @see Command#syntax()
+         */
+        public boolean autoSetMaxOnSyntax() default true;
 
-    /**
-     * A long help for this command.
-     *
-     * @return The long help of this command.
-     */
-    public String help() default "";
+        /**
+         * A long help for this command.
+         *
+         * @return The long help of this command.
+         */
+        public String help() default "";
 }

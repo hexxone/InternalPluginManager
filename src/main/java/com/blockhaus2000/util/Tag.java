@@ -23,7 +23,6 @@ import java.util.Collection;
  * different types (for example {@link Integer} and {@link String}) into a
  * {@link Collection}.
  *
- * @author Blockhaus2000
  * @param <T>
  *            The type that has to be used for data storage.
  */
@@ -83,7 +82,7 @@ public class Tag<T> {
             return false;
         }
 
-        Tag<?> other = (Tag<?>) obj;
+        final Tag<?> other = (Tag<?>) obj;
 
         if (data == null) {
             if (other.getData() != null) {

@@ -20,7 +20,6 @@ package com.blockhaus2000.minecraft.util.command.event;
  * This class simplyfies the usage of {@link CommandEventPackage}s, so you can
  * use a switch-case statement to recocnise the specific event.
  *
- * @author Blockhaus2000
  */
 public enum CommandEventType {
     /**

@@ -24,6 +24,7 @@ import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.blockhaus2000.util.CheckstyleUtil;
 import com.blockhaus2000.util.CommandRegistrationUtil;
 
 /**
@@ -32,7 +33,6 @@ import com.blockhaus2000.util.CommandRegistrationUtil;
  * classses of the jar and the main classes (like
  * {@link CommandRegistrationUtil}).
  *
- * @author Blockhaus2000
  */
 public class IpmPluginClassLoader extends URLClassLoader {
     private final Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
@@ -101,7 +101,8 @@ public class IpmPluginClassLoader extends URLClassLoader {
             try {
                 clazz = Class.forName(name);
             } catch (ClassNotFoundException ex) {
-                // fails silent
+                // This fails silent. Suppressing warnings from checkstyle.
+                CheckstyleUtil.failsSilent();
             }
         } else {
             clazz = classes.get(name);

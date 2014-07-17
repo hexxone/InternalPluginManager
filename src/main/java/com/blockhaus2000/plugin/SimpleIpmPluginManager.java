@@ -22,9 +22,8 @@ import java.util.Set;
 /**
  * An implementation if {@link IpmPluginManager}.
  *
- * @author Blockhaus2000
  */
-public class SimpleIpmPluginManager implements IpmPluginManager {
+public final class SimpleIpmPluginManager implements IpmPluginManager {
     private static final IpmPluginManager instance = new SimpleIpmPluginManager();
 
     private final Set<IpmPlugin> plugins = new HashSet<IpmPlugin>();

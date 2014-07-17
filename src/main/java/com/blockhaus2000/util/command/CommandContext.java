@@ -27,7 +27,6 @@ import com.blockhaus2000.util.Tag;
 /**
  * An extended {@link RawCommandContext}.
  *
- * @author Blockhaus2000
  */
 public class CommandContext extends RawCommandContext {
     private final List<Tag<?>> args;

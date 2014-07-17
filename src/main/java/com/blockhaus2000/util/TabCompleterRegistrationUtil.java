@@ -24,7 +24,7 @@ import com.blockhaus2000.minecraft.util.tabcompl.TabCompletionManager;
  * correctly.
  *
  */
-public class TabCompleterRegistrationUtil {
+public final class TabCompleterRegistrationUtil {
     private TabCompleterRegistrationUtil() {
         // utility should not have a visible constructor
     }

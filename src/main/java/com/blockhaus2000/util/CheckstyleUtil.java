@@ -17,21 +17,29 @@
 package com.blockhaus2000.util;
 
 /**
- * This is a utility class for the usage of the stack.
+ * This utility class for the checkstyle Maven plugin is a workaround to
+ * suppress some warnings from checkstyle.
+ *
+ * <p>
+ * <b> NOTE: Only use this methods if you really know what you are doing! </b>
+ * </p>
+ * <p>
+ * <b> NOTE: Please document the usage of one of this methods! Not in the
+ * JavaDocs, but in a regular comment. Use a comment like
+ * <code>This fails silent. Suppressing warnings from checkstyle.</code> </b>
+ * </p>
  *
  */
-public final class StackUtil {
-    private StackUtil() {
-        // Utility classes should not have a public, protected or visible
-        // constructor.
+public final class CheckstyleUtil {
+    private CheckstyleUtil() {
+        // Utility classes should not have a visible constructor.
     }
 
     /**
+     * Call this method to suppress warnings like
+     * "must be one statement in catch-block".
      *
-     * @return The {@link Caller} of the method that calls this method.
      */
-    public static Caller getCaller() {
-        final StackTraceElement caller = Thread.currentThread().getStackTrace()[3];
-        return new Caller(caller.getClassName(), caller.getMethodName());
+    public static void failsSilent() {
     }
 }

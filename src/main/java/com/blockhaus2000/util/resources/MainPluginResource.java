@@ -40,7 +40,6 @@ import com.blockhaus2000.plugin.IpmPlugin;
  * instead. </b>
  * </p>
  *
- * @author Blockhaus2000
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

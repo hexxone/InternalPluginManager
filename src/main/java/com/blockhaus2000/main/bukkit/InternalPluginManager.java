@@ -22,11 +22,10 @@ import com.blockhaus2000.plugin.SimpleIpmServer;
 /**
  * This is a utility class with static methods.
  *
- * @author Blockhaus2000
  */
-public class InternalPluginManager {
+public final class InternalPluginManager {
     private InternalPluginManager() {
-        // Utility classes should not have a public, protected or visible
+        // Utility classes should not have a visible
         // constructor.
     }
 

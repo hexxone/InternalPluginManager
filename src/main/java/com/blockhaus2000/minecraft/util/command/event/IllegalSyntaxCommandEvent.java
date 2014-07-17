@@ -26,7 +26,6 @@ import com.blockhaus2000.util.command.RawCommandContext;
  * wrong/illegal. See the {@link IllegalSyntaxType} for a detailed error
  * message.
  *
- * @author Blockhaus2000
  * @see com.blockhaus2000.minecraft.util.command.event.IllegalSyntaxCommandEvent
  */
 public class IllegalSyntaxCommandEvent extends CommandEvent<RawCommandContext> {

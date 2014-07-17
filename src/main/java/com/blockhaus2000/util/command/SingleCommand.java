@@ -26,7 +26,6 @@ import com.blockhaus2000.util.CommandRegistrationUtil;
  * command method. Has to be used with the command system and the
  * {@link Command} annotation.
  *
- * @author Blockhaus2000
  */
 public interface SingleCommand {
     /**

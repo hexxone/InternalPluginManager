@@ -32,7 +32,6 @@ import com.blockhaus2000.util.TabCompleterRegistrationUtil;
 /**
  * The main class that is used for plugin.
  *
- * @author Blockhaus2000
  */
 public interface IpmPlugin extends Plugin, PropertyChangeListener {
     /**

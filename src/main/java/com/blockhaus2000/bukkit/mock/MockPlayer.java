@@ -67,8 +67,8 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.util.Vector;
 
 /**
+ * This is only a mock implementation of {@link Player}.
  *
- * @author Blockhaus2000
  */
 @SuppressWarnings("javadoc")
 public class MockPlayer implements Player {

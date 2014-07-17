@@ -24,7 +24,6 @@ import com.blockhaus2000.minecraft.util.tabcompl.TabCompletionManager;
  * The {@link IpmServer} provides some methods for the usage if the
  * InternalPluginManager.
  *
- * @author Blockhaus2000
  */
 public interface IpmServer {
     /**
