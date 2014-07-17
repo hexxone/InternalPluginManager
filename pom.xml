@@ -1,9 +1,13 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.blockhaus2000</groupId>
 	<artifactId>InternalPluginManager</artifactId>
+	<!-- The version has to stand in the 8. line! Otherwise, nightly builds 
+		will break! -->
 	<version>1.9.0</version>
 	<packaging>jar</packaging>
 
@@ -17,6 +21,9 @@
 
 		<!-- The CraftBukkit jar name -->
 		<project.properties.craftbukkitJarName>craftbukkit-1.7.9-R0.2-20140520.082451-2.jar</project.properties.craftbukkitJarName>
+
+		<!-- This is were the checkstyle rules are defined -->
+		<checkstyle.config.location>checkstyle.xml</checkstyle.config.location>
 	</properties>
 
 
@@ -49,17 +56,31 @@
 
 	<!-- ===== Distribution Management ===== -->
 
-	<distributionManagement>
-		<!-- The site will be deployed here -->
-		<!--<site> <id>blockhaus2000-site-ftp</id> <url>ftp://docs.blockhaus2000.com/internalpluginmanager/</url> 
-			</site> -->
+	<!-- For now, we do not need this section. We are using profiles to select 
+		the correct deploy repos. -->
+	<!-- <distributionManagement> -->
+	<!-- The site will be deployed here -->
+	<!-- <site> <id>blockhaus2000-site-ftp</id> <url>ftp://docs.blockhaus2000.com/internalpluginmanager/</url> 
+		</site> -->
 
-		<!-- Releases will be deployed here -->
-		<repository>
-			<id>blockhaus2000-repo-ftp</id>
-			<url>ftp://repo.blockhaus2000.com/</url>
-		</repository>
-	</distributionManagement>
+	<!-- Releases will be deployed here -->
+	<!-- <repository> <id>blockhaus2000-repo-ftp</id> <url>ftp://repo.blockhaus2000.com/</url> 
+		</repository> -->
+
+	<!-- Snapshots (and Nightly builds) will be deployed here -->
+	<!-- <snapshotRepository> <id>blockhaus2000-snap-repo-ftp</id> <url>ftp://snap-repo.blockhaus2000.com/</url> 
+		</snapshotRepository> -->
+	<!-- </distributionManagement> -->
+
+
+	<!-- Plugin Repositories ===== -->
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>blockhaus2000-plugin-repo</id>
+			<url>http://repo.blockhaus2000.com</url>
+		</pluginRepository>
+	</pluginRepositories>
 
 
 	<!-- ===== Dependencies ===== -->
@@ -167,8 +188,8 @@
 					<executionDirectory>target/dist/</executionDirectory>
 					<craftbukkitURL>http://repo.bukkit.org/content/repositories/public/org/bukkit/craftbukkit/${project.properties.bukkitVersion}/${project.properties.craftbukkitJarName}</craftbukkitURL>
 					<craftbukkitFile>cache/${project.properties.craftbukkitJarName}</craftbukkitFile>
-					<!-- Sometimes, the Eclipse formatter creates a new line behind "/usr/bin/java". If ti does, please remove that new line. It will break the testing process. -->
-					<javaExecutionCommand>/usr/bin/java -Dinternalpluginmanager.debug-mode=true -jar craftbukkit.jar</javaExecutionCommand>
+					<javaExecutionCommand>/usr/bin/java \
+						-Dinternalpluginmanager.debug-mode=true -jar craftbukkit.jar</javaExecutionCommand>
 					<failOnTestFailure>true</failOnTestFailure>
 					<bukkitServerStartedIndicator>[START TESTS]</bukkitServerStartedIndicator>
 					<testStartDelay>1000</testStartDelay>
@@ -280,75 +301,10 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>2.12</version>
-				<executions>
-					<execution>
-						<id>verify-style</id>
-						<!--phase>validate</phase -->
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
 				<configuration>
 					<consoleOutput>true</consoleOutput>
 					<failsOnError>true</failsOnError>
 					<logViolationsToConsole>true</logViolationsToConsole>
-
-					<module name="Checker">
-						<!-- Do not use tabs! -->
-						<module name="FileTabCharacter" />
-
-						<module name="TreeWalker">
-							<module name="OuterTypeFilename" />
-
-							<!-- Utility classes will not have a constructor -->
-							<module name="HideUtilityClassConstructor" />
-							<module name="CovariantEquals" />
-
-							<!-- You have to implement both equals() and hashCode() -->
-							<module name="EqualsHashCode" />
-
-							<module name="NestedTryDepth">
-								<property name="max" value="2" />
-							</module>
-
-							<!-- If you override finalize(), you have to call super.finalize() -->
-							<module name="SuperFinalize" />
-							<module name="JUnitTestCase" />
-
-							<!-- Left curly braces never goes to a new line -->
-							<module name="LeftCurly">
-								<property name="option" value="eol" />
-							</module>
-
-							<!-- In a switch...case structure, the default case comes at the end -->
-							<module name="DefaultComesLast" />
-
-							<module name="GenericWhitespace" />
-
-							<!-- You have to follow these contributions! -->
-							<module name="ClassTypeParameterName">
-								<property name="format" value="^[A-Z][a-zA-Z0-9]*$" />
-							</module>
-							<module name="LocalFinalVariableName" />
-							<module name="LocalVariableName">
-								<property name="format" value="^[a-z_][a-zA-Z0-9]*$" />
-							</module>
-							<module name="MemberName">
-								<property name="format" value="^[a-z_][a-zA-Z0-9]*$" />
-							</module>
-							<module name="MethodName">
-								<property name="format" value="^(_INVALID_)?[a-z][a-zA-Z0-9]*$" />
-							</module>
-							<module name="ParameterName" />
-						</module>
-
-						<!-- Please include the header in each file! -->
-						<module name="Header">
-							<property name="headerFile" value="src/main/build/header.txt" />
-							<property name="fileExtensions" value="java" />
-						</module>
-					</module>
 				</configuration>
 			</plugin>
 
@@ -421,4 +377,80 @@
 			</extension>
 		</extensions>
 	</build>
+
+
+	<!-- ===== Profiles ===== -->
+
+	<profiles>
+		<!-- Use this profile if you want to publish a release -->
+		<profile>
+			<id>Release</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+
+			<!-- ===== Distribution Management ==== -->
+			<distributionManagement>
+				<!-- This repo is special for releases -->
+				<repository>
+					<id>blockhaus2000-repo-ftp</id>
+					<url>ftp://repo.blockhaus2000.com/</url>
+				</repository>
+			</distributionManagement>
+		</profile>
+
+		<!-- Use this profile if you want to publish a snapshot -->
+		<profile>
+			<id>Snapshot</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+
+
+			<!-- ===== Distribution Management ==== -->
+
+			<distributionManagement>
+				<!-- This repo is special for snaps/nightlys -->
+				<repository>
+					<id>blockhaus2000-snap-repo-ftp</id>
+					<url>ftp://snap-repo.blockhaus2000.com/</url>
+				</repository>
+			</distributionManagement>
+
+
+			<!-- ===== Build Management ===== -->
+
+			<!-- <build> -->
+			<!-- Appends "-SNAP" -->
+			<!-- <finalName>${project.artifactId}_v${project.version}-${buildNumber}-SNAP</finalName> 
+				</build> -->
+		</profile>
+
+		<!-- Use this profile if you want to publish a nightly build -->
+		<profile>
+			<id>Nightly</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+
+
+			<!-- ===== Distribution Management ==== -->
+
+			<distributionManagement>
+				<!-- This repo is special for snaps/nightlys -->
+				<repository>
+					<id>blockhaus2000-snap-repo-ftp</id>
+					<url>ftp://snap-repo.blockhaus2000.com/</url>
+				</repository>
+			</distributionManagement>
+
+
+			<!-- ===== Build Management ==== -->
+
+			<!-- <build> -->
+			<!-- Appends "-NIGHTLY" -->
+			<!-- <finalName>${project.artifactId}_v${project.version}-${buildNumber}-NIGHTLY</finalName> 
+				</build> -->
+		</profile>
+	</profiles>
 </project>
