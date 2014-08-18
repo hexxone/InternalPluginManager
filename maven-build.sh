@@ -15,10 +15,13 @@ function printHelp {
 }
 
 function editVersion {
+	versionLine="$(cat -n pom.xml | egrep --regexp '<version>.*</version>' | head -n 1 - | sed 's/<.*//')"
+	version="$(cat pom.xml | awk 'NR == 11 {print $1}' | sed 's/<version>//' | sed 's/<\/version>//')"
+
 	mv pom.xml pom.xml~
-	head -n 10 pom.xml~ > pom.xml
-	sed -ne '11,11p' pom.xml~ | sed -e 's/<\/version>$/-'$1'<\/version>/' >> pom.xml
-	cat pom.xml~ | awk 'NR > 11 {print $0}' >> pom.xml
+	head -n $(expr $versionLine - 1) pom.xml~ > pom.xml
+	echo -e "\t<version>$version-$1</version>" >> pom.xml
+	tail -n +$(expr $versionLine + 1) pom.xml~ >> pom.xml
 }
 
 function clearVersion {
