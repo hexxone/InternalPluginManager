@@ -213,7 +213,7 @@
 			<module name="JavaNCSS" />
 
 			<module name="TodoComment">
-				<property name="format" value="TODO:?" />
+				<property name="format" value="TODO:?" /> <!-- //TODO-FINDER:IGNORE -->
 			</module>
 
 			<module name="UncommentedMain" />

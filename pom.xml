@@ -6,7 +6,7 @@
 
 	<groupId>com.blockhaus2000</groupId>
 	<artifactId>InternalPluginManager</artifactId>
-	<version>1.9.1</version>
+	<version>1.9.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<!-- Some important project properties -->
@@ -19,6 +19,9 @@
 
 		<!-- The CraftBukkit jar name -->
 		<project.properties.craftbukkitJarName>craftbukkit-1.7.9-R0.2-20140520.082451-2.jar</project.properties.craftbukkitJarName>
+
+		<!-- The username for GitHub (used by the maven-release-plugin) -->
+		<project.properties.username>Blockhaus2000</project.properties.username>
 
 		<!-- This is were the checkstyle rules are defined -->
 		<checkstyle.config.location>checkstyle.xml</checkstyle.config.location>
@@ -45,30 +48,35 @@
 	</issueManagement>
 
 	<scm>
-		<connection>scm:git:git://github.com/Blockhaus2000/InternalPluginManager.git</connection>
+		<connection>scm:git:git@github.com/Blockhaus2000/InternalPluginManager.git</connection>
 		<developerConnection>scm:git:git@github.com:Blockhaus2000/InternalPluginManager.git</developerConnection>
 		<url>https://www.github.com/Blockhaus2000/InternalPluginManager/</url>
-		<tag>master</tag>
 	</scm>
 
 
 	<!-- ===== Distribution Management ===== -->
 
-	<!-- For now, we do not need this section. We are using profiles to select 
-		the correct deploy repos. -->
-	<!-- <distributionManagement> -->
-	<!-- The site will be deployed here -->
-	<!-- <site> <id>blockhaus2000-site-ftp</id> <url>ftp://docs.blockhaus2000.com/internalpluginmanager/</url> 
-		</site> -->
+	<distributionManagement>
+		<!-- The site will be deployed here -->
+		<!--
+		<site>
+			<id>blockhaus2000-site-ftp</id>
+			<url>ftp://docs.blockhaus2000.com/internalpluginmanager/</url>
+		</site>
+		-->
 
-	<!-- Releases will be deployed here -->
-	<!-- <repository> <id>blockhaus2000-repo-ftp</id> <url>ftp://repo.blockhaus2000.com/</url> 
-		</repository> -->
+		<!-- Releases will be deployed here -->
+		<repository>
+			<id>blockhaus2000-repo-ftp</id>
+			<url>ftp://repo.blockhaus2000.com/</url>
+		</repository>
 
-	<!-- Snapshots (and Nightly builds) will be deployed here -->
-	<!-- <snapshotRepository> <id>blockhaus2000-snap-repo-ftp</id> <url>ftp://snap-repo.blockhaus2000.com/</url> 
-		</snapshotRepository> -->
-	<!-- </distributionManagement> -->
+		<!-- Snapshots will be deployed here -->
+		<snapshotRepository>
+			<id>blockhaus2000-snap-repo-ftp</id>
+			<url>ftp://snap-repo.blockhaus2000.com/</url>
+		</snapshotRepository>
+	 </distributionManagement>
 
 
 	<!-- Plugin Repositories ===== -->
@@ -76,7 +84,7 @@
 	<pluginRepositories>
 		<pluginRepository>
 			<id>blockhaus2000-plugin-repo</id>
-			<url>http://repo.blockhaus2000.com</url>
+			<url>http://repo.blockhaus2000.com/</url>
 		</pluginRepository>
 	</pluginRepositories>
 
@@ -136,6 +144,7 @@
 		<testOutputDirectory>target/test-classes</testOutputDirectory>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<testSourceDirectory>src/test/java</testSourceDirectory>
+		<defaultGoal>clean package install</defaultGoal>
 
 		<plugins>
 			<!-- Compiler settings -->
@@ -164,6 +173,13 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.9.1</version>
+			</plugin>
+			
+			<!-- Packages source code -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.3</version>
 			</plugin>
 
 			<!-- Test runner -->
@@ -245,14 +261,6 @@
 						</includes>
 					</artifactSet>
 				</configuration>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 
 			<!-- JAR plugin -->
@@ -285,6 +293,14 @@
 				<groupId>com.google.code.maven-replacer-plugin</groupId>
 				<artifactId>replacer</artifactId>
 				<version>1.5.3</version>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>replace</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
 					<file>src/main/resources/plugin.yml</file>
 					<outputFile>target/generated-resources/plugin.yml</outputFile>
@@ -299,10 +315,49 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>2.12</version>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>checkstyle</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
 					<consoleOutput>true</consoleOutput>
 					<failsOnError>true</failsOnError>
 					<logViolationsToConsole>true</logViolationsToConsole>
+				</configuration>
+			</plugin>
+
+			<!-- Find TODO's --> <!-- //TODO-FINDER:IGNORE -->
+			<plugin>
+				<groupId>com.blockhaus2000</groupId>
+				<artifactId>todo-finder-maven-plugin</artifactId>
+				<version>1.3</version>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>find</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<lowPriorityStrings>
+						<lowPriorityString>IDEA</lowPriorityString> <!-- //TODO-FINDER:IGNORE -->
+					</lowPriorityStrings>
+					<normalPriorityStrings>
+						<normalPriorityString>TODO</normalPriorityString> <!-- //TODO-FINDER:IGNORE -->
+					</normalPriorityStrings>
+					<highPriorityStrings>
+						<highPriorityString>FIXME</highPriorityString> <!-- //TODO-FINDER:IGNORE -->
+					</highPriorityStrings>
+					<failOnHighPriority>false</failOnHighPriority>
+
+					<excludeFiles>
+						<excludeFile>dependency-reduced-pom.xml</excludeFile>
+					</excludeFiles>
 				</configuration>
 			</plugin>
 
@@ -320,11 +375,14 @@
 					</execution>
 				</executions>
 				<configuration>
-					<!--doCheck>true</doCheck> <doUpdate>true</doUpdate -->
+					<!--doCheck>true</doCheck>-->
+					<!--<doUpdate>true</doUpdate>-->
 					<item>timestamp</item>
 					<shortRevisionLength>5</shortRevisionLength>
 				</configuration>
 			</plugin>
+
+			<!-- Used to automate the JavaDoc upload -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>wagon-maven-plugin</artifactId>
@@ -335,6 +393,13 @@
 					<fromDir>target/apidocs/</fromDir>
 					<toDir>internalpluginmanager/${project.version}</toDir>
 				</configuration>
+			</plugin>
+
+			<!-- Used for release automation -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5</version>
 			</plugin>
 
 			<!-- Site builder -->
@@ -380,59 +445,85 @@
 	<!-- ===== Profiles ===== -->
 
 	<profiles>
-		<!-- Use this profile if you want to publish a release -->
 		<profile>
 			<id>Release</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
-
-			<!-- ===== Distribution Management ==== -->
-			<distributionManagement>
-				<!-- This repo is special for releases -->
-				<repository>
-					<id>blockhaus2000-repo-ftp</id>
-					<url>ftp://repo.blockhaus2000.com/</url>
-				</repository>
-			</distributionManagement>
+			<build>
+				<defaultGoal>validate package deploy</defaultGoal>
+				<plugins>
+					<plugin>
+						<groupId>com.blockhaus2000</groupId>
+						<artifactId>bukkit-tester-maven-plugin</artifactId>
+						<version>1.1.1</version>
+						<executions>
+							<execution>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>bukkit-test</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>wagon-maven-plugin</artifactId>
+						<version>1.0-beta-5</version>
+						<executions>
+							<execution>
+								<phase>deploy</phase>
+								<goals>
+									<goal>upload</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>com.blockhaus2000</groupId>
+						<artifactId>todo-finder-maven-plugin</artifactId>
+						<version>1.3</version>
+						<configuration>
+							<failOnHighPriority>true</failOnHighPriority>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
 		</profile>
 
-		<!-- Use this profile if you want to publish a snapshot -->
 		<profile>
 			<id>Snapshot</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
-
-
-			<!-- ===== Distribution Management ==== -->
-
-			<distributionManagement>
-				<!-- This repo is special for snaps/nightlys -->
-				<repository>
-					<id>blockhaus2000-snap-repo-ftp</id>
-					<url>ftp://snap-repo.blockhaus2000.com/</url>
-				</repository>
-			</distributionManagement>
+			<build>
+				<defaultGoal>validate package deploy</defaultGoal>
+				<plugins>
+					<plugin>
+						<groupId>com.blockhaus2000</groupId>
+						<artifactId>bukkit-tester-maven-plugin</artifactId>
+						<version>1.1.1</version>
+						<executions>
+							<execution>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>bukkit-test</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
 		</profile>
 
-		<!-- Use this profile if you want to publish a nightly build -->
 		<profile>
 			<id>Nightly</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
-
-
-			<!-- ===== Distribution Management ==== -->
-
-			<distributionManagement>
-				<!-- This repo is special for snaps/nightlys -->
-				<repository>
-					<id>blockhaus2000-snap-repo-ftp</id>
-					<url>ftp://snap-repo.blockhaus2000.com/</url>
-				</repository>
-			</distributionManagement>
+			<build>
+				<defaultGoal>validate package deploy</defaultGoal>
+			</build>
 		</profile>
 	</profiles>
 </project>
