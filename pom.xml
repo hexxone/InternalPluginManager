@@ -411,6 +411,8 @@
 					<checkModificationExcludes>
 						<checkModificationExclude>todo.txt</checkModificationExclude>
 					</checkModificationExcludes>
+					<preparationGoals>clean</preparationGoals>
+					<completionGoals>package</completionGoals>
 				</configuration>
 			</plugin>
 
