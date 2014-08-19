@@ -15,13 +15,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<!-- The Bukkit version to use -->
-		<project.properties.bukkitVersion>1.7.9-R0.2-SNAPSHOT</project.properties.bukkitVersion>
+		<project.properties.bukkitVersion>1.7.9-R0.2</project.properties.bukkitVersion>
 
 		<!-- The CraftBukkit jar name -->
 		<project.properties.craftbukkitJarName>craftbukkit-1.7.9-R0.2-20140520.082451-2.jar</project.properties.craftbukkitJarName>
-
-		<!-- The username for GitHub (used by the maven-release-plugin) -->
-		<project.properties.username>Blockhaus2000</project.properties.username>
 
 		<!-- This is were the checkstyle rules are defined -->
 		<checkstyle.config.location>checkstyle.xml</checkstyle.config.location>
@@ -400,6 +397,13 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
 				<version>2.5</version>
+				<configuration>
+					<tagNameFormat>@{project.version}</tagNameFormat>
+					<username>Blockhaus2000</username>
+					<checkModificationExcludes>
+						<checkModificationExclude>todo.txt</checkModificationExcludes>
+					</checkModificationExcludes>
+				</configuration>
 			</plugin>
 
 			<!-- Site builder -->
@@ -451,7 +455,7 @@
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<build>
-				<defaultGoal>validate package deploy</defaultGoal>
+				<defaultGoal>clean release:clean release:prepare release:perform</defaultGoal>
 				<plugins>
 					<plugin>
 						<groupId>com.blockhaus2000</groupId>
@@ -497,7 +501,7 @@
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<build>
-				<defaultGoal>validate package deploy</defaultGoal>
+				<defaultGoal>clean validate package deploy</defaultGoal>
 				<plugins>
 					<plugin>
 						<groupId>com.blockhaus2000</groupId>
@@ -522,7 +526,7 @@
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<build>
-				<defaultGoal>validate package deploy</defaultGoal>
+				<defaultGoal>clean validate package deploy</defaultGoal>
 			</build>
 		</profile>
 	</profiles>
