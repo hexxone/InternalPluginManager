@@ -499,14 +499,6 @@
 							<failOnHighPriority>true</failOnHighPriority>
 						</configuration>
 					</plugin>
-					<plugin>
-						<groupId>com.google.code.maven-replacer-plugin</groupId>
-						<artifactId>replacer</artifactId>
-						<version>1.5.3</version>
-						<configuration>
-							<value>${project.rel.com.blockhaus2000:InternalPluginManager}</value>
-						</configuration>
-					</plugin>
 				</plugins>
 			</build>
 		</profile>
