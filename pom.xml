@@ -411,8 +411,6 @@
 					<checkModificationExcludes>
 						<checkModificationExclude>todo.txt</checkModificationExclude>
 					</checkModificationExcludes>
-					<preparationGoals>clean</preparationGoals>
-					<completionGoals>package</completionGoals>
 				</configuration>
 			</plugin>
 
@@ -506,7 +504,7 @@
 						<artifactId>replacer</artifactId>
 						<version>1.5.3</version>
 						<configuration>
-							<value>${project.rel.com.blockhaus2000:InternalPluginManage}</value>
+							<value>${project.rel.com.blockhaus2000:InternalPluginManager}</value>
 						</configuration>
 					</plugin>
 				</plugins>
