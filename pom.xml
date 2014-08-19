@@ -411,6 +411,8 @@
 					<checkModificationExcludes>
 						<checkModificationExclude>todo.txt</checkModificationExclude>
 					</checkModificationExcludes>
+					<completionGoals>validate package</completionGoals>
+					<preparationGoals>clean</preparationGoals>
 				</configuration>
 			</plugin>
 
@@ -463,7 +465,7 @@
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<build>
-				<defaultGoal>clean release:clean release:prepare release:perform</defaultGoal>
+				<defaultGoal>release:clean release:prepare release:perform</defaultGoal>
 				<plugins>
 					<plugin>
 						<groupId>com.blockhaus2000</groupId>
