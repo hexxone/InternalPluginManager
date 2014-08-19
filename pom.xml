@@ -411,8 +411,6 @@
 					<checkModificationExcludes>
 						<checkModificationExclude>todo.txt</checkModificationExclude>
 					</checkModificationExcludes>
-					<completionGoals>validate package</completionGoals>
-					<preparationGoals>clean</preparationGoals>
 				</configuration>
 			</plugin>
 
@@ -501,6 +499,14 @@
 							<failOnHighPriority>true</failOnHighPriority>
 						</configuration>
 					</plugin>
+					<plugin>
+						<groupId>com.google.code.maven-replacer-plugin</groupId>
+						<artifactId>replacer</artifactId>
+						<version>1.5.3</version>
+						<configuration>
+							<value>${releaseVersion}</value>
+						</configuration>
+					</plugin>
 				</plugins>
 			</build>
 		</profile>
@@ -511,7 +517,7 @@
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<build>
-				<defaultGoal>clean validate package deploy</defaultGoal>
+				<defaultGoal>clean <!--deploy-->install</defaultGoal>
 				<plugins>
 					<plugin>
 						<groupId>com.blockhaus2000</groupId>
@@ -536,7 +542,7 @@
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<build>
-				<defaultGoal>clean validate package deploy</defaultGoal>
+				<defaultGoal>clean deploy</defaultGoal>
 			</build>
 		</profile>
 	</profiles>
