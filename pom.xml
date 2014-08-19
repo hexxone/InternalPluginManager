@@ -401,7 +401,7 @@
 					<tagNameFormat>@{project.version}</tagNameFormat>
 					<username>Blockhaus2000</username>
 					<checkModificationExcludes>
-						<checkModificationExclude>todo.txt</checkModificationExcludes>
+						<checkModificationExclude>todo.txt</checkModificationExclude>
 					</checkModificationExcludes>
 				</configuration>
 			</plugin>
