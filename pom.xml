@@ -504,7 +504,7 @@
 						<artifactId>replacer</artifactId>
 						<version>1.5.3</version>
 						<configuration>
-							<value>${releaseVersion}</value>
+							<value>${project.rel.com.blockhaus2000:InternalPluginManage}</value>
 						</configuration>
 					</plugin>
 				</plugins>
