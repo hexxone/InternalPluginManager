@@ -607,6 +607,9 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>wagon-maven-plugin</artifactId>
 				<version>1.0-beta-5</version>
+				<!-- We only want do deploy the JavaDoc HTML source for a release! -->
+				<!--     Moved to profile configuration -->
+				<!--
 				<executions>
 					<execution>
 						<id>wagon-maven-plugin:upload</id>
@@ -616,6 +619,7 @@
 						</goals>
 					</execution>
 				</executions>
+				-->
 				<configuration> <!-- TODO -->
 					<url>ftp://docs.blockhaus2000.com</url>
 					<followSymLink>false</followSymLink>
@@ -654,7 +658,7 @@
 					<updateWorkingCopyVersion>true</updateWorkingCopyVersion>
 					<useEditMode>false</useEditMode>
 					<username>Blockhaus2000</username>
-					<goals>deploy</goals>
+					<goals><!--deploy-->install</goals> <!-- TODO -->
 					<localCheckout>false</localCheckout>
 				</configuration>
 			</plugin>
@@ -703,32 +707,39 @@
 
 	<profiles>
 		<profile>
-			<id>Release</id>
+			<id>release</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<build>
 				<defaultGoal>release:clean release:prepare release:perform</defaultGoal>
+
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>wagon-maven-plugin</artifactId>
+						<version>1.0-beta-5</version>
+						<executions>
+							<execution>
+								<id>wagon-maven-plugin:upload</id>
+								<phase>deploy</phase>
+								<goals>
+									<goal>upload</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
 			</build>
 		</profile>
 
 		<profile>
-			<id>Snapshot</id>
+			<id>snapshot</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<build>
-				<defaultGoal>clean deploy</defaultGoal>
-			</build>
-		</profile>
-
-		<profile>
-			<id>Nightly</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<build>
-				<defaultGoal>clean deploy</defaultGoal>
+				<defaultGoal>clean <!--deploy-->install</defaultGoal>
 			</build>
 		</profile>
 	</profiles>
