@@ -1,6 +1,4 @@
-<project
-	xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
@@ -11,8 +9,11 @@
 
 	<!-- Some important project properties -->
 	<properties>
-		<!-- Fix encoding warings -->
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- The encoding to use everywhere -->
+		<project.properties.encoding>UTF-8</project.properties.encoding>
+
+		<!-- The main class -->
+		<project.properties.mainClass>com.blockhaus2000.main.bukkit.IpmMain</project.properties.mainClass>
 
 		<!-- The Bukkit version to use -->
 		<project.properties.bukkitVersion>1.7.9-R0.2</project.properties.bukkitVersion>
@@ -20,8 +21,8 @@
 		<!-- The CraftBukkit jar name -->
 		<project.properties.craftbukkitJarName>craftbukkit-1.7.9-R0.2-20140520.082451-2.jar</project.properties.craftbukkitJarName>
 
-		<!-- This is were the checkstyle rules are defined -->
-		<checkstyle.config.location>checkstyle.xml</checkstyle.config.location>
+		<!-- Fix encoding warnings -->
+		<project.build.sourceEncoding>${project.properties.encoding}</project.build.sourceEncoding>
 	</properties>
 
 
@@ -55,12 +56,8 @@
 
 	<distributionManagement>
 		<!-- The site will be deployed here -->
-		<!--
-		<site>
-			<id>blockhaus2000-site-ftp</id>
-			<url>ftp://docs.blockhaus2000.com/internalpluginmanager/</url>
-		</site>
-		-->
+		<!-- <site> <id>blockhaus2000-site-ftp</id> <url>ftp://docs.blockhaus2000.com/internalpluginmanager/</url> 
+			</site> -->
 
 		<!-- Releases will be deployed here -->
 		<repository>
@@ -73,7 +70,7 @@
 			<id>blockhaus2000-snap-repo-ftp</id>
 			<url>ftp://snap-repo.blockhaus2000.com/</url>
 		</snapshotRepository>
-	 </distributionManagement>
+	</distributionManagement>
 
 
 	<!-- Plugin Repositories ===== -->
@@ -125,23 +122,17 @@
 	</dependencies>
 
 
-	<!-- ===== Reporting ===== -->
-
-	<!--<reporting> <plugins> <plugin> <groupId>org.apache.maven.plugins</groupId> 
-		<artifactId>maven-javadoc-plugin</artifactId> <version>2.9.1</version> </plugin> 
-		</plugins> </reporting> -->
-
-
 	<!-- ===== Build ===== -->
 
 	<build>
-		<directory>target</directory>
-		<outputDirectory>target/classes</outputDirectory>
-		<finalName>${project.artifactId}_v${project.version}-${buildNumber}</finalName>
-		<testOutputDirectory>target/test-classes</testOutputDirectory>
-		<sourceDirectory>src/main/java</sourceDirectory>
-		<testSourceDirectory>src/test/java</testSourceDirectory>
+		<finalName>${project.artifactId}_v${project.version}-${timestamp}-${buildNumber}</finalName>
 		<defaultGoal>clean install</defaultGoal>
+
+		<directory>target</directory>
+		<outputDirectory>${project.build.directory}/classes/</outputDirectory>
+		<testOutputDirectory>${project.build.directory}/test-classes/</testOutputDirectory>
+		<sourceDirectory>src/main/java/</sourceDirectory>
+		<testSourceDirectory>src/test/java/</testSourceDirectory>
 
 		<plugins>
 			<!-- Compiler settings -->
@@ -149,19 +140,62 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
+				<executions>
+					<execution>
+						<id>maven-compiler-plugin:compile</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>maven-compiler-plugin:test-compile</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>testCompile</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<compilerReuseStrategy>alwaysNew</compilerReuseStrategy>
+					<compilerVersion>${project.properties.javaVersion}</compilerVersion>
+					<debug>true</debug>
+					<encoding>${project.properties.encoding}</encoding>
+					<failOnError>true</failOnError>
+					<forceJavacCompilerUse>true</forceJavacCompilerUse>
+					<fork>true</fork>
+					<maxmem>2048m</maxmem>
+					<meminitial>64m</meminitial>
+					<optimize>true</optimize>
+					<showDeprecation>true</showDeprecation>
+					<showWarnings>true</showWarnings>
+					<skipMain>false</skipMain>
+					<skipMultiThreadWarning>false</skipMultiThreadWarning>
+					<source>${project.properties.javaVersion}</source>
+					<target>${project.properties.javaVersion}</target>
+					<useIncrementalCompilation>false</useIncrementalCompilation>
+					<verbose>true</verbose>
 				</configuration>
 			</plugin>
 
-			<!-- Used to deploy releaes -->
+			<!-- Used to deploy releases -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
 				<version>2.8.1</version>
+				<executions>
+					<execution>
+						<id>maven-deploy-plugin:deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
 					<deployAtEnd>true</deployAtEnd>
+					<retryFailedDeploymentCount>2</retryFailedDeploymentCount>
+					<updateReleaseInfo>false</updateReleaseInfo>
 				</configuration>
 			</plugin>
 
@@ -170,13 +204,106 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.9.1</version>
+				<executions>
+					<execution>
+						<id>maven-javadoc-plugin:javadoc</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>javadoc</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>maven-javadoc-plugin:jar</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<outputDirectory>${project.build.directory}/apidocs/</outputDirectory>
+					<applyJavadocSecurityFix>true</applyJavadocSecurityFix>
+					<author>true</author>
+					<bottom>Copytight &#169; {inceptionYear}&#x2013;{currentYear}
+						Blockhaus2000. Licensed under ${licenses.license.name}
+						(${licenses.license.url}).</bottom>
+					<breakIterator>false</breakIterator>
+					<charset>${project.properties.encoding}</charset>
+					<debug>false</debug>
+					<destDir>apidocs</destDir>
+					<detectJavaApiLink>true</detectJavaApiLink>
+					<detectLinks>true</detectLinks>
+					<detectOfflineLinks>true</detectOfflineLinks>
+					<docencoding>${project.properties.encoding}</docencoding>
+					<docfilessubdirs>true</docfilessubdirs>
+					<doctitle>${project.name} {project.version} API</doctitle>
+					<encoding>${project.properties.encoding}</encoding>
+					<failOnError>true</failOnError>
+					<includeDependencySources>true</includeDependencySources>
+					<includeTransitiveDependencySources>true</includeTransitiveDependencySources>
+					<javadocVersion>${project.properties.javaVersion}</javadocVersion>
+					<keywords>false</keywords>
+					<linksource>true</linksource>
+					<maxmemory>2048m</maxmemory>
+					<nocomment>false</nocomment>
+					<nodeprecatedlist>false</nodeprecatedlist>
+					<nohelp>false</nohelp>
+					<noindex>false</noindex>
+					<nonavbar>false</nonavbar>
+					<nooverview>false</nooverview>
+					<nosince>false</nosince>
+					<notimestamp>false</notimestamp>
+					<notree>false</notree>
+					<old>false</old>
+					<packagesheader>Packages</packagesheader>
+					<quiet>false</quiet>
+					<serialwarn>true</serialwarn>
+					<show>protected</show>
+					<source>${project.properties.javaVersion}</source>
+					<sourceDependencyCacheDir>${project.build.directory}</sourceDependencyCacheDir>
+					<splitIndex>false</splitIndex>
+					<stylesheet>maven</stylesheet>
+					<use>true</use>
+					<validateLinks>true</validateLinks>
+					<verbose>false</verbose>
+					<version>true</version>
+					<windowtitle>${project.name} ${project.version} API</windowtitle>
+					<finalName>${project.build.finalName}</finalName>
+				</configuration>
 			</plugin>
-			
+
 			<!-- Packages source code -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
 				<version>2.3</version>
+				<executions>
+					<execution>
+						<id>maven-source-plugin:source</id>
+						<phase>generated-sources</phase>
+						<goals>
+							<goal>source</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>maven-source-plugin:jar</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<attach>true</attach>
+					<classifier>sources</classifier>
+					<finalName>${project.build.finalName}</finalName>
+					<forceCreation>true</forceCreation>
+					<includePom>true</includePom>
+					<outputDirectory>$[project.build.directory}</outputDirectory>
+					<skipSource>false</skipSource>
+					<useDefaultExcludes>true</useDefaultExcludes>
+					<useDefaultManifestFile>false</useDefaultManifestFile>
+				</configuration>
 			</plugin>
 
 			<!-- Test runner -->
@@ -184,9 +311,44 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.17</version>
-				<configuration>
-					<parallel>methods</parallel>
-					<threadCount>10</threadCount>
+				<executions>
+					<execution>
+						<id>maven-surefire-plugin:test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration> <!-- TODO -->
+					<testSourceDirectory>${project.build.testSourceDirectory}</testSourceDirectory>
+					<basedir>${basedir}</basedir>
+					<childDelegation>true</childDelegation>
+					<classesDirectory>${project.build.outputDirectory}</classesDirectory>
+					<disableXmlReport>false</disableXmlReport>
+					<enableAssertions>true</enableAssertions>
+					<failIfNoSpecifiedTests>true</failIfNoSpecifiedTests>
+					<failIfNoTests>true</failIfNoTests>
+					<forkCount>2C</forkCount>
+					<forkedProcessTimeoutInSeconds>5</forkedProcessTimeoutInSeconds>
+					<parallelOptimized>true</parallelOptimized>
+					<parallelTestsTimeoutForcedInSeconds>5</parallelTestsTimeoutForcedInSeconds>
+					<parallelTestsTimeoutInSeconds>5</parallelTestsTimeoutInSeconds>
+					<perCoreThreadCount>true</perCoreThreadCount>
+					<printSummary>true</printSummary>
+					<redirectTestOutputToFile>false</redirectTestOutputToFile>
+					<remoteRepositories>${project.pluginArtifactRepositories}</remoteRepositories>
+					<reportFormat>brief</reportFormat>
+					<reportsDirectory>${project.build.directory}/surefire-reports/</reportsDirectory>
+					<reuseForks>true</reuseForks>
+					<runOrder>filesystem</runOrder>
+					<testClassesDirectory>${project.build.testOutputDirectory}</testClassesDirectory>
+					<testFailureIgnore>false</testFailureIgnore>
+					<trimStackTrace>true</trimStackTrace>
+					<useFile>true</useFile>
+					<useManifestOnlyJar>true</useManifestOnlyJar>
+					<useSystemClassLoader>true</useSystemClassLoader>
+					<workingDirectory>${basedir}</workingDirectory>
 				</configuration>
 			</plugin>
 
@@ -195,8 +357,17 @@
 				<groupId>com.blockhaus2000</groupId>
 				<artifactId>bukkit-tester-maven-plugin</artifactId>
 				<version>1.1.1</version>
+				<executions>
+					<execution>
+						<id>bukkit-tester-maven-plugin:bukkit-test</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>bukkit-test</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
-					<executionDirectory>target/dist/</executionDirectory>
+					<executionDirectory>${project.build.directory}/dist/</executionDirectory>
 					<craftbukkitURL>http://repo.bukkit.org/content/repositories/public/org/bukkit/craftbukkit/${project.properties.bukkitVersion}/${project.properties.craftbukkitJarName}</craftbukkitURL>
 					<craftbukkitFile>cache/${project.properties.craftbukkitJarName}</craftbukkitFile>
 					<javaExecutionCommand>/usr/bin/java \
@@ -206,7 +377,7 @@
 					<testStartDelay>1000</testStartDelay>
 
 					<plugins>
-						<plugin>target/${project.artifactId}_v${project.version}-${buildNumber}.jar</plugin>
+						<plugin>${project.build.directory}/${project.build.finalName}.jar</plugin>
 					</plugins>
 					<testCommands>
 						<!-- Enable the test command output. This is not a real test. -->
@@ -253,42 +424,54 @@
 				<version>2.3</version>
 				<executions>
 					<execution>
+						<id>maven-shade-plugin:shade</id>
 						<phase>package</phase>
 						<goals>
 							<goal>shade</goal>
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
+				<configuration> <!-- TODO -->
 					<artifactSet>
 						<includes>
 							<include>com.blockhaus2000:tag-storage-system</include>
 						</includes>
 					</artifactSet>
+					<createDependencyReducedPom>true</createDependencyReducedPom>
+					<createSourcesJar>false</createSourcesJar>
+					<dependencyReducedPomLocation>${basedir}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
+					<minimizeJar>false</minimizeJar>
+					<outputDirectory>${project.build.directory}</outputDirectory>
+					<shadeSourcesContent>false</shadeSourcesContent>
+					<shadeTestJar>false</shadeTestJar>
+					<shadedArtifactAttached>false</shadedArtifactAttached>
+					<shadedArtifactId>${project.artifactId}</shadedArtifactId>
+					<shadedClassifierName>shaded</shadedClassifierName>
+					<useBaseVersion>true</useBaseVersion>
 				</configuration>
 			</plugin>
 
 			<!-- JAR plugin -->
-			<plugin>
+			<plugin> <!-- TODO: Add executions -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.4</version>
 				<configuration>
+					<skipIfEmpty>true</skipIfEmpty>
 					<archive>
-						<manifestEntries>
-							<Implementation-Title>${project.name}</Implementation-Title>
-							<Implementation-Version>${project.version}</Implementation-Version>
-							<Implementation-Vendor>Blockhaus2000</Implementation-Vendor>
-							<Sealed>true</Sealed>
-						</manifestEntries>
-						<manifestSections>
-							<manifestSection>
-								<name>com/blockhaus2000/</name>
-								<manifestEntries>
-									<Sealed>true</Sealed>
-								</manifestEntries>
-							</manifestSection>
-						</manifestSections>
+						<addMavenDescriptor>true</addMavenDescriptor>
+						<compress>false</compress>
+						<forced>true</forced>
+						<index>true</index>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+							<addExtensions>true</addExtensions>
+							<classpathLayoutType>repository</classpathLayoutType>
+							<classpathMavenRepositoryLayout>true</classpathMavenRepositoryLayout>
+							<mainClass>${project.properties.mainClass}</mainClass>
+						</manifest>
 					</archive>
 				</configuration>
 			</plugin>
@@ -300,7 +483,8 @@
 				<version>1.5.3</version>
 				<executions>
 					<execution>
-						<phase>compile</phase>
+						<id>replacer:replace</id>
+						<phase>prepare-package</phase>
 						<goals>
 							<goal>replace</goal>
 						</goals>
@@ -308,7 +492,7 @@
 				</executions>
 				<configuration>
 					<file>src/main/resources/plugin.yml</file>
-					<outputFile>target/generated-resources/plugin.yml</outputFile>
+					<outputFile>${project.build.directory}/generated-resources/plugin.yml</outputFile>
 					<regex>false</regex>
 					<token>$project_version$</token>
 					<value>${project.version}</value>
@@ -322,16 +506,32 @@
 				<version>2.12</version>
 				<executions>
 					<execution>
+						<id>maven-checkstyle-plugin:check</id>
 						<phase>verify</phase>
 						<goals>
-							<goal>checkstyle</goal>
+							<goal>check</goal>
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<consoleOutput>true</consoleOutput>
-					<failsOnError>true</failsOnError>
+				<configuration> <!-- TODO -->
+					<includeResources>true</includeResources>
+					<includeTestResources>true</includeTestResources>
+					<includes>**/*.java</includes>
+					<resourceIncludes>**/*.*</resourceIncludes>
+					<sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
+					<cacheFile>${project.build.directory}/checkstyle-cachefile/</cacheFile>
+					<configLocation>checkstyle.xml</configLocation>
+					<consoleOutput>false</consoleOutput>
+					<encoding>${project.properties.encoding}</encoding>
+					<failOnViolation>true</failOnViolation>
+					<failsOnError>false</failsOnError>
+					<includeTestSourceDirectory>true</includeTestSourceDirectory>
 					<logViolationsToConsole>true</logViolationsToConsole>
+					<maxAllowedViolations>0</maxAllowedViolations>
+					<outputFile>${project.build.directory}/checkstyle-result.xml</outputFile>
+					<outputFileFormat>xml</outputFileFormat>
+					<testSourceDirectory>${project.build.testSourceDirectory}</testSourceDirectory>
+					<violationSeverity>error</violationSeverity>
 				</configuration>
 			</plugin>
 
@@ -339,9 +539,10 @@
 			<plugin>
 				<groupId>com.blockhaus2000</groupId>
 				<artifactId>todo-finder-maven-plugin</artifactId>
-				<version>1.3</version>
+				<version>1.4.1</version>
 				<executions>
 					<execution>
+						<id>todo-finder-maven-plugin:find</id>
 						<phase>verify</phase>
 						<goals>
 							<goal>find</goal>
@@ -358,9 +559,12 @@
 					<highPriorityStrings>
 						<highPriorityString>FIXME</highPriorityString> <!-- //TODO-FINDER:IGNORE -->
 					</highPriorityStrings>
-					<failOnHighPriority>false</failOnHighPriority>
-
+					<failOnHighPriority>true</failOnHighPriority>
+					<todoListFile>${project.build.directory}/todo-finder-report.txt</todoListFile>
 					<excludeFiles>
+						<excludeFile>.git/</excludeFile>
+						<excludeFile>dist/</excludeFile>
+						<excludeFile>target/</excludeFile>
 						<excludeFile>dependency-reduced-pom.xml</excludeFile>
 					</excludeFiles>
 				</configuration>
@@ -373,17 +577,28 @@
 				<version>1.3</version>
 				<executions>
 					<execution>
-						<phase>validate</phase>
+						<id>buildnumber-maven-plugin:create</id>
+						<phase>initialize</phase>
 						<goals>
 							<goal>create</goal>
 						</goals>
 					</execution>
+					<execution>
+						<id>buildnumber-maven-plugin:create-timestamp</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>create-timestamp</goal>
+						</goals>
+					</execution>
 				</executions>
 				<configuration>
-					<!--doCheck>true</doCheck>-->
-					<!--<doUpdate>true</doUpdate>-->
-					<item>timestamp</item>
+					<buildNumberPropertyName>buildNumber</buildNumberPropertyName>
+					<doCheck>false</doCheck>
+					<doUpdate>false</doUpdate>
+					<getRevisionOnlyOnce>false</getRevisionOnlyOnce>
 					<shortRevisionLength>5</shortRevisionLength>
+					<timestampPropertyName>timestamp</timestampPropertyName>
+					<useLastCommittedRevision>false</useLastCommittedRevision>
 				</configuration>
 			</plugin>
 
@@ -392,11 +607,23 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>wagon-maven-plugin</artifactId>
 				<version>1.0-beta-5</version>
-				<configuration>
-					<serverId>blockhaus2000-docs-ftp</serverId>
+				<executions>
+					<execution>
+						<id>wagon-maven-plugin:upload</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>upload</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration> <!-- TODO -->
 					<url>ftp://docs.blockhaus2000.com</url>
-					<fromDir>target/apidocs/</fromDir>
+					<followSymLink>false</followSymLink>
+					<fromDir>${project.build.directory}/apidocs/</fromDir>
+					<optimize>false</optimize>
+					<serverId>blockhaus2000-docs-ftp</serverId>
 					<toDir>internalpluginmanager/${project.version}</toDir>
+					<useDefaultExcludes>true</useDefaultExcludes>
 				</configuration>
 			</plugin>
 
@@ -405,12 +632,30 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
 				<version>2.5</version>
+				<!-- Executions will be performed in the profiles -->
 				<configuration>
+					<javaHome>${java.home}</javaHome>
+					<localRepoDirectory>${maven.repo.local}</localRepoDirectory>
+					<mavenExecutorId>invoker</mavenExecutorId>
+					<mavenHome>${maven.home}</mavenHome>
+					<pomFileName>pom.xml</pomFileName>
+					<addSchema>true</addSchema>
+					<allowTimestampedSnapshots>false</allowTimestampedSnapshots>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<commitByProject>false</commitByProject>
+					<preparationGoals>clean verify</preparationGoals>
+					<pushChanges>true</pushChanges>
+					<remoteTagging>false</remoteTagging>
+					<resume>false</resume>
+					<scmCommentPrefix>[maven-release-plugin]</scmCommentPrefix>
+					<suppressCommitBeforeTag>true</suppressCommitBeforeTag>
 					<tagNameFormat>@{project.version}</tagNameFormat>
+					<updateDependencies>false</updateDependencies>
+					<updateWorkingCopyVersion>true</updateWorkingCopyVersion>
+					<useEditMode>false</useEditMode>
 					<username>Blockhaus2000</username>
-					<checkModificationExcludes>
-						<checkModificationExclude>todo.txt</checkModificationExclude>
-					</checkModificationExcludes>
+					<goals>deploy</goals>
+					<localCheckout>false</localCheckout>
 				</configuration>
 			</plugin>
 
@@ -436,7 +681,7 @@
 				</excludes>
 			</resource>
 			<resource>
-				<directory>target/generated-resources/</directory>
+				<directory>${project.build.directory}/generated-resources/</directory>
 				<includes>
 					<include>plugin.yml</include> <!-- We want to use the plugin.yml with the corrent project version -->
 				</includes>
@@ -464,42 +709,6 @@
 			</activation>
 			<build>
 				<defaultGoal>release:clean release:prepare release:perform</defaultGoal>
-				<plugins>
-					<plugin>
-						<groupId>com.blockhaus2000</groupId>
-						<artifactId>bukkit-tester-maven-plugin</artifactId>
-						<version>1.1.1</version>
-						<executions>
-							<execution>
-								<phase>integration-test</phase>
-								<goals>
-									<goal>bukkit-test</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>wagon-maven-plugin</artifactId>
-						<version>1.0-beta-5</version>
-						<executions>
-							<execution>
-								<phase>deploy</phase>
-								<goals>
-									<goal>upload</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>com.blockhaus2000</groupId>
-						<artifactId>todo-finder-maven-plugin</artifactId>
-						<version>1.3</version>
-						<configuration>
-							<failOnHighPriority>true</failOnHighPriority>
-						</configuration>
-					</plugin>
-				</plugins>
 			</build>
 		</profile>
 
@@ -509,22 +718,7 @@
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<build>
-				<defaultGoal>clean <!--deploy-->install</defaultGoal>
-				<plugins>
-					<plugin>
-						<groupId>com.blockhaus2000</groupId>
-						<artifactId>bukkit-tester-maven-plugin</artifactId>
-						<version>1.1.1</version>
-						<executions>
-							<execution>
-								<phase>integration-test</phase>
-								<goals>
-									<goal>bukkit-test</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
+				<defaultGoal>clean deploy</defaultGoal>
 			</build>
 		</profile>
 
