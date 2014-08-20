@@ -140,22 +140,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
-				<executions>
-					<execution>
-						<id>maven-compiler-plugin:compile</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>maven-compiler-plugin:test-compile</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>testCompile</goal>
-						</goals>
-					</execution>
-				</executions>
 				<configuration>
 					<compilerReuseStrategy>alwaysNew</compilerReuseStrategy>
 					<compilerVersion>${project.properties.javaVersion}</compilerVersion>
@@ -581,13 +565,6 @@
 						<phase>initialize</phase>
 						<goals>
 							<goal>create</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>buildnumber-maven-plugin:create-timestamp</id>
-						<phase>initialize</phase>
-						<goals>
-							<goal>create-timestamp</goal>
 						</goals>
 					</execution>
 				</executions>
