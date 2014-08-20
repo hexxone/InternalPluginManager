@@ -295,15 +295,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.17</version>
-				<executions>
-					<execution>
-						<id>maven-surefire-plugin:test</id>
-						<phase>test</phase>
-						<goals>
-							<goal>test</goal>
-						</goals>
-					</execution>
-				</executions>
 				<configuration> <!-- TODO -->
 					<testSourceDirectory>${project.build.testSourceDirectory}</testSourceDirectory>
 					<basedir>${basedir}</basedir>
