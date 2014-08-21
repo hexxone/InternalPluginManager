@@ -9,6 +9,10 @@
 
 	<!-- Some important project properties -->
 	<properties>
+		<!-- License Stuff -->
+		<project.properties.license.name>Apache License Version 2.0</project.properties.license.name>
+		<project.properties.license.url>http://www.apache.org/licenses/LICENSE-2.0</project.properties.license.url>
+
 		<!-- The encoding to use everywhere -->
 		<project.properties.encoding>UTF-8</project.properties.encoding>
 
@@ -35,8 +39,8 @@
 
 	<licenses>
 		<license>
-			<name>Apache License Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+			<name>${project.properties.license.name}</name>
+			<url>${project.properties.license.url}</url>
 		</license>
 	</licenses>
 
@@ -190,13 +194,6 @@
 				<version>2.9.1</version>
 				<executions>
 					<execution>
-						<id>maven-javadoc-plugin:javadoc</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>javadoc</goal>
-						</goals>
-					</execution>
-					<execution>
 						<id>maven-javadoc-plugin:jar</id>
 						<phase>package</phase>
 						<goals>
@@ -208,9 +205,9 @@
 					<outputDirectory>${project.build.directory}/apidocs/</outputDirectory>
 					<applyJavadocSecurityFix>true</applyJavadocSecurityFix>
 					<author>true</author>
-					<bottom>Copytight &#169; {inceptionYear}&#x2013;{currentYear}
-						Blockhaus2000. Licensed under ${licenses.license.name}
-						(${licenses.license.url}).</bottom>
+					<bottom>Copytight &#169; ${project.inceptionYear}&#x2013;{currentYear}
+						Blockhaus2000. Licensed under ${project.properties.license.name}
+						(${project.properties.license.url}).</bottom>
 					<breakIterator>false</breakIterator>
 					<charset>${project.properties.encoding}</charset>
 					<debug>false</debug>
@@ -220,11 +217,9 @@
 					<detectOfflineLinks>true</detectOfflineLinks>
 					<docencoding>${project.properties.encoding}</docencoding>
 					<docfilessubdirs>true</docfilessubdirs>
-					<doctitle>${project.name} {project.version} API</doctitle>
+					<doctitle>${project.name} ${project.version} API</doctitle>
 					<encoding>${project.properties.encoding}</encoding>
 					<failOnError>true</failOnError>
-					<includeDependencySources>true</includeDependencySources>
-					<includeTransitiveDependencySources>true</includeTransitiveDependencySources>
 					<javadocVersion>${project.properties.javaVersion}</javadocVersion>
 					<keywords>false</keywords>
 					<linksource>true</linksource>
@@ -239,7 +234,6 @@
 					<notimestamp>false</notimestamp>
 					<notree>false</notree>
 					<old>false</old>
-					<packagesheader>Packages</packagesheader>
 					<quiet>false</quiet>
 					<serialwarn>true</serialwarn>
 					<show>protected</show>
@@ -262,13 +256,6 @@
 				<artifactId>maven-source-plugin</artifactId>
 				<version>2.3</version>
 				<executions>
-					<execution>
-						<id>maven-source-plugin:source</id>
-						<phase>generated-sources</phase>
-						<goals>
-							<goal>source</goal>
-						</goals>
-					</execution>
 					<execution>
 						<id>maven-source-plugin:jar</id>
 						<phase>package</phase>
