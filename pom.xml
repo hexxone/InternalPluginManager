@@ -270,7 +270,7 @@
 					<finalName>${project.build.finalName}</finalName>
 					<forceCreation>true</forceCreation>
 					<includePom>true</includePom>
-					<outputDirectory>$[project.build.directory}</outputDirectory>
+					<outputDirectory>${project.build.directory}</outputDirectory>
 					<skipSource>false</skipSource>
 					<useDefaultExcludes>true</useDefaultExcludes>
 					<useDefaultManifestFile>false</useDefaultManifestFile>
