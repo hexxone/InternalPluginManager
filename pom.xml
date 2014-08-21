@@ -371,7 +371,10 @@
 						<failureIndicator>[TEST FAILED]</failureIndicator>
 
 						<!-- Also we want to mark a test as failed if an Exception occures -->
-						<failureIndicator>Exception</failureIndicator>
+						<!--<failureIndicator>Exception</failureIndicator>-->
+
+						<!-- If our plugin could not be loaded, that is a failure -->
+						<failureIndicator>Could not load 'plugins/${finalName}.jar' in folder 'plugins'</failureIndicator>
 
 						<!-- Also if a command cannot be found -->
 						<failureIndicator>Unknown command.</failureIndicator>
