@@ -295,7 +295,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.17</version>
-				<configuration> <!-- TODO -->
+				<configuration>
 					<testSourceDirectory>${project.build.testSourceDirectory}</testSourceDirectory>
 					<basedir>${basedir}</basedir>
 					<childDelegation>true</childDelegation>
@@ -406,7 +406,7 @@
 						</goals>
 					</execution>
 				</executions>
-				<configuration> <!-- TODO -->
+				<configuration>
 					<artifactSet>
 						<includes>
 							<include>com.blockhaus2000:tag-storage-system</include>
@@ -488,7 +488,7 @@
 						</goals>
 					</execution>
 				</executions>
-				<configuration> <!-- TODO -->
+				<configuration>
 					<includeResources>true</includeResources>
 					<includeTestResources>true</includeTestResources>
 					<includes>**/*.java</includes>
@@ -514,7 +514,7 @@
 			<plugin>
 				<groupId>com.blockhaus2000</groupId>
 				<artifactId>todo-finder-maven-plugin</artifactId>
-				<version>1.4.1</version>
+				<version>1.4.2</version>
 				<executions>
 					<execution>
 						<id>todo-finder-maven-plugin:find</id>
@@ -588,7 +588,7 @@
 					</execution>
 				</executions>
 				-->
-				<configuration> <!-- TODO -->
+				<configuration>
 					<url>ftp://docs.blockhaus2000.com</url>
 					<followSymLink>false</followSymLink>
 					<fromDir>${project.build.directory}/apidocs/</fromDir>
@@ -626,7 +626,7 @@
 					<updateWorkingCopyVersion>true</updateWorkingCopyVersion>
 					<useEditMode>false</useEditMode>
 					<username>Blockhaus2000</username>
-					<goals><!--deploy-->install</goals> <!-- TODO -->
+					<goals><!--deploy-->install</goals> <!-- TODO: Change to deploy -->
 					<localCheckout>false</localCheckout>
 				</configuration>
 			</plugin>
@@ -707,7 +707,7 @@
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<build>
-				<defaultGoal>clean <!--deploy-->install</defaultGoal>
+				<defaultGoal>clean <!--deploy-->install</defaultGoal> <!-- TODO: Change to deploy -->
 			</build>
 		</profile>
 	</profiles>
