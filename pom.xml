@@ -630,7 +630,7 @@
 					<updateWorkingCopyVersion>true</updateWorkingCopyVersion>
 					<useEditMode>false</useEditMode>
 					<username>Blockhaus2000</username>
-					<goals>clean <!--deploy-->install</goals> <!-- TODO: Change to deploy -->
+					<goals><!--deploy-->install</goals> <!-- TODO: Change to deploy -->
 					<localCheckout>false</localCheckout>
 				</configuration>
 			</plugin>
