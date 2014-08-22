@@ -18,6 +18,9 @@
 
 		<!-- The main class -->
 		<project.properties.mainClass>com.blockhaus2000.main.bukkit.IpmMain</project.properties.mainClass>
+		
+		<!-- Java Version -->
+		<project.properties.javaVersion>1.6</project.properties.javaVersion>
 
 		<!-- The Bukkit version to use -->
 		<project.properties.bukkitVersion>1.7.9-R0.2</project.properties.bukkitVersion>
