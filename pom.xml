@@ -544,7 +544,7 @@
 						<excludeFile>target/</excludeFile>
 						<excludeFile>dependency-reduced-pom.xml</excludeFile>
 						<excludeFile>pom.xml.tag</excludeFile>
-						<excludeFile>pom.xml.backup</excludeFile>
+						<excludeFile>pom.xml.releaseBackup</excludeFile>
 					</excludeFiles>
 				</configuration>
 			</plugin>
@@ -624,7 +624,7 @@
 					<remoteTagging>false</remoteTagging>
 					<resume>false</resume>
 					<scmCommentPrefix>[maven-release-plugin]</scmCommentPrefix>
-					<suppressCommitBeforeTag>true</suppressCommitBeforeTag>
+					<suppressCommitBeforeTag>false</suppressCommitBeforeTag>
 					<tagNameFormat>@{project.version}</tagNameFormat>
 					<updateDependencies>false</updateDependencies>
 					<updateWorkingCopyVersion>true</updateWorkingCopyVersion>
