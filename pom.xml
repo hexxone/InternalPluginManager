@@ -543,6 +543,8 @@
 						<excludeFile>dist/</excludeFile>
 						<excludeFile>target/</excludeFile>
 						<excludeFile>dependency-reduced-pom.xml</excludeFile>
+						<excludeFile>pom.xml.tag</excludeFile>
+						<excludeFile>pom.xml.backup</excludeFile>
 					</excludeFiles>
 				</configuration>
 			</plugin>
@@ -617,7 +619,7 @@
 					<allowTimestampedSnapshots>false</allowTimestampedSnapshots>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
 					<commitByProject>false</commitByProject>
-					<preparationGoals>clean verify</preparationGoals>
+					<preparationGoals>clean</preparationGoals>
 					<pushChanges>true</pushChanges>
 					<remoteTagging>false</remoteTagging>
 					<resume>false</resume>
@@ -628,7 +630,7 @@
 					<updateWorkingCopyVersion>true</updateWorkingCopyVersion>
 					<useEditMode>false</useEditMode>
 					<username>Blockhaus2000</username>
-					<goals><!--deploy-->install</goals> <!-- TODO: Change to deploy -->
+					<goals>clean <!--deploy-->install</goals> <!-- TODO: Change to deploy -->
 					<localCheckout>false</localCheckout>
 				</configuration>
 			</plugin>
