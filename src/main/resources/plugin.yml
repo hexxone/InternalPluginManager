@@ -1,5 +1,6 @@
-name: InternalPluginManager
-version: $project_version$
-author: Blockhaus2000
+# Licensed under the ${project.properties.license.name}
+name: ${project.artifactId}
+version: ${project.version}
+authors: ${project.organization}
 
-main: com.blockhaus2000.main.bukkit.IpmMain
+main: ${project.properties.mainClass}

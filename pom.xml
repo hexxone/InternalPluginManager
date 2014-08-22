@@ -44,6 +44,11 @@
 		</license>
 	</licenses>
 
+	<organization>
+		<name>Blockhaus2000</name>
+		<url>http://www.blockhaus2000.com/</url>
+	</organization>
+
 	<issueManagement>
 		<system>MantisBT</system>
 		<url>http://issues.blockhaus2000.com/</url>
@@ -53,7 +58,12 @@
 		<connection>scm:git:git@github.com/Blockhaus2000/InternalPluginManager.git</connection>
 		<developerConnection>scm:git:git@github.com:Blockhaus2000/InternalPluginManager.git</developerConnection>
 		<url>https://www.github.com/Blockhaus2000/InternalPluginManager/</url>
+		<tag>HEAD</tag>
 	</scm>
+
+	<prerequisites>
+		<maven>3.0.5</maven>
+	</prerequisites>
 
 
 	<!-- ===== Distribution Management ===== -->
@@ -442,6 +452,7 @@
 			</plugin>
 
 			<!-- Replacement of some tags -->
+			<!--
 			<plugin>
 				<groupId>com.google.code.maven-replacer-plugin</groupId>
 				<artifactId>replacer</artifactId>
@@ -463,6 +474,7 @@
 					<value>${project.version}</value>
 				</configuration>
 			</plugin>
+			-->
 
 			<!-- Check style -->
 			<plugin>
@@ -638,15 +650,7 @@
 		<resources>
 			<resource>
 				<directory>src/main/resources/</directory>
-				<excludes>
-					<exclude>plugin.yml</exclude> <!-- We do not want to include the raw plugin.yml -->
-				</excludes>
-			</resource>
-			<resource>
-				<directory>${project.build.directory}/generated-resources/</directory>
-				<includes>
-					<include>plugin.yml</include> <!-- We want to use the plugin.yml with the corrent project version -->
-				</includes>
+				<filtering>true</filtering>
 			</resource>
 		</resources>
 
