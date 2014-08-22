@@ -1,0 +1,5 @@
+# This is also important for all submodules
+.settings/
+.classpath
+.project
+target/
