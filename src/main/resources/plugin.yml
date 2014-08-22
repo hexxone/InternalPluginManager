@@ -1,6 +1,6 @@
 # Licensed under the ${project.properties.license.name}
 name: ${project.artifactId}
 version: ${project.version}
-authors: ${project.organization}
+authors: ${project.organization.name}
 
 main: ${project.properties.mainClass}
