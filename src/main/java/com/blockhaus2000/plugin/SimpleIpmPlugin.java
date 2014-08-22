@@ -17,6 +17,7 @@
 package com.blockhaus2000.plugin;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -53,6 +54,11 @@ import com.blockhaus2000.util.TabCompleterRegistrationUtil;
  *
  */
 public class SimpleIpmPlugin implements IpmPlugin {
+    /**
+     * Contains all {@link PropertyChangeListener}s that will listen to an
+     * object of this class.
+     *
+     */
     protected final PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
     private IpmPluginDescription description;
@@ -139,7 +145,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
     public void saveConfig() {
         try {
             config.save(configFile);
-        } catch (IOException ex) {
+        } catch (final IOException ex) {
             throw new RuntimeException(ex);
         }
     }
@@ -153,12 +159,12 @@ public class SimpleIpmPlugin implements IpmPlugin {
     public void reloadConfig() {
         try {
             config.load(configFile);
-        } catch (FileNotFoundException ex) {
+        } catch (final FileNotFoundException ex) {
             // This fails silent. Suppressing warnings from checkstyle.
             CheckstyleUtil.failsSilent();
-        } catch (IOException ex) {
+        } catch (final IOException ex) {
             ExceptionHandler.handle(ex);
-        } catch (InvalidConfigurationException ex) {
+        } catch (final InvalidConfigurationException ex) {
             ExceptionHandler.handle(ex);
         }
     }
@@ -252,7 +258,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
      */
     @Override
     public void setEnabled(final boolean enabled) {
-        boolean oldValue = this.enabled;
+        final boolean oldValue = this.enabled;
 
         this.enabled = enabled;
 
@@ -482,7 +488,7 @@ public class SimpleIpmPlugin implements IpmPlugin {
             return false;
         }
 
-        IpmPlugin that = (SimpleIpmPlugin) obj;
+        final IpmPlugin that = (SimpleIpmPlugin) obj;
 
         if (name == null || that.getName() == null) {
             return false;

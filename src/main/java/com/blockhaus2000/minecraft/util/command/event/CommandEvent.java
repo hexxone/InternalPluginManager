@@ -27,10 +27,19 @@ import com.blockhaus2000.util.command.CommandInfo;
  *            The specific {@link CommandInfo}.
  */
 public abstract class CommandEvent<T extends CommandInfo> extends Event {
+    /**
+     * The {@link CommandEventType} of the {@link CommandEvent} that has been
+     * fired.
+     *
+     */
     protected final CommandEventType commandEventType;
 
+    /**
+     * The {@link CommandInfo} that contains basic information about the command
+     * that has triggerred the event fireing.
+     *
+     */
     protected final T command;
-    protected boolean cancelled;
 
     /**
      * Instances a new {@link CommandEvent} with the given {@link CommandInfo}

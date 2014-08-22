@@ -70,7 +70,6 @@ import org.bukkit.util.Vector;
  * This is only a mock implementation of {@link Player}.
  *
  */
-@SuppressWarnings("javadoc")
 public class MockPlayer implements Player {
     private String perm;
     private final boolean op;

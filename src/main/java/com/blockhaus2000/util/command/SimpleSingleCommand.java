@@ -23,8 +23,24 @@ import com.blockhaus2000.plugin.IpmPlugin;
  *
  */
 public abstract class SimpleSingleCommand implements SingleCommand {
+    /**
+     * The plugin which will be used to register this command class.
+     *
+     */
     protected final IpmPlugin plugin;
 
+    /**
+     * Instances a new {@link SimpleSingleCommand}.
+     *
+     * <p>
+     * <b> NOTE: This constructor will also register the object in the command
+     * system. </b>
+     * </p>
+     *
+     * @param plugin
+     *            The {@link IpmPlugin} which will be used to register the
+     *            command class.
+     */
     protected SimpleSingleCommand(final IpmPlugin plugin) {
         this.plugin = plugin;
         this.plugin.registerCommands(this);
