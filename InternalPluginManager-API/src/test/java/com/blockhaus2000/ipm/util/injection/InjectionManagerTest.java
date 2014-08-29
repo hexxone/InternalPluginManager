@@ -58,48 +58,48 @@ public class InjectionManagerTest {
         Assert.assertTrue(InjectionManagerTestClass2.getInjectionField() == obj);
     }
 
-    public static class InjectionManagerTestClass1 {
+    private static class InjectionManagerTestClass1 {
         @Inject
         private InjectionManagerTestInterface injectionField;
 
-        public InjectionManagerTestInterface getInjectionField() {
+        private InjectionManagerTestInterface getInjectionField() {
             return injectionField;
         }
 
-        public static interface InjectionManagerTestInterface {
+        private static interface InjectionManagerTestInterface {
         }
 
-        public static class InjectionManagerTestInterfaceImpl implements InjectionManagerTestInterface {
+        private static class InjectionManagerTestInterfaceImpl implements InjectionManagerTestInterface {
         }
     }
 
-    public static class InjectionManagerTestClass2 {
+    private static class InjectionManagerTestClass2 {
         @Inject
         private static InjectionManagerTestInterface injectionField;
 
-        public static InjectionManagerTestInterface getInjectionField() {
+        private static InjectionManagerTestInterface getInjectionField() {
             return InjectionManagerTestClass2.injectionField;
         }
 
-        public static interface InjectionManagerTestInterface {
+        private static interface InjectionManagerTestInterface {
         }
 
-        public static class InjectionManagerTestInterfaceImpl implements InjectionManagerTestInterface {
+        private static class InjectionManagerTestInterfaceImpl implements InjectionManagerTestInterface {
         }
     }
 
-    public static class InjectionManagerTestClass3 {
+    private static class InjectionManagerTestClass3 {
         @Inject
         private InjectionManagerTestInterface injectionField;
 
-        public InjectionManagerTestInterface getInjectionField() {
+        private InjectionManagerTestInterface getInjectionField() {
             return injectionField;
         }
 
-        public static interface InjectionManagerTestInterface {
+        private static interface InjectionManagerTestInterface {
         }
 
-        public static class InjectionManagerTestInterfaceImpl implements InjectionManagerTestInterface {
+        private static class InjectionManagerTestInterfaceImpl implements InjectionManagerTestInterface {
         }
     }
 }
