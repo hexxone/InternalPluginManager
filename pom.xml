@@ -133,7 +133,7 @@
 				<configuration>
 					<source>${project.properties.javaVersion}</source>
 					<target>${project.properties.javaVersion}</target>
-					<encoding>${project.properties.javaVersion}</encoding>
+					<encoding>${project.properties.encoding}</encoding>
 				</configuration>
 			</plugin>
 
