@@ -17,21 +17,56 @@
  */
 package com.blockhaus2000.ipm.util.injection.exception;
 
+import com.blockhaus2000.ipm.util.injection.InjectionManager;
+
+/**
+ * This exception is thrown if a general error occurres within the
+ * {@link InjectionManager}.
+ *
+ */
 public class InjectionException extends RuntimeException {
+    /**
+     * The serial version uid.
+     *
+     */
     private static final long serialVersionUID = 3079867800122198100L;
 
+    /**
+     * Constructor of InjectionException.
+     *
+     */
     public InjectionException() {
         super();
     }
 
+    /**
+     * Constructor of InjectionException.
+     *
+     * @param message
+     *            Will be used in <code>super</code> call.
+     * @param cause
+     *            Will be used in <code>super</code> call.
+     */
     public InjectionException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
+    /**
+     * Constructor of InjectionException.
+     *
+     * @param message
+     *            Will be used in <code>super</code> call.
+     */
     public InjectionException(final String message) {
         super(message);
     }
 
+    /**
+     * Constructor of InjectionException.
+     *
+     * @param cause
+     *            Will be used in <code>super</code> call.
+     */
     public InjectionException(final Throwable cause) {
         super(cause);
     }

@@ -17,25 +17,56 @@
  */
 package com.blockhaus2000.ipm.util.injection.exception;
 
+import com.blockhaus2000.ipm.util.injection.InjectionManager;
+
 /**
- * TODO: Add type description!
+ * This exception is thrown in the {@link InjectionManager} if a value is
+ * requested that is not mapped (yet).
  *
  */
 public class NotAddedInjectionException extends InjectionException {
+    /**
+     * The serial version uid.
+     *
+     */
     private static final long serialVersionUID = 4661674843310112612L;
 
+    /**
+     * Constructor of NotAddedInjectionException.
+     *
+     */
     public NotAddedInjectionException() {
         super();
     }
 
+    /**
+     * Constructor of NotAddedInjectionException.
+     *
+     * @param message
+     *            Will be used in <code>super</code> call.
+     * @param cause
+     *            Will be used in <code>super</code> call.
+     */
     public NotAddedInjectionException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
+    /**
+     * Constructor of NotAddedInjectionException.
+     *
+     * @param message
+     *            Will be used in <code>super</code> call.
+     */
     public NotAddedInjectionException(final String message) {
         super(message);
     }
 
+    /**
+     * Constructor of NotAddedInjectionException.
+     *
+     * @param cause
+     *            Will be used in <code>super</code> call.
+     */
     public NotAddedInjectionException(final Throwable cause) {
         super(cause);
     }

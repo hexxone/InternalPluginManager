@@ -18,24 +18,53 @@
 package com.blockhaus2000.ipm.util.exception;
 
 /**
- * TODO: Add type description!
+ * This exception can be thrown whilest using exception and indicates that a
+ * non-static field was tried to access staticly.
  *
  */
 public class IllegalStaticAccessException extends RuntimeException {
+    /**
+     * The serial version uid.
+     *
+     */
     private static final long serialVersionUID = -4204719741279343505L;
 
+    /**
+     * Constructor of IllegalStaticAccessException.
+     *
+     */
     public IllegalStaticAccessException() {
         super();
     }
 
+    /**
+     * Constructor of IllegalStaticAccessException.
+     *
+     * @param message
+     *            Will be used in <code>super</code> call.
+     * @param cause
+     *            Will be used in <code>super</code> call.
+     */
     public IllegalStaticAccessException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
+    /**
+     * Constructor of IllegalStaticAccessException.
+     *
+     * @param message
+     *            Will be used in <code>super</code> call.
+     */
     public IllegalStaticAccessException(final String message) {
         super(message);
     }
 
+    /**
+     * Constructor of IllegalStaticAccessException.
+     *
+     * @param cause
+     *            Will be used in <code>super</code> call.
+     */
     public IllegalStaticAccessException(final Throwable cause) {
         super(cause);
     }
