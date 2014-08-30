@@ -85,6 +85,7 @@ public final class InjectionManager {
      */
     public static void init(final Class<?> clazz, final Object obj) {
         assert clazz != null : "Clazz cannot be null!";
+        assert obj == null || clazz.equals(obj.getClass()) : "Obj has to be null or an object of clazz!";
 
         for (final Field field : clazz.getDeclaredFields()) {
             if (!field.isAnnotationPresent(Inject.class)) {

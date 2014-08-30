@@ -19,7 +19,7 @@ package com.blockhaus2000.ipm.util.exception;
 
 /**
  * This exception can be thrown whilest using exception and indicates that a
- * non-static field was tried to access staticly.
+ * non-static element was tried to access staticly.
  *
  */
 public class IllegalStaticAccessException extends RuntimeException {

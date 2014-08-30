@@ -92,6 +92,7 @@ public class InjectionManagerTest {
         @Inject
         private InjectionManagerTestInterface injectionField;
 
+        @SuppressWarnings("unused")
         private InjectionManagerTestInterface getInjectionField() {
             return injectionField;
         }
@@ -99,6 +100,7 @@ public class InjectionManagerTest {
         private static interface InjectionManagerTestInterface {
         }
 
+        @SuppressWarnings("unused")
         private static class InjectionManagerTestInterfaceImpl implements InjectionManagerTestInterface {
         }
     }
