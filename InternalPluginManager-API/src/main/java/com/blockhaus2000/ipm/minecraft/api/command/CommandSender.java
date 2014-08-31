@@ -17,6 +17,6 @@
  */
 package com.blockhaus2000.ipm.minecraft.api.command;
 
-public interface CommandSender { // TODO
+public interface CommandSender {
     public boolean hasPermission(final String permission);
 }

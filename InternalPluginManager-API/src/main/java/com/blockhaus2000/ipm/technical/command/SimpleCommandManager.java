@@ -29,10 +29,13 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import com.blockhaus2000.ipm.minecraft.api.command.CommandSender;
+import com.blockhaus2000.ipm.technical.command.event.CommandEvent;
 import com.blockhaus2000.ipm.technical.command.event.CommandEventData;
 import com.blockhaus2000.ipm.technical.command.event.CommandEventData.CommandEventType;
+import com.blockhaus2000.ipm.technical.command.event.CommandEventManager;
 import com.blockhaus2000.ipm.technical.command.util.CommandContext;
 import com.blockhaus2000.ipm.technical.command.util.CommandInfo;
+import com.blockhaus2000.ipm.technical.command.util.RawCommandContext;
 import com.blockhaus2000.ipm.technical.command.util.SimpleCommandContext;
 import com.blockhaus2000.ipm.technical.command.util.SimpleCommandInfo;
 import com.blockhaus2000.ipm.technical.command.util.SimpleRawCommandContext;
@@ -81,7 +84,7 @@ public class SimpleCommandManager implements CommandManager {
      *      java.lang.Object)
      */
     @Override
-    public Set<CommandInfo> register(final Class<?> clazz, final Object obj) { // TODO
+    public Set<CommandInfo> register(final Class<?> clazz, final Object obj) {
         assert clazz != null : "Clazz cannot be null!";
         assert obj == null || clazz.equals(obj.getClass()) : "Obj has to be null or an object of clazz!";
 
@@ -124,6 +127,7 @@ public class SimpleCommandManager implements CommandManager {
     @Override
     public Set<CommandInfo> register(final Object obj) {
         assert obj != null : "Obj cannot be null!";
+
         return register(obj.getClass(), obj);
     }
 
@@ -146,7 +150,7 @@ public class SimpleCommandManager implements CommandManager {
      */
     @Override
     public boolean execute(final String label, final CommandSender sender, final String... rawArgs) {
-        assert label != null : "Label cannot be null!";
+        assert label != null && !label.isEmpty() : "Label cannot be null or empty!";
         assert sender != null : "Sender cannot be null!";
         assert rawArgs != null : "RawArgs cannot be null!";
 
@@ -154,42 +158,113 @@ public class SimpleCommandManager implements CommandManager {
             return false;
         }
 
-        final Set<CommandEventData> commandEventData = new HashSet<CommandEventData>();
+        final List<CommandEventData> commandEventData = new ArrayList<CommandEventData>();
 
         boolean executed = false;
-        for (final CommandInfo commandInfo : commands.get(label)) { // TODO
-            final Command commandAnot = commandInfo.getCommandAnot();
+        for (final CommandInfo commandInfo : commands.get(label)) {
+            final SimpleRawCommandContext rawCommandContext = new SimpleRawCommandContext(commandInfo, label, rawArgs, sender);
 
-            final List<Tag<?>> args = new ArrayList<Tag<?>>();
-            for (final String arg : rawArgs) {
-                args.add(new Tag<String>(arg));
+            final CommandEventType commandEventType = isCommandExecutionValid(rawCommandContext);
+            if (commandEventType != null) {
+                commandEventData.add(new CommandEventData(rawCommandContext, commandEventType));
             }
 
-            final SimpleCommandContext rawCommandContext = new SimpleCommandContext(new SimpleRawCommandContext(commandInfo,
-                    label, rawArgs, sender), args);
-
-            if (!sender.hasPermission(commandAnot.permission())) {
-                commandEventData.add(new CommandEventData(rawCommandContext, CommandEventType.NO_PERMISSION));
-                continue;
-            }
-
-            final Method method = commandInfo.getMethod();
-            method.setAccessible(true);
-            try {
-                method.invoke(commandInfo.getObject(), rawCommandContext);
-            } catch (final IllegalArgumentException cause) {
-                throw new CommandException("Maybe there is a wrong method signatur at method <" + method
-                        + ">! Check documentation for signature details.", cause);
-            } catch (final IllegalAccessException cause) {
-                throw new CommandException("Not enough permissions.", cause);
-            } catch (final InvocationTargetException cause) {
-                throw new CommandException("An exception occurres in the command execution method!", cause);
-            }
-            method.setAccessible(false);
+            invoke(parseArguments(rawCommandContext));
 
             executed = true;
         }
+
+        if (!executed) {
+            CommandEventManager.getInstance().fire(new CommandEvent(commandEventData));
+        }
+
         return executed;
+    }
+
+    /**
+     * Checks if the command execution is valid.
+     *
+     * <p>
+     * Checks these:
+     * <ul>
+     * <li>Permission</li>
+     * <li>Minimum argument count</li>
+     * <li>Maximum argument count</li>
+     * </ul>
+     * </p>
+     *
+     * @param rawCommandContext
+     *            The {@link RawCommandContext} that contains all information
+     *            that are required to validate the execution.
+     * @return The {@link CommandEventType} that can be thrown if the call is
+     *         invalid. Returns <code>null</code> if the execution is valid.
+     *         Only returns event types that can be fired in combination with a
+     *         {@link RawCommandContext}.
+     */
+    private CommandEventType isCommandExecutionValid(final RawCommandContext rawCommandContext) {
+        assert rawCommandContext != null : "RawCommandContext cannot be null!";
+
+        final Command commandAnot = rawCommandContext.getCommandAnot();
+        final CommandSender sender = rawCommandContext.getSender();
+        final String[] args = rawCommandContext.getRawArgs();
+
+        final CommandEventType result;
+        if (!sender.hasPermission(commandAnot.permission())) {
+            result = CommandEventType.NO_PERMISSION;
+        } else if (args.length < commandAnot.min()) {
+            result = CommandEventType.NOT_ENOUGH_ARGUMENTS;
+        } else if (commandAnot.max() != -1 && args.length > commandAnot.max()) {
+            result = CommandEventType.TOO_MANY_ARGUMENTS;
+        } else {
+            result = null;
+        }
+        return result;
+    }
+
+    /**
+     * Parses the arguments of the given {@link RawCommandContext}.
+     *
+     * @param rawCommandContext
+     *            The {@link RawCommandContext} containing all information for
+     *            parsing arguments.
+     * @return A {@link CommandContext} containing the parsed arguments.
+     */
+    private CommandContext parseArguments(final RawCommandContext rawCommandContext) {
+        assert rawCommandContext != null : "RawCommandContext cannot be null!";
+
+        final List<Tag<?>> args = new ArrayList<Tag<?>>();
+        for (final String rawArg : rawCommandContext.getRawArgs()) {
+            args.add(new Tag<String>(rawArg));
+        }
+
+        return new SimpleCommandContext(rawCommandContext, args);
+    }
+
+    /**
+     * Invokes the method containing in the given {@link CommandContext} with
+     * the given {@link CommandContext}.
+     *
+     * @param context
+     *            The {@link CommandContext} that will be passed into the method
+     *            invokation.
+     */
+    private void invoke(final CommandContext context) {
+        assert context != null : "Context cannot be null!";
+
+        final Method method = context.getMethod();
+        final boolean oldAccessible = method.isAccessible();
+        method.setAccessible(true);
+        try {
+            method.invoke(context.getObject(), context);
+        } catch (final IllegalArgumentException cause) {
+            throw new CommandException("Maybe there is a wrong method signatur at method <" + method
+                    + ">! Check documentation for signature details.", cause);
+        } catch (final IllegalAccessException cause) {
+            throw new CommandException("Not enough permissions.", cause);
+        } catch (final InvocationTargetException cause) {
+            throw new CommandException("An exception occurres in the command execution method!", cause);
+        }
+        method.setAccessible(oldAccessible);
     }
 
     /**

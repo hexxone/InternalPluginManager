@@ -51,6 +51,8 @@ public class CommandEventManager {
      *            The {@link CommandEvent} to fire.
      */
     public void fire(final CommandEvent event) {
+        assert event != null : "Event cannot be null!";
+
         for (final Entry<Class<? extends CommandEventListener>, CommandEventListener> entry : listeners.entrySet()) {
             entry.getValue().onCommandEvent(event);
         }
@@ -64,6 +66,8 @@ public class CommandEventManager {
      *            The {@link CommandEventListener} to register.
      */
     public void register(final CommandEventListener listener) {
+        assert listener != null : "Listener cannot be null!";
+
         listeners.put(listener.getClass(), listener);
     }
 
@@ -77,6 +81,8 @@ public class CommandEventManager {
      *         no value was removed.
      */
     public boolean unregister(final Class<? extends CommandEventListener> listenerClass) {
+        assert listenerClass != null : "ListenerClass cannot be null!";
+
         return listeners.remove(listenerClass) != null;
     }
 
@@ -89,6 +95,8 @@ public class CommandEventManager {
      *         no value was removed.
      */
     public boolean unregister(final CommandEventListener listener) {
+        assert listener != null : "Listener cannot be null!";
+
         return unregister(listener.getClass());
     }
 

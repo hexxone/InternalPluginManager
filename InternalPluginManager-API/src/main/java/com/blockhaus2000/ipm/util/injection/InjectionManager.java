@@ -123,6 +123,7 @@ public final class InjectionManager {
      */
     public static void init(final Object obj) {
         assert obj != null : "Object cannot be null!";
+
         InjectionManager.init(obj.getClass(), obj);
     }
 

@@ -42,6 +42,9 @@ public class SimpleCommandContext extends SimpleRawCommandContext implements Com
      */
     public SimpleCommandContext(final RawCommandContext rawCommandContext, final List<Tag<?>> args) {
         super(rawCommandContext, rawCommandContext.getLabel(), rawCommandContext.getRawArgs(), rawCommandContext.getSender());
+
+        assert args != null : "Args cannot be null!";
+
         this.args = args;
     }
 

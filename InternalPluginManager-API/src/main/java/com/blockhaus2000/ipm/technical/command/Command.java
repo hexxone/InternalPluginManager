@@ -30,4 +30,8 @@ public @interface Command { // TODO
     public String description();
 
     public String permission() default "";
+
+    public int min() default 0;
+
+    public int max() default -1;
 }

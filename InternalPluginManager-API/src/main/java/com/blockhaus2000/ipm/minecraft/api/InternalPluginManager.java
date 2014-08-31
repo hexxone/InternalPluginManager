@@ -20,7 +20,7 @@ package com.blockhaus2000.ipm.minecraft.api;
 import com.blockhaus2000.ipm.util.injection.Inject;
 import com.blockhaus2000.ipm.util.injection.InjectionManager;
 
-public class InternalPluginManager { // TODO
+public class InternalPluginManager {
     /**
      * Stores the {@link Server} object. This is the connector to the server
      * software specific implementation.
