@@ -24,6 +24,8 @@ import com.blockhaus2000.ipm.minecraft.api.Console;
  *
  */
 public class MockedConsole implements Console {
+    public static final String JUNIT_TEST_PERIMSSION = "junit.test.permission";
+
     /**
      * {@inheritDoc}
      *
@@ -31,6 +33,6 @@ public class MockedConsole implements Console {
      */
     @Override
     public boolean hasPermission(final String permission) {
-        return false;
+        return permission.equals("") || permission.equals(MockedConsole.JUNIT_TEST_PERIMSSION);
     }
 }

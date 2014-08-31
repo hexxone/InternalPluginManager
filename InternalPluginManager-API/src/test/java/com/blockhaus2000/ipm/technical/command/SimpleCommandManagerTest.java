@@ -103,8 +103,8 @@ public class SimpleCommandManagerTest {
          *            The {@link CommandContext}.
          */
         @Command(aliases = { "tc_cmd1", "tc_command1" },
-                 description = "")
-        public void command1(@SuppressWarnings("unused") final CommandContext context) {
+                description = "")
+        public void command1(final CommandContext context) {
             throw new TestSuccessfullException();
         }
 
@@ -115,7 +115,7 @@ public class SimpleCommandManagerTest {
          *            The {@link CommandContext}.
          */
         @Command(aliases = { "tc_cmd2" },
-                 description = "")
+                description = "")
         public void command2(final CommandContext context) {
             if (context.getArgs().get(0).getData().equals("arg0") && context.getArgs().get(1).getData().equals("arg1")
                     && context.getArgs().get(2).getData().equals("arg2")) {
@@ -134,7 +134,7 @@ public class SimpleCommandManagerTest {
          *            "Creates" the wrong signature.
          */
         @Command(aliases = { "tc1_cmd1" },
-                 description = "")
+                description = "")
         public void command1(final String str) {
             throw new TestSuccessfullException();
         }
@@ -148,7 +148,7 @@ public class SimpleCommandManagerTest {
          *
          */
         @Command(aliases = { "tc2_cmd1" },
-                 description = "")
+                description = "")
         public void command1() {
             throw new TestSuccessfullException();
         }
@@ -166,7 +166,7 @@ public class SimpleCommandManagerTest {
          *            This argument is too much.
          */
         @Command(aliases = { "tc3_cmd1" },
-                 description = "")
+                description = "")
         public void command1(final CommandContext context, final CommandContext context2) {
             throw new TestSuccessfullException();
         }

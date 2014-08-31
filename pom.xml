@@ -141,10 +141,9 @@
 			<plugin>
 				<groupId>com.blockhaus2000</groupId>
 				<artifactId>todo-finder-maven-plugin</artifactId>
-				<version>1.4.2</version>
+				<version>1.4.4</version>
 				<executions>
 					<execution>
-						<id>todo-finder-maven-plugin:find</id>
 						<phase>verify</phase>
 						<goals>
 							<goal>find</goal>
@@ -162,14 +161,12 @@
 						<highPriorityString>FIXME</highPriorityString> <!-- //TODO-FINDER:IGNORE -->
 					</highPriorityStrings>
 					<failOnHighPriority>true</failOnHighPriority>
-					<todoListFile>${project.build.directory}/todo-finder-report.txt</todoListFile>
+					<writeTodoList>false</writeTodoList>
 					<excludeFiles>
 						<excludeFile>.git/</excludeFile>
-						<excludeFile>dist/</excludeFile>
-						<excludeFile>target/</excludeFile>
+						<excludeFile>codetemplates.xml</excludeFile>
+						<excludeFile>${project.build.directory}/</excludeFile>
 						<excludeFile>dependency-reduced-pom.xml</excludeFile>
-						<excludeFile>pom.xml.tag</excludeFile>
-						<excludeFile>pom.xml.releaseBackup</excludeFile>
 					</excludeFiles>
 				</configuration>
 			</plugin>
@@ -204,6 +201,35 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.17</version>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<createDependencyReducedPom>false</createDependencyReducedPom>
+					<artifactSet>
+						<includes>
+							<include>com.blockhaus2000:tag-storage-system</include>
+						</includes>
+					</artifactSet>
+				</configuration>
+			</plugin>
 		</plugins>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ftp</artifactId>
+				<version>2.5</version>
+			</extension>
+		</extensions>
 	</build>
 </project>
