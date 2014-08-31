@@ -15,19 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.technical.command;
+package com.blockhaus2000.ipm.minecraft.api;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.blockhaus2000.ipm.minecraft.api.command.CommandSender;
 
-@Target(ElementType.METHOD)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Command { // TODO
-    public String[] aliases();
-
-    public String description();
-
-    public String permission() default "";
+public interface Console extends CommandSender {
+    // TODO Auto-generated interface body.
 }

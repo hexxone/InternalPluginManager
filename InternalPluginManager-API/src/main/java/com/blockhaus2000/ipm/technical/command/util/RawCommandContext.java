@@ -17,12 +17,12 @@
  */
 package com.blockhaus2000.ipm.technical.command.util;
 
-import com.blockhaus2000.ipm.minecraft.api.command.CommandSenderType;
+import com.blockhaus2000.ipm.minecraft.api.command.CommandSender;
 
 public interface RawCommandContext extends CommandInfo {
     public String getLabel();
 
     public String[] getRawArgs();
 
-    public CommandSenderType getSender();
+    public CommandSender getSender();
 }

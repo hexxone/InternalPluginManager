@@ -15,51 +15,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.technical.command.util;
+package com.blockhaus2000.ipm.test.mocked;
 
 import com.blockhaus2000.ipm.minecraft.api.command.CommandSender;
+import com.blockhaus2000.ipm.technical.command.util.RawCommandContext;
 
 /**
- * Add implementation of {@link RawCommandContext}.
+ * A mock implementation of the {@link RawCommandContext}.
  *
  */
-public class SimpleRawCommandContext extends SimpleCommandInfo implements RawCommandContext {
-    /**
-     * The command label.
-     *
-     */
-    private final String label;
-    /**
-     * The command arguments (non-parsed).
-     *
-     */
-    private final String[] rawArgs;
-    /**
-     * The command sender (type).
-     *
-     */
-    private final CommandSender sender;
-
-    /**
-     * Constructor of SimpleRawCommandContext.
-     *
-     * @param commandInfo
-     *            Will be used in <code>super</code> call.
-     * @param label
-     *            The command label.
-     * @param rawArgs
-     *            The command arguments (non-parsed).
-     * @param sender
-     *            The command sender (type).
-     */
-    public SimpleRawCommandContext(final CommandInfo commandInfo, final String label, final String[] rawArgs,
-            final CommandSender sender) {
-        super(commandInfo.getCommandAnot(), commandInfo.getClazz(), commandInfo.getObject(), commandInfo.getMethod());
-        this.label = label;
-        this.rawArgs = rawArgs;
-        this.sender = sender;
-    }
-
+public class MockedRawCommandContext extends MockedCommandInfo implements RawCommandContext {
     /**
      * {@inheritDoc}
      *
@@ -67,7 +32,7 @@ public class SimpleRawCommandContext extends SimpleCommandInfo implements RawCom
      */
     @Override
     public String getLabel() {
-        return label;
+        return null;
     }
 
     /**
@@ -77,7 +42,7 @@ public class SimpleRawCommandContext extends SimpleCommandInfo implements RawCom
      */
     @Override
     public String[] getRawArgs() {
-        return rawArgs;
+        return null;
     }
 
     /**
@@ -87,6 +52,6 @@ public class SimpleRawCommandContext extends SimpleCommandInfo implements RawCom
      */
     @Override
     public CommandSender getSender() {
-        return sender;
+        return null;
     }
 }

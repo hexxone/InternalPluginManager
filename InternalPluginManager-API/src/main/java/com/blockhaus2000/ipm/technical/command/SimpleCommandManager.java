@@ -28,13 +28,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import com.blockhaus2000.ipm.minecraft.api.command.CommandSenderType;
+import com.blockhaus2000.ipm.minecraft.api.command.CommandSender;
+import com.blockhaus2000.ipm.technical.command.event.CommandEventData;
+import com.blockhaus2000.ipm.technical.command.event.CommandEventData.CommandEventType;
+import com.blockhaus2000.ipm.technical.command.util.CommandContext;
 import com.blockhaus2000.ipm.technical.command.util.CommandInfo;
 import com.blockhaus2000.ipm.technical.command.util.SimpleCommandContext;
 import com.blockhaus2000.ipm.technical.command.util.SimpleCommandInfo;
 import com.blockhaus2000.ipm.technical.command.util.SimpleRawCommandContext;
 import com.blockhaus2000.ipm.technical.command.util.exception.CommandException;
 import com.blockhaus2000.ipm.util.Tag;
+import com.blockhaus2000.ipm.util.exception.IllegalMethodSignatureException;
 import com.blockhaus2000.ipm.util.exception.IllegalStaticAccessException;
 
 /**
@@ -91,6 +95,14 @@ public class SimpleCommandManager implements CommandManager {
                 throw new IllegalStaticAccessException("The method <" + method + "> is non-static and the given object (<" + obj
                         + ">) is null!");
             }
+            if (method.getParameterTypes().length != 1 || !method.getParameterTypes()[0].equals(CommandContext.class)) {
+                throw new IllegalMethodSignatureException("The signature of the method <" + method
+                        + "> is incorrect (More detailed: Your arguments are not enough or too many, "
+                        + "or your arguments types are not valid)! "
+                        + "Please change your method signature to this (you can replace \"context\" "
+                        + "with the name you like more): \"" + method.getName() + "(" + CommandContext.class.getName()
+                        + " context)\"");
+            }
 
             final Command commandAnot = method.getAnnotation(Command.class);
             for (final String alias : commandAnot.aliases()) {
@@ -129,27 +141,42 @@ public class SimpleCommandManager implements CommandManager {
      * {@inheritDoc}
      *
      * @see com.blockhaus2000.ipm.technical.command.CommandManager#execute(java.lang.String,
-     *      com.blockhaus2000.ipm.minecraft.api.command.CommandSenderType,
+     *      com.blockhaus2000.ipm.minecraft.api.command.CommandSender,
      *      java.lang.String...)
      */
     @Override
-    public boolean execute(final String label, final CommandSenderType sender, final String... rawArgs) {
+    public boolean execute(final String label, final CommandSender sender, final String... rawArgs) {
         assert label != null : "Label cannot be null!";
         assert sender != null : "Sender cannot be null!";
         assert rawArgs != null : "RawArgs cannot be null!";
 
+        if (commands.get(label) == null) {
+            return false;
+        }
+
+        final Set<CommandEventData> commandEventData = new HashSet<CommandEventData>();
+
         boolean executed = false;
         for (final CommandInfo commandInfo : commands.get(label)) { // TODO
+            final Command commandAnot = commandInfo.getCommandAnot();
+
             final List<Tag<?>> args = new ArrayList<Tag<?>>();
             for (final String arg : rawArgs) {
                 args.add(new Tag<String>(arg));
             }
 
+            final SimpleCommandContext rawCommandContext = new SimpleCommandContext(new SimpleRawCommandContext(commandInfo,
+                    label, rawArgs, sender), args);
+
+            if (!sender.hasPermission(commandAnot.permission())) {
+                commandEventData.add(new CommandEventData(rawCommandContext, CommandEventType.NO_PERMISSION));
+                continue;
+            }
+
             final Method method = commandInfo.getMethod();
             method.setAccessible(true);
             try {
-                method.invoke(commandInfo.getObject(), new SimpleCommandContext(new SimpleRawCommandContext(commandInfo, label,
-                        rawArgs, sender), args));
+                method.invoke(commandInfo.getObject(), rawCommandContext);
             } catch (final IllegalArgumentException cause) {
                 throw new CommandException("Maybe there is a wrong method signatur at method <" + method
                         + ">! Check documentation for signature details.", cause);

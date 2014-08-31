@@ -20,7 +20,7 @@ package com.blockhaus2000.ipm.technical.command;
 import java.util.Map;
 import java.util.Set;
 
-import com.blockhaus2000.ipm.minecraft.api.command.CommandSenderType;
+import com.blockhaus2000.ipm.minecraft.api.command.CommandSender;
 import com.blockhaus2000.ipm.technical.command.util.CommandInfo;
 
 public interface CommandManager {
@@ -30,7 +30,7 @@ public interface CommandManager {
 
     public Set<CommandInfo> register(final Class<?> clazz);
 
-    public boolean execute(final String label, final CommandSenderType sender, final String... rawArgs);
+    public boolean execute(final String label, final CommandSender sender, final String... rawArgs);
 
     public Map<String, Set<CommandInfo>> getCommands();
 }

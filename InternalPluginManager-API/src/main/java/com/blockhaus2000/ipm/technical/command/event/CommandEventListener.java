@@ -15,10 +15,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.api.command;
+package com.blockhaus2000.ipm.technical.command.event;
 
-public enum CommandSenderType {
-    PLAYER,
-    CONSOLE,
-    COMMAND_BLOCK;
+public interface CommandEventListener {
+    public void onCommandEvent(final CommandEvent commandEvent);
 }
