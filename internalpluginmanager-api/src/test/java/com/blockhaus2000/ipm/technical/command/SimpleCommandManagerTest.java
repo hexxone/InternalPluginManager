@@ -17,12 +17,15 @@
  */
 package com.blockhaus2000.ipm.technical.command;
 
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Test;
 
 import com.blockhaus2000.ipm.technical.command.util.CommandContext;
 import com.blockhaus2000.ipm.technical.command.util.exception.CommandException;
 import com.blockhaus2000.ipm.test.mocked.MockedCommandSender;
+import com.blockhaus2000.ipm.util.Tag;
 import com.blockhaus2000.ipm.util.exception.IllegalMethodSignatureException;
 
 /**
@@ -52,9 +55,12 @@ public class SimpleCommandManagerTest {
         Assert.assertTrue(testCommand("tc_cmd4", SimpleCommandManagerTest.MOCKED_COMMAND_SENDER));
         Assert.assertTrue(testCommand("tc_cmd5", SimpleCommandManagerTest.MOCKED_COMMAND_SENDER, "-a"));
         Assert.assertTrue(testCommand("tc_cmd6", SimpleCommandManagerTest.MOCKED_COMMAND_SENDER, "\\-a"));
-        Assert.assertTrue(testCommand("tc_cmd7", SimpleCommandManagerTest.MOCKED_COMMAND_SENDER, "-a TEST"));
-        Assert.assertTrue(testCommand("tc_cmd8", SimpleCommandManagerTest.MOCKED_COMMAND_SENDER, "-a 1234.5678"));
-        Assert.assertTrue(testCommand("tc_cmd9", SimpleCommandManagerTest.MOCKED_COMMAND_SENDER, "-a \"Hello World!\""));
+        Assert.assertTrue(testCommand("tc_cmd7", SimpleCommandManagerTest.MOCKED_COMMAND_SENDER, "-a", "TEST"));
+        Assert.assertTrue(testCommand("tc_cmd8", SimpleCommandManagerTest.MOCKED_COMMAND_SENDER, "-a", "1234.5678"));
+        Assert.assertTrue(testCommand("tc_cmd9", SimpleCommandManagerTest.MOCKED_COMMAND_SENDER, "-a", "\"Hello", "World!\"",
+                "bla"));
+        Assert.assertTrue(testCommand("tc_cmd10", SimpleCommandManagerTest.MOCKED_COMMAND_SENDER, "-a", "arg0", "-c", "bla",
+                "-d", "1234", "-e", "1234.5678", "arg1", "-f", "'Hello", "World!'", "arg2"));
 
         Assert.assertFalse(SimpleCommandManager.getInstance().execute("unknown_command",
                 SimpleCommandManagerTest.MOCKED_COMMAND_SENDER));
@@ -89,6 +95,12 @@ public class SimpleCommandManagerTest {
      *         otherwise.
      */
     private boolean testCommand(final String label, final CommandSender sender, final String... args) {
+        for (final String arg : args) {
+            if (arg.contains(" ")) {
+                throw new IllegalArgumentException("Args cannot contain blanks (\" \"!");
+            }
+        }
+
         try {
             SimpleCommandManager.getInstance().execute(label, sender, args);
         } catch (final CommandException ex) {
@@ -235,6 +247,35 @@ public class SimpleCommandManagerTest {
                  flags = { "a:string_vararg" })
         public void command9(final CommandContext context) {
             if (((String) context.getFlags().get('a').getData()).equals("Hello World!")) {
+                throw new TestSuccessfullException();
+            }
+        }
+
+        /**
+         * Test flags.
+         *
+         * @param context
+         *            The {@link CommandContext}.
+         */
+        @Command(aliases = { "tc_cmd10" },
+                 description = "",
+                 flags = { "a", "b", "c:string", "d:long", "e:double", "f:string_vararg" })
+        public void command10(final CommandContext context) {
+            final Map<Character, Tag<?>> flags = context.getFlags();
+            final java.util.List<Tag<?>> args = context.getArgs();
+
+            System.out.println("Flags: " + flags);
+            System.out.println("Args:  " + args);
+
+            if ((Boolean) flags.get('a').getData()
+                    && !((Boolean) flags.get('b').getData())
+                    && ((String) flags.get('c').getData()).equals("bla") //
+                    && ((Long) flags.get('d').getData()).longValue() == 1234
+                    && ((Double) flags.get('e').getData()).doubleValue() == 1234.5678
+                    && ((String) flags.get('f').getData()).equals("Hello World!")
+                    && ((String) args.get(0).getData()).equals("arg0") //
+                    && ((String) args.get(1).getData()).equals("arg1") //
+                    && ((String) args.get(2).getData()).equals("arg2")) {
                 throw new TestSuccessfullException();
             }
         }

@@ -200,9 +200,14 @@ public class SimpleCommandManager implements CommandManager {
             final CommandEventType commandEventType = isCommandExecutionValid(rawCommandContext);
             if (commandEventType != null) {
                 commandEventData.add(new CommandEventData(rawCommandContext, commandEventType));
+                continue;
             }
 
-            invoke(parseArguments(rawCommandContext, commandEventData));
+            final CommandContext commandContext = parseArguments(rawCommandContext, commandEventData);
+            if (commandContext == null) {
+                continue;
+            }
+            invoke(commandContext);
 
             executed = true;
         }
@@ -260,6 +265,9 @@ public class SimpleCommandManager implements CommandManager {
      * @param rawCommandContext
      *            The {@link RawCommandContext} containing all information for
      *            parsing arguments.
+     * @param commandEventData
+     *            The {@link List} of {@link CommandEventData} that will be
+     *            fired. Used to deploy events.
      * @return A {@link CommandContext} containing the parsed arguments.
      */
     private CommandContext parseArguments(final RawCommandContext rawCommandContext, final List<CommandEventData> commandEventData) {
@@ -281,7 +289,7 @@ public class SimpleCommandManager implements CommandManager {
             final String flagKey = CommonConstants.DASH + key;
             int flagIndex = -1;
             for (int i = 0; i < rawArgs.size(); i++) {
-                if (rawArgs.get(i).matches("[^\\\\]" + flagKey)) {
+                if (rawArgs.get(i).equals(flagKey)) {
                     flagIndex = i;
                     break;
                 }
@@ -313,15 +321,24 @@ public class SimpleCommandManager implements CommandManager {
                     flags.put(key, new Tag<Double>(Double.parseDouble(rawArgs.get(flagIndex + 1))));
                     break;
                 case STRING_VARARG:
-                    flags.put(key, new Tag<String>(parseVarArg(rawArgs, flagIndex + 1, rawArgs.get(flagIndex + 1).charAt(0))));
+                    String parsedVarArg = parseVarArg(rawArgs, flagIndex + 1, rawArgs.get(flagIndex + 1).charAt(0));
+                    parsedVarArg = parsedVarArg.substring(1, parsedVarArg.length() - 1);
+
+                    for (int i = 1; i < parsedVarArg.split(" ").length; i++) {
+                        toRemove.add(flagIndex + i + 1);
+                    }
+
+                    flags.put(key, new Tag<String>(parsedVarArg));
                     break;
                 }
+                toRemove.add(flagIndex + 1);
             } catch (final NumberFormatException ex) {
                 commandEventData.add(new CommandEventData(rawCommandContext, CommandEventType.INCONSTISTENT_FLAG_VALUE));
+                return null;
             }
         }
         for (final Integer index : toRemove) {
-            rawArgs.remove(index);
+            System.out.println(rawArgs.remove(index.intValue()));
         }
 
         final List<Tag<?>> args = new ArrayList<Tag<?>>(CollectionUtil.toTagCollection(rawArgs, ArrayList.class));
@@ -372,7 +389,7 @@ public class SimpleCommandManager implements CommandManager {
      */
     private String parseVarArg(final List<String> args, final int startIndex, final Character quote) {
         int endIndex = args.size() - 1;
-        if (quote != '"' && quote != '\'') {
+        if (quote.equals('"') || quote.equals('\'')) {
             for (int i = startIndex; i < args.size(); i++) {
                 final String cur = args.get(i);
                 if (cur.endsWith(quote.toString())) {
