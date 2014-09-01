@@ -96,7 +96,6 @@ public @interface Command {
      *
      * @return The priority of this command.
      */
-    // TODO: Implement
     public CommandPriority priority() default CommandPriority.NORMAL;
 
     /**

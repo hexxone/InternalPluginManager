@@ -199,4 +199,16 @@ public class SimpleCommandInfo implements CommandInfo {
         }
         return true;
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    @Override
+    public int compareTo(final CommandInfo that) {
+        final int thisPriority = getCommandAnot().priority().getPriority();
+        final int thatPriority = that.getCommandAnot().priority().getPriority();
+        return thisPriority < thatPriority ? -1 : thisPriority == thatPriority ? 0 : 1;
+    }
 }

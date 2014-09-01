@@ -19,6 +19,7 @@ package com.blockhaus2000.ipm.technical.command;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
 
 import com.blockhaus2000.ipm.technical.command.util.CommandInfo;
 
@@ -95,5 +96,5 @@ public interface CommandManager {
      *
      * @return All registered commands.
      */
-    public Map<String, Set<CommandInfo>> getCommands();
+    public Map<String, SortedSet<CommandInfo>> getCommands();
 }

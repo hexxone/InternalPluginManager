@@ -78,4 +78,14 @@ public class MockedCommandInfo implements CommandInfo {
     public Map<Character, SyntaxType> getFlagData() {
         return null;
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    @Override
+    public int compareTo(final CommandInfo o) {
+        return 0;
+    }
 }

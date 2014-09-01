@@ -26,7 +26,7 @@ import com.blockhaus2000.ipm.technical.command.Command;
  * A {@link CommandInfo} contains the main information about a command.
  *
  */
-public interface CommandInfo {
+public interface CommandInfo extends Comparable<CommandInfo> {
     /**
      *
      * @return The {@link Command} annotation that indicates the command.

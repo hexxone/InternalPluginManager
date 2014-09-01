@@ -73,7 +73,7 @@ public class SimpleCommandManager implements CommandManager {
      * for one command.</li>
      * </ul>
      */
-    private final Map<String, Set<CommandInfo>> commands = new HashMap<String, Set<CommandInfo>>();
+    private final Map<String, SortedSet<CommandInfo>> commands = new HashMap<String, SortedSet<CommandInfo>>();
 
     /**
      * Constructor of SimpleCommandManager.
@@ -141,7 +141,7 @@ public class SimpleCommandManager implements CommandManager {
                 }
 
                 if (!commands.containsKey(alias)) {
-                    commands.put(alias, new HashSet<CommandInfo>());
+                    commands.put(alias, new TreeSet<CommandInfo>());
                 }
                 commands.get(alias).add(new SimpleCommandInfo(commandAnot, clazz, obj, method, flagData));
             }
@@ -379,10 +379,10 @@ public class SimpleCommandManager implements CommandManager {
      * @see com.blockhaus2000.ipm.technical.command.CommandManager#getCommands()
      */
     @Override
-    public Map<String, Set<CommandInfo>> getCommands() {
-        final Map<String, Set<CommandInfo>> result = new HashMap<String, Set<CommandInfo>>();
-        for (final Entry<String, Set<CommandInfo>> entry : commands.entrySet()) {
-            result.put(entry.getKey(), new HashSet<CommandInfo>(entry.getValue()));
+    public Map<String, SortedSet<CommandInfo>> getCommands() {
+        final Map<String, SortedSet<CommandInfo>> result = new HashMap<String, SortedSet<CommandInfo>>();
+        for (final Entry<String, SortedSet<CommandInfo>> entry : commands.entrySet()) {
+            result.put(entry.getKey(), new TreeSet<CommandInfo>(entry.getValue()));
         }
         return result;
     }
