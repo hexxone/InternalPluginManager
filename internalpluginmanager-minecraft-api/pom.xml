@@ -9,9 +9,9 @@
 	</parent>
 
 	<artifactId>internalpluginmanager-minecraft-api</artifactId>
-	
+
 	<name>InternalPluginManager Minecraft API</name>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>com.blockhaus2000</groupId>
@@ -19,4 +19,30 @@
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<createDependencyReducedPom>false</createDependencyReducedPom>
+					<artifactSet>
+						<includes>
+							<include>com.blockhaus2000:internalpluginmanager-api</include>
+						</includes>
+					</artifactSet>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

@@ -73,7 +73,11 @@ public class CommandEventManagerTest {
          */
         @Override
         public void onCommandEvent(final CommandEvent commandEvent) {
-            if (commandEvent.getCommandEventData().get(0).getEventType() == CommandEventType.NO_PERMISSION) {
+            final CommandEventData eventData = commandEvent.getCommandEventData().get(0);
+            if (eventData.getCommandInfo().getCommandAnot() != null) {
+                return;
+            }
+            if (eventData.getEventType() == CommandEventType.NO_PERMISSION) {
                 throw new TestSuccessfulException();
             }
         }
@@ -92,7 +96,11 @@ public class CommandEventManagerTest {
          */
         @Override
         public void onCommandEvent(final CommandEvent commandEvent) {
-            if (commandEvent.getCommandEventData().get(0).getEventType() == CommandEventType.NOT_ENOUGH_ARGUMENTS) {
+            final CommandEventData eventData = commandEvent.getCommandEventData().get(0);
+            if (eventData.getCommandInfo().getCommandAnot() != null) {
+                return;
+            }
+            if (eventData.getEventType() == CommandEventType.NOT_ENOUGH_ARGUMENTS) {
                 throw new TestSuccessfulException();
             }
         }

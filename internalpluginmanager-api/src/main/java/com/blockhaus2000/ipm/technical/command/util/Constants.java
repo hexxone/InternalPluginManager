@@ -26,7 +26,12 @@ public class Constants {
      * The regular expression that is used to parse flags.
      *
      */
-    public static final String FLAG_REGEX = "[a-zA-Z](:(string|long|double|string_vararg|long_vararg|double_vararg|))?";
+    public static final String FLAG_REGEX = "^[a-zA-Z](:(string|long|double|string_vararg))?$";
+    /**
+     * The regulare expression that is used to parse the syntax.
+     *
+     */
+    public static final String SYNTAX_REGEX = "^((string|long|double), *)*(string|long|double|string_vararg)$";
 
     /**
      * Constructor of Constants.

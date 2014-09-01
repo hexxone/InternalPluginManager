@@ -196,10 +196,10 @@ public class SimpleCommandManager implements CommandManager {
         boolean executed = false;
         for (final CommandInfo commandInfo : commands.get(label)) {
             final SimpleRawCommandContext rawCommandContext = new SimpleRawCommandContext(commandInfo, label, rawArgs, sender);
+            final Command commandAnot = rawCommandContext.getCommandAnot();
 
-            final CommandEventType commandEventType = isCommandExecutionValid(rawCommandContext);
-            if (commandEventType != null) {
-                commandEventData.add(new CommandEventData(rawCommandContext, commandEventType));
+            if (!sender.hasPermission(commandAnot.permission())) {
+                commandEventData.add(new CommandEventData(rawCommandContext, CommandEventType.NO_PERMISSION));
                 continue;
             }
 
@@ -217,46 +217,6 @@ public class SimpleCommandManager implements CommandManager {
         }
 
         return executed;
-    }
-
-    /**
-     * Checks if the command execution is valid.
-     *
-     * <p>
-     * Checks these:
-     * <ul>
-     * <li>Permission</li>
-     * <li>Minimum argument count</li>
-     * <li>Maximum argument count</li>
-     * </ul>
-     * </p>
-     *
-     * @param rawCommandContext
-     *            The {@link RawCommandContext} that contains all information
-     *            that are required to validate the execution.
-     * @return The {@link CommandEventType} that can be thrown if the call is
-     *         invalid. Returns <code>null</code> if the execution is valid.
-     *         Only returns event types that can be fired in combination with a
-     *         {@link RawCommandContext}.
-     */
-    private CommandEventType isCommandExecutionValid(final RawCommandContext rawCommandContext) {
-        assert rawCommandContext != null : "RawCommandContext cannot be null!";
-
-        final Command commandAnot = rawCommandContext.getCommandAnot();
-        final CommandSender sender = rawCommandContext.getSender();
-        final String[] args = rawCommandContext.getRawArgs();
-
-        final CommandEventType result;
-        if (!sender.hasPermission(commandAnot.permission())) {
-            result = CommandEventType.NO_PERMISSION;
-        } else if (args.length < commandAnot.min()) {
-            result = CommandEventType.NOT_ENOUGH_ARGUMENTS;
-        } else if (commandAnot.max() != -1 && args.length > commandAnot.max()) {
-            result = CommandEventType.TOO_MANY_ARGUMENTS;
-        } else {
-            result = null;
-        }
-        return result;
     }
 
     /**
@@ -338,7 +298,17 @@ public class SimpleCommandManager implements CommandManager {
             }
         }
         for (final Integer index : toRemove) {
-            System.out.println(rawArgs.remove(index.intValue()));
+            rawArgs.remove(index.intValue());
+        }
+
+        final Command commandAnot = rawCommandContext.getCommandAnot();
+        if (rawArgs.size() < commandAnot.min()) {
+            commandEventData.add(new CommandEventData(rawCommandContext, CommandEventType.NOT_ENOUGH_ARGUMENTS));
+            return null;
+        }
+        if (commandAnot.max() != -1 && rawArgs.size() > commandAnot.max()) {
+            commandEventData.add(new CommandEventData(rawCommandContext, CommandEventType.TOO_MANY_ARGUMENTS));
+            return null;
         }
 
         final List<Tag<?>> args = new ArrayList<Tag<?>>(CollectionUtil.toTagCollection(rawArgs, ArrayList.class));

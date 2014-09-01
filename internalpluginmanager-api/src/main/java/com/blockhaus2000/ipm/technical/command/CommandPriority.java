@@ -15,15 +15,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.technical.command.util;
+package com.blockhaus2000.ipm.technical.command;
 
-import java.util.List;
-import java.util.Map;
+public enum CommandPriority {
+    LOWEST(0),
+    LOW(10),
+    NORMAL(20),
+    HIGH(30),
+    HIGHEST(40),
+    MONITOR(50);
 
-import com.blockhaus2000.ipm.util.Tag;
+    private final int priority;
 
-public interface CommandContext extends RawCommandContext {
-    public List<Tag<?>> getArgs();
+    private CommandPriority(final int priority) {
+        this.priority = priority;
+    }
 
-    public Map<Character, Tag<?>> getFlags();
+    public int getPriority() {
+        return priority;
+    }
 }

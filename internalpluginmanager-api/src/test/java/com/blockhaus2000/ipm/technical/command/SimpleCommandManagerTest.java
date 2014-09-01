@@ -127,8 +127,7 @@ public class SimpleCommandManagerTest {
          * @param context
          *            The {@link CommandContext}.
          */
-        @Command(aliases = { "tc_cmd1", "tc_command1" },
-                description = "")
+        @Command(aliases = { "tc_cmd1", "tc_command1" })
         public void command1(final CommandContext context) {
             throw new TestSuccessfullException();
         }
@@ -139,8 +138,7 @@ public class SimpleCommandManagerTest {
          * @param context
          *            The {@link CommandContext}.
          */
-        @Command(aliases = { "tc_cmd2" },
-                description = "")
+        @Command(aliases = { "tc_cmd2" })
         public void command2(final CommandContext context) {
             if (context.getArgs().get(0).getData().equals("arg0") && context.getArgs().get(1).getData().equals("arg1")
                     && context.getArgs().get(2).getData().equals("arg2")) {
@@ -155,7 +153,6 @@ public class SimpleCommandManagerTest {
          *            The {@link CommandContext}.
          */
         @Command(aliases = { "tc_cmd3" },
-                 description = "",
                  permission = MockedCommandSender.JUNIT_TEST_PERIMSSION)
         public void command3(final CommandContext context) {
             throw new TestSuccessfullException();
@@ -168,7 +165,6 @@ public class SimpleCommandManagerTest {
          *            The {@link CommandContext}.
          */
         @Command(aliases = { "tc_cmd4" },
-                 description = "",
                  flags = { "a" })
         public void command4(final CommandContext context) {
             if (!(Boolean) context.getFlags().get('a').getData()) {
@@ -183,7 +179,6 @@ public class SimpleCommandManagerTest {
          *            The {@link CommandContext}.
          */
         @Command(aliases = { "tc_cmd5" },
-                 description = "",
                  flags = { "a" })
         public void command5(final CommandContext context) {
             if ((Boolean) context.getFlags().get('a').getData()) {
@@ -198,7 +193,6 @@ public class SimpleCommandManagerTest {
          *            The {@link CommandContext}.
          */
         @Command(aliases = { "tc_cmd6" },
-                 description = "",
                  flags = { "a" })
         public void command6(final CommandContext context) {
             if (!(Boolean) context.getFlags().get('a').getData()) {
@@ -213,7 +207,6 @@ public class SimpleCommandManagerTest {
          *            The {@link CommandContext}.
          */
         @Command(aliases = { "tc_cmd7" },
-                 description = "",
                  flags = { "a:string" })
         public void command7(final CommandContext context) {
             if (((String) context.getFlags().get('a').getData()).equals("TEST")) {
@@ -228,7 +221,6 @@ public class SimpleCommandManagerTest {
          *            The {@link CommandContext}.
          */
         @Command(aliases = { "tc_cmd8" },
-                 description = "",
                  flags = { "a:double" })
         public void command8(final CommandContext context) {
             if (((Double) context.getFlags().get('a').getData()).doubleValue() == 1234.5678) {
@@ -243,7 +235,6 @@ public class SimpleCommandManagerTest {
          *            The {@link CommandContext}.
          */
         @Command(aliases = { "tc_cmd9" },
-                 description = "",
                  flags = { "a:string_vararg" })
         public void command9(final CommandContext context) {
             if (((String) context.getFlags().get('a').getData()).equals("Hello World!")) {
@@ -258,14 +249,10 @@ public class SimpleCommandManagerTest {
          *            The {@link CommandContext}.
          */
         @Command(aliases = { "tc_cmd10" },
-                 description = "",
                  flags = { "a", "b", "c:string", "d:long", "e:double", "f:string_vararg" })
         public void command10(final CommandContext context) {
             final Map<Character, Tag<?>> flags = context.getFlags();
             final java.util.List<Tag<?>> args = context.getArgs();
-
-            System.out.println("Flags: " + flags);
-            System.out.println("Args:  " + args);
 
             if ((Boolean) flags.get('a').getData()
                     && !((Boolean) flags.get('b').getData())
@@ -290,8 +277,7 @@ public class SimpleCommandManagerTest {
          * @param str
          *            "Creates" the wrong signature.
          */
-        @Command(aliases = { "tc1_cmd1" },
-                description = "")
+        @Command(aliases = { "tc1_cmd1" })
         public void command1(final String str) {
             throw new TestSuccessfullException();
         }
@@ -304,8 +290,7 @@ public class SimpleCommandManagerTest {
          * whilest registering this class.
          *
          */
-        @Command(aliases = { "tc2_cmd1" },
-                description = "")
+        @Command(aliases = { "tc2_cmd1" })
         public void command1() {
             throw new TestSuccessfullException();
         }
@@ -322,8 +307,7 @@ public class SimpleCommandManagerTest {
          * @param context2
          *            This argument is too much.
          */
-        @Command(aliases = { "tc3_cmd1" },
-                description = "")
+        @Command(aliases = { "tc3_cmd1" })
         public void command1(final CommandContext context, final CommandContext context2) {
             throw new TestSuccessfullException();
         }
