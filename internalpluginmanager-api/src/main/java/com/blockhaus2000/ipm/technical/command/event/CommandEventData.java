@@ -17,13 +17,42 @@
  */
 package com.blockhaus2000.ipm.technical.command.event;
 
+import com.blockhaus2000.ipm.technical.command.CommandSender;
 import com.blockhaus2000.ipm.technical.command.util.CommandInfo;
 import com.blockhaus2000.ipm.technical.command.util.RawCommandContext;
 
+/**
+ * The {@link CommandEventData} is used to store informations about one
+ * {@link CommandEvent} part. That is because one command execution can fire
+ * more than one event. With this system, you only have to catch them once for
+ * each execution.
+ *
+ */
 public class CommandEventData {
+    /**
+     * The common information about the command execution that fired the event.
+     *
+     */
     private final CommandInfo commandInfo;
+    /**
+     * The {@link CommandEventType}.
+     *
+     */
     private final CommandEventType eventType;
 
+    /**
+     * Constructor of CommandEventData.
+     *
+     * @param commandInfo
+     *            The common information about the command execution that fired
+     *            the event. The {@link CommandInfo} object has to be an
+     *            instance of the class that is associated with the given
+     *            {@link CommandEventType}. So
+     *            <code>eventType.getCommandInfoType().isInstance(commandInfo)</code>
+     *            has to return <code>true</code>.
+     * @param eventType
+     *            The {@link CommandEventType}.
+     */
     public CommandEventData(final CommandInfo commandInfo, final CommandEventType eventType) {
         assert commandInfo != null : "CommandInfo cannot be null!";
         assert eventType != null : "EventType cannot be null!";
@@ -36,7 +65,9 @@ public class CommandEventData {
 
     /**
      *
-     * @return {@link CommandEventData#commandInfo}.
+     * @return {@link CommandEventData#commandInfo}. This can be casted safely
+     *         to the {@link CommandInfo} type that is associated with the
+     *         {@link CommandEventType}.
      */
     public CommandInfo getCommandInfo() {
         return commandInfo;
@@ -104,19 +135,59 @@ public class CommandEventData {
         return getClass().getName() + "[commandInfo=" + commandInfo + ", eventType=" + eventType + "]";
     }
 
+    /**
+     * The {@link CommandEventType} makes it easy to check what is the real
+     * cause of the command event.
+     *
+     */
     public static enum CommandEventType {
+        /**
+         * If the {@link CommandSender} has not enough permissions.
+         *
+         */
         NO_PERMISSION(RawCommandContext.class),
+        /**
+         * If not enough arguments where passed.
+         *
+         */
         NOT_ENOUGH_ARGUMENTS(RawCommandContext.class),
+        /**
+         * If too many arguments where passed.
+         *
+         */
         TOO_MANY_ARGUMENTS(RawCommandContext.class),
+        /**
+         * If a flag value is missing.
+         *
+         */
         MISSING_FLAG_VALUE(RawCommandContext.class),
+        /**
+         * If a flag value is inconsistent with its type.
+         *
+         */
         INCONSTISTENT_FLAG_VALUE(RawCommandContext.class);
 
+        /**
+         * The specific type of the {@link CommandInfo} that has to be passed
+         * info a new {@link CommandEventData}.
+         *
+         */
         private final Class<? extends CommandInfo> commandInfoType;
 
+        /**
+         * Constructor of CommandEventType.
+         *
+         * @param commandInfoType
+         *            The specific {@link CommandInfo} type.
+         */
         private CommandEventType(final Class<? extends CommandInfo> commandInfoType) {
             this.commandInfoType = commandInfoType;
         }
 
+        /**
+         *
+         * @return {@link CommandEventType#commandInfoType}.
+         */
         public Class<? extends CommandInfo> getCommandInfoType() {
             return commandInfoType;
         }

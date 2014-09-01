@@ -22,14 +22,78 @@ import java.util.Set;
 
 import com.blockhaus2000.ipm.technical.command.util.CommandInfo;
 
+/**
+ * The {@link CommandManager} is the core of the command system, managing all
+ * commands and check permissions, argument count, etc.
+ *
+ */
 public interface CommandManager {
-    public Set<CommandInfo> register(final Class<?> clazz, final Object obj);
+    /**
+     * Registers all command methods that are included in the given class,
+     * marked with the {@link Command} annotation.
+     *
+     * @param clazz
+     *            The {@link Class} containing all commands.
+     * @param obj
+     *            An {@link Object} of the given {@link Class}, if one of the
+     *            methods to register is non-static.
+     * @return A set of all {@link CommandInfo} that where registered.
+     */
+    public <T> Set<CommandInfo> register(final Class<T> clazz, final T obj);
 
-    public Set<CommandInfo> register(final Object obj);
+    /**
+     * Delegates to {@link CommandManager#register(Class, Object)} with
+     * <code>clazz = obj.getClass()</code>.
+     *
+     * @param obj
+     *            Will be passed to
+     *            {@link CommandManager#register(Class, Object)}.
+     * @return See {@link CommandManager#register(Class, Object)}.
+     * @see com.blockhaus2000.ipm.technical.command.CommandManager#register(java.lang.Class,
+     *      java.lang.Object)
+     */
+    public <T> Set<CommandInfo> register(final T obj);
 
-    public Set<CommandInfo> register(final Class<?> clazz);
+    /**
+     * Delegates to {@link CommandManager#register(Class, Object)} with
+     * <code>obj = null</code>.
+     *
+     * <p>
+     * <b> NOTE: Only use this of all methods to register are static. </b>
+     * </p>
+     *
+     * @param clazz
+     *            Will be passed to
+     *            {@link CommandManager#register(Class, Object)}.
+     * @return See {@link CommandManager#register(Class, Object)}.
+     * @see com.blockhaus2000.ipm.technical.command.CommandManager#register(java.lang.Class,
+     *      java.lang.Object)
+     */
+    public <T> Set<CommandInfo> register(final Class<T> clazz);
 
+    /**
+     * Executes the given alias (label).
+     *
+     * @param label
+     *            The command alias to execute.
+     * @param sender
+     *            The {@link CommandSender} that has executed the command.
+     * @param rawArgs
+     *            The raw arguments that will be parsed (used for flags, syntax,
+     *            etc.).
+     * @return <code>true</code> if the command was executed successfully,
+     *         <code>false</code> otherwise.
+     */
     public boolean execute(final String label, final CommandSender sender, final String... rawArgs);
 
+    /**
+     * <ul>
+     * <li>Key (java.lang.String): The command alias.</li>
+     * <li>Value (java.util.Set): The {@link CommandInfo}s that are associated
+     * with the command alias.</li>
+     * </ul>
+     *
+     * @return All registered commands.
+     */
     public Map<String, Set<CommandInfo>> getCommands();
 }

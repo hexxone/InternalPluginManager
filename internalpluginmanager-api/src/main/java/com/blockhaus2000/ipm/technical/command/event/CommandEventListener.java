@@ -17,6 +17,17 @@
  */
 package com.blockhaus2000.ipm.technical.command.event;
 
+/**
+ * Implement this interface and register it to the {@link CommandEventManager}
+ * to listent to events.
+ *
+ */
 public interface CommandEventListener {
+    /**
+     * This method will be invoked if a {@link CommandEvent} was fired.
+     *
+     * @param commandEvent
+     *            The {@link CommandEvent} that was fired.
+     */
     public void onCommandEvent(final CommandEvent commandEvent);
 }

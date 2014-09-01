@@ -93,7 +93,7 @@ public class SimpleCommandManager implements CommandManager {
      *      java.lang.Object)
      */
     @Override
-    public Set<CommandInfo> register(final Class<?> clazz, final Object obj) {
+    public <T> Set<CommandInfo> register(final Class<T> clazz, final T obj) {
         assert clazz != null : "Clazz cannot be null!";
         assert obj == null || clazz.equals(obj.getClass()) : "Obj has to be null or an object of clazz!";
 
@@ -155,11 +155,12 @@ public class SimpleCommandManager implements CommandManager {
      *
      * @see com.blockhaus2000.ipm.technical.command.CommandManager#register(java.lang.Object)
      */
+    @SuppressWarnings("unchecked")
     @Override
-    public Set<CommandInfo> register(final Object obj) {
+    public <T> Set<CommandInfo> register(final T obj) {
         assert obj != null : "Obj cannot be null!";
 
-        return register(obj.getClass(), obj);
+        return register((Class<T>) obj.getClass(), obj);
     }
 
     /**
@@ -168,7 +169,7 @@ public class SimpleCommandManager implements CommandManager {
      * @see com.blockhaus2000.ipm.technical.command.CommandManager#register(java.lang.Class)
      */
     @Override
-    public Set<CommandInfo> register(final Class<?> clazz) {
+    public <T> Set<CommandInfo> register(final Class<T> clazz) {
         return register(clazz, null);
     }
 

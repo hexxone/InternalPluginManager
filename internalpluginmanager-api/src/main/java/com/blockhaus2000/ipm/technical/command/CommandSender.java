@@ -17,6 +17,19 @@
  */
 package com.blockhaus2000.ipm.technical.command;
 
+/**
+ * A {@link CommandSender} can execute commands.
+ *
+ */
 public interface CommandSender {
+    /**
+     * Checks if the {@link CommandSender} has the given permission.
+     *
+     * @param permission
+     *            The permission to check.
+     * @return <code>true</code> if the permission if <code>null</code>, empty
+     *         or the {@link CommandSender} has the permission.
+     *         <code>false</code> in all other cases.
+     */
     public boolean hasPermission(final String permission);
 }
