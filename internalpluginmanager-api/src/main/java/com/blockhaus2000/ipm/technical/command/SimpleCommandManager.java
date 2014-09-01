@@ -117,13 +117,17 @@ public class SimpleCommandManager implements CommandManager {
             }
 
             final Command commandAnot = method.getAnnotation(Command.class);
-            for (final String alias : commandAnot.aliases()) {
+            for (String alias : commandAnot.aliases()) {
+                alias = alias.toLowerCase().trim();
+
                 if (alias.isEmpty()) {
                     continue;
                 }
 
                 final Map<Character, SyntaxType> flagData = new HashMap<Character, SyntaxType>();
-                for (final String rawFlagData : commandAnot.flags()) {
+                for (String rawFlagData : commandAnot.flags()) {
+                    rawFlagData = rawFlagData.trim();
+
                     if (rawFlagData.isEmpty()) {
                         continue;
                     }
@@ -133,7 +137,7 @@ public class SimpleCommandManager implements CommandManager {
                     }
 
                     flagData.put(rawFlagData.charAt(0),
-                            rawFlagData.contains(":") ? SyntaxType.getFromName(rawFlagData.split(":")[1]) : null);
+                            rawFlagData.contains(":") ? SyntaxType.getFromName(rawFlagData.split(":")[1].toLowerCase()) : null);
                 }
 
                 if (!commands.containsKey(alias)) {
@@ -176,7 +180,9 @@ public class SimpleCommandManager implements CommandManager {
      *      java.lang.String...)
      */
     @Override
-    public boolean execute(final String label, final CommandSender sender, final String... rawArgs) {
+    public boolean execute(String label, final CommandSender sender, final String... rawArgs) {
+        label = label == null ? null : label.toLowerCase().trim();
+
         assert label != null && !label.isEmpty() : "Label cannot be null or empty!";
         assert sender != null : "Sender cannot be null!";
         assert rawArgs != null : "RawArgs cannot be null!";
