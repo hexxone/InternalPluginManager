@@ -17,6 +17,8 @@
  */
 package com.blockhaus2000.ipm.technical.command.util;
 
+import java.util.Arrays;
+
 import com.blockhaus2000.ipm.technical.command.CommandSender;
 
 /**
@@ -94,5 +96,57 @@ public class SimpleRawCommandContext extends SimpleCommandInfo implements RawCom
     @Override
     public CommandSender getSender() {
         return sender;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + (label == null ? 0 : label.hashCode());
+        result = prime * result + Arrays.hashCode(rawArgs);
+        result = prime * result + (sender == null ? 0 : sender.hashCode());
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!super.equals(obj)) {
+            return false;
+        }
+        if (!(obj instanceof SimpleRawCommandContext)) {
+            return false;
+        }
+        final SimpleRawCommandContext other = (SimpleRawCommandContext) obj;
+        if (label == null) {
+            if (other.label != null) {
+                return false;
+            }
+        } else if (!label.equals(other.label)) {
+            return false;
+        }
+        if (!Arrays.equals(rawArgs, other.rawArgs)) {
+            return false;
+        }
+        if (sender == null) {
+            if (other.sender != null) {
+                return false;
+            }
+        } else if (!sender.equals(other.sender)) {
+            return false;
+        }
+        return true;
     }
 }

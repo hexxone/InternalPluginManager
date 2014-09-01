@@ -23,18 +23,33 @@ import org.junit.Test;
 import com.blockhaus2000.ipm.util.exception.IllegalStaticAccessException;
 import com.blockhaus2000.ipm.util.injection.exception.NotAddedInjectionException;
 
-@SuppressWarnings("javadoc")
+/**
+ * Tests the {@link InjectionManager}.
+ *
+ */
 public class InjectionManagerTest {
+    /**
+     * Test the null-injection check.
+     *
+     */
     @Test(expected = NotAddedInjectionException.class)
     public void initNotAddedInjectionException() {
         InjectionManager.init(new InjectionManagerTestClass3());
     }
 
+    /**
+     * Test the static access check.
+     *
+     */
     @Test(expected = IllegalStaticAccessException.class)
     public void initIllegalStaticAccessException() {
         InjectionManager.init(InjectionManagerTestClass3.class);
     }
 
+    /**
+     * Test injection of non-static fields.
+     *
+     */
     @Test
     public void initObjectAccess() {
         final InjectionManagerTestClass1.InjectionManagerTestInterface obj = new InjectionManagerTestClass1.InjectionManagerTestInterfaceImpl();
@@ -47,6 +62,10 @@ public class InjectionManagerTest {
         Assert.assertTrue(testClass.getInjectionField() == obj);
     }
 
+    /**
+     * Test injection of static fields.
+     *
+     */
     @Test
     public void initStaticAccess() {
         final InjectionManagerTestClass2.InjectionManagerTestInterface obj = new InjectionManagerTestClass2.InjectionManagerTestInterfaceImpl();
@@ -58,6 +77,7 @@ public class InjectionManagerTest {
         Assert.assertTrue(InjectionManagerTestClass2.getInjectionField() == obj);
     }
 
+    @SuppressWarnings("javadoc")
     private static class InjectionManagerTestClass1 {
         @Inject
         private InjectionManagerTestInterface injectionField;
@@ -73,6 +93,7 @@ public class InjectionManagerTest {
         }
     }
 
+    @SuppressWarnings("javadoc")
     private static class InjectionManagerTestClass2 {
         @Inject
         private static InjectionManagerTestInterface injectionField;
@@ -88,6 +109,7 @@ public class InjectionManagerTest {
         }
     }
 
+    @SuppressWarnings("javadoc")
     private static class InjectionManagerTestClass3 {
         @Inject
         private InjectionManagerTestInterface injectionField;

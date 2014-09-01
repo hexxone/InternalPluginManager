@@ -17,16 +17,64 @@
  */
 package com.blockhaus2000.ipm.technical.command.util;
 
+import com.blockhaus2000.ipm.util.Tag;
+
+/**
+ * All these syntax types can be used to indicate the type of a flag, or (as the
+ * name says) of a syntax element.
+ *
+ */
 public enum SyntaxType {
+    /**
+     * This is used mostly, and it is the safest, because no parsing has to be
+     * processed. Will be passed into a {@link Tag} with the type {@link String}
+     *
+     * @see java.lang.String
+     */
     STRING,
+    /**
+     * Use this for numbers without decimals (like <code>1</code>,
+     * <code>2</code>, <code>3</code>, etc.). Will be passed into a {@link Tag}
+     * with the type {@link Long}. A {@link Long} is used because maybe you want
+     * to get higher numbers than {@link Integer#MAX_VALUE}.
+     *
+     * @see java.lang.Long
+     */
     LONG,
+    /**
+     * Use this for number with decimals (like <code>12.34</code>,
+     * <code>56.78</code>, etc.). Will be passed into a {@link Tag} with the
+     * type {@link Double}.
+     *
+     * @see java.lang.Double
+     */
     DOUBLE,
+    /**
+     * Use this to get a joined string, like <code>"Hello World!"</code>, which
+     * is present in two different arguments. Will be passed into a {@link Tag}
+     * with the type {@link String}.
+     *
+     * @see java.lang.String
+     */
     STRING_VARARG;
 
+    /**
+     *
+     * @return A name that can be parsed by
+     *         {@link SyntaxType#getFromName(String)}.
+     */
     public String getUseableName() {
         return toString().toLowerCase();
     }
 
+    /**
+     *
+     * @param name
+     *            The name of the {@link SyntaxType} to get.
+     * @return The {@link SyntaxType} that is associated with the given
+     *         <code>name</code>. Returns <code>null</code>, if nothing was
+     *         found.
+     */
     public static SyntaxType getFromName(final String name) {
         for (final SyntaxType syntaxType : SyntaxType.values()) {
             if (syntaxType.getUseableName().equalsIgnoreCase(name)) {

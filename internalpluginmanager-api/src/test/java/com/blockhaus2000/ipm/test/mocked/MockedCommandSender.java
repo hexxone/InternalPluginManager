@@ -26,6 +26,10 @@ import com.blockhaus2000.ipm.technical.command.CommandSender;
  *
  */
 public class MockedCommandSender implements CommandSender {
+    /**
+     * The test permission that this {@link CommandSender} has.
+     *
+     */
     public static final String JUNIT_TEST_PERIMSSION = "junit.test.permission";
 
     /**
@@ -35,6 +39,6 @@ public class MockedCommandSender implements CommandSender {
      */
     @Override
     public boolean hasPermission(final String permission) {
-        return permission.equals("") || permission.equals(MockedCommandSender.JUNIT_TEST_PERIMSSION);
+        return permission == null || permission.equals("") || permission.equals(MockedCommandSender.JUNIT_TEST_PERIMSSION);
     }
 }

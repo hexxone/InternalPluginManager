@@ -79,4 +79,52 @@ public class SimpleCommandContext extends SimpleRawCommandContext implements Com
     public Map<Character, Tag<?>> getFlags() {
         return new HashMap<Character, Tag<?>>(flags);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + (args == null ? 0 : args.hashCode());
+        result = prime * result + (flags == null ? 0 : flags.hashCode());
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!super.equals(obj)) {
+            return false;
+        }
+        if (!(obj instanceof SimpleCommandContext)) {
+            return false;
+        }
+        final SimpleCommandContext other = (SimpleCommandContext) obj;
+        if (args == null) {
+            if (other.args != null) {
+                return false;
+            }
+        } else if (!args.equals(other.args)) {
+            return false;
+        }
+        if (flags == null) {
+            if (other.flags != null) {
+                return false;
+            }
+        } else if (!flags.equals(other.flags)) {
+            return false;
+        }
+        return true;
+    }
 }

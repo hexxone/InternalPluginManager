@@ -22,20 +22,42 @@ import java.util.Map;
 
 import com.blockhaus2000.ipm.technical.command.Command;
 
+/**
+ * A {@link CommandInfo} contains the main information about a command.
+ *
+ */
 public interface CommandInfo {
+    /**
+     *
+     * @return The {@link Command} annotation that indicates the command.
+     */
     public Command getCommandAnot();
 
+    /**
+     *
+     * @return The {@link Class} that contains the command method.
+     */
     public Class<?> getClazz();
 
+    /**
+     *
+     * @return The {@link Object} of the class that contains the command method.
+     *         May be <code>null</code>, if no object where given (The method
+     *         has to be static!).
+     */
     public Object getObject();
 
+    /**
+     *
+     * @return The {@link Method} that is tagged with the {@link Command}
+     *         annotation.
+     */
     public Method getMethod();
 
+    /**
+     *
+     * @return The flag data, containing all information about flags that are
+     *         important to parse them whilest a execution.
+     */
     public Map<Character, SyntaxType> getFlagData();
-
-    @Override
-    public int hashCode();
-
-    @Override
-    public boolean equals(final Object obj);
 }

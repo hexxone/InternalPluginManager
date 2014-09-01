@@ -19,10 +19,27 @@ package com.blockhaus2000.ipm.technical.command.util;
 
 import com.blockhaus2000.ipm.technical.command.CommandSender;
 
+/**
+ * A {@link RawCommandContext} contains more information about a command as
+ * {@link CommandInfo}, like the raw arguments.
+ *
+ */
 public interface RawCommandContext extends CommandInfo {
+    /**
+     *
+     * @return The command alias that the command was executed with.
+     */
     public String getLabel();
 
+    /**
+     *
+     * @return The unparsed arguments.
+     */
     public String[] getRawArgs();
 
+    /**
+     *
+     * @return The {@link CommandSender} that has executed the command.
+     */
     public CommandSender getSender();
 }

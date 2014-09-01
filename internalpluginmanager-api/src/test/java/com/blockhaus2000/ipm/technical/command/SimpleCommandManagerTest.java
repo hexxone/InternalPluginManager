@@ -41,7 +41,7 @@ public class SimpleCommandManagerTest {
     private static final CommandSender MOCKED_COMMAND_SENDER = new MockedCommandSender();
 
     /**
-     * Executes some executing tests that should not end with an exception.
+     * Executes some executing tests that should end successful.
      *
      */
     @Test
@@ -66,16 +66,28 @@ public class SimpleCommandManagerTest {
                 SimpleCommandManagerTest.MOCKED_COMMAND_SENDER));
     }
 
+    /**
+     * Tests that the method signature testing works.
+     *
+     */
     @Test(expected = IllegalMethodSignatureException.class)
     public void registerIllegalMethodSignatureException1() {
         SimpleCommandManager.getInstance().register(new SimpleCommandManagerTestClass1());
     }
 
+    /**
+     * Tests that the method signature testing works.
+     *
+     */
     @Test(expected = IllegalMethodSignatureException.class)
     public void registerIllegalMethodSignatureException2() {
         SimpleCommandManager.getInstance().register(new SimpleCommandManagerTestClass2());
     }
 
+    /**
+     * Tests that the method signature testing works.
+     *
+     */
     @Test(expected = IllegalMethodSignatureException.class)
     public void registerIllegalMethodSignatureException3() {
         SimpleCommandManager.getInstance().register(new SimpleCommandManagerTestClass3());

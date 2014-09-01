@@ -22,8 +22,21 @@ import java.util.Map;
 
 import com.blockhaus2000.ipm.util.Tag;
 
+/**
+ * A {@link CommandContext} contains all important information to work with a
+ * parsed command.
+ *
+ */
 public interface CommandContext extends RawCommandContext {
+    /**
+     *
+     * @return The parsed arguments.
+     */
     public List<Tag<?>> getArgs();
 
+    /**
+     *
+     * @return The parsed flags.
+     */
     public Map<Character, Tag<?>> getFlags();
 }

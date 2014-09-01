@@ -21,10 +21,16 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Test {@link ArrayUtil}
+ * Tests the {@link ArrayUtil}.
  *
  */
 public class ArrayUtilTest {
+    /**
+     * Tests {@link ArrayUtil#joinString(String, int, int, String...)}. <br />
+     * Tests {@link ArrayUtil#joinString(String, String...)}. <br />
+     * Tests {@link ArrayUtil#joinString(String...)}. <br />
+     *
+     */
     @Test
     public void joinString() {
         final String[] arr = new String[] { "e0", "e1", "e2", "e3", "e4" };

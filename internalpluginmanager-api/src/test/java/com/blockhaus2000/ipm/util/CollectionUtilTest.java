@@ -19,6 +19,7 @@ package com.blockhaus2000.ipm.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,10 +28,14 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Test {@link CollectionUtil}.
+ * Tests the {@link CollectionUtil}.
  *
  */
 public class CollectionUtilTest {
+    /**
+     * Test {@link CollectionUtil#toTagCollection(Collection, Class)}
+     *
+     */
     @Test
     @SuppressWarnings("unchecked")
     public void toTagList() {
