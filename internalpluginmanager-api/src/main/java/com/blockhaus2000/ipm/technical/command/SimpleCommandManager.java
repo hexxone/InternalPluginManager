@@ -22,6 +22,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -73,7 +74,7 @@ public class SimpleCommandManager implements CommandManager {
      * for one command.</li>
      * </ul>
      */
-    private final Map<String, SortedSet<CommandInfo>> commands = new HashMap<String, SortedSet<CommandInfo>>();
+    private final Map<String, List<CommandInfo>> commands = new HashMap<String, List<CommandInfo>>();
 
     /**
      * Constructor of SimpleCommandManager.
@@ -141,9 +142,21 @@ public class SimpleCommandManager implements CommandManager {
                 }
 
                 if (!commands.containsKey(alias)) {
-                    commands.put(alias, new TreeSet<CommandInfo>());
+                    commands.put(alias, new ArrayList<CommandInfo>());
                 }
-                commands.get(alias).add(new SimpleCommandInfo(commandAnot, clazz, obj, method, flagData));
+
+                final CommandInfo commandInfo = new SimpleCommandInfo(commandAnot, clazz, obj, method, flagData);
+
+                if (commands.get(alias).add(commandInfo)) {
+                    Collections.sort(commands.get(alias), new Comparator<CommandInfo>() {
+                        @Override
+                        public int compare(final CommandInfo o1, final CommandInfo o2) {
+                            return Integer.valueOf(o1.getCommandAnot().priority().getPriority()).compareTo(
+                                    o2.getCommandAnot().priority().getPriority());
+                        }
+                    });
+                    result.add(commandInfo);
+                }
             }
         }
 
@@ -181,7 +194,7 @@ public class SimpleCommandManager implements CommandManager {
      *      java.lang.String...)
      */
     @Override
-    public boolean execute(String label, final CommandSender sender, final String... rawArgs) {
+    public boolean execute(String label, final CommandSender sender, String... rawArgs) {
         label = label == null ? null : label.toLowerCase().trim();
 
         assert label != null && !label.isEmpty() : "Label cannot be null or empty!";
@@ -196,8 +209,23 @@ public class SimpleCommandManager implements CommandManager {
 
         boolean executed = false;
         for (final CommandInfo commandInfo : commands.get(label)) {
+            final Command commandAnot = commandInfo.getCommandAnot();
+
+            final String rawSecondLevelCommand = commandAnot.secondLevelCommand().trim();
+            final String secondLevelCommand = rawSecondLevelCommand.isEmpty() ? null : rawSecondLevelCommand;
+            if (secondLevelCommand != null) {
+                if (rawArgs.length == 0) {
+                    commandEventData.add(new CommandEventData(commandInfo, CommandEventType.UNAVAILABLE_SECOND_LEVEL_COMMAND));
+                    continue;
+                }
+                if (!rawArgs[0].equalsIgnoreCase(secondLevelCommand)) {
+                    commandEventData.add(new CommandEventData(commandInfo, CommandEventType.UNKNOWN_SECOND_LEVEL_COMMAND));
+                    continue;
+                }
+                rawArgs = Arrays.copyOfRange(rawArgs, 1, rawArgs.length);
+            }
+
             final SimpleRawCommandContext rawCommandContext = new SimpleRawCommandContext(commandInfo, label, rawArgs, sender);
-            final Command commandAnot = rawCommandContext.getCommandAnot();
 
             if (!sender.hasPermission(commandAnot.permission())) {
                 commandEventData.add(new CommandEventData(rawCommandContext, CommandEventType.NO_PERMISSION));
@@ -239,7 +267,7 @@ public class SimpleCommandManager implements CommandManager {
         final SortedSet<Integer> toRemove = new TreeSet<Integer>(new Comparator<Integer>() {
             @Override
             public int compare(final Integer o1, final Integer o2) {
-                return -o1.compareTo(o2); // Sort against the normal order.
+                return -o1.compareTo(o2); // Reverse sorting is required
             }
         });
         final Map<Character, Tag<?>> flags = new HashMap<Character, Tag<?>>();
@@ -266,7 +294,7 @@ public class SimpleCommandManager implements CommandManager {
                 continue;
             }
             if (flagIndex + 1 >= rawArgs.size()) {
-                commandEventData.add(new CommandEventData(rawCommandContext, CommandEventType.MISSING_FLAG_VALUE));
+                commandEventData.add(new CommandEventData(rawCommandContext, CommandEventType.UNAVAILABLE_FLAG_VALUE));
                 continue;
             }
 
@@ -379,10 +407,10 @@ public class SimpleCommandManager implements CommandManager {
      * @see com.blockhaus2000.ipm.technical.command.CommandManager#getCommands()
      */
     @Override
-    public Map<String, SortedSet<CommandInfo>> getCommands() {
-        final Map<String, SortedSet<CommandInfo>> result = new HashMap<String, SortedSet<CommandInfo>>();
-        for (final Entry<String, SortedSet<CommandInfo>> entry : commands.entrySet()) {
-            result.put(entry.getKey(), new TreeSet<CommandInfo>(entry.getValue()));
+    public Map<String, List<CommandInfo>> getCommands() {
+        final Map<String, List<CommandInfo>> result = new HashMap<String, List<CommandInfo>>();
+        for (final Entry<String, List<CommandInfo>> entry : commands.entrySet()) {
+            result.put(entry.getKey(), new ArrayList<CommandInfo>(entry.getValue()));
         }
         return result;
     }

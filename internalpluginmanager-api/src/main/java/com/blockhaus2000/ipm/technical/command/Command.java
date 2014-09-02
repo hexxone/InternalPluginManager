@@ -104,10 +104,11 @@ public @interface Command {
      * flag will be setted to <code>true</code>). Value flags are also
      * supported. You can enable them with a <code>:</code> after the flag name.
      * If the value is not available, a {@link CommandEvent} will be fired with
-     * the {@link CommandEventType} {@link CommandEventType#MISSING_FLAG_VALUE}.
-     * If you use value flags, you have to enter the type of the flag data that
-     * is expected (like {@link Double}). Write the type after the
-     * <code>:</code>, like <code>p:string</code>. These types are available:
+     * the {@link CommandEventType}
+     * {@link CommandEventType#UNAVAILABLE_FLAG_VALUE}. If you use value flags,
+     * you have to enter the type of the flag data that is expected (like
+     * {@link Double}). Write the type after the <code>:</code>, like
+     * <code>p:string</code>. These types are available:
      * <ul>
      * <li>String, write <code>a:string</code></li>
      * <li>Long, write <code>a:long</code></li>
@@ -171,7 +172,6 @@ public @interface Command {
      *
      * @return The second-level-command for this command.
      */
-    // TODO: Implement
     public String secondLevelCommand() default "";
 
     /**

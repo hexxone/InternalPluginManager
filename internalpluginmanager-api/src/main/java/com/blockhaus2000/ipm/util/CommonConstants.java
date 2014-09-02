@@ -30,6 +30,10 @@ public class CommonConstants {
      * <code>"-"</code>
      */
     public static final String DASH = "-";
+    /**
+     * <code>""</code>
+     */
+    public static final String EMPTY = "";
 
     /**
      * Constructor of CommonConstants.

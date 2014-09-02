@@ -160,12 +160,14 @@ public class CommandEventData {
          * If a flag value is missing.
          *
          */
-        MISSING_FLAG_VALUE(RawCommandContext.class),
+        UNAVAILABLE_FLAG_VALUE(RawCommandContext.class),
         /**
          * If a flag value is inconsistent with its type.
          *
          */
-        INCONSTISTENT_FLAG_VALUE(RawCommandContext.class);
+        INCONSTISTENT_FLAG_VALUE(RawCommandContext.class),
+        UNAVAILABLE_SECOND_LEVEL_COMMAND(CommandInfo.class),
+        UNKNOWN_SECOND_LEVEL_COMMAND(CommandInfo.class);
 
         /**
          * The specific type of the {@link CommandInfo} that has to be passed

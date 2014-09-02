@@ -211,4 +211,15 @@ public class SimpleCommandInfo implements CommandInfo {
         final int thatPriority = that.getCommandAnot().priority().getPriority();
         return thisPriority < thatPriority ? -1 : thisPriority == thatPriority ? 0 : 1;
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return getClass().getName() + "[commandAnot=" + commandAnot + ", clazz=" + clazz + ", object=" + object + ", method="
+                + method + ", flagData=" + flagData + "]";
+    }
 }
