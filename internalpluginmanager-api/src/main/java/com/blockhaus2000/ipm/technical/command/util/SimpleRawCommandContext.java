@@ -57,7 +57,7 @@ public class SimpleRawCommandContext extends SimpleCommandInfo implements RawCom
     public SimpleRawCommandContext(final CommandInfo commandInfo, final String label, final String[] rawArgs,
             final CommandSender sender) {
         super(commandInfo.getCommandAnot(), commandInfo.getClazz(), commandInfo.getObject(), commandInfo.getMethod(), commandInfo
-                .getFlagData());
+                .getFlagData(), commandInfo.getSyntaxData());
 
         assert label != null && !label.isEmpty() : "Label cannot be null or empty!";
         assert rawArgs != null : "RawArgs cannot be null!";

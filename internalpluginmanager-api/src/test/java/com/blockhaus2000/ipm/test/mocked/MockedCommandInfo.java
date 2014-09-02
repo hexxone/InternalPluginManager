@@ -18,6 +18,7 @@
 package com.blockhaus2000.ipm.test.mocked;
 
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Map;
 
 import com.blockhaus2000.ipm.technical.command.Command;
@@ -76,6 +77,16 @@ public class MockedCommandInfo implements CommandInfo {
      */
     @Override
     public Map<Character, SyntaxType> getFlagData() {
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.technical.command.util.CommandInfo#getSyntaxData()
+     */
+    @Override
+    public List<SyntaxType> getSyntaxData() {
         return null;
     }
 

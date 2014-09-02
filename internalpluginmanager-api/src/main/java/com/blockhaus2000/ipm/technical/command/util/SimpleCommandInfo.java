@@ -18,7 +18,9 @@
 package com.blockhaus2000.ipm.technical.command.util;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.blockhaus2000.ipm.technical.command.Command;
@@ -54,6 +56,11 @@ public class SimpleCommandInfo implements CommandInfo {
      *
      */
     private final Map<Character, SyntaxType> flagData;
+    /**
+     * The command syntax data
+     *
+     */
+    private final List<SyntaxType> syntaxData;
 
     /**
      * Constructor of SimpleCommandInfo.
@@ -70,9 +77,11 @@ public class SimpleCommandInfo implements CommandInfo {
      *            The command executin {@link Method}.
      * @param flagData
      *            The command flag data.
+     * @param syntaxData
+     *            The command syntax data.
      */
     public SimpleCommandInfo(final Command commandAnot, final Class<?> clazz, final Object object, final Method method,
-            final Map<Character, SyntaxType> flagData) {
+            final Map<Character, SyntaxType> flagData, final List<SyntaxType> syntaxData) {
         assert commandAnot != null : "CommandAnot cannot be null!";
         assert clazz != null : "Clazz cannot be null!";
         assert object == null || clazz.equals(object.getClass()) : "Object has to be null or an object of clazz!";
@@ -84,6 +93,7 @@ public class SimpleCommandInfo implements CommandInfo {
         this.object = object;
         this.method = method;
         this.flagData = flagData;
+        this.syntaxData = syntaxData;
     }
 
     /**
@@ -150,6 +160,16 @@ public class SimpleCommandInfo implements CommandInfo {
         result = prime * result + (method == null ? 0 : method.hashCode());
         result = prime * result + (object == null ? 0 : object.hashCode());
         return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.technical.command.util.CommandInfo#getSyntaxData()
+     */
+    @Override
+    public List<SyntaxType> getSyntaxData() {
+        return syntaxData == null ? null : new ArrayList<SyntaxType>(syntaxData);
     }
 
     /**

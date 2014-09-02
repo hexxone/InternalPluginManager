@@ -18,6 +18,7 @@
 package com.blockhaus2000.ipm.technical.command.util;
 
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Map;
 
 import com.blockhaus2000.ipm.technical.command.Command;
@@ -56,8 +57,15 @@ public interface CommandInfo extends Comparable<CommandInfo> {
 
     /**
      *
-     * @return The flag data, containing all information about flags that are
+     * @return The flag data, containing all informations about flags that are
      *         important to parse them whilest a execution.
      */
     public Map<Character, SyntaxType> getFlagData();
+
+    /**
+     *
+     * @return The syntax data, containing all informations about the command
+     *         syntax are important to parse the arguments while execution.
+     */
+    public List<SyntaxType> getSyntaxData();
 }

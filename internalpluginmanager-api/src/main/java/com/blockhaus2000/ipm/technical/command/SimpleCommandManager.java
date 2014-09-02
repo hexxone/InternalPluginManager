@@ -184,13 +184,33 @@ public class SimpleCommandManager implements CommandManager {
                                     .split(CommonStringConstants.COLON)[1].toLowerCase()) : null);
                 }
 
+                // The syntax string should be trimmed.
+                final String rawSyntax = commandAnot.syntax().trim();
+                // If the syntax string is empty, no syntax check will be
+                // processed.
+                final String syntax = rawSyntax.isEmpty() ? null : rawSyntax;
+                // If the syntax is null, this list has to be null.
+                final List<SyntaxType> syntaxData = syntax == null ? null : new ArrayList<SyntaxType>();
+                // Only parse syntax if it is available.
+                if (syntax != null) {
+                    if (!syntax.matches(Constants.SYNTAX_REGEX)) {
+                        throw new CommandException("The syntax \"" + syntax + "\" does not match the regex \""
+                                + Constants.SYNTAX_REGEX + "\"!");
+                    }
+                    for (final String syntaxName : syntax.split(", *")) {
+                        // This cannot return null. The regex checks the name
+                        // before.
+                        syntaxData.add(SyntaxType.getFromName(syntaxName));
+                    }
+                }
+
                 // If the command map does not contain a list of command infos
                 // for the current flag, an ArrayList is created.
                 if (!commands.containsKey(alias)) {
                     commands.put(alias, new ArrayList<CommandInfo>());
                 }
 
-                final CommandInfo commandInfo = new SimpleCommandInfo(commandAnot, clazz, obj, method, flagData);
+                final CommandInfo commandInfo = new SimpleCommandInfo(commandAnot, clazz, obj, method, flagData, syntaxData);
 
                 // Only if the command info was added successful, the command
                 // info should be added to the "registered"-list.
@@ -269,16 +289,22 @@ public class SimpleCommandManager implements CommandManager {
             final String secondLevelCommand = rawSecondLevelCommand.isEmpty() ? null : rawSecondLevelCommand;
             // Only handle a scl, if one is set.
             if (secondLevelCommand != null) {
+                // This RawCommandContext is only temporary and does not include
+                // the correct raw args.
+                final RawCommandContext tempRawCommandContext = new SimpleRawCommandContext(commandInfo, label, rawArgs, sender);
+
                 // If the arguments are empty, no scl has been passed into the
                 // execution.
                 if (rawArgs.length == 0) {
-                    commandEventData.add(new CommandEventData(commandInfo, CommandEventType.UNAVAILABLE_SECOND_LEVEL_COMMAND));
+                    commandEventData.add(new CommandEventData(tempRawCommandContext,
+                            CommandEventType.UNAVAILABLE_SECOND_LEVEL_COMMAND));
                     continue;
                 }
                 // The scl has to match the first argument, because that is the
                 // scl.
                 if (!rawArgs[0].equalsIgnoreCase(secondLevelCommand)) {
-                    commandEventData.add(new CommandEventData(commandInfo, CommandEventType.UNKNOWN_SECOND_LEVEL_COMMAND));
+                    commandEventData.add(new CommandEventData(tempRawCommandContext,
+                            CommandEventType.UNKNOWN_SECOND_LEVEL_COMMAND));
                     continue;
                 }
                 // Now, remove the first argument from the argument array.
@@ -384,10 +410,10 @@ public class SimpleCommandManager implements CommandManager {
                     flags.put(key, new Tag<String>(rawArgs.get(flagIndex + 1)));
                     break;
                 case LONG:
-                    flags.put(key, new Tag<Long>(Long.parseLong(rawArgs.get(flagIndex + 1))));
+                    flags.put(key, new Tag<Long>(Long.valueOf(rawArgs.get(flagIndex + 1))));
                     break;
                 case DOUBLE:
-                    flags.put(key, new Tag<Double>(Double.parseDouble(rawArgs.get(flagIndex + 1))));
+                    flags.put(key, new Tag<Double>(Double.valueOf(rawArgs.get(flagIndex + 1))));
                     break;
                 case STRING_VARARG:
                     // :/ VarArgs has to be parsed.
@@ -404,7 +430,7 @@ public class SimpleCommandManager implements CommandManager {
                 }
                 // This should be removed always because index + 1 is the value.
                 toRemove.add(flagIndex + 1);
-            } catch (final NumberFormatException ex) {
+            } catch (final NumberFormatException dummy) {
                 // Add an event instead of throwing the exception.
                 commandEventData.add(new CommandEventData(rawCommandContext, CommandEventType.INCONSTISTENT_FLAG_VALUE));
                 // An "error" occurred.
@@ -418,19 +444,57 @@ public class SimpleCommandManager implements CommandManager {
             rawArgs.remove(index.intValue());
         }
 
+        // Set min/max arguments.
         final Command commandAnot = rawCommandContext.getCommandAnot();
+        final List<SyntaxType> syntaxData = rawCommandContext.getSyntaxData();
+        final int min = syntaxData == null ? commandAnot.min() : syntaxData.size();
+        final int max = syntaxData == null ? commandAnot.max() : !commandAnot.autoSetMaxOnSyntax()
+                || syntaxData.get(syntaxData.size() - 1) == SyntaxType.STRING_VARARG ? -1 : syntaxData.size();
+
         // Check min/max arguments.
-        if (rawArgs.size() < commandAnot.min()) {
+        if (rawArgs.size() < min) {
             commandEventData.add(new CommandEventData(rawCommandContext, CommandEventType.NOT_ENOUGH_ARGUMENTS));
             return null;
         }
-        if (commandAnot.max() != -1 && rawArgs.size() > commandAnot.max()) {
+        if (max != -1 && rawArgs.size() > max) {
             commandEventData.add(new CommandEventData(rawCommandContext, CommandEventType.TOO_MANY_ARGUMENTS));
             return null;
         }
 
-        // For now, no special parsing of arguments is needed.
-        final List<Tag<?>> args = new ArrayList<Tag<?>>(CollectionUtil.toTagCollection(rawArgs, ArrayList.class));
+        // Parse arguments
+        final List<Tag<?>> args;
+        if (syntaxData == null) {
+            args = new ArrayList<Tag<?>>(CollectionUtil.toTagCollection(rawArgs, ArrayList.class));
+        } else {
+            args = new ArrayList<Tag<?>>();
+            try {
+                for (int i = 0; i < syntaxData.size(); i++) {
+                    final String arg = rawArgs.get(i);
+                    switch (syntaxData.get(i)) {
+                    case STRING:
+                        // Yay, no parsing required.
+                        args.add(new Tag<String>(arg));
+                        break;
+                    case LONG:
+                        args.add(new Tag<Long>(Long.valueOf(arg)));
+                        break;
+                    case DOUBLE:
+                        args.add(new Tag<Double>(Double.valueOf(arg)));
+                        break;
+                    case STRING_VARARG:
+                        // :/ VarArgs parsing required.
+                        args.add(new Tag<String>(parseVarArg(rawArgs, i, null)));
+                        break;
+                    }
+                }
+            } catch (final NumberFormatException dummy) {
+                // Add an event instead of throwing the exception.
+                commandEventData.add(new CommandEventData(rawCommandContext, CommandEventType.INCONSTISTENT_FLAG_VALUE));
+                // An "error" occurred.
+                return null;
+            }
+        }
+
         return new SimpleCommandContext(rawCommandContext, args, flags);
     }
 
@@ -480,7 +544,7 @@ public class SimpleCommandManager implements CommandManager {
      */
     private String parseVarArg(final List<String> args, final int startIndex, final Character quote) {
         int endIndex = args.size() - 1;
-        if (quote.equals('"') || quote.equals('\'')) {
+        if (quote != null && (quote.equals('"') || quote.equals('\''))) {
             for (int i = startIndex; i < args.size(); i++) {
                 final String cur = args.get(i);
                 if (cur.endsWith(quote.toString())) {

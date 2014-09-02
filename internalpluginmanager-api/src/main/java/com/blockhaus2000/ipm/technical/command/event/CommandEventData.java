@@ -170,13 +170,18 @@ public class CommandEventData {
          * If a second level command is set, but the size of arguments of 0.
          *
          */
-        UNAVAILABLE_SECOND_LEVEL_COMMAND(CommandInfo.class),
+        UNAVAILABLE_SECOND_LEVEL_COMMAND(RawCommandContext.class),
         /**
          * If a second level command is set, but the first argument does not
          * match the second level command.
          *
          */
-        UNKNOWN_SECOND_LEVEL_COMMAND(CommandInfo.class);
+        UNKNOWN_SECOND_LEVEL_COMMAND(RawCommandContext.class),
+        /**
+         * If a syntax entry is incosnsistent with its type.
+         *
+         */
+        INCONSISTENT_SYNTAX_ENTRY(RawCommandContext.class);
 
         /**
          * The specific type of the {@link CommandInfo} that has to be passed
