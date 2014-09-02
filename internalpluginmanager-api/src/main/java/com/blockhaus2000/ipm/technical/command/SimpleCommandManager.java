@@ -33,6 +33,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.logging.Logger;
 
 import com.blockhaus2000.ipm.technical.command.event.CommandEvent;
 import com.blockhaus2000.ipm.technical.command.event.CommandEventData;
@@ -49,6 +50,7 @@ import com.blockhaus2000.ipm.technical.command.util.SyntaxType;
 import com.blockhaus2000.ipm.technical.command.util.exception.CommandException;
 import com.blockhaus2000.ipm.util.ArrayUtil;
 import com.blockhaus2000.ipm.util.CollectionUtil;
+import com.blockhaus2000.ipm.util.CommonConstants;
 import com.blockhaus2000.ipm.util.CommonStringConstants;
 import com.blockhaus2000.ipm.util.Tag;
 import com.blockhaus2000.ipm.util.exception.IllegalMethodSignatureException;
@@ -59,6 +61,12 @@ import com.blockhaus2000.ipm.util.exception.IllegalStaticAccessException;
  *
  */
 public class SimpleCommandManager implements CommandManager {
+    /**
+     * The InternalPluginManager system logger.
+     *
+     */
+    private static final Logger LOGGER = Logger.getLogger(CommonConstants.INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME);
+
     /**
      * THE instance of the {@link SimpleCommandManager}.
      *
@@ -122,11 +130,15 @@ public class SimpleCommandManager implements CommandManager {
         assert clazz != null : "Clazz cannot be null!";
         assert obj == null || clazz.equals(obj.getClass()) : "Obj has to be null or an object of clazz!";
 
+        SimpleCommandManager.LOGGER.fine("Registering class \"" + clazz.getName() + "\" with object \"" + obj + "\".");
+
         // Contains all successful registered commands.
         final Set<CommandInfo> registered = new HashSet<CommandInfo>();
 
         for (final Method method : clazz.getDeclaredMethods()) {
             if (!method.isAnnotationPresent(Command.class)) {
+                SimpleCommandManager.LOGGER.finer("Skipping method \"" + method.getName() + "\" (annotation not present).");
+
                 continue;
             }
             if (!Modifier.isStatic(method.getModifiers()) && obj == null) {
@@ -143,6 +155,68 @@ public class SimpleCommandManager implements CommandManager {
             }
 
             final Command commandAnot = method.getAnnotation(Command.class);
+
+            SimpleCommandManager.LOGGER.fine("Parsing method \"" + method.getName() + "\" with annotation data \"" + commandAnot
+                    + "\".");
+            SimpleCommandManager.LOGGER.finer("Parsing flags.");
+
+            // The flag data is parsed here to improve the performance.
+            // If the flag is a toggle flag, the SyntaxType is null.
+            final Map<Character, SyntaxType> flagData = new HashMap<Character, SyntaxType>();
+            for (String rawFlagData : commandAnot.flags()) {
+                // Flags should be trimmed.
+                rawFlagData = rawFlagData.trim();
+
+                // Empty flags are be ignored, becase the default value
+                // is an empty string.
+                if (rawFlagData.isEmpty()) {
+                    continue;
+                }
+                if (!rawFlagData.matches(Constants.FLAG_REGEX)) {
+                    throw new CommandException("The flag \"" + rawFlagData + "\" does not match the regex \""
+                            + Constants.FLAG_REGEX + "\"");
+                }
+
+                SimpleCommandManager.LOGGER.finest("Parsing flag \"" + rawFlagData + "\".");
+
+                // The first char is ALWAYS the flag name, the regex checks
+                // that. If the flag a value flag, the flag string contains
+                // a colon (:), and directly after the colon stands the
+                // syntax name. If there is no colon, the syntax type is
+                // null. That means, the flag is a toggle flag.
+                flagData.put(
+                        rawFlagData.charAt(0),
+                        rawFlagData.contains(CommonStringConstants.COLON) ? SyntaxType.getFromName(rawFlagData
+                                .split(CommonStringConstants.COLON)[1].toLowerCase()) : null);
+            }
+
+            SimpleCommandManager.LOGGER.finer("Parsing syntax.");
+
+            // The syntax string should be trimmed.
+            final String rawSyntax = commandAnot.syntax().trim();
+            // If the syntax string is empty, no syntax check will be
+            // processed.
+            final String syntax = rawSyntax.isEmpty() ? null : rawSyntax;
+            // If the syntax is null, this list has to be null.
+            final List<SyntaxType> syntaxData = syntax == null ? null : new ArrayList<SyntaxType>();
+            // Only parse syntax if it is available.
+            if (syntax != null) {
+                if (!syntax.matches(Constants.SYNTAX_REGEX)) {
+                    throw new CommandException("The syntax \"" + syntax + "\" does not match the regex \""
+                            + Constants.SYNTAX_REGEX + "\"!");
+                }
+                for (final String syntaxName : syntax.split(", *")) {
+                    SimpleCommandManager.LOGGER.finest("Parsing syntax element \"" + syntaxName + "\".");
+
+                    // This cannot return null. The regex checks the name
+                    // before.
+                    syntaxData.add(SyntaxType.getFromName(syntaxName));
+                }
+            }
+
+            final CommandInfo commandInfo = new SimpleCommandInfo(commandAnot, clazz, obj, method, flagData, syntaxData);
+
+            SimpleCommandManager.LOGGER.finer("Registering command information (\"" + commandInfo + "\").");
             for (String alias : commandAnot.aliases()) {
                 // Aliases should be lowercase and trimmed.
                 alias = alias.toLowerCase().trim();
@@ -156,61 +230,15 @@ public class SimpleCommandManager implements CommandManager {
                     continue;
                 }
 
-                // The flag data is parsed here to improve the performance.
-                // If the flag is a toggle flag, the SyntaxType is null.
-                final Map<Character, SyntaxType> flagData = new HashMap<Character, SyntaxType>();
-                for (String rawFlagData : commandAnot.flags()) {
-                    // Flags should be trimmed.
-                    rawFlagData = rawFlagData.trim();
-
-                    // Empty flags are be ignored, becase the default value
-                    // is an empty string.
-                    if (rawFlagData.isEmpty()) {
-                        continue;
-                    }
-                    if (!rawFlagData.matches(Constants.FLAG_REGEX)) {
-                        throw new CommandException("The flag \"" + rawFlagData + "\" does not match the regex \""
-                                + Constants.FLAG_REGEX + "\"");
-                    }
-
-                    // The first char is ALWAYS the flag name, the regex checks
-                    // that. If the flag a value flag, the flag string contains
-                    // a colon (:), and directly after the colon stands the
-                    // syntax name. If there is no colon, the syntax type is
-                    // null. That means, the flag is a toggle flag.
-                    flagData.put(
-                            rawFlagData.charAt(0),
-                            rawFlagData.contains(CommonStringConstants.COLON) ? SyntaxType.getFromName(rawFlagData
-                                    .split(CommonStringConstants.COLON)[1].toLowerCase()) : null);
-                }
-
-                // The syntax string should be trimmed.
-                final String rawSyntax = commandAnot.syntax().trim();
-                // If the syntax string is empty, no syntax check will be
-                // processed.
-                final String syntax = rawSyntax.isEmpty() ? null : rawSyntax;
-                // If the syntax is null, this list has to be null.
-                final List<SyntaxType> syntaxData = syntax == null ? null : new ArrayList<SyntaxType>();
-                // Only parse syntax if it is available.
-                if (syntax != null) {
-                    if (!syntax.matches(Constants.SYNTAX_REGEX)) {
-                        throw new CommandException("The syntax \"" + syntax + "\" does not match the regex \""
-                                + Constants.SYNTAX_REGEX + "\"!");
-                    }
-                    for (final String syntaxName : syntax.split(", *")) {
-                        // This cannot return null. The regex checks the name
-                        // before.
-                        syntaxData.add(SyntaxType.getFromName(syntaxName));
-                    }
-                }
+                SimpleCommandManager.LOGGER.finest("Registering for alias \"" + alias + "\"");
 
                 // If the command map does not contain a list of command infos
                 // for the current flag, an ArrayList is created.
                 if (!commands.containsKey(alias)) {
+                    SimpleCommandManager.LOGGER.finest("Adding new list.");
+
                     commands.put(alias, new ArrayList<CommandInfo>());
                 }
-
-                final CommandInfo commandInfo = new SimpleCommandInfo(commandAnot, clazz, obj, method, flagData, syntaxData);
 
                 // Only if the command info was added successful, the command
                 // info should be added to the "registered"-list.
@@ -225,6 +253,8 @@ public class SimpleCommandManager implements CommandManager {
                 }
             }
         }
+
+        SimpleCommandManager.LOGGER.fine("Registered " + registered.size() + "commands (\"" + registered + "\").");
 
         return registered;
     }
@@ -267,9 +297,14 @@ public class SimpleCommandManager implements CommandManager {
         assert sender != null : "Sender cannot be null!";
         assert rawArgs != null : "RawArgs cannot be null!";
 
+        SimpleCommandManager.LOGGER.fine("\"" + sender + "\" executed \"" + label + "\" with arguments \""
+                + Arrays.asList(rawArgs) + "\"");
+
         // If no registered commands could be found, it is impossible to execute
         // them.
         if (commands.get(label) == null) {
+            SimpleCommandManager.LOGGER.fine("Command label not found.");
+
             return false;
         }
 
@@ -281,6 +316,8 @@ public class SimpleCommandManager implements CommandManager {
         boolean executed = false;
         for (final CommandInfo commandInfo : commands.get(label)) {
             final Command commandAnot = commandInfo.getCommandAnot();
+
+            SimpleCommandManager.LOGGER.finer("Executing \"" + commandInfo + "\".");
 
             // The trimmed second level command is used twice, so it is assigned
             // to a variable. Do NOT use this.
@@ -311,6 +348,8 @@ public class SimpleCommandManager implements CommandManager {
                 rawArgs = Arrays.copyOfRange(rawArgs, 1, rawArgs.length);
             }
 
+            SimpleCommandManager.LOGGER.finest("Second level command is set to \"" + secondLevelCommand + "\"");
+
             final SimpleRawCommandContext rawCommandContext = new SimpleRawCommandContext(commandInfo, label, rawArgs, sender);
 
             // Check permission.
@@ -326,6 +365,9 @@ public class SimpleCommandManager implements CommandManager {
             if (commandContext == null) {
                 continue;
             }
+
+            SimpleCommandManager.LOGGER.finest("Command parsed to \"" + commandContext + "\".");
+
             // Now, invoke/execute the method that is associated with the
             // current command (alias).
             invoke(commandContext);
@@ -333,6 +375,9 @@ public class SimpleCommandManager implements CommandManager {
             // Now, the command has been executed successfully.
             executed = true;
         }
+
+        SimpleCommandManager.LOGGER.finer("Created events: \"" + commandEventData + "\".");
+        SimpleCommandManager.LOGGER.fine("Executed: " + executed);
 
         // If no command was executed, fire the CommandEvent.
         if (!executed) {
@@ -357,6 +402,8 @@ public class SimpleCommandManager implements CommandManager {
     private CommandContext parseArguments(final RawCommandContext rawCommandContext, final List<CommandEventData> commandEventData) {
         assert rawCommandContext != null : "RawCommandContext cannot be null!";
 
+        SimpleCommandManager.LOGGER.fine("Parsing arguments for \"" + rawCommandContext + "\".");
+
         // A LinkedList has to be used, because later, some entries will be
         // removed. An ArrayList does not support this feature.
         final List<String> rawArgs = new LinkedList<String>(Arrays.asList(rawCommandContext.getRawArgs()));
@@ -366,6 +413,9 @@ public class SimpleCommandManager implements CommandManager {
         // the system, cause a IndexOutOfBoundsException is thrown. With this,
         // it is save for work.
         final SortedSet<Integer> toRemove = new TreeSet<Integer>(SimpleCommandManager.REVERSE_INTEGER_COMPARATOR);
+
+        SimpleCommandManager.LOGGER.finer("Parsing flags.");
+
         // Flag data is stored here. If a value flag is not set, the value is
         // null.
         final Map<Character, Tag<?>> flags = new HashMap<Character, Tag<?>>();
@@ -374,6 +424,8 @@ public class SimpleCommandManager implements CommandManager {
         for (final Entry<Character, SyntaxType> entry : rawCommandContext.getFlagData().entrySet()) {
             final Character key = entry.getKey();
             final SyntaxType value = entry.getValue();
+
+            SimpleCommandManager.LOGGER.finest("Parsing flag \"" + key + "\".");
 
             // In the flag data, flags are stored with signle characters, but a
             // dash in front is needed to set them whilest executing the
@@ -437,6 +489,10 @@ public class SimpleCommandManager implements CommandManager {
                 return null;
             }
         }
+
+        SimpleCommandManager.LOGGER.finer("Flags parsed to \"" + flags + "\".");
+        SimpleCommandManager.LOGGER.finer("Removing parsed arguments.");
+
         // Remove all added indexes to remove. The set is sorted reversed, so
         // iterate about the set and remove every value is possible without an
         // IndexOutOfBoundsException.
@@ -444,12 +500,18 @@ public class SimpleCommandManager implements CommandManager {
             rawArgs.remove(index.intValue());
         }
 
+        SimpleCommandManager.LOGGER.finer("Parsed arguments removed.");
+        SimpleCommandManager.LOGGER.finer("Calculating/checking min/max arguments.");
+
         // Set min/max arguments.
         final Command commandAnot = rawCommandContext.getCommandAnot();
         final List<SyntaxType> syntaxData = rawCommandContext.getSyntaxData();
         final int min = syntaxData == null ? commandAnot.min() : syntaxData.size();
         final int max = syntaxData == null ? commandAnot.max() : !commandAnot.autoSetMaxOnSyntax()
                 || syntaxData.get(syntaxData.size() - 1) == SyntaxType.STRING_VARARG ? -1 : syntaxData.size();
+
+        SimpleCommandManager.LOGGER.finest("Minimal arguments set to " + min + ".");
+        SimpleCommandManager.LOGGER.finest("Maximal arguments set to " + max + ".");
 
         // Check min/max arguments.
         if (rawArgs.size() < min) {
@@ -461,11 +523,17 @@ public class SimpleCommandManager implements CommandManager {
             return null;
         }
 
+        SimpleCommandManager.LOGGER.finer("Parsing arguments.");
+
         // Parse arguments
         final List<Tag<?>> args;
         if (syntaxData == null) {
+            SimpleCommandManager.LOGGER.finest("No syntax available, nothing to parse.");
+
             args = new ArrayList<Tag<?>>(CollectionUtil.toTagCollection(rawArgs, ArrayList.class));
         } else {
+            SimpleCommandManager.LOGGER.finest("Parsing syntax.");
+
             args = new ArrayList<Tag<?>>();
             try {
                 for (int i = 0; i < syntaxData.size(); i++) {
@@ -495,6 +563,8 @@ public class SimpleCommandManager implements CommandManager {
             }
         }
 
+        SimpleCommandManager.LOGGER.finer("Arguments parsed to \"" + args + "\".");
+
         return new SimpleCommandContext(rawCommandContext, args, flags);
     }
 
@@ -510,10 +580,19 @@ public class SimpleCommandManager implements CommandManager {
         assert context != null : "Context cannot be null!";
 
         final Method method = context.getMethod();
+
+        SimpleCommandManager.LOGGER.fine("Invoking method \"" + method.getName() + "\"");
+
         // The accessible status should be resetted to the old state.
         final boolean oldAccessible = method.isAccessible();
+
+        SimpleCommandManager.LOGGER.finest("Setting accessible to true.");
+
         method.setAccessible(true);
         try {
+            SimpleCommandManager.LOGGER.finest("Invoking method \"" + method.getName() + "\" on object \"" + context.getObject()
+                    + "\" with the argument \"" + context + "\".");
+
             method.invoke(context.getObject(), context);
         } catch (final IllegalArgumentException cause) {
             throw new CommandException("Maybe there is a wrong method signatur at method <" + method
@@ -523,6 +602,9 @@ public class SimpleCommandManager implements CommandManager {
         } catch (final InvocationTargetException cause) {
             throw new CommandException("An exception occurres in the command execution method!", cause);
         }
+
+        SimpleCommandManager.LOGGER.finest("Resetting accessible to " + oldAccessible + ".");
+
         // Reset accessible status.
         method.setAccessible(oldAccessible);
     }

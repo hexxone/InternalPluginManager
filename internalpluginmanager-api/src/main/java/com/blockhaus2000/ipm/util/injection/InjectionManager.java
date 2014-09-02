@@ -21,7 +21,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
+import com.blockhaus2000.ipm.util.CommonConstants;
 import com.blockhaus2000.ipm.util.exception.IllegalStaticAccessException;
 import com.blockhaus2000.ipm.util.injection.exception.InjectionException;
 import com.blockhaus2000.ipm.util.injection.exception.NotAddedInjectionException;
@@ -36,6 +38,12 @@ import com.blockhaus2000.ipm.util.injection.exception.NotAddedInjectionException
  *
  */
 public final class InjectionManager {
+    /**
+     * The InternalPluginManager system logger.
+     *
+     */
+    private static final Logger LOGGER = Logger.getLogger(CommonConstants.INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME);
+
     /**
      * This {@link Map} stores the instances of all registered resources that
      * can be injected.
@@ -87,8 +95,12 @@ public final class InjectionManager {
         assert clazz != null : "Clazz cannot be null!";
         assert obj == null || clazz.equals(obj.getClass()) : "Obj has to be null or an object of clazz!";
 
+        InjectionManager.LOGGER.fine("Initilizing class \"" + clazz.getName() + "\".");
+
         for (final Field field : clazz.getDeclaredFields()) {
             if (!field.isAnnotationPresent(Inject.class)) {
+                InjectionManager.LOGGER.finer("Skipping field \"" + field.getName() + "\".");
+
                 continue;
             }
             if (!Modifier.isStatic(field.getModifiers()) && obj == null) {
@@ -100,15 +112,28 @@ public final class InjectionManager {
             if (!InjectionManager.INSTANCES.containsKey(type)) {
                 throw new NotAddedInjectionException("No object found that is associated with the  type <" + type + ">!");
             }
+
+            final boolean oldAccessible = field.isAccessible();
+
+            InjectionManager.LOGGER.finest("Setting accessible to true.");
+
             field.setAccessible(true);
             try {
+                InjectionManager.LOGGER.finest("Setting value.");
+
                 field.set(obj, InjectionManager.INSTANCES.get(type));
             } catch (final IllegalArgumentException cause) {
                 throw new InjectionException("The type of the saved object is inconsistent with the type of the field!", cause);
             } catch (final IllegalAccessException cause) {
                 throw new InjectionException("You do not have enough rights to set the field value!", cause);
             }
+
+            InjectionManager.LOGGER.finest("Resetting accessible to " + oldAccessible + ".");
+
+            field.setAccessible(oldAccessible);
         }
+
+        InjectionManager.LOGGER.fine("Initilization finished.");
     }
 
     /**
@@ -157,10 +182,17 @@ public final class InjectionManager {
         assert obj != null : "Obj cannot be null!";
         assert clazz != null : "Clazz cannot be null!";
 
+        InjectionManager.LOGGER.fine("Adding resource \"" + obj + "\" (\"" + clazz.getName() + "\").");
+
         if (InjectionManager.INSTANCES.containsKey(clazz)) {
+            InjectionManager.LOGGER.fine("Resource already added.");
+
             return false;
         }
         InjectionManager.INSTANCES.put(clazz, obj);
+
+        InjectionManager.LOGGER.fine("Resource added.");
+
         return true;
     }
 }
