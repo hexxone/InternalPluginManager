@@ -66,6 +66,18 @@ public class SimpleCommandManager implements CommandManager {
     private static final CommandManager INSTANCE = new SimpleCommandManager();
 
     /**
+     * The {@link CommandInfo} comparator.
+     *
+     */
+    private static final Comparator<CommandInfo> COMMAND_INFO_COMPARATOR = new Comparator<CommandInfo>() {
+        @Override
+        public int compare(final CommandInfo o1, final CommandInfo o2) {
+            return Integer.valueOf(o1.getCommandAnot().priority().getPriority()).compareTo(
+                    o2.getCommandAnot().priority().getPriority());
+        }
+    };
+
+    /**
      * Contains all registered commands.
      *
      * <ul>
@@ -148,13 +160,7 @@ public class SimpleCommandManager implements CommandManager {
                 final CommandInfo commandInfo = new SimpleCommandInfo(commandAnot, clazz, obj, method, flagData);
 
                 if (commands.get(alias).add(commandInfo)) {
-                    Collections.sort(commands.get(alias), new Comparator<CommandInfo>() {
-                        @Override
-                        public int compare(final CommandInfo o1, final CommandInfo o2) {
-                            return Integer.valueOf(o1.getCommandAnot().priority().getPriority()).compareTo(
-                                    o2.getCommandAnot().priority().getPriority());
-                        }
-                    });
+                    Collections.sort(commands.get(alias), SimpleCommandManager.COMMAND_INFO_COMPARATOR);
                     result.add(commandInfo);
                 }
             }
