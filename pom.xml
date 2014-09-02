@@ -14,9 +14,9 @@
 
 	<!-- Some important project properties -->
 	<properties>
-		<!-- License Stuff --> <!-- TODO: Update License -->
-		<project.properties.license.name>Apache License Version 2.0</project.properties.license.name>
-		<project.properties.license.url>http://www.apache.org/licenses/LICENSE-2.0</project.properties.license.url>
+		<!-- License Stuff -->
+		<project.properties.license.name>GNU General Public License 3.0</project.properties.license.name>
+		<project.properties.license.url>http://www.gnu.org/licenses/</project.properties.license.url>
 
 		<!-- The encoding to use everywhere -->
 		<project.properties.encoding>UTF-8</project.properties.encoding>
@@ -138,7 +138,7 @@
 				</configuration>
 			</plugin>
 
-			<!-- Find TODO's --> <!-- //TODO-FINDER:IGNORE -->
+			<!-- Find To-Do's -->
 			<plugin>
 				<groupId>com.blockhaus2000</groupId>
 				<artifactId>todo-finder-maven-plugin</artifactId>
