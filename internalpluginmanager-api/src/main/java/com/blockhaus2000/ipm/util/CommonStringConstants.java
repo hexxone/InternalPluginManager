@@ -18,10 +18,10 @@
 package com.blockhaus2000.ipm.util;
 
 /**
- * This class contains some common constants, such like a blank (" ").
+ * This class contains some common string constants, such like a blank (" ").
  *
  */
-public class CommonConstants {
+public class CommonStringConstants {
     /**
      * <code>" "</code>
      */
@@ -34,12 +34,16 @@ public class CommonConstants {
      * <code>""</code>
      */
     public static final String EMPTY = "";
+    /**
+     * <code>":"</code>
+     */
+    public static final String COLON = ":";
 
     /**
      * Constructor of CommonConstants.
      *
      */
-    private CommonConstants() {
+    private CommonStringConstants() {
         // Utility classes should not have a visible constructor.
     }
 }

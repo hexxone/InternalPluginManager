@@ -39,7 +39,7 @@ public class ArrayUtil {
     public static String joinString(final String rawDelimiter, final int start, final int end, final String... arr) {
         assert arr != null : "Arr cannot be null!";
 
-        final String delimiter = rawDelimiter == null ? CommonConstants.BLANK : rawDelimiter;
+        final String delimiter = rawDelimiter == null ? CommonStringConstants.BLANK : rawDelimiter;
         final int endIndex = end == -1 ? arr.length : end;
 
         final StringBuffer buffer = new StringBuffer();
