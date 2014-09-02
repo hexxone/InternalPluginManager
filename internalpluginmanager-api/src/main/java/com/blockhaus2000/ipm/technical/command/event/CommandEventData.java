@@ -57,7 +57,7 @@ public class CommandEventData {
         assert commandInfo != null : "CommandInfo cannot be null!";
         assert eventType != null : "EventType cannot be null!";
         assert eventType.getCommandInfoType().isInstance(commandInfo) : "CommandInfo has to be an instance of <"
-                + eventType.getClass().getName() + ">!";
+        + eventType.getClass().getName() + ">!";
 
         this.commandInfo = commandInfo;
         this.eventType = eventType;
@@ -166,7 +166,16 @@ public class CommandEventData {
          *
          */
         INCONSTISTENT_FLAG_VALUE(RawCommandContext.class),
+        /**
+         * If a second level command is set, but the size of arguments of 0.
+         *
+         */
         UNAVAILABLE_SECOND_LEVEL_COMMAND(CommandInfo.class),
+        /**
+         * If a second level command is set, but the first argument does not
+         * match the second level command.
+         *
+         */
         UNKNOWN_SECOND_LEVEL_COMMAND(CommandInfo.class);
 
         /**

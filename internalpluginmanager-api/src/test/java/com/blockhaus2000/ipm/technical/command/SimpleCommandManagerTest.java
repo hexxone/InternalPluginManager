@@ -168,7 +168,7 @@ public class SimpleCommandManagerTest {
          *            The {@link CommandContext}.
          */
         @Command(aliases = "tc_cmd3",
-                permission = MockedCommandSender.JUNIT_TEST_PERIMSSION)
+                 permission = MockedCommandSender.JUNIT_TEST_PERIMSSION)
         public void command3(final CommandContext context) {
             throw new TestSuccessfullException();
         }
@@ -180,7 +180,7 @@ public class SimpleCommandManagerTest {
          *            The {@link CommandContext}.
          */
         @Command(aliases = "tc_cmd4",
-                flags = { "a" })
+                 flags = { "a" })
         public void command4(final CommandContext context) {
             if (!(Boolean) context.getFlags().get('a').getData()) {
                 throw new TestSuccessfullException();
@@ -194,7 +194,7 @@ public class SimpleCommandManagerTest {
          *            The {@link CommandContext}.
          */
         @Command(aliases = "tc_cmd5",
-                flags = { "a" })
+                 flags = { "a" })
         public void command5(final CommandContext context) {
             if ((Boolean) context.getFlags().get('a').getData()) {
                 throw new TestSuccessfullException();
@@ -208,7 +208,7 @@ public class SimpleCommandManagerTest {
          *            The {@link CommandContext}.
          */
         @Command(aliases = "tc_cmd6",
-                flags = { "a" })
+                 flags = { "a" })
         public void command6(final CommandContext context) {
             if (!(Boolean) context.getFlags().get('a').getData()) {
                 throw new TestSuccessfullException();
@@ -222,7 +222,7 @@ public class SimpleCommandManagerTest {
          *            The {@link CommandContext}.
          */
         @Command(aliases = "tc_cmd7",
-                flags = { "a:string" })
+                 flags = { "a:string" })
         public void command7(final CommandContext context) {
             if (((String) context.getFlags().get('a').getData()).equals("TEST")) {
                 throw new TestSuccessfullException();
@@ -236,7 +236,7 @@ public class SimpleCommandManagerTest {
          *            The {@link CommandContext}.
          */
         @Command(aliases = "tc_cmd8",
-                flags = { "a:double" })
+                 flags = { "a:double" })
         public void command8(final CommandContext context) {
             if (((Double) context.getFlags().get('a').getData()).doubleValue() == 1234.5678) {
                 throw new TestSuccessfullException();
@@ -250,7 +250,7 @@ public class SimpleCommandManagerTest {
          *            The {@link CommandContext}.
          */
         @Command(aliases = "tc_cmd9",
-                flags = { "a:string_vararg" })
+                 flags = { "a:string_vararg" })
         public void command9(final CommandContext context) {
             if (((String) context.getFlags().get('a').getData()).equals("Hello World!")) {
                 throw new TestSuccessfullException();
@@ -264,7 +264,7 @@ public class SimpleCommandManagerTest {
          *            The {@link CommandContext}.
          */
         @Command(aliases = "tc_cmd10",
-                flags = { "a", "b", "c:string", "d:long", "e:double", "f:string_vararg" })
+                 flags = { "a", "b", "c:string", "d:long", "e:double", "f:string_vararg" })
         public void command10(final CommandContext context) {
             final Map<Character, Tag<?>> flags = context.getFlags();
             final java.util.List<Tag<?>> args = context.getArgs();
@@ -282,14 +282,30 @@ public class SimpleCommandManagerTest {
             }
         }
 
+        /**
+         * Test command priority.
+         *
+         */
         private Object command11 = null;
 
+        /**
+         * Test command priority.
+         *
+         * @param context
+         *            The {@link CommandContext}.
+         */
         @Command(aliases = "tc_cmd11",
-                priority = CommandPriority.LOW)
+                 priority = CommandPriority.LOW)
         public void command11a(final CommandContext context) {
             command11 = new Object();
         }
 
+        /**
+         * Test command priority.
+         *
+         * @param context
+         *            The {@link CommandContext}.
+         */
         @Command(aliases = "tc_cmd11")
         public void command11b(final CommandContext context) {
             if (command11 != null) {
@@ -297,18 +313,30 @@ public class SimpleCommandManagerTest {
             }
         }
 
+        /**
+         * Test second level command.
+         *
+         * @param context
+         *            The {@link CommandContext}.
+         */
         @Command(aliases = "tc_cmd12",
-                 secondLevelCommand = "a",
-                 flags = "a")
+                secondLevelCommand = "a",
+                flags = "a")
         public void command12a(final CommandContext context) {
             if ((Boolean) context.getFlags().get('a').getData()) {
                 throw new TestSuccessfullException();
             }
         }
 
+        /**
+         * Test second level command.
+         *
+         * @param context
+         *            The {@link CommandContext}.
+         */
         @Command(aliases = "tc_cmd12",
-                 secondLevelCommand = "b",
-                 flags = "b")
+                secondLevelCommand = "b",
+                flags = "b")
         public void command12b(final CommandContext context) {
             if ((Boolean) context.getFlags().get('b').getData()) {
                 throw new TestSuccessfullException();
