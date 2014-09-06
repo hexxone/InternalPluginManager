@@ -56,8 +56,8 @@ public class SimpleRawCommandContext extends SimpleCommandInfo implements RawCom
      */
     public SimpleRawCommandContext(final CommandInfo commandInfo, final String label, final String[] rawArgs,
             final CommandSender sender) {
-        super(commandInfo.getCommandAnot(), commandInfo.getClazz(), commandInfo.getObject(), commandInfo.getMethod(), commandInfo
-                .getFlagData(), commandInfo.getSyntaxData());
+        super(commandInfo.getCommandAnot(), commandInfo.getObject(), commandInfo.getMethod(), commandInfo.getFlagData(),
+                commandInfo.getSyntaxData());
 
         assert label != null && !label.isEmpty() : "Label cannot be null or empty!";
         assert rawArgs != null : "RawArgs cannot be null!";
@@ -75,7 +75,7 @@ public class SimpleRawCommandContext extends SimpleCommandInfo implements RawCom
      */
     @Override
     public String getLabel() {
-        return label;
+        return this.label;
     }
 
     /**
@@ -85,7 +85,7 @@ public class SimpleRawCommandContext extends SimpleCommandInfo implements RawCom
      */
     @Override
     public String[] getRawArgs() {
-        return rawArgs;
+        return this.rawArgs;
     }
 
     /**
@@ -95,7 +95,7 @@ public class SimpleRawCommandContext extends SimpleCommandInfo implements RawCom
      */
     @Override
     public CommandSender getSender() {
-        return sender;
+        return this.sender;
     }
 
     /**
@@ -107,9 +107,9 @@ public class SimpleRawCommandContext extends SimpleCommandInfo implements RawCom
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
-        result = prime * result + (label == null ? 0 : label.hashCode());
-        result = prime * result + Arrays.hashCode(rawArgs);
-        result = prime * result + (sender == null ? 0 : sender.hashCode());
+        result = prime * result + (this.label == null ? 0 : this.label.hashCode());
+        result = prime * result + Arrays.hashCode(this.rawArgs);
+        result = prime * result + (this.sender == null ? 0 : this.sender.hashCode());
         return result;
     }
 
@@ -130,21 +130,21 @@ public class SimpleRawCommandContext extends SimpleCommandInfo implements RawCom
             return false;
         }
         final SimpleRawCommandContext other = (SimpleRawCommandContext) obj;
-        if (label == null) {
+        if (this.label == null) {
             if (other.label != null) {
                 return false;
             }
-        } else if (!label.equals(other.label)) {
+        } else if (!this.label.equals(other.label)) {
             return false;
         }
-        if (!Arrays.equals(rawArgs, other.rawArgs)) {
+        if (!Arrays.equals(this.rawArgs, other.rawArgs)) {
             return false;
         }
-        if (sender == null) {
+        if (this.sender == null) {
             if (other.sender != null) {
                 return false;
             }
-        } else if (!sender.equals(other.sender)) {
+        } else if (!this.sender.equals(other.sender)) {
             return false;
         }
         return true;

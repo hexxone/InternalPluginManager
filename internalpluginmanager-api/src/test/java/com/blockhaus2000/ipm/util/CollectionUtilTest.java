@@ -33,7 +33,21 @@ import org.junit.Test;
  */
 public class CollectionUtilTest {
     /**
-     * Test {@link CollectionUtil#toTagCollection(Collection, Class)}
+     * Tests {@link CollectionUtil#indexOf(String, List)}.
+     *
+     */
+    @Test
+    public void indexOf() {
+        final List<String> target = new ArrayList<String>(Arrays.asList("e0", "e1", "e2", "e3", "e4"));
+
+        Assert.assertEquals(1, CollectionUtil.indexOf("e1", target));
+        Assert.assertEquals(0, CollectionUtil.indexOf("e\\d", target));
+        Assert.assertEquals(4, CollectionUtil.indexOf(".4", target));
+        Assert.assertEquals(-1, CollectionUtil.indexOf("element", target));
+    }
+
+    /**
+     * Tests {@link CollectionUtil#toTagCollection(Collection, Class)}.
      *
      */
     @Test

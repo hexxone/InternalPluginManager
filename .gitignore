@@ -12,3 +12,5 @@ target/
 dependency-reduced-pom.xml
 # Binary files from Visual Paradigm
 *.vpp*
+# Testing stuff
+dist/

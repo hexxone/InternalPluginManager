@@ -36,12 +36,6 @@ public interface CommandInfo extends Comparable<CommandInfo> {
 
     /**
      *
-     * @return The {@link Class} that contains the command method.
-     */
-    public Class<?> getClazz();
-
-    /**
-     *
      * @return The {@link Object} of the class that contains the command method.
      *         May be <code>null</code>, if no object where given (The method
      *         has to be static!).

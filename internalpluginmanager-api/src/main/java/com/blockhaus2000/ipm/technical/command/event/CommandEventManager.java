@@ -20,7 +20,6 @@ package com.blockhaus2000.ipm.technical.command.event;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -42,7 +41,7 @@ public class CommandEventManager {
      * implementing an extra method for a listener. A class is identical enough.
      *
      */
-    private final Map<Class<? extends CommandEventListener>, CommandEventListener> listeners = new HashMap<Class<? extends CommandEventListener>, CommandEventListener>();
+    private final Map<String, CommandEventListener> listeners = new HashMap<String, CommandEventListener>();
 
     /**
      * Fires the given {@link CommandEvent}.
@@ -53,8 +52,8 @@ public class CommandEventManager {
     public void fire(final CommandEvent event) {
         assert event != null : "Event cannot be null!";
 
-        for (final Entry<Class<? extends CommandEventListener>, CommandEventListener> entry : listeners.entrySet()) {
-            entry.getValue().onCommandEvent(event);
+        for (final CommandEventListener listener : this.listeners.values()) {
+            listener.onCommandEvent(event);
         }
     }
 
@@ -68,7 +67,7 @@ public class CommandEventManager {
     public void register(final CommandEventListener listener) {
         assert listener != null : "Listener cannot be null!";
 
-        listeners.put(listener.getClass(), listener);
+        this.listeners.put(listener.getClass().getName(), listener);
     }
 
     /**
@@ -83,7 +82,7 @@ public class CommandEventManager {
     public boolean unregister(final Class<? extends CommandEventListener> listenerClass) {
         assert listenerClass != null : "ListenerClass cannot be null!";
 
-        return listeners.remove(listenerClass) != null;
+        return this.listeners.remove(listenerClass.getName()) != null;
     }
 
     /**
@@ -97,7 +96,7 @@ public class CommandEventManager {
     public boolean unregister(final CommandEventListener listener) {
         assert listener != null : "Listener cannot be null!";
 
-        return unregister(listener.getClass());
+        return this.unregister(listener.getClass());
     }
 
     /**
@@ -105,7 +104,7 @@ public class CommandEventManager {
      * @return The values of {@link CommandEventManager#listeners}.
      */
     public Set<CommandEventListener> getListeners() {
-        return new HashSet<CommandEventListener>(listeners.values());
+        return new HashSet<CommandEventListener>(this.listeners.values());
     }
 
     /**

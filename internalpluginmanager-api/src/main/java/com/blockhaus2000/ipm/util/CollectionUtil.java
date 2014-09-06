@@ -21,6 +21,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * This utility class simplifies the use of {@link Collection}s.
@@ -33,6 +34,24 @@ public class CollectionUtil {
      */
     private CollectionUtil() {
         // Utility classes should not have a visible constructor.
+    }
+
+    /**
+     * Gets the index of the first occurrence of the given regex.
+     *
+     * @param regex
+     *            The regex to search for.
+     * @param list
+     *            The list that may contains the given regex.
+     * @return The index of the first occurrence. If not found, <code>-1</code>.
+     */
+    public static int indexOf(final String regex, final List<String> list) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).matches(regex)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**

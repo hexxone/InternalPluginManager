@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -214,7 +215,7 @@ public class SimpleCommandManager implements CommandManager {
                 }
             }
 
-            final CommandInfo commandInfo = new SimpleCommandInfo(commandAnot, clazz, obj, method, flagData, syntaxData);
+            final CommandInfo commandInfo = new SimpleCommandInfo(commandAnot, obj, method, flagData, syntaxData);
 
             SimpleCommandManager.LOGGER.finer("Registering command information (\"" + commandInfo + "\").");
             for (String alias : commandAnot.aliases()) {
@@ -234,27 +235,27 @@ public class SimpleCommandManager implements CommandManager {
 
                 // If the command map does not contain a list of command infos
                 // for the current flag, an ArrayList is created.
-                if (!commands.containsKey(alias)) {
+                if (!this.commands.containsKey(alias)) {
                     SimpleCommandManager.LOGGER.finest("Adding new list.");
 
-                    commands.put(alias, new ArrayList<CommandInfo>());
+                    this.commands.put(alias, new ArrayList<CommandInfo>());
                 }
 
                 // Only if the command info was added successful, the command
                 // info should be added to the "registered"-list.
-                if (commands.get(alias).add(commandInfo)) {
+                if (this.commands.get(alias).add(commandInfo)) {
                     // Sorts the command info in the priority order. A SortedSet
                     // cannot be used, because it does not add the value in case
                     // the priority is the same (if
                     // Comparator#compare(CommandInfo, CommandInfo) returns 0).
-                    Collections.sort(commands.get(alias), SimpleCommandManager.COMMAND_INFO_COMPARATOR);
+                    Collections.sort(this.commands.get(alias), SimpleCommandManager.COMMAND_INFO_COMPARATOR);
                     // Now, the command is registered successful.
                     registered.add(commandInfo);
                 }
             }
         }
 
-        SimpleCommandManager.LOGGER.fine("Registered " + registered.size() + "commands (\"" + registered + "\").");
+        SimpleCommandManager.LOGGER.fine("Registered " + registered.size() + " commands (\"" + registered + "\").");
 
         return registered;
     }
@@ -269,7 +270,7 @@ public class SimpleCommandManager implements CommandManager {
     public <T> Set<CommandInfo> register(final T obj) {
         assert obj != null : "Obj cannot be null!";
 
-        return register((Class<T>) obj.getClass(), obj);
+        return this.register((Class<T>) obj.getClass(), obj);
     }
 
     /**
@@ -279,7 +280,45 @@ public class SimpleCommandManager implements CommandManager {
      */
     @Override
     public <T> Set<CommandInfo> register(final Class<T> clazz) {
-        return register(clazz, null);
+        return this.register(clazz, null);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.technical.command.CommandManager#unregister(java.lang.Class)
+     */
+    @Override
+    public Set<CommandInfo> unregister(final Class<?> clazz) {
+        final Set<CommandInfo> unregistered = new HashSet<CommandInfo>();
+
+        for (final Method method : clazz.getDeclaredMethods()) {
+            if (!method.isAnnotationPresent(Command.class)) {
+                continue;
+            }
+
+            for (final List<CommandInfo> commandInfos : this.commands.values()) {
+                for (final Iterator<CommandInfo> iterator = commandInfos.iterator(); iterator.hasNext();) {
+                    final CommandInfo commandInfo = iterator.next();
+                    if (commandInfo.getMethod().getDeclaringClass().equals(clazz)) {
+                        iterator.remove();
+                        unregistered.add(commandInfo);
+                    }
+                }
+            }
+        }
+
+        return unregistered;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.technical.command.CommandManager#unregister(java.lang.Object)
+     */
+    @Override
+    public Set<CommandInfo> unregister(final Object obj) {
+        return this.unregister(obj.getClass());
     }
 
     /**
@@ -302,7 +341,7 @@ public class SimpleCommandManager implements CommandManager {
 
         // If no registered commands could be found, it is impossible to execute
         // them.
-        if (commands.get(label) == null) {
+        if (this.commands.get(label) == null) {
             SimpleCommandManager.LOGGER.fine("Command label not found.");
 
             return false;
@@ -314,7 +353,11 @@ public class SimpleCommandManager implements CommandManager {
 
         // This boolean is returned at the end.
         boolean executed = false;
-        for (final CommandInfo commandInfo : commands.get(label)) {
+        for (final CommandInfo commandInfo : this.commands.get(label)) {
+            // if (commandInfo.getClazz() == null) {
+            // continue;
+            // }
+
             final Command commandAnot = commandInfo.getCommandAnot();
 
             SimpleCommandManager.LOGGER.finer("Executing \"" + commandInfo + "\".");
@@ -358,7 +401,7 @@ public class SimpleCommandManager implements CommandManager {
                 continue;
             }
 
-            final CommandContext commandContext = parseArguments(rawCommandContext, commandEventData);
+            final CommandContext commandContext = this.parseArguments(rawCommandContext, commandEventData);
             // parseArguments(RawCommandContext, List<CommandEventData>) returns
             // null if an "error" occurres and adds a CommandEventData to the
             // list.
@@ -370,7 +413,7 @@ public class SimpleCommandManager implements CommandManager {
 
             // Now, invoke/execute the method that is associated with the
             // current command (alias).
-            invoke(commandContext);
+            this.invoke(commandContext);
 
             // Now, the command has been executed successfully.
             executed = true;
@@ -380,7 +423,7 @@ public class SimpleCommandManager implements CommandManager {
         SimpleCommandManager.LOGGER.fine("Executed: " + executed);
 
         // If no command was executed, fire the CommandEvent.
-        if (!executed) {
+        if (!executed && !commandEventData.isEmpty()) {
             CommandEventManager.getInstance().fire(new CommandEvent(commandEventData));
         }
 
@@ -469,7 +512,7 @@ public class SimpleCommandManager implements CommandManager {
                     break;
                 case STRING_VARARG:
                     // :/ VarArgs has to be parsed.
-                    String parsedVarArg = parseVarArg(rawArgs, flagIndex + 1, rawArgs.get(flagIndex + 1).charAt(0));
+                    String parsedVarArg = this.parseVarArg(rawArgs, flagIndex + 1, rawArgs.get(flagIndex + 1).charAt(0));
                     parsedVarArg = parsedVarArg.substring(1, parsedVarArg.length() - 1);
 
                     // Add indexes to the remove set.
@@ -551,7 +594,7 @@ public class SimpleCommandManager implements CommandManager {
                         break;
                     case STRING_VARARG:
                         // :/ VarArgs parsing required.
-                        args.add(new Tag<String>(parseVarArg(rawArgs, i, null)));
+                        args.add(new Tag<String>(this.parseVarArg(rawArgs, i, null)));
                         break;
                     }
                 }
@@ -647,7 +690,7 @@ public class SimpleCommandManager implements CommandManager {
     @Override
     public Map<String, List<CommandInfo>> getCommands() {
         final Map<String, List<CommandInfo>> result = new HashMap<String, List<CommandInfo>>();
-        for (final Entry<String, List<CommandInfo>> entry : commands.entrySet()) {
+        for (final Entry<String, List<CommandInfo>> entry : this.commands.entrySet()) {
             result.put(entry.getKey(), new ArrayList<CommandInfo>(entry.getValue()));
         }
         return result;

@@ -72,6 +72,10 @@ public interface CommandManager {
      */
     public <T> Set<CommandInfo> register(final Class<T> clazz);
 
+    public Set<CommandInfo> unregister(final Class<?> clazz);
+
+    public Set<CommandInfo> unregister(final Object obj);
+
     /**
      * Executes the given alias (label).
      *

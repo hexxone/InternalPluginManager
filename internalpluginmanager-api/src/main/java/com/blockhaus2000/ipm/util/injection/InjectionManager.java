@@ -54,7 +54,7 @@ public final class InjectionManager {
      * </ul>
      *
      */
-    private static final Map<Class<?>, Object> INSTANCES = new HashMap<Class<?>, Object>();
+    private static final Map<String, Object> INSTANCES = new HashMap<String, Object>();
 
     /**
      * Constructor of InjectionManager.
@@ -109,7 +109,7 @@ public final class InjectionManager {
             }
 
             final Class<?> type = field.getType();
-            if (!InjectionManager.INSTANCES.containsKey(type)) {
+            if (!InjectionManager.INSTANCES.containsKey(type.getName())) {
                 throw new NotAddedInjectionException("No object found that is associated with the  type <" + type + ">!");
             }
 
@@ -121,7 +121,7 @@ public final class InjectionManager {
             try {
                 InjectionManager.LOGGER.finest("Setting value.");
 
-                field.set(obj, InjectionManager.INSTANCES.get(type));
+                field.set(obj, InjectionManager.INSTANCES.get(type.getName()));
             } catch (final IllegalArgumentException cause) {
                 throw new InjectionException("The type of the saved object is inconsistent with the type of the field!", cause);
             } catch (final IllegalAccessException cause) {
@@ -184,12 +184,12 @@ public final class InjectionManager {
 
         InjectionManager.LOGGER.fine("Adding resource \"" + obj + "\" (\"" + clazz.getName() + "\").");
 
-        if (InjectionManager.INSTANCES.containsKey(clazz)) {
+        if (InjectionManager.INSTANCES.containsKey(clazz.getName())) {
             InjectionManager.LOGGER.fine("Resource already added.");
 
             return false;
         }
-        InjectionManager.INSTANCES.put(clazz, obj);
+        InjectionManager.INSTANCES.put(clazz.getName(), obj);
 
         InjectionManager.LOGGER.fine("Resource added.");
 

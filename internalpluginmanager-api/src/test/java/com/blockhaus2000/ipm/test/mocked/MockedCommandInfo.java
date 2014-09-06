@@ -43,16 +43,6 @@ public class MockedCommandInfo implements CommandInfo {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.command.util.CommandInfo#getClazz()
-     */
-    @Override
-    public Class<?> getClazz() {
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
      * @see com.blockhaus2000.ipm.technical.command.util.CommandInfo#getObject()
      */
     @Override

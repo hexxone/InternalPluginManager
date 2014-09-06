@@ -29,17 +29,13 @@ import com.blockhaus2000.ipm.technical.command.Command;
  * An implementation of {@link CommandInfo}.
  *
  */
+// TODO: Remove Class storing.
 public class SimpleCommandInfo implements CommandInfo {
     /**
      * The {@link Command} annotation.
      *
      */
     private final Command commandAnot;
-    /**
-     * The {@link Class} where the command execution method is located.
-     *
-     */
-    private final Class<?> clazz;
     /**
      * An {@link Object} of the class where the command execution method is
      * located.
@@ -80,16 +76,13 @@ public class SimpleCommandInfo implements CommandInfo {
      * @param syntaxData
      *            The command syntax data.
      */
-    public SimpleCommandInfo(final Command commandAnot, final Class<?> clazz, final Object object, final Method method,
+    public SimpleCommandInfo(final Command commandAnot, final Object object, final Method method,
             final Map<Character, SyntaxType> flagData, final List<SyntaxType> syntaxData) {
         assert commandAnot != null : "CommandAnot cannot be null!";
-        assert clazz != null : "Clazz cannot be null!";
-        assert object == null || clazz.equals(object.getClass()) : "Object has to be null or an object of clazz!";
         assert method != null : "Method cannot be null!";
         assert flagData != null : "FlagData cannot be null!";
 
         this.commandAnot = commandAnot;
-        this.clazz = clazz;
         this.object = object;
         this.method = method;
         this.flagData = flagData;
@@ -103,17 +96,7 @@ public class SimpleCommandInfo implements CommandInfo {
      */
     @Override
     public Command getCommandAnot() {
-        return commandAnot;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see com.blockhaus2000.ipm.technical.command.util.CommandInfo#getClazz()
-     */
-    @Override
-    public Class<?> getClazz() {
-        return clazz;
+        return this.commandAnot;
     }
 
     /**
@@ -123,7 +106,7 @@ public class SimpleCommandInfo implements CommandInfo {
      */
     @Override
     public Object getObject() {
-        return object;
+        return this.object;
     }
 
     /**
@@ -133,7 +116,7 @@ public class SimpleCommandInfo implements CommandInfo {
      */
     @Override
     public Method getMethod() {
-        return method;
+        return this.method;
     }
 
     /**
@@ -143,7 +126,17 @@ public class SimpleCommandInfo implements CommandInfo {
      */
     @Override
     public Map<Character, SyntaxType> getFlagData() {
-        return new HashMap<Character, SyntaxType>(flagData);
+        return new HashMap<Character, SyntaxType>(this.flagData);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.technical.command.util.CommandInfo#getSyntaxData()
+     */
+    @Override
+    public List<SyntaxType> getSyntaxData() {
+        return this.syntaxData == null ? null : new ArrayList<SyntaxType>(this.syntaxData);
     }
 
     /**
@@ -155,21 +148,10 @@ public class SimpleCommandInfo implements CommandInfo {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + (clazz == null ? 0 : clazz.hashCode());
-        result = prime * result + (commandAnot == null ? 0 : commandAnot.hashCode());
-        result = prime * result + (method == null ? 0 : method.hashCode());
-        result = prime * result + (object == null ? 0 : object.hashCode());
+        result = prime * result + (this.commandAnot == null ? 0 : this.commandAnot.hashCode());
+        result = prime * result + (this.method == null ? 0 : this.method.hashCode());
+        result = prime * result + (this.object == null ? 0 : this.object.hashCode());
         return result;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see com.blockhaus2000.ipm.technical.command.util.CommandInfo#getSyntaxData()
-     */
-    @Override
-    public List<SyntaxType> getSyntaxData() {
-        return syntaxData == null ? null : new ArrayList<SyntaxType>(syntaxData);
     }
 
     /**
@@ -189,32 +171,25 @@ public class SimpleCommandInfo implements CommandInfo {
             return false;
         }
         final SimpleCommandInfo other = (SimpleCommandInfo) obj;
-        if (clazz == null) {
-            if (other.clazz != null) {
-                return false;
-            }
-        } else if (!clazz.equals(other.clazz)) {
-            return false;
-        }
-        if (commandAnot == null) {
+        if (this.commandAnot == null) {
             if (other.commandAnot != null) {
                 return false;
             }
-        } else if (!commandAnot.equals(other.commandAnot)) {
+        } else if (!this.commandAnot.equals(other.commandAnot)) {
             return false;
         }
-        if (method == null) {
+        if (this.method == null) {
             if (other.method != null) {
                 return false;
             }
-        } else if (!method.equals(other.method)) {
+        } else if (!this.method.equals(other.method)) {
             return false;
         }
-        if (object == null) {
+        if (this.object == null) {
             if (other.object != null) {
                 return false;
             }
-        } else if (!object.equals(other.object)) {
+        } else if (!this.object.equals(other.object)) {
             return false;
         }
         return true;
@@ -227,7 +202,7 @@ public class SimpleCommandInfo implements CommandInfo {
      */
     @Override
     public int compareTo(final CommandInfo that) {
-        final int thisPriority = getCommandAnot().priority().getPriority();
+        final int thisPriority = this.getCommandAnot().priority().getPriority();
         final int thatPriority = that.getCommandAnot().priority().getPriority();
         return thisPriority < thatPriority ? -1 : thisPriority == thatPriority ? 0 : 1;
     }
@@ -239,7 +214,7 @@ public class SimpleCommandInfo implements CommandInfo {
      */
     @Override
     public String toString() {
-        return getClass().getName() + "[commandAnot=" + commandAnot + ", clazz=" + clazz + ", object=" + object + ", method="
-                + method + ", flagData=" + flagData + "]";
+        return this.getClass().getName() + "[commandAnot=" + this.commandAnot + ", object=" + this.object + ", method="
+                + this.method + ", flagData=" + this.flagData + "]";
     }
 }
