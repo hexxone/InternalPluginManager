@@ -19,21 +19,54 @@ package com.blockhaus2000.ipm.technical.plugin.util.exception;
 
 import java.io.IOException;
 
+/**
+ * A general {@link IOException} that can be thrown if an error occurres in the
+ * context of a plugins.
+ *
+ */
 public class PluginIOException extends IOException {
+    /**
+     * The serial version uid.
+     *
+     */
     private static final long serialVersionUID = 5112171159033704887L;
 
+    /**
+     * Constructor of PluginIOException.
+     *
+     */
     public PluginIOException() {
         super();
     }
 
+    /**
+     * Constructor of PluginIOException.
+     *
+     * @param message
+     *            Will be used in <code>super</code> call.
+     * @param cause
+     *            Will be used in <code>super</code> call.
+     */
     public PluginIOException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
+    /**
+     * Constructor of PluginIOException.
+     *
+     * @param message
+     *            Will be used in <code>super</code> call.
+     */
     public PluginIOException(final String message) {
         super(message);
     }
 
+    /**
+     * Constructor of PluginIOException.
+     *
+     * @param cause
+     *            Will be used in <code>super</code> call.
+     */
     public PluginIOException(final Throwable cause) {
         super(cause);
     }

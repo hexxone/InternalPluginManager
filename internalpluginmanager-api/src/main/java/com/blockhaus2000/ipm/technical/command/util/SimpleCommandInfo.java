@@ -63,9 +63,6 @@ public class SimpleCommandInfo implements CommandInfo {
      *
      * @param commandAnot
      *            The {@link Command} annotation.
-     * @param clazz
-     *            The {@link Class} where the command execution method is
-     *            located.
      * @param object
      *            An {@link Object} of the class where the command execution
      *            method is located.

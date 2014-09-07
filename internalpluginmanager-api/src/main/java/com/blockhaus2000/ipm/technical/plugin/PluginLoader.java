@@ -19,6 +19,7 @@ package com.blockhaus2000.ipm.technical.plugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.jar.JarFile;
@@ -27,16 +28,55 @@ import java.util.zip.ZipEntry;
 import com.blockhaus2000.ipm.technical.plugin.util.exception.PluginException;
 import com.blockhaus2000.ipm.technical.plugin.util.exception.PluginIOException;
 
-public class PluginLoader {
+/**
+ * The loader for plugins.
+ *
+ * <p>
+ * <b> NOTE: Do NOT interact with methods via reflection! </b>
+ * </p>
+ *
+ */
+public final class PluginLoader {
+    /**
+     * THE instance of the {@link PluginLoader}.
+     *
+     */
     private static final PluginLoader INSTANCE = new PluginLoader();
 
+    /**
+     * A {@link Map} containing all (plugin) class loaders that can be asked for
+     * classes.
+     *
+     * <p>
+     * <b> NOTE: This should be the only place where instances of plugin class
+     * loaders are stored. </b>
+     * </p>
+     *
+     */
     private static final Map<String, PluginClassLoader> CLASS_LOADERS = new HashMap<String, PluginClassLoader>();
 
+    /**
+     * Constructor of PluginLoader.
+     *
+     */
     private PluginLoader() {
         // Nothing to do (only to provide singleton).
     }
 
-    synchronized void remove(String name) throws IOException {
+    /**
+     * Removes the plugin with the given name from the plugin loader.
+     *
+     * <p>
+     * <b> NOTE: This does not delete the plugin in the plugin directory. </b>
+     * </p>
+     * <p>
+     * <b> NOTE: This does not disable the plugin. </b>
+     * </p>
+     *
+     * @param name
+     *            The name of the plugin to remove from the plugin loader.
+     */
+    synchronized void remove(String name) {
         name = name.toLowerCase();
 
         final PluginClassLoader classLoader = PluginLoader.CLASS_LOADERS.get(name);
@@ -47,6 +87,20 @@ public class PluginLoader {
         }
     }
 
+    /**
+     * Parses the meta data for the given plugin.
+     *
+     * @param file
+     *            The {@link File} that mai contains the plugin meta.
+     * @return The parsed {@link PluginMeta}.
+     * @throws IOException
+     *             is thrown if
+     *             <ol>
+     *             <li>the {@link JarFile} constructor throws it.</li>
+     *             <li>{@link JarFile#close()} throws it.</li>
+     *             <li>the plugin meta file cannot be found.</li>
+     *             </ol>
+     */
     PluginMeta getMeta(final File file) throws IOException {
         final JarFile jarFile = new JarFile(file);
 
@@ -59,14 +113,29 @@ public class PluginLoader {
         return new PluginMeta(file, jarFile.getInputStream(pluginMetaEntry));
     }
 
-    synchronized Plugin load(final PluginMeta meta) throws IOException {
+    /**
+     * Loads the plugin for the given plugin meta.
+     *
+     * <p>
+     * <b> NOTE: This does not invoke {@link Plugin#onLoad()}. </b>
+     * </p>
+     *
+     * @param meta
+     *            The {@link PluginMeta} of the plugin to load.
+     * @return The loaded {@link Plugin}.
+     */
+    synchronized Plugin load(final PluginMeta meta) {
         final String name = meta.getName();
         final String main = meta.getMain();
 
         this.remove(name);
 
-        final PluginClassLoader classLoader = new PluginClassLoader(meta.getFile(), this, Thread.currentThread()
-                .getContextClassLoader());
+        PluginClassLoader classLoader;
+        try {
+            classLoader = new PluginClassLoader(meta.getFile());
+        } catch (final MalformedURLException cause) {
+            throw new PluginException("This should NEVER happen. How have you made that???", cause);
+        }
 
         final Class<? extends SimplePlugin> pluginClass;
         try {
@@ -92,8 +161,17 @@ public class PluginLoader {
         return plugin;
     }
 
-    // TODO: Reduce visibility.
-    public Class<?> findClass(final String name) throws ClassNotFoundException {
+    /**
+     * Search in all stored class loaders for the given full-qualified class
+     * name.
+     *
+     * @param name
+     *            The full-qualified class name.
+     * @return The {@link Class}, if found.
+     * @throws ClassNotFoundException
+     *             Is thrown if the class cannot be found.
+     */
+    Class<?> findClass(final String name) throws ClassNotFoundException {
         for (final PluginClassLoader classLoader : PluginLoader.CLASS_LOADERS.values()) {
             final Class<?> clazz = classLoader.findClass(name, false);
             if (clazz != null) {
@@ -103,8 +181,11 @@ public class PluginLoader {
         throw new ClassNotFoundException("Class \"" + name + "\" was not found!");
     }
 
-    // TODO: Reduce visibility.
-    public static PluginLoader getInstance() {
+    /**
+     *
+     * @return {@link PluginLoader#INSTANCE}.
+     */
+    static PluginLoader getInstance() {
         return PluginLoader.INSTANCE;
     }
 }

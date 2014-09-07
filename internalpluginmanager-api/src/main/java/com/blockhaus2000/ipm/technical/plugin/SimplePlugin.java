@@ -24,19 +24,61 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import com.blockhaus2000.ipm.technical.command.SimpleCommandManager;
+import com.blockhaus2000.ipm.util.CommonConstants;
 
+/**
+ * An implementation of {@link Plugin}. Extend this to make your plugin
+ * loadable.
+ *
+ */
 public class SimplePlugin implements Plugin {
+    /**
+     * The name of the enabled-field. This is used whilest fireing
+     * {@link PropertyChangeEvent}s with the {@link PropertyChangeSupport}.
+     *
+     */
     protected static final String ENABLED_PROPERTY_NAME = "enabled";
 
+    /**
+     * The {@link PropertyChangeSupport} for this class.
+     *
+     */
     protected final PropertyChangeSupport PROPERTY_CHANGE_SUPPORT = new PropertyChangeSupport(this);
 
+    /**
+     * This set contains all (command) classes that are registered with
+     * {@link Plugin#registerCommands(Class, Object)}. This is used to
+     * unregister these commands on disable.
+     *
+     */
     private final Set<Class<?>> registeredCommandClasses = new HashSet<Class<?>>();
 
-    private Logger logger; // TODO
+    /**
+     * The plugin {@link Logger}.
+     *
+     */
+    private Logger logger;
+    /**
+     * The {@link PluginMeta} containing main information about this plugin.
+     *
+     */
     private PluginMeta pluginMeta;
 
+    /**
+     * The enabled flag.
+     *
+     */
     private boolean enabled;
 
+    /**
+     * Constructor of SimplePlugin.
+     *
+     * <p>
+     * <b> NOTE: This constructor should NOT be called from others than a
+     * {@link PluginManager}. </b>
+     * </p>
+     *
+     */
     protected SimplePlugin() {
         this.PROPERTY_CHANGE_SUPPORT.addPropertyChangeListener(SimplePlugin.ENABLED_PROPERTY_NAME, this);
     }
@@ -182,7 +224,15 @@ public class SimplePlugin implements Plugin {
         }
     }
 
+    /**
+     * Initilizes this plugin. Should be callen by the {@link PluginLoader}
+     * only.
+     *
+     * @param pluginMeta
+     *            The {@link PluginMeta}.
+     */
     void init(final PluginMeta pluginMeta) {
         this.pluginMeta = pluginMeta;
+        this.logger = Logger.getLogger(CommonConstants.INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME + "." + pluginMeta.getName());
     }
 }

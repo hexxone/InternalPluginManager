@@ -19,32 +19,66 @@ package com.blockhaus2000.ipm.technical.plugin;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PluginClassLoader extends URLClassLoader {
+/**
+ * An {@link URLClassLoader} to load plugins.
+ *
+ * <p>
+ * <b> NOTE: Do NOT interact directly with this class via reflection! </b>
+ * </p>
+ *
+ */
+public final class PluginClassLoader extends URLClassLoader {
+    /**
+     * A cache for the already loaded classes. Speeds everything up.
+     *
+     */
     private final Map<String, Class<?>> classes = new HashMap<String, Class<?>>();
-    private final PluginLoader pluginLoader;
 
-    public PluginClassLoader(final File file, final PluginLoader pluginLoader, final ClassLoader parent)
-            throws MalformedURLException {
-        super(new URL[] { file.toURI().toURL() }, parent);
-
-        assert pluginLoader != null : "PluginLoader cannot be null!";
-
-        this.pluginLoader = pluginLoader;
+    /**
+     * Constructor of PluginClassLoader.
+     *
+     * <p>
+     * <b> NOTE: Do NOT invoke this constructor via reflection! </b>
+     * </p>
+     *
+     * @param file
+     *            The {@link File} that has to be added to the class lookup path
+     *            (the classpath).
+     * @throws MalformedURLException
+     *             Is thrown if {@link URI#toURL()} throws it. Should never be
+     *             thrown cause the {@link URI} is created by
+     *             {@link File#toURI()}.
+     */
+    PluginClassLoader(final File file) throws MalformedURLException {
+        super(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
     }
 
-    protected Class<?> findClass(final String name, final boolean global) {
+    /**
+     * Searchs for the given, full-qualified, class name.
+     *
+     * @param name
+     *            The full-qualified class name.
+     * @param global
+     *            If <code>true</code>, the {@link PluginClassLoader} asks the
+     *            {@link PluginLoader} to search for the class. Maked it
+     *            possible to share classes over different plugins.
+     * @return The {@link Class} that has been found for the given name. If it
+     *         cannot be found, it returns <code>null</code>.
+     */
+    Class<?> findClass(final String name, final boolean global) {
         assert name != null : "Name cannot be null!";
 
         Class<?> clazz = this.classes.get(name);
         if (clazz == null) {
             try {
                 if (global) {
-                    clazz = this.pluginLoader.findClass(name);
+                    clazz = PluginLoader.getInstance().findClass(name);
                 } else {
                     // Throw Exception to go into the catch block.
                     throw new ClassNotFoundException();
@@ -69,23 +103,24 @@ public class PluginClassLoader extends URLClassLoader {
         return clazz;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * Delegates to {@link PluginClassLoader#findClass(String, boolean)} with
+     * <code>global = true</code>.
+     *
+     * @see java.net.URLClassLoader#findClass(java.lang.String)
+     */
     @Override
     protected Class<?> findClass(final String name) throws ClassNotFoundException {
         return this.findClass(name, true);
     }
 
-    protected void clear() {
+    /**
+     * Clears the plugin class loader.
+     *
+     */
+    void clear() {
         this.classes.clear();
     }
-
-    // /**
-    // * {@inheritDoc}
-    // *
-    // * @see java.lang.Object#finalize()
-    // */
-    // @Override
-    // protected void finalize() throws Throwable {
-    // System.out.println(this.getClass().getName() + ": finalize()");
-    // super.finalize();
-    // }
 }

@@ -72,8 +72,24 @@ public interface CommandManager {
      */
     public <T> Set<CommandInfo> register(final Class<T> clazz);
 
+    /**
+     * Unregisters all commands specified in the given {@link Class}.
+     *
+     * @param clazz
+     *            The {@link Class} that contains all commands to unregister.
+     * @return A {@link Set} of {@link CommandInfo}s that are unregistered.
+     */
     public Set<CommandInfo> unregister(final Class<?> clazz);
 
+    /**
+     * Delegates to {@link CommandManager#unregister(Class)} with
+     * <code>clazz = obj.getClass()</code>.
+     *
+     * @param obj
+     *            Will be passed to {@link CommandManager#unregister(Class)}.
+     * @return See {@link CommandManager#unregister(Class)}.
+     * @see com.blockhaus2000.ipm.technical.command.CommandManager#unregister(java.lang.Class)
+     */
     public Set<CommandInfo> unregister(final Object obj);
 
     /**

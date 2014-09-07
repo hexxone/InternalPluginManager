@@ -19,18 +19,65 @@ package com.blockhaus2000.ipm.technical.plugin;
 
 import java.io.File;
 
+/**
+ * The {@link PluginManager} manages all plugins. Enables/disable and loads
+ * them. It is the heart of the plugin system.
+ *
+ */
 public interface PluginManager {
+    /**
+     * Starts the plugin manager for the given directory. Once it is started, it
+     * cannot be started against.
+     *
+     * @param directory
+     *            The directory where to create the directopry structure.
+     * @throws IllegalStateException
+     *             Is thrown if the plugin manager is already started.
+     */
     public void start(final File directory) throws IllegalStateException;
 
+    /**
+     * Removes/unloads the given plugin.
+     *
+     * @param plugin
+     *            The {@link Plugin} to remove/unload.
+     */
     public void remove(final Plugin plugin);
 
+    /**
+     * Disables the given plugin.
+     *
+     * @param plugin
+     *            The {@link Plugin} to disable.
+     */
     public void disable(final Plugin plugin);
 
+    /**
+     * Disables all loaded plugins.
+     *
+     */
     public void disableAll();
 
+    /**
+     * Enables the given plugin.
+     *
+     * @param plugin
+     *            The {@link Plugin} to enable.
+     */
     public void enable(final Plugin plugin);
 
+    /**
+     * Enables all loaded plugins.
+     *
+     */
     public void enableAll();
 
+    /**
+     *
+     * @param name
+     *            The plugin name to search for. Is case-insensitive.
+     * @return The {@link Plugin} associated with the given name. Returns
+     *         <code>null</code> if not found.
+     */
     public Plugin getPlugin(final String name);
 }

@@ -24,25 +24,31 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Logger;
 
 import com.blockhaus2000.ipm.technical.plugin.util.exception.MissingDependencyPluginException;
-import com.blockhaus2000.ipm.technical.plugin.util.exception.PluginException;
-import com.blockhaus2000.ipm.util.CommonConstants;
 
+/**
+ * An implementation of the {@link PluginManager}.
+ *
+ */
 public class SimplePluginManager implements PluginManager {
-    /**
-     * The InternalPluginManager system logger.
-     *
-     */
-    private static final Logger LOGGER = Logger.getLogger(CommonConstants.INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME);
-
     /**
      * THE instance of the {@link SimplePluginManager}.
      *
      */
     private static final PluginManager INSTANCE = new SimplePluginManager();
 
+    /**
+     * This {@link Map} contains all loaded plugins.
+     *
+     * <p>
+     * <ul>
+     * <li>Key ({@link String}): The plugin name.</li>
+     * <li>Value ({@link Plugin}): The associated plugin.</li>
+     * </ul>
+     * </p>
+     *
+     */
     private final Map<String, Plugin> plugins = new HashMap<String, Plugin>();
 
     /**
@@ -91,24 +97,38 @@ public class SimplePluginManager implements PluginManager {
 
         this.deployDir = new File(directory, "deploy");
         assert !this.deployDir.exists() || this.deployDir.isDirectory() : "\"" + this.deployDir.getAbsolutePath()
-        + "\" has to be a directory!";
+                + "\" has to be a directory!";
         this.deployDir.mkdirs();
 
         this.pluginDir = new File(directory, "plugins" + File.separator + "plugin");
         assert !this.pluginDir.exists() || this.pluginDir.isDirectory() : "\"" + this.pluginDir.getAbsolutePath()
-        + "\" has to be a directory!";
+                + "\" has to be a directory!";
         this.pluginDir.mkdirs();
 
         this.configDir = new File(directory, "plugins" + File.separator + "config");
         assert !this.configDir.exists() || this.configDir.isDirectory() : "\"" + this.configDir.getAbsolutePath()
-        + "\" has to be a directory!";
+                + "\" has to be a directory!";
         this.configDir.mkdirs();
 
         this.deployDaemon = new PluginDeployDaemon(this.deployDir, this.pluginDir);
         this.deployDaemon.start();
     }
 
+    /**
+     * Loads the plugin for the given {@link File}. If <code>enabled</code> is
+     * <code>true</code>, this also enables the plugin after loading it.
+     *
+     * @param file
+     *            The {@link File} that represents the plugin.
+     * @param enable
+     *            If <code>true</code>, this also enables the plugin after
+     *            loading.
+     * @throws IOException
+     *             Is thrown if {@link PluginLoader#getMeta(File)} throws it.
+     */
     synchronized void loadPlugin(final File file, final boolean enable) throws IOException {
+        this.checkAccess();
+
         assert file != null : "File cannot be null!";
         assert file.isFile() : "\"" + file.getAbsolutePath() + "\" has to be a file!";
 
@@ -135,13 +155,11 @@ public class SimplePluginManager implements PluginManager {
      */
     @Override
     public synchronized void remove(final Plugin plugin) {
-        try {
-            this.disable(plugin);
-            PluginLoader.getInstance().remove(plugin.getName());
-            this.plugins.remove(plugin.getName().toLowerCase());
-        } catch (final IOException cause) {
-            throw new PluginException("An Exception occurred whilest removing plugin " + plugin.getName() + "!", cause);
-        }
+        this.checkAccess();
+
+        this.disable(plugin);
+        PluginLoader.getInstance().remove(plugin.getName());
+        this.plugins.remove(plugin.getName().toLowerCase());
     }
 
     /**
@@ -151,6 +169,8 @@ public class SimplePluginManager implements PluginManager {
      */
     @Override
     public synchronized void disable(final Plugin plugin) {
+        this.checkAccess();
+
         if (!plugin.isEnabled()) {
             return;
         }
@@ -178,6 +198,8 @@ public class SimplePluginManager implements PluginManager {
      */
     @Override
     public void disableAll() {
+        this.checkAccess();
+
         for (final Plugin plugin : this.plugins.values()) {
             this.disable(plugin);
         }
@@ -190,6 +212,8 @@ public class SimplePluginManager implements PluginManager {
      */
     @Override
     public synchronized void enable(final Plugin plugin) {
+        this.checkAccess();
+
         if (plugin.isEnabled()) {
             return;
         }
@@ -214,6 +238,8 @@ public class SimplePluginManager implements PluginManager {
      */
     @Override
     public void enableAll() { // TODO: Add dependecy resolving
+        this.checkAccess();
+
         for (final Plugin plugin : this.plugins.values()) {
             this.enable(plugin);
         }
@@ -226,6 +252,8 @@ public class SimplePluginManager implements PluginManager {
      */
     @Override
     public Plugin getPlugin(final String name) {
+        this.checkAccess();
+
         return this.plugins.get(name.toLowerCase());
     }
 
@@ -244,8 +272,7 @@ public class SimplePluginManager implements PluginManager {
 
     /**
      *
-     * @return An instance of the {@link SimplePluginManager} (in form of a
-     *         {@link PluginManager}).
+     * @return {@link SimplePluginManager#INSTANCE}.
      */
     public static final PluginManager getInstance() {
         return SimplePluginManager.INSTANCE;
@@ -253,7 +280,8 @@ public class SimplePluginManager implements PluginManager {
 
     /**
      *
-     * @return An instance of the {@link SimplePluginManager}.
+     * @return {@link SimplePluginManager#INSTANCE} (casted to
+     *         {@link SimplePluginManager}).
      */
     static final SimplePluginManager getClassInstance() {
         return (SimplePluginManager) SimplePluginManager.INSTANCE;

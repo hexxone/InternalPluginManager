@@ -25,6 +25,13 @@ import java.util.logging.Logger;
 
 import com.blockhaus2000.ipm.util.CommonConstants;
 
+/**
+ * The {@link PluginDeployDaemon} scans the deploy directory for new deployed
+ * plugins, moves them to the plugin directory and deploys them into the
+ * classpath, loads them and enables them. If the plugin is not new, it updates
+ * the plugin.
+ *
+ */
 public class PluginDeployDaemon extends Thread {
     /**
      * The InternalPluginManager system logger.
@@ -33,20 +40,21 @@ public class PluginDeployDaemon extends Thread {
     private static final Logger LOGGER = Logger.getLogger(CommonConstants.INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME);
 
     /**
-     * The jar {@link FileFilter}.
+     * A {@link FileFilter} that only allowes jar files.
      *
      */
     private static final FileFilter JAR_FILE_FILTER = new FileFilter() {
         /**
          * {@inheritDoc}
          *
-         * @return <code>true</code> if {@link File} is a file and the name ends
-         *         with <code>.jar</code>. <code>false</code> otherwise.
+         * @return <code>true</code> if {@link File} is not <code>null</code>,
+         *         is a file and (the name) ends with <code>.jar</code>.
+         *         <code>false</code> otherwise.
          * @see java.io.FileFilter#accept(java.io.File)
          */
         @Override
         public boolean accept(final File file) {
-            return file.isFile() && file.getName().endsWith(".jar");
+            return file != null && file.isFile() && file.getName().endsWith(".jar");
         }
     };
 
@@ -65,7 +73,9 @@ public class PluginDeployDaemon extends Thread {
      * Constructor of PluginDeployDeamon.
      *
      * @param deployDir
-     *            The directory were plugins can be deployed.
+     *            The deploy directory to scan for new plugins.
+     * @param pluginDir
+     *            The internal plugin directory.
      */
     public PluginDeployDaemon(final File deployDir, final File pluginDir) {
         assert deployDir != null : "DeployDir cannot be null!";
@@ -79,7 +89,7 @@ public class PluginDeployDaemon extends Thread {
         this.deployDir = deployDir;
         this.pluginDir = pluginDir;
 
-        setDaemon(true);
+        this.setDaemon(true);
     }
 
     /**
@@ -89,9 +99,9 @@ public class PluginDeployDaemon extends Thread {
      */
     @Override
     public void run() {
-        PluginDeployDaemon.LOGGER.fine("Loading plugins in directory \"" + pluginDir.getAbsolutePath() + "\".");
+        PluginDeployDaemon.LOGGER.fine("Loading plugins in directory \"" + this.pluginDir.getAbsolutePath() + "\".");
 
-        for (final File file : pluginDir.listFiles(PluginDeployDaemon.JAR_FILE_FILTER)) {
+        for (final File file : this.pluginDir.listFiles(PluginDeployDaemon.JAR_FILE_FILTER)) {
             PluginDeployDaemon.LOGGER.info("Jar file \"" + file.getAbsolutePath() + "\" detected.");
 
             PluginDeployDaemon.LOGGER.finer("Starting deployment of \"" + file.getAbsolutePath() + "\".");
@@ -108,13 +118,13 @@ public class PluginDeployDaemon extends Thread {
 
         PluginDeployDaemon.LOGGER.fine("Loading finished.");
 
-        PluginDeployDaemon.LOGGER.fine("Hot deploy daemon started on directory \"" + deployDir.getAbsolutePath() + "\".");
+        PluginDeployDaemon.LOGGER.fine("Hot deploy daemon started on directory \"" + this.deployDir.getAbsolutePath() + "\".");
 
-        while (!isInterrupted()) {
-            for (final File rawFile : deployDir.listFiles(PluginDeployDaemon.JAR_FILE_FILTER)) {
+        while (!this.isInterrupted()) {
+            for (final File rawFile : this.deployDir.listFiles(PluginDeployDaemon.JAR_FILE_FILTER)) {
                 PluginDeployDaemon.LOGGER.info("Jar file \"" + rawFile.getAbsolutePath() + "\" detected.");
 
-                final File file = new File(pluginDir, rawFile.getName());
+                final File file = new File(this.pluginDir, rawFile.getName());
 
                 PluginDeployDaemon.LOGGER.finer("Deleting old jar file \"" + file.getAbsolutePath() + "\".");
 
@@ -141,7 +151,7 @@ public class PluginDeployDaemon extends Thread {
                 } catch (final InterruptedException ex) {
                     PluginDeployDaemon.LOGGER.severe("An Exception occurres while waiting for deployment starting.");
                     ex.printStackTrace();
-                    interrupt();
+                    this.interrupt();
                 }
 
                 PluginDeployDaemon.LOGGER.finer("Deployment finished.");
@@ -150,7 +160,7 @@ public class PluginDeployDaemon extends Thread {
             try {
                 TimeUnit.SECONDS.sleep(2);
             } catch (final InterruptedException dummy) {
-                interrupt();
+                this.interrupt();
             }
         }
 

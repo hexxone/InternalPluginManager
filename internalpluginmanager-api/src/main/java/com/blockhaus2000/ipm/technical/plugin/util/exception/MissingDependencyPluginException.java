@@ -21,9 +21,25 @@ import java.util.Arrays;
 
 import com.blockhaus2000.ipm.technical.plugin.Plugin;
 
+/**
+ * If a plugin misses dependencies whilest enabling, this exception is thrown.
+ *
+ */
 public class MissingDependencyPluginException extends PluginException {
+    /**
+     * The serial version uid.
+     *
+     */
     private static final long serialVersionUID = 9010284243773593378L;
 
+    /**
+     * Constructor of MissingDependencyPluginException.
+     *
+     * @param plugin
+     *            The {@link Plugin} that misses dependencies.
+     * @param missingDependencies
+     *            The names of the missing dependencies.
+     */
     public MissingDependencyPluginException(final Plugin plugin, final String... missingDependencies) {
         super("Missing dependencies (" + Arrays.toString(missingDependencies) + ") for plugin \"" + plugin.getName() + "\"!");
     }

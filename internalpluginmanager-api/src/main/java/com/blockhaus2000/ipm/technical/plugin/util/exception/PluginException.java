@@ -17,21 +17,54 @@
  */
 package com.blockhaus2000.ipm.technical.plugin.util.exception;
 
+/**
+ * A general {@link Exception} that can be thrown if an error occurres in the
+ * context of a plugins.
+ *
+ */
 public class PluginException extends RuntimeException {
+    /**
+     * The serial version uid.
+     *
+     */
     private static final long serialVersionUID = 8512715140829394436L;
 
+    /**
+     * Constructor of PluginException.
+     *
+     */
     public PluginException() {
         super();
     }
 
+    /**
+     * Constructor of PluginException.
+     *
+     * @param message
+     *            Will be used in <code>super</code> call.
+     * @param cause
+     *            Will be used in <code>super</code> call.
+     */
     public PluginException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
+    /**
+     * Constructor of PluginException.
+     *
+     * @param message
+     *            Will be used in <code>super</code> call.
+     */
     public PluginException(final String message) {
         super(message);
     }
 
+    /**
+     * Constructor of PluginException.
+     *
+     * @param cause
+     *            Will be used in <code>super</code> call.
+     */
     public PluginException(final Throwable cause) {
         super(cause);
     }

@@ -20,6 +20,7 @@ package com.blockhaus2000.ipm.technical.plugin;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,18 +31,60 @@ import com.blockhaus2000.ipm.technical.plugin.util.exception.PluginException;
 import com.blockhaus2000.ipm.util.CollectionUtil;
 import com.blockhaus2000.ipm.util.CommonStringConstants;
 
-public class PluginMeta implements Cloneable {
-    private final File file;
+/**
+ * The {@link PluginMeta} contains main information about a plugin.
+ *
+ */
+public class PluginMeta implements Cloneable, Serializable {
+    /**
+     * The serial version uid.
+     *
+     */
+    private static final long serialVersionUID = -7497694871564152979L;
+
+    /**
+     * The {@link File} that represents the plugin.
+     *
+     */
+    private final transient File file;
 
     // Required Parameters
+    /**
+     * The plugin name.
+     *
+     */
     private final String name;
+    /**
+     * The plugin version.
+     *
+     */
     private final String version;
+    /**
+     * The plugin main class (name).
+     *
+     */
     private final String main;
 
     // Optional Parameters
+    /**
+     * The plugin author.
+     *
+     */
     private final String author;
+    /**
+     * The plugin dependencies.
+     *
+     */
     private final String[] dependencies;
 
+    /**
+     * Constructor of PluginMeta.
+     *
+     * @param file
+     *            The {@link File} that represents the plugin.
+     * @param in
+     *            The {@link InputStream} to parse the plugin meta from.
+     */
     public PluginMeta(final File file, final InputStream in) {
         assert file != null : "File cannot be null!";
         assert in != null : "In cannot be null!";
@@ -57,6 +100,12 @@ public class PluginMeta implements Cloneable {
                 PluginMetaEntry.DEPENDENCIES).split(", *");
     }
 
+    /**
+     * A copy constructor.
+     *
+     * @param meta
+     *            The {@link PluginMeta} to get the information from.
+     */
     private PluginMeta(final PluginMeta meta) {
         this.file = meta.file;
         this.name = meta.name;
@@ -66,6 +115,13 @@ public class PluginMeta implements Cloneable {
         this.dependencies = meta.dependencies;
     }
 
+    /**
+     * Parses the plugin meta from the given {@link InputStream}.
+     *
+     * @param in
+     *            The {@link InputStream} to parse the plugin meta from.
+     * @return The parsed plugin meta.
+     */
     private Map<PluginMetaEntry, String> parse(final InputStream in) {
         final List<String> dataLines = new ArrayList<String>();
 
@@ -153,16 +209,58 @@ public class PluginMeta implements Cloneable {
         return new PluginMeta(this);
     }
 
+    /**
+     * An enum that contains every information (string) that a plugin meta can
+     * contain.
+     *
+     */
     private static enum PluginMetaEntry {
+        /**
+         * The plugin name.
+         *
+         */
         NAME(true, "name"),
+        /**
+         * The plugin version.
+         *
+         */
         VERSION(true, "version"),
+        /**
+         * The plugin main class (name).
+         *
+         */
         MAIN(true, "main"),
+        /**
+         * The plugin author.
+         *
+         */
         AUTHOR(false, "author"),
+        /**
+         * The plugin dependencies.
+         *
+         */
         DEPENDENCIES(false, "depends");
 
+        /**
+         * The required flag. If <code>true</code>, the information is required.
+         *
+         */
         private final boolean required;
+        /**
+         * The key that has to be used to indicate the information in the plugin
+         * meta.
+         *
+         */
         private final String key;
 
+        /**
+         * Constructor of PluginMetaEntry.
+         *
+         * @param required
+         *            The required flag.
+         * @param key
+         *            The entry key.
+         */
         private PluginMetaEntry(final boolean required, final String key) {
             this.required = required;
             this.key = key;
