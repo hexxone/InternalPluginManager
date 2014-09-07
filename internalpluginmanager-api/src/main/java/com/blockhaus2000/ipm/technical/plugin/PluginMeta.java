@@ -151,6 +151,12 @@ public class PluginMeta implements Cloneable, Serializable {
         return entries;
     }
 
+    /**
+     * Sets the file for this plugin meta.
+     *
+     * @param file
+     *            The new {@link File}.
+     */
     void setFile(final File file) {
         this.file = file;
     }

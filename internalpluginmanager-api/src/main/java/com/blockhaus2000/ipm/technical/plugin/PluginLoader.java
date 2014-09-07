@@ -117,10 +117,24 @@ public final class PluginLoader {
         }
     }
 
+    /**
+     * Delegates to {@link PluginLoader#remove(String)} with
+     * <code>name = plugin.getName()</code>.
+     *
+     * @param plugin
+     *            Is passed into {@link PluginLoader#remove(String)}.
+     */
     synchronized void remove(final Plugin plugin) {
         this.remove(plugin.getName());
     }
 
+    /**
+     * Delegates to {@link PluginLoader#remove(String)} with
+     * <code>name = plugin.getName()</code> and deletes the plugin jar file.
+     *
+     * @param plugin
+     *            The plugin to delete.
+     */
     synchronized void delete(final Plugin plugin) {
         this.remove(plugin.getName());
         plugin.getPluginMeta().getFile().delete();
