@@ -19,7 +19,6 @@ package com.blockhaus2000.ipm.technical.plugin;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -107,10 +106,10 @@ public class PluginDeployDaemon extends Thread {
             PluginDeployDaemon.LOGGER.finer("Starting deployment of \"" + file.getAbsolutePath() + "\".");
 
             try {
-                SimplePluginManager.getClassInstance().loadPlugin(file, true);
-            } catch (final IOException ex) {
+                SimplePluginManager.getClassInstance().loadPlugin(file, true, false);
+            } catch (final Exception ex) {
                 ex.printStackTrace();
-                PluginDeployDaemon.LOGGER.severe("An error occurred whilest deploying \"" + file.getAbsolutePath() + "\".");
+                PluginDeployDaemon.LOGGER.severe("An error occurred whilest deploying \"" + file.getAbsolutePath() + "\"!");
             }
 
             PluginDeployDaemon.LOGGER.finer("Deployment finished");
@@ -142,11 +141,13 @@ public class PluginDeployDaemon extends Thread {
 
                     // Only deploy if no InterruptedException occurred.
                     try {
-                        SimplePluginManager.getClassInstance().loadPlugin(file, true);
-                    } catch (final IOException ex) {
+                        SimplePluginManager.getClassInstance().loadPlugin(file, true, true);
+                    } catch (final Exception ex) {
                         ex.printStackTrace();
                         PluginDeployDaemon.LOGGER.severe("An error occurred whilest deploying \"" + file.getAbsolutePath()
-                                + "\".");
+                                + "\"!");
+                        PluginDeployDaemon.LOGGER.severe("Deleting \"" + file.getAbsolutePath() + "\"!");
+                        file.delete();
                     }
                 } catch (final InterruptedException ex) {
                     PluginDeployDaemon.LOGGER.severe("An Exception occurres while waiting for deployment starting.");

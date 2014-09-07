@@ -46,7 +46,7 @@ public class PluginMeta implements Cloneable, Serializable {
      * The {@link File} that represents the plugin.
      *
      */
-    private final transient File file;
+    private transient File file;
 
     // Required Parameters
     /**
@@ -149,6 +149,10 @@ public class PluginMeta implements Cloneable, Serializable {
         }
 
         return entries;
+    }
+
+    void setFile(final File file) {
+        this.file = file;
     }
 
     /**

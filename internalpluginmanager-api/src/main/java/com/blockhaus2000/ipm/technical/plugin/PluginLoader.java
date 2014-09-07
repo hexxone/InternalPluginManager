@@ -18,15 +18,19 @@
 package com.blockhaus2000.ipm.technical.plugin;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.jar.JarFile;
+import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 
 import com.blockhaus2000.ipm.technical.plugin.util.exception.PluginException;
 import com.blockhaus2000.ipm.technical.plugin.util.exception.PluginIOException;
+import com.blockhaus2000.ipm.util.CommonConstants;
+import com.blockhaus2000.tagstoragesystem.TSS;
 
 /**
  * The loader for plugins.
@@ -38,10 +42,24 @@ import com.blockhaus2000.ipm.technical.plugin.util.exception.PluginIOException;
  */
 public final class PluginLoader {
     /**
+     * The InternalPluginManager system logger.
+     *
+     */
+    private static final Logger LOGGER = Logger.getLogger(CommonConstants.INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME);
+
+    /**
      * THE instance of the {@link PluginLoader}.
      *
      */
     private static final PluginLoader INSTANCE = new PluginLoader();
+
+    /**
+     * The plugin meta cache, containing plugin metas associated with the jar
+     * names.
+     *
+     */
+    private final TSS pluginMetaCache = new TSS(new File(SimplePluginManager.getClassInstance().getPluginDirectory(),
+            "plugin-meta-cache.tss"));
 
     /**
      * A {@link Map} containing all (plugin) class loaders that can be asked for
@@ -53,14 +71,26 @@ public final class PluginLoader {
      * </p>
      *
      */
-    private static final Map<String, PluginClassLoader> CLASS_LOADERS = new HashMap<String, PluginClassLoader>();
+    private final Map<String, PluginClassLoader> CLASS_LOADERS = new HashMap<String, PluginClassLoader>();
 
     /**
      * Constructor of PluginLoader.
      *
      */
     private PluginLoader() {
-        // Nothing to do (only to provide singleton).
+        try {
+            this.pluginMetaCache.load();
+        } catch (final FileNotFoundException dummy) {
+            // This fails silent.
+            //
+            // It fails silent because a FileNotFoundException is thrown if the
+            // file (the plugin meta cache file) does not exists. The file is
+            // created later on.
+        } catch (final IOException cause) {
+            throw new PluginException("An error occurred whilest loading the plugin meta cache!", cause);
+        } catch (final ClassNotFoundException cause) {
+            throw new PluginException("It seems that you have edited the plugin meta cache with an other program!", cause);
+        }
     }
 
     /**
@@ -79,12 +109,21 @@ public final class PluginLoader {
     synchronized void remove(String name) {
         name = name.toLowerCase();
 
-        final PluginClassLoader classLoader = PluginLoader.CLASS_LOADERS.get(name);
+        final PluginClassLoader classLoader = this.CLASS_LOADERS.get(name);
         if (classLoader != null) {
             classLoader.clear();
-            PluginLoader.CLASS_LOADERS.remove(name);
+            this.CLASS_LOADERS.remove(name);
             System.gc();
         }
+    }
+
+    synchronized void remove(final Plugin plugin) {
+        this.remove(plugin.getName());
+    }
+
+    synchronized void delete(final Plugin plugin) {
+        this.remove(plugin.getName());
+        plugin.getPluginMeta().getFile().delete();
     }
 
     /**
@@ -92,25 +131,49 @@ public final class PluginLoader {
      *
      * @param file
      *            The {@link File} that mai contains the plugin meta.
+     * @param update
+     *            Ff <code>true</code>, the plugin meta will be updated (read
+     *            from the plugin jar) and added to the plugin meta cache. If
+     *            <code>false</code>, the plugin meta is read from the plugin
+     *            meta cache (if the cache does not contain the plugin meta, the
+     *            plugin meta is read from the jar file and added to the cache).
      * @return The parsed {@link PluginMeta}.
      * @throws IOException
      *             is thrown if
      *             <ol>
      *             <li>the {@link JarFile} constructor throws it.</li>
      *             <li>{@link JarFile#close()} throws it.</li>
+     *             <li>{@link TSS#save()} throws it.</li>
      *             <li>the plugin meta file cannot be found.</li>
      *             </ol>
      */
-    PluginMeta getMeta(final File file) throws IOException {
-        final JarFile jarFile = new JarFile(file);
+    PluginMeta getMeta(final File file, final boolean update) throws IOException {
+        final PluginMeta pluginMeta;
+        if (update) {
+            final JarFile jarFile = new JarFile(file);
 
-        final ZipEntry pluginMetaEntry = jarFile.getEntry("plugin-meta");
-        if (pluginMetaEntry == null) {
-            jarFile.close();
-            throw new PluginIOException("The plugin meta file (\"plugin-meta\") cannot be found in \"" + jarFile.getName()
-                    + "\"!");
+            final ZipEntry pluginMetaEntry = jarFile.getEntry("plugin-meta");
+            if (pluginMetaEntry == null) {
+                jarFile.close();
+                throw new PluginIOException("The plugin meta file (\"plugin-meta\") cannot be found in \"" + jarFile.getName()
+                        + "\"!");
+            }
+            pluginMeta = new PluginMeta(file, jarFile.getInputStream(pluginMetaEntry));
+
+            this.pluginMetaCache.setData(file.getName(), pluginMeta);
+            this.pluginMetaCache.save();
+        } else {
+            pluginMeta = this.pluginMetaCache.getData(file.getName());
+
+            if (pluginMeta == null) {
+                PluginLoader.LOGGER.warning("Could not find plugin meta for \"" + file.getAbsolutePath()
+                        + "\" in plugin meta cache! Updating plugin meta.");
+                return this.getMeta(file, true);
+            }
+
+            pluginMeta.setFile(file);
         }
-        return new PluginMeta(file, jarFile.getInputStream(pluginMetaEntry));
+        return pluginMeta;
     }
 
     /**
@@ -146,7 +209,7 @@ public final class PluginLoader {
             throw new PluginException("The main class \"" + main + "\" from plugin \"" + name + "\" is no instance of \""
                     + SimplePlugin.class.getName() + "\"!", cause);
         }
-        PluginLoader.CLASS_LOADERS.put(name.toLowerCase(), classLoader);
+        this.CLASS_LOADERS.put(name.toLowerCase(), classLoader);
 
         final SimplePlugin plugin;
         try {
@@ -172,7 +235,7 @@ public final class PluginLoader {
      *             Is thrown if the class cannot be found.
      */
     Class<?> findClass(final String name) throws ClassNotFoundException {
-        for (final PluginClassLoader classLoader : PluginLoader.CLASS_LOADERS.values()) {
+        for (final PluginClassLoader classLoader : this.CLASS_LOADERS.values()) {
             final Class<?> clazz = classLoader.findClass(name, false);
             if (clazz != null) {
                 return clazz;

@@ -115,51 +115,23 @@ public class SimplePluginManager implements PluginManager {
     }
 
     /**
-     * Loads the plugin for the given {@link File}. If <code>enabled</code> is
-     * <code>true</code>, this also enables the plugin after loading it.
-     *
-     * @param file
-     *            The {@link File} that represents the plugin.
-     * @param enable
-     *            If <code>true</code>, this also enables the plugin after
-     *            loading.
-     * @throws IOException
-     *             Is thrown if {@link PluginLoader#getMeta(File)} throws it.
-     */
-    synchronized void loadPlugin(final File file, final boolean enable) throws IOException {
-        this.checkAccess();
-
-        assert file != null : "File cannot be null!";
-        assert file.isFile() : "\"" + file.getAbsolutePath() + "\" has to be a file!";
-
-        final PluginMeta meta = PluginLoader.getInstance().getMeta(file);
-
-        final Plugin oldPlugin = this.getPlugin(meta.getName().toLowerCase());
-        if (oldPlugin != null) {
-            this.remove(oldPlugin);
-        }
-
-        final Plugin plugin = PluginLoader.getInstance().load(meta);
-
-        this.plugins.put(plugin.getName().toLowerCase(), plugin);
-        plugin.onLoad();
-        if (enable) {
-            this.enable(plugin);
-        }
-    }
-
-    /**
      * {@inheritDoc}
      *
      * @see com.blockhaus2000.ipm.technical.plugin.PluginManager#remove(com.blockhaus2000.ipm.technical.plugin.Plugin)
      */
     @Override
     public synchronized void remove(final Plugin plugin) {
-        this.checkAccess();
+        this.remove(plugin, false);
+    }
 
-        this.disable(plugin);
-        PluginLoader.getInstance().remove(plugin.getName());
-        this.plugins.remove(plugin.getName().toLowerCase());
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.technical.plugin.PluginManager#delete(com.blockhaus2000.ipm.technical.plugin.Plugin)
+     */
+    @Override
+    public void delete(final Plugin plugin) {
+        this.remove(plugin, true);
     }
 
     /**
@@ -258,6 +230,79 @@ public class SimplePluginManager implements PluginManager {
     }
 
     /**
+     * Loads the plugin for the given {@link File}. If <code>enabled</code> is
+     * <code>true</code>, this also enables the plugin after loading it.
+     *
+     * @param file
+     *            The {@link File} that represents the plugin.
+     * @param enable
+     *            If <code>true</code>, this also enables the plugin after
+     *            loading.
+     * @param updateMeta
+     *            If <code>true</code>, the plugin meta will be updated (read
+     *            from the plugin jar). If <code>false</code>, the meta is read
+     *            from the plugin meta cache.
+     * @throws IOException
+     *             Is thrown if {@link PluginLoader#getMeta(File, boolean)}
+     *             throws it.
+     */
+    synchronized void loadPlugin(final File file, final boolean enable, final boolean updateMeta) throws IOException {
+        this.checkAccess();
+
+        assert file != null : "File cannot be null!";
+        assert file.isFile() : "\"" + file.getAbsolutePath() + "\" has to be a file!";
+
+        final PluginMeta meta = PluginLoader.getInstance().getMeta(file, updateMeta);
+
+        final Plugin oldPlugin = this.getPlugin(meta.getName().toLowerCase());
+        if (oldPlugin != null) {
+            if (meta.getFile().equals(oldPlugin.getPluginMeta().getFile())) {
+                this.remove(oldPlugin);
+            } else {
+                this.delete(oldPlugin);
+            }
+        }
+
+        final Plugin plugin = PluginLoader.getInstance().load(meta);
+
+        this.plugins.put(plugin.getName().toLowerCase(), plugin);
+        plugin.onLoad();
+        if (enable) {
+            this.enable(plugin);
+        }
+    }
+
+    /**
+     *
+     * @return {@link SimplePluginManager#pluginDir}
+     */
+    File getPluginDirectory() {
+        this.checkAccess();
+
+        return this.pluginDir;
+    }
+
+    /**
+     * Removes the given plugin.
+     *
+     * @param plugin
+     *            The {@link Plugin} to remove.
+     * @param delete
+     *            If <code>true</code>, the plugin will be deleted.
+     */
+    private synchronized void remove(final Plugin plugin, final boolean delete) {
+        this.checkAccess();
+
+        this.disable(plugin);
+        if (delete) {
+            PluginLoader.getInstance().delete(plugin);
+        } else {
+            PluginLoader.getInstance().remove(plugin);
+        }
+        this.plugins.remove(plugin.getName().toLowerCase());
+    }
+
+    /**
      * Checks if the access is valid. An access is valid if the
      * {@link PluginManager} is started. If not, the access is invalid.
      *
@@ -272,7 +317,7 @@ public class SimplePluginManager implements PluginManager {
 
     /**
      *
-     * @return {@link SimplePluginManager#INSTANCE}.
+     * @return {@link SimplePluginManager#INSTANCE}
      */
     public static final PluginManager getInstance() {
         return SimplePluginManager.INSTANCE;

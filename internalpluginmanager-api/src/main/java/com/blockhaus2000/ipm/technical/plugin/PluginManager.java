@@ -45,6 +45,14 @@ public interface PluginManager {
     public void remove(final Plugin plugin);
 
     /**
+     * Removed/unloads and deletes the given plugin.
+     *
+     * @param plugin
+     *            The {@link Plugin} to remove/unload and delete.
+     */
+    public void delete(final Plugin plugin);
+
+    /**
      * Disables the given plugin.
      *
      * @param plugin
