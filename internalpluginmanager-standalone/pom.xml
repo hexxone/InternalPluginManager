@@ -47,6 +47,8 @@
 					</artifactSet>
 				</configuration>
 			</plugin>
+
+			<!-- This is runnable, so it should contain a main class. -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>

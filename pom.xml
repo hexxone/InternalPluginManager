@@ -95,22 +95,8 @@
 
 	<!-- ===== Dependencies ===== -->
 
-	<repositories>
-		<repository>
-			<id>blockhaus2000-repo</id>
-			<url>http://repo.blockhaus2000.com/</url>
-		</repository>
-	</repositories>
-
 	<dependencies>
-		<!-- Used to store serializable objects easily -->
-		<dependency>
-			<groupId>com.blockhaus2000</groupId>
-			<artifactId>tag-storage-system</artifactId>
-			<version>2.1</version>
-		</dependency>
-
-		<!-- Unit tests -->
+		<!-- Used for unit tests. -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -123,11 +109,11 @@
 	<!-- ===== Build ===== -->
 
 	<build>
-		<finalName>${project.artifactId}_v${project.version}-${timestamp}-${buildNumber}</finalName>
+		<finalName>${project.artifactId}_v${project.version}-${timestamp}</finalName>
 		<defaultGoal>clean install</defaultGoal>
 
 		<plugins>
-			<!-- Compiler settings -->
+			<!-- Compiler settings. -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -139,7 +125,7 @@
 				</configuration>
 			</plugin>
 
-			<!-- Find To-Do's -->
+			<!-- Find To-Do's. -->
 			<plugin>
 				<groupId>com.blockhaus2000</groupId>
 				<artifactId>todo-finder-maven-plugin</artifactId>
@@ -173,60 +159,25 @@
 				</configuration>
 			</plugin>
 
-			<!-- Generate build numbers -->
+			<!-- Generates build numbers. -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>buildnumber-maven-plugin</artifactId>
 				<version>1.3</version>
-				<executions>
-					<execution>
-						<id>buildnumber-maven-plugin:create</id>
-						<phase>initialize</phase>
-						<goals>
-							<goal>create</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<buildNumberPropertyName>buildNumber</buildNumberPropertyName>
-					<doCheck>false</doCheck>
-					<doUpdate>false</doUpdate>
-					<getRevisionOnlyOnce>false</getRevisionOnlyOnce>
-					<shortRevisionLength>5</shortRevisionLength>
-					<timestampPropertyName>timestamp</timestampPropertyName>
-					<useLastCommittedRevision>false</useLastCommittedRevision>
-				</configuration>
+				<!--<executions> <execution> <id>buildnumber-maven-plugin:create</id> 
+					<phase>initialize</phase> <goals> <goal>create</goal> </goals> </execution> 
+					</executions> -->
 			</plugin>
 
+			<!-- Test runner. -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.17</version>
 			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>2.3</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<createDependencyReducedPom>false</createDependencyReducedPom>
-					<artifactSet>
-						<includes>
-							<include>com.blockhaus2000:tag-storage-system</include>
-						</includes>
-					</artifactSet>
-				</configuration>
-			</plugin>
 		</plugins>
 		<extensions>
+			<!-- Used as repository connector. -->
 			<extension>
 				<groupId>org.apache.maven.wagon</groupId>
 				<artifactId>wagon-ftp</artifactId>
