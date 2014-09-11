@@ -56,7 +56,7 @@ public class SimplePluginManager implements PluginManager {
      * {@link PluginManager} is started. <code>false</code> otherwise.
      *
      */
-    private boolean started = false;
+    private boolean started;
 
     /**
      * The hot deploy daemon.
@@ -97,17 +97,17 @@ public class SimplePluginManager implements PluginManager {
 
         this.deployDir = new File(directory, "deploy");
         assert !this.deployDir.exists() || this.deployDir.isDirectory() : "\"" + this.deployDir.getAbsolutePath()
-                + "\" has to be a directory!";
+        + "\" has to be a directory!";
         this.deployDir.mkdirs();
 
         this.pluginDir = new File(directory, "plugins" + File.separator + "plugin");
         assert !this.pluginDir.exists() || this.pluginDir.isDirectory() : "\"" + this.pluginDir.getAbsolutePath()
-                + "\" has to be a directory!";
+        + "\" has to be a directory!";
         this.pluginDir.mkdirs();
 
         this.configDir = new File(directory, "plugins" + File.separator + "config");
         assert !this.configDir.exists() || this.configDir.isDirectory() : "\"" + this.configDir.getAbsolutePath()
-                + "\" has to be a directory!";
+        + "\" has to be a directory!";
         this.configDir.mkdirs();
 
         this.deployDaemon = new PluginDeployDaemon(this.deployDir, this.pluginDir);
@@ -208,8 +208,9 @@ public class SimplePluginManager implements PluginManager {
      *
      * @see com.blockhaus2000.ipm.technical.plugin.PluginManager#enableAll()
      */
+    // TODO: Add dependecy resolving
     @Override
-    public void enableAll() { // TODO: Add dependecy resolving
+    public void enableAll() {
         this.checkAccess();
 
         for (final Plugin plugin : this.plugins.values()) {

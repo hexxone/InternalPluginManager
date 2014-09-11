@@ -19,7 +19,6 @@ package com.blockhaus2000.ipm.technical.plugin;
 
 import java.io.File;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.HashMap;
@@ -53,8 +52,8 @@ public final class PluginClassLoader extends URLClassLoader {
      *            The {@link File} that has to be added to the class lookup path
      *            (the classpath).
      * @throws MalformedURLException
-     *             Is thrown if {@link URI#toURL()} throws it. Should never be
-     *             thrown cause the {@link URI} is created by
+     *             Is thrown if {@link java.net.URI#toURL()} throws it. Should
+     *             never be thrown cause the {@link java.net.URI} is created by
      *             {@link File#toURI()}.
      */
     PluginClassLoader(final File file) throws MalformedURLException {

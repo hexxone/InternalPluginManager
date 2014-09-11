@@ -17,10 +17,9 @@
  */
 package com.blockhaus2000.ipm.util.injection.exception;
 
-import com.blockhaus2000.ipm.util.injection.InjectionManager;
-
 /**
- * This exception is thrown in the {@link InjectionManager} if a value is
+ * This exception is thrown in the
+ * {@link com.blockhaus2000.ipm.util.injection.InjectionManager} if a value is
  * requested that is not mapped (yet).
  *
  */

@@ -17,7 +17,6 @@
  */
 package com.blockhaus2000.ipm.technical.command.event;
 
-import com.blockhaus2000.ipm.technical.command.CommandSender;
 import com.blockhaus2000.ipm.technical.command.util.CommandInfo;
 import com.blockhaus2000.ipm.technical.command.util.RawCommandContext;
 
@@ -70,7 +69,7 @@ public class CommandEventData {
      *         {@link CommandEventType}.
      */
     public CommandInfo getCommandInfo() {
-        return commandInfo;
+        return this.commandInfo;
     }
 
     /**
@@ -78,7 +77,7 @@ public class CommandEventData {
      * @return {@link CommandEventData#eventType}.
      */
     public CommandEventType getEventType() {
-        return eventType;
+        return this.eventType;
     }
 
     /**
@@ -90,8 +89,8 @@ public class CommandEventData {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + (commandInfo == null ? 0 : commandInfo.hashCode());
-        result = prime * result + (eventType == null ? 0 : eventType.hashCode());
+        result = prime * result + (this.commandInfo == null ? 0 : this.commandInfo.hashCode());
+        result = prime * result + (this.eventType == null ? 0 : this.eventType.hashCode());
         return result;
     }
 
@@ -112,14 +111,14 @@ public class CommandEventData {
             return false;
         }
         final CommandEventData other = (CommandEventData) obj;
-        if (commandInfo == null) {
+        if (this.commandInfo == null) {
             if (other.commandInfo != null) {
                 return false;
             }
-        } else if (!commandInfo.equals(other.commandInfo)) {
+        } else if (!this.commandInfo.equals(other.commandInfo)) {
             return false;
         }
-        if (eventType != other.eventType) {
+        if (this.eventType != other.eventType) {
             return false;
         }
         return true;
@@ -132,7 +131,7 @@ public class CommandEventData {
      */
     @Override
     public String toString() {
-        return getClass().getName() + "[commandInfo=" + commandInfo + ", eventType=" + eventType + "]";
+        return this.getClass().getName() + "[commandInfo=" + this.commandInfo + ", eventType=" + this.eventType + "]";
     }
 
     /**
@@ -142,7 +141,8 @@ public class CommandEventData {
      */
     public static enum CommandEventType {
         /**
-         * If the {@link CommandSender} has not enough permissions.
+         * If the {@link com.blockhaus2000.ipm.technical.command.CommandSender}
+         * has not enough permissions.
          *
          */
         NO_PERMISSION(RawCommandContext.class),
@@ -205,7 +205,7 @@ public class CommandEventData {
          * @return {@link CommandEventType#commandInfoType}.
          */
         public Class<? extends CommandInfo> getCommandInfoType() {
-            return commandInfoType;
+            return this.commandInfoType;
         }
     }
 }

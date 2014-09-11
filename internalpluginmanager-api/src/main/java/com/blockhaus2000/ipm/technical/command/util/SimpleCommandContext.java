@@ -67,7 +67,7 @@ public class SimpleCommandContext extends SimpleRawCommandContext implements Com
      */
     @Override
     public List<Tag<?>> getArgs() {
-        return args;
+        return this.args;
     }
 
     /**
@@ -77,7 +77,7 @@ public class SimpleCommandContext extends SimpleRawCommandContext implements Com
      */
     @Override
     public Map<Character, Tag<?>> getFlags() {
-        return new HashMap<Character, Tag<?>>(flags);
+        return new HashMap<Character, Tag<?>>(this.flags);
     }
 
     /**
@@ -89,8 +89,8 @@ public class SimpleCommandContext extends SimpleRawCommandContext implements Com
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
-        result = prime * result + (args == null ? 0 : args.hashCode());
-        result = prime * result + (flags == null ? 0 : flags.hashCode());
+        result = prime * result + (this.args == null ? 0 : this.args.hashCode());
+        result = prime * result + (this.flags == null ? 0 : this.flags.hashCode());
         return result;
     }
 
@@ -111,18 +111,18 @@ public class SimpleCommandContext extends SimpleRawCommandContext implements Com
             return false;
         }
         final SimpleCommandContext other = (SimpleCommandContext) obj;
-        if (args == null) {
+        if (this.args == null) {
             if (other.args != null) {
                 return false;
             }
-        } else if (!args.equals(other.args)) {
+        } else if (!this.args.equals(other.args)) {
             return false;
         }
-        if (flags == null) {
+        if (this.flags == null) {
             if (other.flags != null) {
                 return false;
             }
-        } else if (!flags.equals(other.flags)) {
+        } else if (!this.flags.equals(other.flags)) {
             return false;
         }
         return true;

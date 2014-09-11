@@ -22,10 +22,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.blockhaus2000.ipm.technical.command.event.CommandEvent;
-import com.blockhaus2000.ipm.technical.command.event.CommandEventData.CommandEventType;
-import com.blockhaus2000.ipm.technical.command.util.Constants;
-
 /**
  * The annotation is used to tag methods, so they will be detected from the
  * {@link CommandManager} to register the implemented commands.
@@ -40,14 +36,17 @@ public @interface Command {
      *
      * @return The {@link String}[] of the aliases.
      */
-    public String[] aliases();
+    String[] aliases();
 
     /**
      * The permission that is used for this command. If the executer does not
-     * have the permission, a {@link CommandEvent} will be fired with the
-     * {@link CommandEventType} {@link CommandEventType#NO_PERMISSION} and the
-     * method will not be invoked. If the permission is an empty {@link String},
-     * no permission will be used.
+     * have the permission, a
+     * {@link com.blockhaus2000.ipm.technical.command.event.CommandEvent} will
+     * be fired with the
+     * {@link com.blockhaus2000.ipm.technical.command.event.CommandEventData.CommandEventType}
+     * {@link com.blockhaus2000.ipm.technical.command.event.CommandEventData.CommandEventType#NO_PERMISSION}
+     * and the method will not be invoked. If the permission is an empty
+     * {@link String}, no permission will be used.
      *
      * <p>
      * Default: <code>""</code>
@@ -55,12 +54,15 @@ public @interface Command {
      *
      * @return The permission for this command.
      */
-    public String permission() default "";
+    String permission() default "";
 
     /**
      * The minimum arguments for this command. If a uses enter not enough
-     * arguments, a {@link CommandEvent} will be fired with the
-     * {@link CommandEventType} {@link CommandEventType#NOT_ENOUGH_ARGUMENTS}
+     * arguments, a
+     * {@link com.blockhaus2000.ipm.technical.command.event.CommandEvent} will
+     * be fired with the
+     * {@link com.blockhaus2000.ipm.technical.command.event.CommandEventData.CommandEventType}
+     * {@link com.blockhaus2000.ipm.technical.command.event.CommandEventData.CommandEventType#NOT_ENOUGH_ARGUMENTS}
      * and the method will not be invoked.
      *
      * <p>
@@ -69,14 +71,17 @@ public @interface Command {
      *
      * @return The minimum arguments of this command.
      */
-    public int min() default 0;
+    int min() default 0;
 
     /**
      * The maximal arguments for this command. If a uses enter too many
-     * arguments, a {@link CommandEvent} will be fired with the
-     * {@link CommandEventType} {@link CommandEventType#TOO_MANY_ARGUMENTS} and
-     * the method will not be invoked. If it is <code>-1</code>, you can enter
-     * infinite arguments.
+     * arguments, a
+     * {@link com.blockhaus2000.ipm.technical.command.event.CommandEvent} will
+     * be fired with the
+     * {@link com.blockhaus2000.ipm.technical.command.event.CommandEventData.CommandEventType}
+     * {@link com.blockhaus2000.ipm.technical.command.event.CommandEventData.CommandEventType#TOO_MANY_ARGUMENTS}
+     * and the method will not be invoked. If it is <code>-1</code>, you can
+     * enter infinite arguments.
      *
      * <p>
      * Default: <code>-1</code>
@@ -84,7 +89,7 @@ public @interface Command {
      *
      * @return The minimum arguments of this command.
      */
-    public int max() default -1;
+    int max() default -1;
 
     /**
      * The {@link CommandPriority} for this command. If some commands have a
@@ -96,36 +101,43 @@ public @interface Command {
      *
      * @return The priority of this command.
      */
-    public CommandPriority priority() default CommandPriority.NORMAL;
+    CommandPriority priority() default CommandPriority.NORMAL;
 
     /**
      * The flags for this command. Flags are an efficient way to allow toggles
      * in commands (For example, a user uses <code>-h</code> in his command, the
      * flag will be setted to <code>true</code>). Value flags are also
      * supported. You can enable them with a <code>:</code> after the flag name.
-     * If the value is not available, a {@link CommandEvent} will be fired with
-     * the {@link CommandEventType}
-     * {@link CommandEventType#UNAVAILABLE_FLAG_VALUE}. If you use value flags,
-     * you have to enter the type of the flag data that is expected (like
-     * {@link Double}). Write the type after the <code>:</code>, like
-     * <code>p:string</code>. These types are available:
+     * If the value is not available, a
+     * {@link com.blockhaus2000.ipm.technical.command.event.CommandEvent} will
+     * be fired with the
+     * {@link com.blockhaus2000.ipm.technical.command.event.CommandEventData.CommandEventType}
+     * {@link com.blockhaus2000.ipm.technical.command.event.CommandEventData.CommandEventType#UNAVAILABLE_FLAG_VALUE}
+     * . If you use value flags, you have to enter the type of the flag data
+     * that is expected (like {@link Double}). Write the type after the
+     * <code>:</code>, like <code>p:string</code>. These types are available:
      * <ul>
      * <li>String, write <code>a:string</code></li>
      * <li>Long, write <code>a:long</code></li>
      * <li>Double, write <code>a:double</code></li>
      * <li>String_VarArg, write <code>string_vararg</code></li>
      * </ul>
-     * If the type is inconstistent, a {@link CommandEvent} with the
-     * {@link CommandEventType}
-     * {@link CommandEventType#INCONSTISTENT_FLAG_VALUE} will be fired.
+     * If the type is inconstistent, a
+     * {@link com.blockhaus2000.ipm.technical.command.event.CommandEvent} with
+     * the
+     * {@link com.blockhaus2000.ipm.technical.command.event.CommandEventData.CommandEventType}
+     * {@link com.blockhaus2000.ipm.technical.command.event.CommandEventData.CommandEventType#INCONSTISTENT_FLAG_VALUE}
+     * will be fired.
      *
      * <p>
-     * <b> NOTE: Flags have to match the regex {@link Constants#FLAG_REGEX}!</b>
+     * <b> NOTE: Flags have to match the regex
+     * {@link com.blockhaus2000.ipm.technical.command.util.Constants#FLAG_REGEX}
+     * !</b>
      * </p>
      *
      * @return A {@link String}[] of flags for this command.
      */
-    public String[] flags() default "";
+    String[] flags() default "";
 
     /**
      * This is the syntax of the command. The syntax should sepcify the
@@ -148,13 +160,13 @@ public @interface Command {
      * </p>
      * <p>
      * <b> NOTE: The syntax has to match the regex
-     * {@link Constants#SYNTAX_REGEX}! </b>
+     * {@link com.blockhaus2000.ipm.technical.command.util.Constants#SYNTAX_REGEX}
+     * ! </b>
      * </p>
      *
      * @return The syntax for this command.
      */
-    // TODO: Implement
-    public String syntax() default "";
+    String syntax() default "";
 
     /**
      * This is the second-level-command of the command. So the command method
@@ -172,7 +184,7 @@ public @interface Command {
      *
      * @return The second-level-command for this command.
      */
-    public String secondLevelCommand() default "";
+    String secondLevelCommand() default "";
 
     /**
      * Enables the auto maximal argument setting if you use a specific command
@@ -182,6 +194,5 @@ public @interface Command {
      *         specification is enabled.
      * @see Command#syntax()
      */
-    // TODO: Implement
-    public boolean autoSetMaxOnSyntax() default true;
+    boolean autoSetMaxOnSyntax() default true;
 }

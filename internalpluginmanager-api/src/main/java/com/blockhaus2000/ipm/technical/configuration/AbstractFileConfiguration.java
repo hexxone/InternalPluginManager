@@ -23,11 +23,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The {@link FileConfiguration} is used to simplify the usage of
+ * The {@link AbstractFileConfiguration} is used to simplify the usage of
  * configurations. The access is easy, fast and lightweight.
  *
  */
-public abstract class FileConfiguration {
+public abstract class AbstractFileConfiguration {
     /**
      * The file where the configuration is stored.
      *
@@ -42,7 +42,7 @@ public abstract class FileConfiguration {
      *            possible that the file does not exist, but not that the file
      *            is a directory.
      */
-    public FileConfiguration(final File file) {
+    public AbstractFileConfiguration(final File file) {
         assert !file.exists() || file.isFile() : "File has to be a file!";
 
         this.file = file;
@@ -62,7 +62,7 @@ public abstract class FileConfiguration {
 
     /**
      * Reloads the configuration. Simple delegates to
-     * {@link FileConfiguration#load()}.
+     * {@link AbstractFileConfiguration#load()}.
      *
      */
     public void reload() {
@@ -81,13 +81,13 @@ public abstract class FileConfiguration {
     public abstract String getString(final String path, final String def);
 
     /**
-     * Delegates to {@link FileConfiguration#getString(String, String)} with
+     * Delegates to {@link AbstractFileConfiguration#getString(String, String)} with
      * <code>path = path</code> and <code>def = null</code>.
      *
      * @param path
      *            Is passed into
-     *            {@link FileConfiguration#getString(String, String)}.
-     * @return See {@link FileConfiguration#getString(String, String)}.
+     *            {@link AbstractFileConfiguration#getString(String, String)}.
+     * @return See {@link AbstractFileConfiguration#getString(String, String)}.
      */
     public String getString(final String path) {
         return this.getString(path, null);
@@ -104,13 +104,13 @@ public abstract class FileConfiguration {
     public abstract List<String> getStringList(final String path, final List<String> def);
 
     /**
-     * Delegates to {@link FileConfiguration#getStringList(String, List)} with
+     * Delegates to {@link AbstractFileConfiguration#getStringList(String, List)} with
      * <code>path = path</code> and <code>def = new ArrayList()</code>.
      *
      * @param path
      *            Is passed into
-     *            {@link FileConfiguration#getStringList(String, List)}.
-     * @return See {@link FileConfiguration#getStringList(String, List)}.
+     *            {@link AbstractFileConfiguration#getStringList(String, List)}.
+     * @return See {@link AbstractFileConfiguration#getStringList(String, List)}.
      */
     public List<String> getStringList(final String path) {
         return this.getStringList(path, new ArrayList<String>());
@@ -127,13 +127,13 @@ public abstract class FileConfiguration {
     public abstract boolean getBoolean(final String path, final boolean def);
 
     /**
-     * Delegates to {@link FileConfiguration#getBoolean(String, boolean)} with
+     * Delegates to {@link AbstractFileConfiguration#getBoolean(String, boolean)} with
      * <code>path = path</code> and <code>def = false</code>.
      *
      * @param path
      *            Is passed into
-     *            {@link FileConfiguration#getBoolean(String, boolean)}.
-     * @return See {@link FileConfiguration#getBoolean(String, boolean)}.
+     *            {@link AbstractFileConfiguration#getBoolean(String, boolean)}.
+     * @return See {@link AbstractFileConfiguration#getBoolean(String, boolean)}.
      */
     public boolean getBoolean(final String path) {
         return this.getBoolean(path, false);
@@ -150,13 +150,13 @@ public abstract class FileConfiguration {
     public abstract int getInteger(final String path, final int def);
 
     /**
-     * Delegates to {@link FileConfiguration#getInteger(String, int)} with
+     * Delegates to {@link AbstractFileConfiguration#getInteger(String, int)} with
      * <code>path = path</code> and <code>def = -1</code>.
      *
      * @param path
      *            Is passed into
-     *            {@link FileConfiguration#getInteger(String, int)}.
-     * @return See {@link FileConfiguration#getInteger(String, int)}.
+     *            {@link AbstractFileConfiguration#getInteger(String, int)}.
+     * @return See {@link AbstractFileConfiguration#getInteger(String, int)}.
      */
     public int getInteger(final String path) {
         return this.getInteger(path, -1);
@@ -173,13 +173,13 @@ public abstract class FileConfiguration {
     public abstract long getLong(final String path, final long def);
 
     /**
-     * Delegates to {@link FileConfiguration#getLong(String, long)} with
+     * Delegates to {@link AbstractFileConfiguration#getLong(String, long)} with
      * <code>path = path</code> and <code>def = -1</code>.
      *
      * @param path
-     *            Is passed into {@link FileConfiguration#getLong(String, long)}
+     *            Is passed into {@link AbstractFileConfiguration#getLong(String, long)}
      *            .
-     * @return See {@link FileConfiguration#getLong(String, long)}.
+     * @return See {@link AbstractFileConfiguration#getLong(String, long)}.
      */
     public long getLong(final String path) {
         return this.getLong(path, -1);
@@ -196,13 +196,13 @@ public abstract class FileConfiguration {
     public abstract double getDouble(final String path, final double def);
 
     /**
-     * Delegates to {@link FileConfiguration#getDouble(String, double)} with
+     * Delegates to {@link AbstractFileConfiguration#getDouble(String, double)} with
      * <code>path = path</code> and <code>def = -1</code>.
      *
      * @param path
      *            Is passed into
-     *            {@link FileConfiguration#getDouble(String, double)}.
-     * @return See {@link FileConfiguration#getDouble(String, double)}.
+     *            {@link AbstractFileConfiguration#getDouble(String, double)}.
+     * @return See {@link AbstractFileConfiguration#getDouble(String, double)}.
      */
     public double getDouble(final String path) {
         return this.getDouble(path, -1);
@@ -366,7 +366,7 @@ public abstract class FileConfiguration {
 
     /**
      *
-     * @return {@link FileConfiguration#file}
+     * @return {@link AbstractFileConfiguration#file}
      */
     public File getFile() {
         return this.file;

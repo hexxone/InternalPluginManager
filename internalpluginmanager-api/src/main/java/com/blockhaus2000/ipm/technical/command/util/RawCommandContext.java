@@ -29,17 +29,17 @@ public interface RawCommandContext extends CommandInfo {
      *
      * @return The command alias that the command was executed with.
      */
-    public String getLabel();
+    String getLabel();
 
     /**
      *
      * @return The unparsed arguments.
      */
-    public String[] getRawArgs();
+    String[] getRawArgs();
 
     /**
      *
      * @return The {@link CommandSender} that has executed the command.
      */
-    public CommandSender getSender();
+    CommandSender getSender();
 }

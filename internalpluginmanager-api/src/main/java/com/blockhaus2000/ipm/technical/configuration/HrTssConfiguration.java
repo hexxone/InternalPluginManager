@@ -27,11 +27,11 @@ import java.util.Map;
 import com.blockhaus2000.tagstoragesystem.human.HRTSS;
 
 /**
- * A {@link FileConfiguration}, based on the human-readable tss (HRTSS)
+ * A {@link AbstractFileConfiguration}, based on the human-readable tss (HRTSS)
  * configuration file.
  *
  */
-public class HrTssConfiguration extends FileConfiguration {
+public class HrTssConfiguration extends AbstractFileConfiguration {
     /**
      * The String that a semicol (<code>";"</code>) is escaped with. The
      * semicolon is used to split elements in a serialized list.
@@ -62,7 +62,7 @@ public class HrTssConfiguration extends FileConfiguration {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.configuration.FileConfiguration#save()
+     * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#save()
      */
     @Override
     public void save() {
@@ -72,7 +72,7 @@ public class HrTssConfiguration extends FileConfiguration {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.configuration.FileConfiguration#load()
+     * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#load()
      */
     @Override
     public void load() {
@@ -83,7 +83,7 @@ public class HrTssConfiguration extends FileConfiguration {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.configuration.FileConfiguration#getString(java.lang.String,
+     * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#getString(java.lang.String,
      *      java.lang.String)
      */
     @Override
@@ -98,7 +98,7 @@ public class HrTssConfiguration extends FileConfiguration {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.configuration.FileConfiguration#getStringList(java.lang.String,
+     * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#getStringList(java.lang.String,
      *      java.util.List)
      */
     @Override
@@ -120,7 +120,7 @@ public class HrTssConfiguration extends FileConfiguration {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.configuration.FileConfiguration#getBoolean(java.lang.String,
+     * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#getBoolean(java.lang.String,
      *      boolean)
      */
     @Override
@@ -131,7 +131,7 @@ public class HrTssConfiguration extends FileConfiguration {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.configuration.FileConfiguration#getInteger(java.lang.String,
+     * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#getInteger(java.lang.String,
      *      int)
      */
     @Override
@@ -142,7 +142,7 @@ public class HrTssConfiguration extends FileConfiguration {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.configuration.FileConfiguration#getLong(java.lang.String,
+     * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#getLong(java.lang.String,
      *      long)
      */
     @Override
@@ -153,7 +153,7 @@ public class HrTssConfiguration extends FileConfiguration {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.configuration.FileConfiguration#getDouble(java.lang.String,
+     * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#getDouble(java.lang.String,
      *      double)
      */
     @Override
@@ -165,7 +165,7 @@ public class HrTssConfiguration extends FileConfiguration {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.configuration.FileConfiguration#set(java.lang.String,
+     * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#set(java.lang.String,
      *      java.lang.String)
      */
     @Override
@@ -176,7 +176,7 @@ public class HrTssConfiguration extends FileConfiguration {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.configuration.FileConfiguration#set(java.lang.String,
+     * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#set(java.lang.String,
      *      java.util.List)
      */
     @Override
@@ -194,7 +194,7 @@ public class HrTssConfiguration extends FileConfiguration {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.configuration.FileConfiguration#set(java.lang.String,
+     * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#set(java.lang.String,
      *      boolean)
      */
     @Override
@@ -205,7 +205,7 @@ public class HrTssConfiguration extends FileConfiguration {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.configuration.FileConfiguration#set(java.lang.String,
+     * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#set(java.lang.String,
      *      int)
      */
     @Override
@@ -216,7 +216,7 @@ public class HrTssConfiguration extends FileConfiguration {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.configuration.FileConfiguration#set(java.lang.String,
+     * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#set(java.lang.String,
      *      long)
      */
     @Override
@@ -227,7 +227,7 @@ public class HrTssConfiguration extends FileConfiguration {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.configuration.FileConfiguration#set(java.lang.String,
+     * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#set(java.lang.String,
      *      double)
      */
     @Override
@@ -239,7 +239,7 @@ public class HrTssConfiguration extends FileConfiguration {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.configuration.FileConfiguration#add(java.lang.String,
+     * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#add(java.lang.String,
      *      java.lang.String)
      */
     @Override
@@ -252,7 +252,7 @@ public class HrTssConfiguration extends FileConfiguration {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.configuration.FileConfiguration#add(java.lang.String,
+     * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#add(java.lang.String,
      *      java.util.List)
      */
     @Override
@@ -265,7 +265,7 @@ public class HrTssConfiguration extends FileConfiguration {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.configuration.FileConfiguration#add(java.lang.String,
+     * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#add(java.lang.String,
      *      boolean)
      */
     @Override
@@ -278,7 +278,7 @@ public class HrTssConfiguration extends FileConfiguration {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.configuration.FileConfiguration#add(java.lang.String,
+     * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#add(java.lang.String,
      *      int)
      */
     @Override
@@ -291,7 +291,7 @@ public class HrTssConfiguration extends FileConfiguration {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.configuration.FileConfiguration#add(java.lang.String,
+     * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#add(java.lang.String,
      *      long)
      */
     @Override
@@ -304,7 +304,7 @@ public class HrTssConfiguration extends FileConfiguration {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.configuration.FileConfiguration#add(java.lang.String,
+     * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#add(java.lang.String,
      *      double)
      */
     @Override
@@ -318,7 +318,7 @@ public class HrTssConfiguration extends FileConfiguration {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.configuration.FileConfiguration#remove(java.lang.String)
+     * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#remove(java.lang.String)
      */
     @Override
     public void remove(final String path) {
@@ -328,7 +328,7 @@ public class HrTssConfiguration extends FileConfiguration {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.configuration.FileConfiguration#getValues()
+     * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#getValues()
      */
     @Override
     public Map<String, String> getValues() {

@@ -32,11 +32,11 @@ public interface CommandContext extends RawCommandContext {
      *
      * @return The parsed arguments.
      */
-    public List<Tag<?>> getArgs();
+    List<Tag<?>> getArgs();
 
     /**
      *
      * @return The parsed flags.
      */
-    public Map<Character, Tag<?>> getFlags();
+    Map<Character, Tag<?>> getFlags();
 }

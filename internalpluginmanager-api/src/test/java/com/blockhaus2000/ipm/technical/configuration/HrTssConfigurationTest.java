@@ -53,7 +53,7 @@ public class HrTssConfigurationTest {
         final double d3 = 1234.5678;
         final List<String> d4 = new ArrayList<String>(Arrays.asList("e0", "e1.1;e1.2", "e2", "e3", "e4", "e5"));
 
-        final FileConfiguration configWrite;
+        final AbstractFileConfiguration configWrite;
         try {
             configWrite = new HrTssConfiguration(file);
         } catch (final IOException cause) {
@@ -67,7 +67,7 @@ public class HrTssConfigurationTest {
 
         configWrite.save();
 
-        final FileConfiguration configRead;
+        final AbstractFileConfiguration configRead;
         try {
             configRead = new HrTssConfiguration(file);
         } catch (final IOException cause) {

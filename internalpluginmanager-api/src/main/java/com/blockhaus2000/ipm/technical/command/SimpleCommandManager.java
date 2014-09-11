@@ -164,21 +164,21 @@ public final class SimpleCommandManager implements CommandManager {
             // The flag data is parsed here to improve the performance.
             // If the flag is a toggle flag, the SyntaxType is null.
             final Map<Character, SyntaxType> flagData = new HashMap<Character, SyntaxType>();
-            for (String rawFlagData : commandAnot.flags()) {
+            for (final String rawFlagdata : commandAnot.flags()) {
                 // Flags should be trimmed.
-                rawFlagData = rawFlagData.trim();
+                final String flagDataPart = rawFlagdata.trim();
 
                 // Empty flags are be ignored, becase the default value
                 // is an empty string.
-                if (rawFlagData.isEmpty()) {
+                if (flagDataPart.isEmpty()) {
                     continue;
                 }
-                if (!rawFlagData.matches(Constants.FLAG_REGEX)) {
-                    throw new CommandException("The flag \"" + rawFlagData + "\" does not match the regex \""
+                if (!flagDataPart.matches(Constants.FLAG_REGEX)) {
+                    throw new CommandException("The flag \"" + flagDataPart + "\" does not match the regex \""
                             + Constants.FLAG_REGEX + "\"");
                 }
 
-                SimpleCommandManager.LOGGER.finest("Parsing flag \"" + rawFlagData + "\".");
+                SimpleCommandManager.LOGGER.finest("Parsing flag \"" + flagDataPart + "\".");
 
                 // The first char is ALWAYS the flag name, the regex checks
                 // that. If the flag a value flag, the flag string contains
@@ -186,8 +186,8 @@ public final class SimpleCommandManager implements CommandManager {
                 // syntax name. If there is no colon, the syntax type is
                 // null. That means, the flag is a toggle flag.
                 flagData.put(
-                        rawFlagData.charAt(0),
-                        rawFlagData.contains(CommonStringConstants.COLON) ? SyntaxType.getFromName(rawFlagData
+                        flagDataPart.charAt(0),
+                        flagDataPart.contains(CommonStringConstants.COLON) ? SyntaxType.getFromName(flagDataPart
                                 .split(CommonStringConstants.COLON)[1].toLowerCase()) : null);
             }
 
@@ -329,8 +329,8 @@ public final class SimpleCommandManager implements CommandManager {
      *      java.lang.String...)
      */
     @Override
-    public boolean execute(String label, final CommandSender sender, String... rawArgs) {
-        label = label == null ? null : label.toLowerCase().trim();
+    public boolean execute(final String rawLabel, final CommandSender sender, final String... rawArgs) {
+        final String label = rawLabel == null ? null : rawLabel.toLowerCase().trim();
 
         assert label != null && !label.isEmpty() : "Label cannot be null or empty!";
         assert sender != null : "Sender cannot be null!";
@@ -368,7 +368,10 @@ public final class SimpleCommandManager implements CommandManager {
             // By default, no scl is set. Then, it should be null.
             final String secondLevelCommand = rawSecondLevelCommand.isEmpty() ? null : rawSecondLevelCommand;
             // Only handle a scl, if one is set.
-            if (secondLevelCommand != null) {
+            final String[] args;
+            if (secondLevelCommand == null) {
+                args = rawArgs;
+            } else {
                 // This RawCommandContext is only temporary and does not include
                 // the correct raw args.
                 final RawCommandContext tempRawCommandContext = new SimpleRawCommandContext(commandInfo, label, rawArgs, sender);
@@ -388,12 +391,12 @@ public final class SimpleCommandManager implements CommandManager {
                     continue;
                 }
                 // Now, remove the first argument from the argument array.
-                rawArgs = Arrays.copyOfRange(rawArgs, 1, rawArgs.length);
+                args = Arrays.copyOfRange(rawArgs, 1, rawArgs.length);
             }
 
             SimpleCommandManager.LOGGER.finest("Second level command is set to \"" + secondLevelCommand + "\"");
 
-            final SimpleRawCommandContext rawCommandContext = new SimpleRawCommandContext(commandInfo, label, rawArgs, sender);
+            final SimpleRawCommandContext rawCommandContext = new SimpleRawCommandContext(commandInfo, label, args, sender);
 
             // Check permission.
             if (!sender.hasPermission(commandAnot.permission())) {
@@ -500,28 +503,28 @@ public final class SimpleCommandManager implements CommandManager {
 
             try {
                 switch (value) {
-                case STRING:
-                    // Yay, nothing has to be parsed.
-                    flags.put(key, new Tag<String>(rawArgs.get(flagIndex + 1)));
-                    break;
-                case LONG:
-                    flags.put(key, new Tag<Long>(Long.valueOf(rawArgs.get(flagIndex + 1))));
-                    break;
-                case DOUBLE:
-                    flags.put(key, new Tag<Double>(Double.valueOf(rawArgs.get(flagIndex + 1))));
-                    break;
-                case STRING_VARARG:
-                    // :/ VarArgs has to be parsed.
-                    String parsedVarArg = this.parseVarArg(rawArgs, flagIndex + 1, rawArgs.get(flagIndex + 1).charAt(0));
-                    parsedVarArg = parsedVarArg.substring(1, parsedVarArg.length() - 1);
+                    case STRING:
+                        // Yay, nothing has to be parsed.
+                        flags.put(key, new Tag<String>(rawArgs.get(flagIndex + 1)));
+                        break;
+                    case LONG:
+                        flags.put(key, new Tag<Long>(Long.valueOf(rawArgs.get(flagIndex + 1))));
+                        break;
+                    case DOUBLE:
+                        flags.put(key, new Tag<Double>(Double.valueOf(rawArgs.get(flagIndex + 1))));
+                        break;
+                    case STRING_VARARG:
+                        // :/ VarArgs has to be parsed.
+                        String parsedVarArg = this.parseVarArg(rawArgs, flagIndex + 1, rawArgs.get(flagIndex + 1).charAt(0));
+                        parsedVarArg = parsedVarArg.substring(1, parsedVarArg.length() - 1);
 
-                    // Add indexes to the remove set.
-                    for (int i = 1; i < parsedVarArg.split(" ").length; i++) {
-                        toRemove.add(flagIndex + i + 1);
-                    }
+                        // Add indexes to the remove set.
+                        for (int i = 1; i < parsedVarArg.split(" ").length; i++) {
+                            toRemove.add(flagIndex + i + 1);
+                        }
 
-                    flags.put(key, new Tag<String>(parsedVarArg));
-                    break;
+                        flags.put(key, new Tag<String>(parsedVarArg));
+                        break;
                 }
                 // This should be removed always because index + 1 is the value.
                 toRemove.add(flagIndex + 1);
@@ -582,20 +585,20 @@ public final class SimpleCommandManager implements CommandManager {
                 for (int i = 0; i < syntaxData.size(); i++) {
                     final String arg = rawArgs.get(i);
                     switch (syntaxData.get(i)) {
-                    case STRING:
-                        // Yay, no parsing required.
-                        args.add(new Tag<String>(arg));
-                        break;
-                    case LONG:
-                        args.add(new Tag<Long>(Long.valueOf(arg)));
-                        break;
-                    case DOUBLE:
-                        args.add(new Tag<Double>(Double.valueOf(arg)));
-                        break;
-                    case STRING_VARARG:
-                        // :/ VarArgs parsing required.
-                        args.add(new Tag<String>(this.parseVarArg(rawArgs, i, null)));
-                        break;
+                        case STRING:
+                            // Yay, no parsing required.
+                            args.add(new Tag<String>(arg));
+                            break;
+                        case LONG:
+                            args.add(new Tag<Long>(Long.valueOf(arg)));
+                            break;
+                        case DOUBLE:
+                            args.add(new Tag<Double>(Double.valueOf(arg)));
+                            break;
+                        case STRING_VARARG:
+                            // :/ VarArgs parsing required.
+                            args.add(new Tag<String>(this.parseVarArg(rawArgs, i, null)));
+                            break;
                     }
                 }
             } catch (final NumberFormatException dummy) {

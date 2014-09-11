@@ -22,7 +22,7 @@ import java.io.File;
 import java.util.logging.Logger;
 
 import com.blockhaus2000.ipm.technical.command.CommandManager;
-import com.blockhaus2000.ipm.technical.configuration.FileConfiguration;
+import com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration;
 
 /**
  * The plugin interface. To implement a plugin, extend the {@link SimplePlugin}.
@@ -49,7 +49,7 @@ public interface Plugin extends PropertyChangeListener {
      * @param obj
      *            Is passed into {@link CommandManager#register(Class, Object)}.
      */
-    public <T> void registerCommands(final Class<T> clazz, final T obj);
+    <T> void registerCommands(final Class<T> clazz, final T obj);
 
     /**
      * Delegates to {@link Plugin#registerCommands(Class, Object)} with
@@ -60,7 +60,7 @@ public interface Plugin extends PropertyChangeListener {
      * @see com.blockhaus2000.ipm.technical.plugin.Plugin#registerCommands(java.lang.Class,
      *      java.lang.Object)
      */
-    public <T> void registerCommands(final T obj);
+    <T> void registerCommands(final T obj);
 
     /**
      * Delegates to {@link Plugin#registerCommands(Class, Object)} with
@@ -71,19 +71,19 @@ public interface Plugin extends PropertyChangeListener {
      * @see com.blockhaus2000.ipm.technical.plugin.Plugin#registerCommands(java.lang.Class,
      *      java.lang.Object)
      */
-    public <T> void registerCommands(final Class<T> clazz);
+    <T> void registerCommands(final Class<T> clazz);
 
     /**
      * If the enabled flag is set to <code>false</code>, this will be callen.
      *
      */
-    public void onDisable();
+    void onDisable();
 
     /**
      * If the enabled flag is set to <code>true</code>, this will be callen.
      *
      */
-    public void onEnable();
+    void onEnable();
 
     /**
      * This method will be callen after loading the plugin, but before enabling
@@ -95,46 +95,46 @@ public interface Plugin extends PropertyChangeListener {
      * </p>
      *
      */
-    public void onLoad();
+    void onLoad();
 
     /**
      *
      * @return The folder where the plugin can store its internal files. Do
      *         NEVER use an other directory to store files!
      */
-    public File getDataFolder();
+    File getDataFolder();
 
     /**
      *
      * @return The configuration for this plugin.
      */
-    public FileConfiguration getConfig();
+    AbstractFileConfiguration getConfig();
 
     /**
      *
      * @return The {@link Logger} for this plugin.
      */
-    public Logger getLogger();
+    Logger getLogger();
 
     /**
      *
      * @return The {@link PluginMeta}, that contains some information about this
      *         plugin.
      */
-    public PluginMeta getPluginMeta();
+    PluginMeta getPluginMeta();
 
     /**
      *
      * @return The name of the plugin.
      */
-    public String getName();
+    String getName();
 
     /**
      *
      * @return <code>true</code> if the plugin is enabled, <code>false</code>
      *         otherwise.
      */
-    public boolean isEnabled();
+    boolean isEnabled();
 
     /**
      * Sets the enabled-flag. Will automaticly call {@link Plugin#onEnable()}
@@ -143,5 +143,5 @@ public interface Plugin extends PropertyChangeListener {
      * @param enabled
      *            The new enabled flag.
      */
-    public void setEnabled(final boolean enabled);
+    void setEnabled(final boolean enabled);
 }

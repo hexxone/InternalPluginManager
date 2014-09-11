@@ -29,5 +29,5 @@ public interface CommandEventListener {
      * @param commandEvent
      *            The {@link CommandEvent} that was fired.
      */
-    public void onCommandEvent(final CommandEvent commandEvent);
+    void onCommandEvent(final CommandEvent commandEvent);
 }

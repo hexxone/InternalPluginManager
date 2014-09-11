@@ -26,7 +26,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import com.blockhaus2000.ipm.technical.command.SimpleCommandManager;
-import com.blockhaus2000.ipm.technical.configuration.FileConfiguration;
+import com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration;
 import com.blockhaus2000.ipm.technical.configuration.HrTssConfiguration;
 import com.blockhaus2000.ipm.technical.plugin.util.exception.PluginException;
 import com.blockhaus2000.ipm.util.CommonConstants;
@@ -48,7 +48,7 @@ public class SimplePlugin implements Plugin {
      * The {@link PropertyChangeSupport} for this class.
      *
      */
-    protected final PropertyChangeSupport PROPERTY_CHANGE_SUPPORT = new PropertyChangeSupport(this);
+    protected final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     /**
      * This set contains all (command) classes that are registered with
@@ -72,7 +72,7 @@ public class SimplePlugin implements Plugin {
      * The plugin file configuration.
      *
      */
-    private FileConfiguration config;
+    private AbstractFileConfiguration config;
     /**
      * The {@link PluginMeta} containing main information about this plugin.
      *
@@ -95,7 +95,7 @@ public class SimplePlugin implements Plugin {
      *
      */
     protected SimplePlugin() {
-        this.PROPERTY_CHANGE_SUPPORT.addPropertyChangeListener(SimplePlugin.ENABLED_PROPERTY_NAME, this);
+        this.propertyChangeSupport.addPropertyChangeListener(SimplePlugin.ENABLED_PROPERTY_NAME, this);
     }
 
     /**
@@ -182,7 +182,7 @@ public class SimplePlugin implements Plugin {
      * @see com.blockhaus2000.ipm.technical.plugin.Plugin#getConfig()
      */
     @Override
-    public FileConfiguration getConfig() {
+    public AbstractFileConfiguration getConfig() {
         return this.config;
     }
 
@@ -238,7 +238,7 @@ public class SimplePlugin implements Plugin {
         this.enabled = enabled;
 
         if (oldVal != newVal) {
-            this.PROPERTY_CHANGE_SUPPORT.firePropertyChange(SimplePlugin.ENABLED_PROPERTY_NAME, oldVal, newVal);
+            this.propertyChangeSupport.firePropertyChange(SimplePlugin.ENABLED_PROPERTY_NAME, oldVal, newVal);
         }
     }
 

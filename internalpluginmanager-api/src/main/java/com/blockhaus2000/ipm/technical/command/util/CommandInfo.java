@@ -32,7 +32,7 @@ public interface CommandInfo extends Comparable<CommandInfo> {
      *
      * @return The {@link Command} annotation that indicates the command.
      */
-    public Command getCommandAnot();
+    Command getCommandAnot();
 
     /**
      *
@@ -40,26 +40,26 @@ public interface CommandInfo extends Comparable<CommandInfo> {
      *         May be <code>null</code>, if no object where given (The method
      *         has to be static!).
      */
-    public Object getObject();
+    Object getObject();
 
     /**
      *
      * @return The {@link Method} that is tagged with the {@link Command}
      *         annotation.
      */
-    public Method getMethod();
+    Method getMethod();
 
     /**
      *
      * @return The flag data, containing all informations about flags that are
      *         important to parse them whilest a execution.
      */
-    public Map<Character, SyntaxType> getFlagData();
+    Map<Character, SyntaxType> getFlagData();
 
     /**
      *
      * @return The syntax data, containing all informations about the command
      *         syntax are important to parse the arguments while execution.
      */
-    public List<SyntaxType> getSyntaxData();
+    List<SyntaxType> getSyntaxData();
 }

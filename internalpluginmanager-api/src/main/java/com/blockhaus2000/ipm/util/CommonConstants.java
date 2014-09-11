@@ -17,8 +17,6 @@
  */
 package com.blockhaus2000.ipm.util;
 
-import com.blockhaus2000.ipm.technical.plugin.Plugin;
-
 /**
  * This class contains some common constants.
  *
@@ -29,7 +27,8 @@ public final class CommonConstants {
      *
      * <p>
      * <b> NOTE: Do NOT use this logger within plugins. Use the plugin logger (
-     * {@link Plugin#getLogger()}) instead. </b>
+     * {@link com.blockhaus2000.ipm.technical.plugin.Plugin#getLogger()})
+     * instead. </b>
      * </p>
      */
     public static final String INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME = CommonConstants.class.getPackage().getName()

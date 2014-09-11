@@ -40,7 +40,7 @@ public interface CommandManager {
      *            methods to register is non-static.
      * @return A set of all {@link CommandInfo} that where registered.
      */
-    public <T> Set<CommandInfo> register(final Class<T> clazz, final T obj);
+    <T> Set<CommandInfo> register(final Class<T> clazz, final T obj);
 
     /**
      * Delegates to {@link CommandManager#register(Class, Object)} with
@@ -53,7 +53,7 @@ public interface CommandManager {
      * @see com.blockhaus2000.ipm.technical.command.CommandManager#register(java.lang.Class,
      *      java.lang.Object)
      */
-    public <T> Set<CommandInfo> register(final T obj);
+    <T> Set<CommandInfo> register(final T obj);
 
     /**
      * Delegates to {@link CommandManager#register(Class, Object)} with
@@ -70,7 +70,7 @@ public interface CommandManager {
      * @see com.blockhaus2000.ipm.technical.command.CommandManager#register(java.lang.Class,
      *      java.lang.Object)
      */
-    public <T> Set<CommandInfo> register(final Class<T> clazz);
+    <T> Set<CommandInfo> register(final Class<T> clazz);
 
     /**
      * Unregisters all commands specified in the given {@link Class}.
@@ -79,7 +79,7 @@ public interface CommandManager {
      *            The {@link Class} that contains all commands to unregister.
      * @return A {@link Set} of {@link CommandInfo}s that are unregistered.
      */
-    public Set<CommandInfo> unregister(final Class<?> clazz);
+    Set<CommandInfo> unregister(final Class<?> clazz);
 
     /**
      * Delegates to {@link CommandManager#unregister(Class)} with
@@ -90,7 +90,7 @@ public interface CommandManager {
      * @return See {@link CommandManager#unregister(Class)}.
      * @see com.blockhaus2000.ipm.technical.command.CommandManager#unregister(java.lang.Class)
      */
-    public Set<CommandInfo> unregister(final Object obj);
+    Set<CommandInfo> unregister(final Object obj);
 
     /**
      * Executes the given alias (label).
@@ -105,7 +105,7 @@ public interface CommandManager {
      * @return <code>true</code> if the command was executed successfully,
      *         <code>false</code> otherwise.
      */
-    public boolean execute(final String label, final CommandSender sender, final String... rawArgs);
+    boolean execute(final String label, final CommandSender sender, final String... rawArgs);
 
     /**
      * <ul>
@@ -116,5 +116,5 @@ public interface CommandManager {
      *
      * @return All registered commands.
      */
-    public Map<String, List<CommandInfo>> getCommands();
+    Map<String, List<CommandInfo>> getCommands();
 }

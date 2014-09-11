@@ -17,11 +17,9 @@
  */
 package com.blockhaus2000.ipm.util;
 
-import java.util.Collection;
-
 /**
  * This class is a wrapper class to store different items in a
- * {@link Collection}.
+ * {@link java.util.Collection}.
  *
  * @param <T>
  *            The type of the stored data.
@@ -56,7 +54,7 @@ public class Tag<T> {
      * @return {@link Tag#data}.
      */
     public T getData() {
-        return data;
+        return this.data;
     }
 
     /**
@@ -77,7 +75,7 @@ public class Tag<T> {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + (data == null ? 0 : data.hashCode());
+        result = prime * result + (this.data == null ? 0 : this.data.hashCode());
         return result;
     }
 
@@ -98,11 +96,11 @@ public class Tag<T> {
             return false;
         }
         final Tag<?> other = (Tag<?>) obj;
-        if (data == null) {
+        if (this.data == null) {
             if (other.data != null) {
                 return false;
             }
-        } else if (!data.equals(other.data)) {
+        } else if (!this.data.equals(other.data)) {
             return false;
         }
         return true;
@@ -115,6 +113,6 @@ public class Tag<T> {
      */
     @Override
     public String toString() {
-        return getClass().getName() + "[data=" + data + "]";
+        return this.getClass().getName() + "[data=" + this.data + "]";
     }
 }

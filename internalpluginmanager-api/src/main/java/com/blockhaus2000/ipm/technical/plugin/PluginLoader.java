@@ -72,7 +72,7 @@ public final class PluginLoader {
      * </p>
      *
      */
-    private final Map<String, PluginClassLoader> CLASS_LOADERS = new HashMap<String, PluginClassLoader>();
+    private final Map<String, PluginClassLoader> classLoaders = new HashMap<String, PluginClassLoader>();
 
     /**
      * Constructor of PluginLoader.
@@ -105,16 +105,16 @@ public final class PluginLoader {
      * <b> NOTE: This does not disable the plugin. </b>
      * </p>
      *
-     * @param name
+     * @param rawName
      *            The name of the plugin to remove from the plugin loader.
      */
-    synchronized void remove(String name) {
-        name = name.toLowerCase();
+    synchronized void remove(final String rawName) {
+        final String name = rawName.toLowerCase();
 
-        final PluginClassLoader classLoader = this.CLASS_LOADERS.get(name);
+        final PluginClassLoader classLoader = this.classLoaders.get(name);
         if (classLoader != null) {
             classLoader.clear();
-            this.CLASS_LOADERS.remove(name);
+            this.classLoaders.remove(name);
             System.gc();
         }
     }
@@ -225,7 +225,7 @@ public final class PluginLoader {
             throw new PluginException("The main class \"" + main + "\" from plugin \"" + name + "\" is no instance of \""
                     + SimplePlugin.class.getName() + "\"!", cause);
         }
-        this.CLASS_LOADERS.put(name.toLowerCase(), classLoader);
+        this.classLoaders.put(name.toLowerCase(), classLoader);
 
         final SimplePlugin plugin;
         try {
@@ -251,7 +251,7 @@ public final class PluginLoader {
      *             Is thrown if the class cannot be found.
      */
     Class<?> findClass(final String name) throws ClassNotFoundException {
-        for (final PluginClassLoader classLoader : this.CLASS_LOADERS.values()) {
+        for (final PluginClassLoader classLoader : this.classLoaders.values()) {
             final Class<?> clazz = classLoader.findClass(name, false);
             if (clazz != null) {
                 return clazz;

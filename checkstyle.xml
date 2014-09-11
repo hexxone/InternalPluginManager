@@ -126,7 +126,7 @@
 		</module>
 
 		<module name="MultipleStringLiterals">
-			<property name="allowedDuplicates" value="1" />
+			<property name="allowedDuplicates" value="5" />
 		</module>
 
 		<module name="MultipleVariableDeclarations" />
@@ -149,7 +149,7 @@
 		<module name="RedundantImport" />
 		<module name="UnusedImports" />
 		<!-- TODO -->
-		<!--<module name="ImportOrder" />-->
+		<!--<module name="ImportOrder" /> -->
 
 		<module name="JavadocType">
 			<property name="scope" value="private" />
@@ -176,8 +176,7 @@
 
 		<module name="JavadocStyle">
 			<property name="scope" value="private" />
-			<property name="checkFirstSentence" value="true" />
-			<property name="endOfSentenceFormat" value="[.!?]$" />
+			<property name="checkFirstSentence" value="false" />
 			<property name="checkEmptyJavadoc" value="true" />
 			<property name="checkHtml" value="true" />
 		</module>
@@ -204,10 +203,6 @@
 
 		<module name="JavaNCSS" />
 
-		<module name="TodoComment">
-			<property name="format" value="TODO:?" /> <!-- //TODO-FINDER:IGNORE -->
-		</module>
-
 		<module name="UncommentedMain" />
 		<module name="UpperEll" />
 
@@ -230,13 +225,13 @@
 		<module name="RedundantModifier" />
 
 		<module name="AbstractClassName">
-			<property name="format" value="^Abstract.*$|^.*Factory$" />
+			<property name="format" value="^Abstract[A-Z][a-zA-Z]*$" />
 		</module>
 		<module name="ClassTypeParameterName">
 			<property name="format" value="^[A-Z]$" />
 		</module>
 		<module name="ConstantName">
-			<property name="format" value="^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$" />
+			<property name="format" value="^[A-Z][_A-Z0-9]*$" />
 		</module>
 		<module name="LocalFinalVariableName">
 			<property name="format" value="^[a-z][a-zA-Z0-9]*$" />
@@ -248,7 +243,7 @@
 			<property name="format" value="^[a-z][a-zA-Z0-9]*$" />
 		</module>
 		<module name="MethodName">
-			<property name="format" value="^(_INVALID_)?[a-z][a-zA-Z0-9]*$" />
+			<property name="format" value="^[a-z][a-zA-Z0-9]*$" />
 		</module>
 		<module name="MethodTypeParameterName">
 			<property name="format" value="^[A-Z]$" />

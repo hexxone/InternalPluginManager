@@ -18,9 +18,7 @@
 package com.blockhaus2000.ipm.util;
 
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -63,8 +61,8 @@ public final class CollectionUtil {
      *            The {@link Collection} containing the elements to encapsulate.
      * @param listType
      *            The type of the {@link Collection} to use. Like
-     *            {@link ArrayList}, or {@link HashSet}. Has to be a valid
-     *            implementation and no interface.
+     *            {@link java.util.ArrayList}, or {@link java.util.HashSet}. Has
+     *            to be a valid implementation and no interface.
      * @return An object of the given {@link Collection} type containing the
      *         encapsulated fields of the given {@link Collection}.
      */

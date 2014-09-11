@@ -34,7 +34,7 @@ public interface PluginManager {
      * @throws IllegalStateException
      *             Is thrown if the plugin manager is already started.
      */
-    public void start(final File directory) throws IllegalStateException;
+    void start(final File directory) throws IllegalStateException;
 
     /**
      * Removes/unloads the given plugin.
@@ -42,7 +42,7 @@ public interface PluginManager {
      * @param plugin
      *            The {@link Plugin} to remove/unload.
      */
-    public void remove(final Plugin plugin);
+    void remove(final Plugin plugin);
 
     /**
      * Removed/unloads and deletes the given plugin.
@@ -50,7 +50,7 @@ public interface PluginManager {
      * @param plugin
      *            The {@link Plugin} to remove/unload and delete.
      */
-    public void delete(final Plugin plugin);
+    void delete(final Plugin plugin);
 
     /**
      * Disables the given plugin.
@@ -58,13 +58,13 @@ public interface PluginManager {
      * @param plugin
      *            The {@link Plugin} to disable.
      */
-    public void disable(final Plugin plugin);
+    void disable(final Plugin plugin);
 
     /**
      * Disables all loaded plugins.
      *
      */
-    public void disableAll();
+    void disableAll();
 
     /**
      * Enables the given plugin.
@@ -72,13 +72,13 @@ public interface PluginManager {
      * @param plugin
      *            The {@link Plugin} to enable.
      */
-    public void enable(final Plugin plugin);
+    void enable(final Plugin plugin);
 
     /**
      * Enables all loaded plugins.
      *
      */
-    public void enableAll();
+    void enableAll();
 
     /**
      *
@@ -87,5 +87,5 @@ public interface PluginManager {
      * @return The {@link Plugin} associated with the given name. Returns
      *         <code>null</code> if not found.
      */
-    public Plugin getPlugin(final String name);
+    Plugin getPlugin(final String name);
 }
