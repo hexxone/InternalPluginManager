@@ -18,9 +18,11 @@
 package com.blockhaus2000.ipm.technical.plugin;
 
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.util.logging.Logger;
 
 import com.blockhaus2000.ipm.technical.command.CommandManager;
+import com.blockhaus2000.ipm.technical.configuration.FileConfiguration;
 
 /**
  * The plugin interface. To implement a plugin, extend the {@link SimplePlugin}.
@@ -94,6 +96,19 @@ public interface Plugin extends PropertyChangeListener {
      *
      */
     public void onLoad();
+
+    /**
+     *
+     * @return The folder where the plugin can store its internal files. Do
+     *         NEVER use an other directory to store files!
+     */
+    public File getDataFolder();
+
+    /**
+     *
+     * @return The configuration for this plugin.
+     */
+    public FileConfiguration getConfig();
 
     /**
      *

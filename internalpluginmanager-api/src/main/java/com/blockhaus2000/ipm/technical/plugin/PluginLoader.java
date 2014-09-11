@@ -88,8 +88,6 @@ public final class PluginLoader {
             // created later on.
         } catch (final IOException cause) {
             throw new PluginException("An error occurred whilest loading the plugin meta cache!", cause);
-        } catch (final ClassNotFoundException cause) {
-            throw new PluginException("It seems that you have edited the plugin meta cache with an other program!", cause);
         }
     }
 

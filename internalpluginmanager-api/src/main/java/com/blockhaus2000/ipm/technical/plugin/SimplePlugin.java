@@ -19,11 +19,16 @@ package com.blockhaus2000.ipm.technical.plugin;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
 import com.blockhaus2000.ipm.technical.command.SimpleCommandManager;
+import com.blockhaus2000.ipm.technical.configuration.FileConfiguration;
+import com.blockhaus2000.ipm.technical.configuration.HrTssConfiguration;
+import com.blockhaus2000.ipm.technical.plugin.util.exception.PluginException;
 import com.blockhaus2000.ipm.util.CommonConstants;
 
 /**
@@ -58,6 +63,16 @@ public class SimplePlugin implements Plugin {
      *
      */
     private Logger logger;
+    /**
+     * The plugin data folder.
+     *
+     */
+    private File dataFolder;
+    /**
+     * The plugin file configuration.
+     *
+     */
+    private FileConfiguration config;
     /**
      * The {@link PluginMeta} containing main information about this plugin.
      *
@@ -154,6 +169,26 @@ public class SimplePlugin implements Plugin {
     /**
      * {@inheritDoc}
      *
+     * @see com.blockhaus2000.ipm.technical.plugin.Plugin#getDataFolder()
+     */
+    @Override
+    public File getDataFolder() {
+        return this.dataFolder;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.technical.plugin.Plugin#getConfig()
+     */
+    @Override
+    public FileConfiguration getConfig() {
+        return this.config;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @see com.blockhaus2000.ipm.technical.plugin.Plugin#getLogger()
      */
     @Override
@@ -234,5 +269,13 @@ public class SimplePlugin implements Plugin {
     void init(final PluginMeta pluginMeta) {
         this.pluginMeta = pluginMeta;
         this.logger = Logger.getLogger(CommonConstants.INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME + "." + pluginMeta.getName());
+        this.dataFolder = new File(SimplePluginManager.getClassInstance().getPluginDirectory(), pluginMeta.getName()
+                .toLowerCase());
+        this.dataFolder.mkdir();
+        try {
+            this.config = new HrTssConfiguration(new File(this.dataFolder, "config.hrtss"));
+        } catch (final IOException cause) {
+            throw new PluginException("Cannot create plugin configuration file!", cause);
+        }
     }
 }
