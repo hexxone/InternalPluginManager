@@ -21,7 +21,7 @@ package com.blockhaus2000.ipm.technical.command.util;
  * This class contains some constants like regular exrepssions.
  *
  */
-public class Constants {
+public final class Constants {
     /**
      * The regular expression that is used to parse flags.
      *

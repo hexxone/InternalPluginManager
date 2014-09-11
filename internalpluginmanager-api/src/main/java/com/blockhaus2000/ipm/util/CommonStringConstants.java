@@ -21,7 +21,7 @@ package com.blockhaus2000.ipm.util;
  * This class contains some common string constants, such like a blank (" ").
  *
  */
-public class CommonStringConstants {
+public final class CommonStringConstants {
     /**
      * <code>" "</code>
      */

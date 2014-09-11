@@ -29,6 +29,7 @@ import java.util.zip.ZipEntry;
 
 import com.blockhaus2000.ipm.technical.plugin.util.exception.PluginException;
 import com.blockhaus2000.ipm.technical.plugin.util.exception.PluginIOException;
+import com.blockhaus2000.ipm.util.CheckstyleUtil;
 import com.blockhaus2000.ipm.util.CommonConstants;
 import com.blockhaus2000.tagstoragesystem.TSS;
 
@@ -86,6 +87,9 @@ public final class PluginLoader {
             // It fails silent because a FileNotFoundException is thrown if the
             // file (the plugin meta cache file) does not exists. The file is
             // created later on.
+
+            // Suppress checkstyle warnings.
+            CheckstyleUtil.failsSilent();
         } catch (final IOException cause) {
             throw new PluginException("An error occurred whilest loading the plugin meta cache!", cause);
         }

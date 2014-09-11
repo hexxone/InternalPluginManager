@@ -21,7 +21,15 @@ package com.blockhaus2000.ipm.util;
  * This utility class provides some method for the array using.
  *
  */
-public class ArrayUtil {
+public final class ArrayUtil {
+    /**
+     * Constructor of CheckstyleUtil.
+     *
+     */
+    private ArrayUtil() {
+        // Utility classes should not have a visible constructor.
+    }
+
     /**
      * Joins the given string array together.
      *

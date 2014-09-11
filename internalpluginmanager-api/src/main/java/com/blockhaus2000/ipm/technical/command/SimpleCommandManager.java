@@ -61,7 +61,7 @@ import com.blockhaus2000.ipm.util.exception.IllegalStaticAccessException;
  * This is an implementation of {@link CommandManager}.
  *
  */
-public class SimpleCommandManager implements CommandManager {
+public final class SimpleCommandManager implements CommandManager {
     /**
      * The InternalPluginManager system logger.
      *

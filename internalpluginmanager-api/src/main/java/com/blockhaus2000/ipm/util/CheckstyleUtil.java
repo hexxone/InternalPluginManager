@@ -15,3 +15,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.blockhaus2000.ipm.util;
+
+/**
+ * This class is used to suppres some checkstyle errors.
+ *
+ */
+public final class CheckstyleUtil {
+    /**
+     * Constructor of CheckstyleUtil.
+     *
+     */
+    private CheckstyleUtil() {
+        // Utility classes should not have a visible constructor.
+    }
+
+    /**
+     * Checkstyle shows an error if an Exception is caught withput any handling.
+     * Call this (empty) method within catch block to suppress the warning.
+     *
+     */
+    public static void failsSilent() {
+        // Empty.
+    }
+}

@@ -27,7 +27,7 @@ import java.util.List;
  * This utility class simplifies the use of {@link Collection}s.
  *
  */
-public class CollectionUtil {
+public final class CollectionUtil {
     /**
      * Constructor of CollectionUtil.
      *

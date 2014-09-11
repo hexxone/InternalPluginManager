@@ -159,6 +159,30 @@
 				</configuration>
 			</plugin>
 
+			<!-- Check style -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.12</version>
+				<executions>
+					<execution>
+						<id>maven-checkstyle-plugin:check</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<configLocation>checkstyle.xml</configLocation>
+					<encoding>${project.properties.encoding}</encoding>
+					<failOnViolation>true</failOnViolation>
+					<logViolationsToConsole>true</logViolationsToConsole>
+					<maxAllowedViolations>0</maxAllowedViolations>
+					<violationSeverity>error</violationSeverity>
+				</configuration>
+			</plugin>
+
 			<!-- Generates build numbers. -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>

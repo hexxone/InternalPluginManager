@@ -23,7 +23,7 @@ import com.blockhaus2000.ipm.technical.plugin.Plugin;
  * This class contains some common constants.
  *
  */
-public class CommonConstants {
+public final class CommonConstants {
     /**
      * The name of the InternalPluginManager system logger.
      *
@@ -32,7 +32,8 @@ public class CommonConstants {
      * {@link Plugin#getLogger()}) instead. </b>
      * </p>
      */
-    public static final String INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME = CommonConstants.class.getPackage().getName() + ".LOGGER";
+    public static final String INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME = CommonConstants.class.getPackage().getName()
+            + ".LOGGER";
 
     /**
      * Constructor of CommonConstants.

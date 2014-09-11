@@ -25,6 +25,8 @@ import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.blockhaus2000.ipm.util.CheckstyleUtil;
+
 /**
  * An {@link URLClassLoader} to load plugins.
  *
@@ -91,6 +93,9 @@ public final class PluginClassLoader extends URLClassLoader {
                         clazz = Class.forName(name);
                     } catch (final ClassNotFoundException d2) {
                         // Fails silent. Class not found.
+
+                        // Suppress checkstyle warnings.
+                        CheckstyleUtil.failsSilent();
                     }
                 }
             }
