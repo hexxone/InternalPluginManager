@@ -29,11 +29,6 @@
 			<artifactId>tag-storage-system</artifactId>
 			<version>2.2</version>
 		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.2.3</version>
-		</dependency>
 	</dependencies>
 
 	<build>
@@ -56,7 +51,6 @@
 					<artifactSet>
 						<includes>
 							<include>com.blockhaus2000:tag-storage-system</include>
-							<include>com.fasterxml.jackson.core:jackson-databind</include>
 						</includes>
 					</artifactSet>
 				</configuration>
