@@ -111,7 +111,7 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
         final List<String> result = new ArrayList<String>();
 
         for (final String str : Arrays.asList(value.split(";"))) {
-            result.add(str.replace(HrTssConfiguration.ESCAPED_SEMICOLON, ";"));
+            result.add(str.replace(HrTssConfiguration.ESCAPED_SEMICOLON, ";").trim());
         }
 
         return result;
