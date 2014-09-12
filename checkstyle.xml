@@ -4,353 +4,548 @@
 	"http://www.puppycrawl.com/dtds/configuration_1_2.dtd">
 
 <module name="Checker">
+	<!-- ===== Basic Settings ===== -->
+
+	<property name="localeCountry" value="EN" />
+	<property name="localeLanguage" value="en" />
+	<property name="charset" value="UTF-8" />
+
+
+	<!-- ===== TreeWalker ===== -->
+	<!-- (for Java files) -->
+
 	<module name="TreeWalker">
 		<property name="tabWidth" value="4" />
-		<property name="fileExtensions" value="java" />
 
-		<module name="MissingDeprecated" />
-		<module name="MissingOverride" />
-		<module name="PackageAnnotation" />
 
-		<module name="SuppressWarnings">
-			<property name="format" value="^all$|^unused$" />
+		<!-- ===== Annotations ===== -->
+
+		<!-- Basic Annotation Style -->
+		<module name="AnnotationUseStyle">
+			<!-- Do not use full array qualifier if not necessarry. -->
+			<property name="elementStyle" value="compact_no_array" />
+			<!-- Do not use parantheses if not necessarry. -->
+			<property name="closingParens" value="never" />
+			<!-- Do not leave a trailing comma after properties. -->
+			<property name="trailingArrayComma" value="never" />
 		</module>
 
-		<module name="EmptyBlock" />
+		<!-- Always add both @Deprecated annotation and @deprecated JavaDoc tag. -->
+		<module name="MissingDeprecated" />
 
+		<!-- Always add @Override to overriding methods. -->
+		<module name="MissingOverride" />
+
+		<!-- Always place package annotations in the package-info.java file. -->
+		<module name="PackageAnnotation" />
+
+		<!-- Do not suppress the warnings specified below. -->
+		<module name="SuppressWarnings">
+			<!-- Do not suppress "all", "unused", "resource", "null". -->
+			<property name="format" value="^\s*$|^all$|^unused$|^resource$|^null$" />
+		</module>
+
+
+		<!-- ===== Block Checks ===== -->
+
+		<!-- Do not write empty blocks without any comment. -->
+		<module name="EmptyBlock">
+			<property name="option" value="text" />
+		</module>
+
+		<!-- Left curly ("{") style. -->
 		<module name="LeftCurly">
+			<!-- Always place them on the same line. -->
 			<property name="option" value="eol" />
+			<!-- Maximum line length (130 characters). -->
 			<property name="maxLineLength" value="130" />
 		</module>
 
+		<!-- Always place braces. -->
 		<module name="NeedBraces" />
 
+		<!-- Right curly ("}") style. -->
 		<module name="RightCurly">
+			<!-- Always places them on the same line. -->
 			<property name="option" value="same" />
+			<!-- Always place them at the line start. -->
 			<property name="shouldStartLine" value="true" />
 		</module>
 
+		<!-- Do not write nested blocks. -->
 		<module name="AvoidNestedBlocks">
+			<!-- Also not in switch...case structure. -->
 			<property name="allowInSwitchCase" value="false" />
 		</module>
 
-		<module name="VisibilityModifier">
-			<property name="packageAllowed" value="false" />
-			<property name="protectedAllowed" value="true" />
-			<property name="publicMemberPattern" value="^[A-Z][a-zA-Z0-9_]*$" />
+
+		<!-- ===== Class Design ===== -->
+
+		<!-- Do not assign field the defualt or protected visibility modifier. -->
+		<module name="VisibilityModifier" />
+
+		<!-- Classes with only non-visible constructors should be final. -->
+		<module name="FinalClass" />
+
+		<!-- Do not write interfaces with only constants, but without methods. -->
+		<module name="InterfaceIsType">
+			<!-- But marker interfaces are allowed. -->
+			<property name="allowMarkerInterfaces" value="true" />
 		</module>
 
-		<module name="FinalClass" />
+		<!-- Classes with only static methods should not have a visible constructor. -->
 		<module name="HideUtilityClassConstructor" />
+
+		<!-- Exception classes should be immutable. -->
 		<module name="MutableException" />
 
+		<!-- Limit throws count. -->
 		<module name="ThrowsCount">
+			<!-- Only two Exceptions should be declared in throws-clausel. -->
 			<property name="max" value="2" />
 		</module>
 
+		<!-- Onner classes/interfaces/enums should be declared at last. -->
 		<module name="InnerTypeLast" />
+
+
+		<!-- ===== Coding ===== -->
+
+		<!-- Do not leave a trailing comma at end of an array construction. -->
+		<module name="ArrayTrailingComma" />
+
+		<!-- Do not create methods that are similar to the methods java.lang.Object#equals(java.lang.Object). -->
 		<module name="CovariantEquals" />
+
+		<!-- Do not write empty statements (a single ";"). -->
 		<module name="EmptyStatement" />
+
+		<!-- Always override both equals(java.lang.Object) and hashCode(). -->
 		<module name="EqualsHashCode" />
 
+		<!-- Parameter variables should be final and not changed whilest runtime. -->
 		<module name="FinalLocalVariable">
+			<!-- But only parameter definitions. -->
 			<property name="tokens" value="PARAMETER_DEF" />
 		</module>
 
+		<!-- Local variables should not shadow a field in the same class. -->
 		<module name="HiddenField">
-			<property name="tokens" value="VARIABLE_DEF" />
+			<!-- But ignore constructor parameters. -->
 			<property name="ignoreConstructorParameter" value="true" />
+			<!-- But ignore setter method parameters. -->
 			<property name="ignoreSetter" value="true" />
-			<property name="ignoreAbstractMethods" value="false" />
+			<!-- But ignore abstract method parameter. -->
+			<property name="ignoreAbstractMethods" value="true" />
 		</module>
 
+		<!-- Do not create instances of the classes specified below. -->
 		<module name="IllegalInstantiation">
+			<!-- Do not create instances of java.lang.String and all wrapper classes 
+				for primitive types. -->
 			<property name="classes"
-				value="java.lang.Byte,java.lang.Short,java.lang.Integer,java.lang.Long,java.lang.Float,java.lang.Double,java.lang.Boolean,java.lang.Character,java.lang.String" />
+				value="java.lang.String,java.lang.Boolean,java.lang.Character,java.lang.Byte,java.lang.Short,java.lang.Integer,java.lang.Long,java.lang.Float,java.lang.Double" />
 		</module>
 
+		<!-- Do not use the tokens specified below. -->
+		<module name="IllegalToken">
+			<!-- See http://checkstyle.sourceforge.net/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html 
+				for token list. -->
+			<property name="tokens"
+				value="BAND_ASSIGN,BOR_ASSIGN,BSR_ASSIGN,BXOR_ASSIGN,DEC,DIV_ASSIGN,DO_WHILE,EMPTY_STAT,INC,LITERAL_DO,LITERAL_NATIVE,MINUS_ASSIGN,MOD_ASSIGN,PLUS_ASSIGN,SL_ASSIGN,SR_ASSIGN,STAR_ASSIGN,WILDCARD_TYPE" />
+		</module>
+
+		<!-- Do not use inner assignments. -->
 		<module name="InnerAssignment" />
 
+		<!-- Do write numbers other numbers than -1, 0, 1 or 2 raw in the code. 
+			Use constants for them. -->
 		<module name="MagicNumber">
-			<property name="ignoreNumbers" value="-1,0,1,2" />
+			<!-- Do not check hashCode(). -->
+			<property name="ignoreHashCodeMethod" value="true" />
 		</module>
 
+		<!-- Switches should always have a default. -->
+		<module name="MissingSwitchDefault" />
+
+		<!-- Variables in loops (like i) should not be modified. -->
 		<module name="ModifiedControlVariable" />
 
-		<!-- TODO -->
-		<!--<module name="RedudantThrows"> <property name="allowUnchecked" value="false" 
-			/> <property name="allowSubclasses" value="false" /> <property name="logLoadErrors" 
-			value="true" /> <property name="suppressLoadErrors" value="false" /> </module> -->
+		<!-- Do not add unchecked exceptions (java.lang.RuntimeException or subclasses) 
+			to throws clauses. Also add not classes that are subclasses of other Exceptions 
+			declared in the throws clauses (like java.io.IOException and java.io.FileNotFoundException). -->
+		<module name="RedundantThrows" />
 
+		<!-- Keep boolean expressions simple. -->
 		<module name="SimplifyBooleanExpression" />
+
+		<!-- Keep boolean return statements simple. -->
 		<module name="SimplifyBooleanReturn" />
+
+		<!-- Do never check Strings via "==". -->
 		<module name="StringLiteralEquality" />
 
-		<module name="NestedForDepth">
-			<property name="max" value="3" />
-		</module>
+		<!-- Only nest for loops once. -->
+		<module name="NestedForDepth" />
 
-		<module name="NestedIfDepth">
-			<property name="max" value="3" />
-		</module>
+		<!-- Only nest if statements once. -->
+		<module name="NestedIfDepth" />
 
-		<module name="NestedTryDepth">
-			<property name="max" value="3" />
-		</module>
+		<!-- Only nest try statements once. -->
+		<module name="NestedTryDepth" />
 
+		<!-- Do not declare a finalize() method. -->
+		<module name="NoFinalizer" />
+
+		<!-- If finalize() is overridded, it should call super.finalize(). -->
 		<module name="SuperFinalize" />
-		<module name="IllegalCatch" />
-		<module name="IllegalThrows" />
+
+		<!-- Do not catch java.lang.RuntimeException, java.lang.Exception, java.lang.Error 
+			or java.lang.Throwable. -->
+		<module name="IllegalCatch">
+			<property name="illegalClassNames"
+				value="java.lang.RuntimeException,java.lang.Exception,java.lang.Error,java.lang.Throwable" />
+		</module>
+
+		<!-- Do not add java.lang.RuntimeException, java.lang.Exception, java.lang.Error 
+			or java.lang.Throwable to the throws clausel. -->
+		<module name="IllegalThrows">
+			<property name="illegalClassNames"
+				value="java.lang.RuntimeException,java.lang.Exception,java.lang.Error,java.lang.Throwable" />
+		</module>
+
+		<!-- Do never add a class in the default package and keep package name 
+			and directory synchronized. -->
 		<module name="PackageDeclaration" />
-		<module name="JUnitTestCase" />
 
-		<module name="ReturnCount">
-			<property name="max" value="3" />
-		</module>
+		<!-- Do not write methods that are returning a value more than two times. -->
+		<module name="ReturnCount" />
 
-		<module name="IllegalType">
-			<property name="ignoredMethodNames"
-				value="getInitialContext,getEnvironment,getInstance" />
-		</module>
-
+		<!-- Order of types, field, constrctors, etc.. -->
 		<module name="DeclarationOrder" />
-		<module name="ParameterAssignment" />
-		<module name="ExplicitInitialization" />
-		<module name="DefaultComesLast" />
-		<!-- TODO -->
-		<!--<module name="MissingCtro" /> -->
 
+		<!-- Parameters should not be assigned. -->
+		<module name="ParameterAssignment" />
+
+		<!-- Do not assign variable explicit to its default value. -->
+		<module name="ExplicitInitialization" />
+
+		<!-- In switch...case structures, default has to come as last. -->
+		<module name="DefaultComesLast" />
+
+		<!-- Classes, except asbtract classes, should define a constrcuor explicit. -->
+		<module name="MissingCtor" />
+
+		<!-- In switch...case statements, fall-throughs should be explicit marked 
+			by a comment with the content "FALL-THROUGH" -->
 		<module name="FallThrough">
+			<!-- Also the last member should end with a break; or a "FALL-THROUGH"-comment. -->
 			<property name="checkLastCaseGroup" value="true" />
+			<!-- Mark fall-throughs with a comment with the content "FALL-THROUGH". -->
 			<property name="reliefPattern" value="FALL-THROUGH" />
 		</module>
 
+		<!-- Same strings in one file should be definied in a constant to avoid 
+			spelling mistakes. -->
 		<module name="MultipleStringLiterals">
-			<property name="allowedDuplicates" value="5" />
+			<!-- Strictly warn on every duplication. -->
+			<property name="allowedDuplicates" value="1" />
+			<!-- Ignore duplicates Strings in annotations, asserts or throws. -->
+			<property name="ignoreOccurrenceContext" value="ANNOTATION,LITERAL_ASSERT,LITERAL_THROW" />
 		</module>
 
+		<!-- Each variable has to be initilized on another line. -->
 		<module name="MultipleVariableDeclarations" />
 
-		<module name="RequireThis">
-			<property name="checkFields" value="true" />
-			<property name="checkMethods" value="true" />
-		</module>
+		<!-- Use this-qualifier where possible. -->
+		<module name="RequireThis" />
 
+		<!-- Do only write parantheses if necessarry. -->
 		<module name="UnnecessaryParentheses" />
+
+		<!-- Only write one statement per line. -->
 		<module name="OneStatementPerLine" />
 
-		<module name="AvoidStarImport">
-			<property name="allowClassImports" value="false" />
-			<property name="allowStaticMemberImports" value="false" />
-		</module>
 
+		<!-- ===== Imports ===== -->
+
+		<!-- Do not use the star import (wildcard). -->
+		<module name="AvoidStarImport" />
+
+		<!-- Do not use static imports. -->
 		<module name="AvoidStaticImport" />
+
+		<!-- Do not import sun packages -->
 		<module name="IllegalImport" />
+
+		<!-- Avoid redundant imports. -->
 		<module name="RedundantImport" />
-		<module name="UnusedImports" />
-		<!-- TODO -->
-		<!--<module name="ImportOrder" /> -->
 
+		<!-- Do not leave unused import. -->
+		<module name="UnusedImports">
+			<!-- Classes can be imported to be available in JavaDoc. -->
+			<property name="processJavadoc" value="true" />
+		</module>
+
+
+		<!-- ===== Javadoc Comments ===== -->
+
+		<!-- JavaDoc rules for types (classes/interfaces). -->
 		<module name="JavadocType">
+			<!-- Write JavaDoc for every visibility level, also private. -->
 			<property name="scope" value="private" />
-			<property name="allowMissingParamTags" value="false" />
-			<property name="allowUnknownTags" value="false" />
 		</module>
 
+		<!-- JavaDoc rules for methods. -->
 		<module name="JavadocMethod">
+			<!-- Write JavaDoc for every visibility level, also private. -->
 			<property name="scope" value="private" />
-			<property name="allowUndeclaredRTE" value="false" />
-			<property name="allowThrowsTagsForSubclasses" value="false" />
-			<property name="allowMissingParamTags" value="false" />
-			<property name="allowMissingThrowsTags" value="false" />
-			<property name="allowMissingReturnTag" value="false" />
-			<property name="allowMissingJavadoc" value="false" />
-			<property name="allowMissingPropertyJavadoc" value="false" />
-			<property name="logLoadErrors" value="true" />
-			<property name="suppressLoadErrors" value="false" />
 		</module>
 
+		<!-- JavaDoc rules for variables -->
 		<module name="JavadocVariable">
+			<!-- Write JavaDoc for every visibility level, also private. -->
 			<property name="scope" value="private" />
 		</module>
 
+		<!-- JavaDoc style. -->
 		<module name="JavadocStyle">
+			<!-- Write JavaDoc for every visibility level, also private. -->
 			<property name="scope" value="private" />
+			<!-- Do not check first sentence. -->
 			<property name="checkFirstSentence" value="false" />
-			<property name="checkEmptyJavadoc" value="true" />
-			<property name="checkHtml" value="true" />
 		</module>
 
-		<module name="BooleanExpressionComplexity">
-			<property name="max" value="3" />
-		</module>
 
-		<module name="ClassDataAbstractionCoupling">
-			<property name="max" value="5" />
-		</module>
+		<!-- ===== Metrics ===== -->
 
-		<module name="ClassFanOutComplexity">
-			<property name="max" value="10" />
-		</module>
+		<!-- Do not create too complex boolean expressions (max three &&, ||, &, 
+			| and ^ in one expression). -->
+		<module name="BooleanExpressionComplexity" />
 
-		<module name="CyclomaticComplexity">
-			<property name="max" value="7" />
-		</module>
+		<!-- Do not create more than seven instances of other classes in one class 
+			(root level). -->
+		<module name="ClassDataAbstractionCoupling" />
 
-		<module name="NPathComplexity">
-			<property name="max" value="20" />
-		</module>
+		<!-- Do not relie to more than 20 other classes in one class. -->
+		<module name="ClassFanOutComplexity" />
 
+		<!-- Do not use more than 10 if, while, do, for, ?:, catch, switch statements 
+			and operators (&&, ||, &, | and ^ (counted as one)) in a method. -->
+		<module name="CyclomaticComplexity" />
+
+		<!-- A methods should not have more than 200 possible execution paths. -->
+		<module name="NPathComplexity" />
+
+		<!-- Non Commenting Source Statements count check. -->
 		<module name="JavaNCSS" />
 
-		<module name="UncommentedMain" />
-		<module name="UpperEll" />
 
-		<module name="ArrayTypeStyle">
-			<property name="javaStyle" value="true" />
+		<!-- ===== Miscellaneous ===== -->
+
+		<!-- Check for missplaced main methods. -->
+		<module name="UncommentedMain">
+			<!-- Class names that ends with "Main" are real main classes and can have 
+				a main method. -->
+			<property name="excludedClasses" value=".*Main$" />
 		</module>
 
-		<module name="FinalParameters" />
+		<!-- Long constants should be defined with an upper "L" at the end of the 
+			number. -->
+		<module name="UpperEll" />
 
+		<!-- Definine arrays always with the Java-Style ("String[] arr"), not C-Style 
+			("String arr[]"). -->
+		<module name="ArrayTypeStyle" />
+
+		<!-- Check final modifier within method/constructor/catch blocks. -->
+		<module name="FinalParameters">
+			<!-- Method/Constructor/Catch-Block parameters should be final. -->
+			<property name="tokens" value="METHOD_DEF,CTOR_DEF,LITERAL_CATCH" />
+		</module>
+
+		<!-- Always indent code specified below. -->
 		<module name="Indentation">
+			<!-- By default, every indention should be 4 spaces. -->
 			<property name="basicOffset" value="4" />
+			<!-- Do not indent braces when on next line. -->
 			<property name="braceAdjustment" value="0" />
+			<!-- Indent cases in switch...case statement by 4 spaces. -->
 			<property name="caseIndent" value="4" />
+			<!-- Indent throws clauses by four spaces when on next line. -->
 			<property name="throwsIndent" value="4" />
 		</module>
 
-		<module name="TrailingComment" />
+		<!-- Only write comments in extra lines. -->
+		<module name="TrailingComment">
+			<!-- Only free space is allowed before comment. -->
+			<property name="format" value="^\s*$" />
+			<!-- A comment on the same line is allowed if comment text equals "FORMAT". 
+				This can be used to safely format enums so that every elemet is on a new 
+				line when a code formatter formats the code. -->
+			<property name="legalComment" value="^FORMAT$" />
+		</module>
+
+		<!-- Class name and file name has to match (So class "Foo" has to be in 
+			file "Foo.java"). -->
 		<module name="OuterTypeFilename" />
+
+
+		<!-- ===== Modifiers ===== -->
+
+		<!-- Modifier order has to be: public, protected, private, abstract, static, 
+			final, transient, volatile, synchronized, native, strictfp. -->
 		<module name="ModifierOrder" />
+
+		<!-- It is not recommended to declare modifiers redundant. -->
 		<module name="RedundantModifier" />
 
-		<module name="AbstractClassName">
-			<property name="format" value="^Abstract[A-Z][a-zA-Z]*$" />
-		</module>
-		<module name="ClassTypeParameterName">
-			<property name="format" value="^[A-Z]$" />
-		</module>
-		<module name="ConstantName">
-			<property name="format" value="^[A-Z][_A-Z0-9]*$" />
-		</module>
-		<module name="LocalFinalVariableName">
-			<property name="format" value="^[a-z][a-zA-Z0-9]*$" />
-		</module>
-		<module name="LocalVariableName">
-			<property name="format" value="^[a-z][a-zA-Z0-9]*$" />
-		</module>
-		<module name="MemberName">
-			<property name="format" value="^[a-z][a-zA-Z0-9]*$" />
-		</module>
-		<module name="MethodName">
-			<property name="format" value="^[a-z][a-zA-Z0-9]*$" />
-		</module>
-		<module name="MethodTypeParameterName">
-			<property name="format" value="^[A-Z]$" />
-		</module>
-		<module name="PackageName">
-			<property name="format" value="^[a-z]+(\.[a-zA-Z_][a-zA-Z0-9_]*)*$" />
-		</module>
-		<module name="ParameterName">
-			<property name="format" value="^[a-z][a-zA-Z0-9]*$" />
-		</module>
-		<module name="StaticVariableName">
-			<property name="format" value="^[a-z][a-zA-Z0-9]*$" />
-		</module>
-		<module name="TypeName">
-			<property name="format" value="^[A-Z][a-zA-Z0-9]*$" />
-		</module>
 
-		<module name="ExecutableStatementCount">
-			<property name="max" value="20" />
-		</module>
+		<!-- ===== Naming Conventions ===== -->
 
+		<!-- Variable name conventions. -->
+		<module name="AbstractClassName" />
+		<module name="ClassTypeParameterName" />
+		<module name="ConstantName" />
+		<module name="LocalFinalVariableName" />
+		<module name="LocalVariableName" />
+		<module name="MemberName" />
+		<module name="MethodName" />
+		<module name="MethodTypeParameterName" />
+		<module name="PackageName" />
+		<module name="ParameterName" />
+		<module name="StaticVariableName" />
+		<module name="TypeName" />
+
+
+		<!-- ===== Size Violations ===== -->
+
+		<!-- Do not create more than 30 executeable statements for constructors, 
+			methods, instance creation and static blocks. -->
+		<module name="ExecutableStatementCount" />
+
+		<!-- Lines should only be 130 characters long. -->
 		<module name="LineLength">
 			<property name="max" value="130" />
 		</module>
 
-		<module name="MethodLength">
-			<property name="max" value="150" />
-			<property name="countEmpty" value="true" />
-		</module>
+		<!-- Methods should not have more than 150 lines. -->
+		<module name="MethodLength" />
 
-		<!-- TODO -->
-		<!--<module name="AnonInnerCheck"> <property name="max" value="50" /> </module> -->
+		<!-- Anonymous inner classes should not have more than 20 lines. -->
+		<module name="AnonInnerLength" />
 
-		<module name="ParameterNumber">
-			<property name="max" value="10" />
-		</module>
+		<!-- A method or constrcutor should not have more than seven parameters. -->
+		<module name="ParameterNumber" />
 
-		<module name="OuterTypeNumber">
-			<property name="max" value="2" />
-		</module>
+		<!-- Onyl one type should be created in the root level of a class. -->
+		<module name="OuterTypeNumber" />
 
-		<module name="MethodCount">
-			<!-- TODO -->
-			<!--<property name="max" value="25" /> -->
-		</module>
+		<!-- A class should only declare a maximum of 100 methods (max. 100 private, 
+			max. 100 package-private, max. 100 protected, max. 100 public). -->
+		<module name="MethodCount" />
 
+
+		<!-- ===== Whitespace ===== -->
+
+		<!-- To spaces should be around generic tokens. -->
 		<module name="GenericWhitespace" />
 
-		<module name="EmptyForInitializerPad">
-			<property name="option" value="nospace" />
-		</module>
+		<!-- No space should be at the "for"-initilizer if it is empty. -->
+		<module name="EmptyForInitializerPad" />
 
-		<module name="EmptyForIteratorPad">
-			<property name="option" value="nospace" />
-		</module>
+		<!-- No space should be at the "for"-iterator if it is empty. -->
+		<module name="EmptyForIteratorPad" />
 
-		<module name="MethodParamPad">
+		<!-- No space should be between the method/constructor call/invokation 
+			and the left brace. -->
+		<module name="MethodParamPad" />
+
+		<!-- No space should be after the tokens specified below. -->
+		<module name="NoWhitespaceAfter">
+			<!-- No spaces are allowed after the tokens below if the line breaks. -->
 			<property name="allowLineBreaks" value="false" />
-			<property name="option" value="nospace" />
+			<!-- No spaces after these tokens. -->
+			<property name="tokens" value="DOT,LNOT" />
 		</module>
 
-		<module name="NoWhitespaceAfter" />
-		<module name="NoWhitespaceBefore" />
-
-		<module name="OperatorWrap">
-			<property name="option" value="eol" />
+		<!-- No space should be before the tokend specified below. -->
+		<module name="NoWhitespaceBefore">
+			<!-- No spaces are allowed after the tokens below if the line breaks. -->
+			<property name="allowLineBreaks" value="false" />
+			<!-- No spaces after these tokens. -->
+			<property name="tokens" value="SEMI,DOT,POST_DEC,POST_INC" />
 		</module>
 
-		<module name="ParenPad">
-			<property name="option" value="nospace" />
-		</module>
+		<!-- Wrap operators should always be placed on a new line. -->
+		<module name="OperatorWrap" />
 
-		<module name="TypecastParenPad">
-			<property name="option" value="nospace" />
-		</module>
+		<!-- No spaces should be placed next to parantheses. -->
+		<module name="ParenPad" />
 
+		<!-- Place space after comma, semicolon and typecast. -->
 		<module name="WhitespaceAfter" />
 
+		<!-- Always add a whitespace around assignment operators, math operations, 
+			etc.. -->
 		<module name="WhitespaceAround">
-			<property name="allowEmptyConstructors" value="false" />
-			<property name="allowEmptyMethods" value="false" />
+			<!-- Do not ignore the enhanced for colon. -->
 			<property name="ignoreEnhancedForColon" value="false" />
 		</module>
 	</module>
 
+
+	<!-- ===== Duplicate Code ===== -->
+
+	<!-- Detect duplicate code. -->
 	<module name="StrictDuplicateCode">
+		<!-- From 20 lines up, the code is duplicate. -->
 		<property name="min" value="25" />
+		<!-- Only check Java files. -->
 		<property name="fileExtensions" value="java" />
 	</module>
 
+
+	<!-- ===== Header ===== -->
+
+	<!-- Always include this header. -->
 	<module name="Header">
+		<!-- The header file. -->
 		<property name="headerFile" value="HEADER" />
-		<property name="charset" value="UTF-8" />
+		<!-- But only in Java files. -->
 		<property name="fileExtensions" value="java" />
 	</module>
 
+
+	<!-- ===== Miscellaneous ===== -->
+
+	<!-- Every file should end with an empty line. -->
 	<module name="NewlineAtEndOfFile">
+		<!-- Use linux line endings. -->
 		<property name="lineSeparator" value="lf" />
 	</module>
 
+	<!-- Check that no keys are duplicated in property files. -->
+	<module name="UniqueProperties" />
+
+
+	<!-- ===== Size Violations ===== -->
+
+	<!-- Files should not be too big to provide readability. -->
 	<module name="FileLength">
-		<property name="max" value="1500" />
-		<property name="fileExtensions" value="java" />
+		<!-- No more than 2000 lines. -->
+		<property name="max" value="2000" />
+		<!-- Only check the files ending with java, xml, txt or hrtss. -->
+		<property name="fileExtensions" value="java,xml,txt,hrtss" />
 	</module>
 
+
+	<!-- ===== Whitespace ===== -->
+
+	<!-- Tabs should never be used. -->
 	<module name="FileTabCharacter">
-		<property name="eachLine" value="true" />
-		<property name="fileExtensions" value="java" />
+		<!-- Only check the files ending with java, txt or hrtss. Tabs are allowed 
+			in XML files. -->
+		<property name="fileExtensions" value="java,txt,hrtss" />
 	</module>
 </module>
