@@ -1,0 +1,73 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.blockhaus2000</groupId>
+		<artifactId>internalpluginmanager-parent</artifactId>
+		<version>2.0.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>internalpluginmanager-plugin-api</artifactId>
+
+	<name>InternalPluginManager Plugin API</name>
+
+
+	<!-- ===== Dependencies ===== -->
+
+	<repositories>
+		<repository>
+			<id>blockhaus2000-repo</id>
+			<url>http://repo.blockhaus2000.com/</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.blockhaus2000</groupId>
+			<artifactId>internalpluginmanager-base-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.blockhaus2000</groupId>
+			<artifactId>internalpluginmanager-command-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.blockhaus2000</groupId>
+			<artifactId>internalpluginmanager-configuration-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- Shade some dependencies. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<createDependencyReducedPom>false</createDependencyReducedPom>
+					<artifactSet>
+						<includes>
+							<!-- This may create some failures, because both of these are using 
+								the artifact com.blockhaus2000:internalpluginmanager-base-api. Ignore these 
+								erros, they are OK. -->
+							<include>com.blockhaus2000:internalpluginmanager-command-api</include>
+							<include>com.blockhaus2000:internalpluginmanager-configuration-api</include>
+						</includes>
+					</artifactSet>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

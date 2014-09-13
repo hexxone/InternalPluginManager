@@ -1,0 +1,230 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.blockhaus2000</groupId>
+	<artifactId>internalpluginmanager-parent</artifactId>
+	<version>2.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		<!-- This order must be kept! -->
+		<module>internalpluginmanager-base-api</module>
+		<module>internalpluginmanager-command-api</module>
+		<module>internalpluginmanager-configuration-api</module>
+		<module>internalpluginmanager-plugin-api</module>
+		<module>internalpluginmanager-api</module>
+
+		<!-- This can be re-ordered. -->
+		<module>internalpluginmanager-minecraft-api</module>
+		<module>internalpluginmanager-standalone</module>
+	</modules>
+
+	<!-- Some important project properties -->
+	<properties>
+		<!-- License Stuff -->
+		<project.properties.license.name>GNU General Public License 3.0</project.properties.license.name>
+		<project.properties.license.url>http://www.gnu.org/licenses/</project.properties.license.url>
+
+		<!-- The encoding to use everywhere -->
+		<project.properties.encoding>UTF-8</project.properties.encoding>
+
+		<!-- Java Version -->
+		<project.properties.javaVersion>1.6</project.properties.javaVersion>
+
+		<!-- Fix encoding warnings -->
+		<project.build.sourceEncoding>${project.properties.encoding}</project.build.sourceEncoding>
+	</properties>
+
+
+	<!-- ===== Project Information ===== -->
+
+	<name>InternalPluginManager</name>
+	<inceptionYear>2014</inceptionYear>
+	<url>https://www.github.com/Blockhaus2000/InternalPluginManager/</url>
+	<description>Not added yet.</description> <!-- TODO: Add description -->
+
+	<licenses>
+		<license>
+			<name>${project.properties.license.name}</name>
+			<url>${project.properties.license.url}</url>
+		</license>
+	</licenses>
+
+	<organization>
+		<name>Blockhaus2000</name>
+		<url>http://www.blockhaus2000.com/</url>
+	</organization>
+
+	<issueManagement>
+		<system>MantisBT</system>
+		<url>http://issues.blockhaus2000.com/</url>
+	</issueManagement>
+
+	<scm>
+		<connection>scm:git:git@github.com/Blockhaus2000/InternalPluginManager.git</connection>
+		<developerConnection>scm:git:git@github.com:Blockhaus2000/InternalPluginManager.git</developerConnection>
+		<url>https://www.github.com/Blockhaus2000/InternalPluginManager/</url>
+		<tag>HEAD</tag>
+	</scm>
+
+	<prerequisites>
+		<maven>3.0.5</maven>
+	</prerequisites>
+
+
+	<!-- ===== Distribution Management ===== -->
+
+	<distributionManagement>
+		<!-- Releases will be deployed here -->
+		<repository>
+			<id>blockhaus2000-repo-ftp</id>
+			<url>ftp://repo.blockhaus2000.com/</url>
+		</repository>
+
+		<!-- Snapshots will be deployed here -->
+		<snapshotRepository>
+			<id>blockhaus2000-snap-repo-ftp</id>
+			<url>ftp://snap-repo.blockhaus2000.com/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+
+	<!-- Plugin Repositories ===== -->
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>blockhaus2000-plugin-repo</id>
+			<url>http://repo.blockhaus2000.com/</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+
+	<!-- ===== Dependencies ===== -->
+
+	<dependencies>
+		<!-- Used for unit tests. -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+
+	<!-- ===== Build ===== -->
+
+	<build>
+		<finalName>${project.artifactId}_v${project.version}_${buildNumber}</finalName>
+		<defaultGoal>clean install</defaultGoal>
+
+		<plugins>
+			<!-- Compiler settings. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>${project.properties.javaVersion}</source>
+					<target>${project.properties.javaVersion}</target>
+					<encoding>${project.properties.encoding}</encoding>
+				</configuration>
+			</plugin>
+
+			<!-- Find To-Do's. -->
+			<plugin>
+				<groupId>com.blockhaus2000</groupId>
+				<artifactId>todo-finder-maven-plugin</artifactId>
+				<version>1.4.4</version>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>find</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<lowPriorityStrings>
+						<lowPriorityString>IDEA</lowPriorityString> <!-- //TODO-FINDER:IGNORE -->
+					</lowPriorityStrings>
+					<normalPriorityStrings>
+						<normalPriorityString>TODO</normalPriorityString> <!-- //TODO-FINDER:IGNORE -->
+					</normalPriorityStrings>
+					<highPriorityStrings>
+						<highPriorityString>FIXME</highPriorityString> <!-- //TODO-FINDER:IGNORE -->
+					</highPriorityStrings>
+					<failOnHighPriority>true</failOnHighPriority>
+					<writeTodoList>false</writeTodoList>
+					<excludeFiles>
+						<excludeFile>.git/</excludeFile>
+						<excludeFile>codetemplates.xml</excludeFile>
+						<excludeFile>${project.build.directory}/</excludeFile>
+						<excludeFile>dependency-reduced-pom.xml</excludeFile>
+					</excludeFiles>
+				</configuration>
+			</plugin>
+
+			<!-- Check style -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.12</version>
+				<executions>
+					<execution>
+						<id>maven-checkstyle-plugin:check</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<configLocation>checkstyle.xml</configLocation>
+					<encoding>${project.properties.encoding}</encoding>
+					<logViolationsToConsole>true</logViolationsToConsole>
+					<maxAllowedViolations>10</maxAllowedViolations>
+					<violationSeverity>warning</violationSeverity>
+				</configuration>
+			</plugin>
+
+			<!-- Generates build numbers. -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>1.3</version>
+				<executions>
+					<execution>
+						<id>buildnumber-maven-plugin:create</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<format>{0,date,yyyyMMdd-HHmmss}</format>
+					<items>
+						<item>timestamp</item>
+					</items>
+				</configuration>
+			</plugin>
+
+			<!-- Test runner. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.17</version>
+			</plugin>
+		</plugins>
+		<extensions>
+			<!-- Used as repository connector. -->
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ftp</artifactId>
+				<version>2.5</version>
+			</extension>
+		</extensions>
+	</build>
+</project>
