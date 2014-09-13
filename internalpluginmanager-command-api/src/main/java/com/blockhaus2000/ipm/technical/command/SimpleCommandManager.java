@@ -118,9 +118,6 @@ public final class SimpleCommandManager implements CommandManager {
     /**
      * Constructor of SimpleCommandManager.
      *
-     * <p>
-     * <b> NOTE: use {@link SimpleCommandManager#getInstance()} instead. </b>
-     * </p>
      */
     private SimpleCommandManager() {
         // Nothing to do (only to provide singleton).
