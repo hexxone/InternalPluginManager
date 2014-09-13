@@ -58,7 +58,7 @@ import com.blockhaus2000.ipm.technical.command.util.SyntaxType;
 import com.blockhaus2000.ipm.technical.command.util.exception.CommandException;
 
 /**
- * This is an implementation of {@link CommandManager}.
+ * This is an implementation of the {@link CommandManager}.
  *
  */
 public final class SimpleCommandManager implements CommandManager {
