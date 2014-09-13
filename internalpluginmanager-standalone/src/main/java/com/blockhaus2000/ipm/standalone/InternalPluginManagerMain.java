@@ -29,13 +29,45 @@ import com.blockhaus2000.ipm.technical.command.event.CommandEventData;
 import com.blockhaus2000.ipm.technical.command.event.CommandEventListener;
 import com.blockhaus2000.ipm.technical.command.event.CommandEventManager;
 import com.blockhaus2000.ipm.technical.command.util.CommandContext;
+import com.blockhaus2000.ipm.technical.plugin.PluginManager;
 import com.blockhaus2000.ipm.technical.plugin.SimplePluginManager;
 
-public class InternalPluginManagerMain implements CommandEventListener {
+/**
+ * The main class of the standalone version of the InternalPluginManager.
+ *
+ */
+public final class InternalPluginManagerMain implements CommandEventListener {
+    /**
+     * The main command.
+     *
+     */
     private static final String MAIN_COMMAND = "internalpluginmanager";
+    /**
+     * The main command alias.
+     *
+     */
     private static final String MAIN_COMMAND_ALIAS = "ipm";
 
-    public static void main(final String[] dummy) {
+    /**
+     * Constructor of InternalPluginManagerMain.
+     *
+     */
+    private InternalPluginManagerMain() {
+        // Nothing to do.
+    }
+
+    /**
+     * Starts the InternalPluginManager Standalone.
+     *
+     * <p>
+     * Only invokes {@link PluginManager#start(File)} and registers own
+     * commands.
+     * </p>
+     *
+     * @param cmdArgs
+     *            The arguments passed to the program on startup.
+     */
+    public static void main(final String[] cmdArgs) {
         SimplePluginManager.getInstance().start(new File("plugins"));
 
         CommandEventManager.getInstance().register(new InternalPluginManagerMain());
@@ -53,8 +85,14 @@ public class InternalPluginManagerMain implements CommandEventListener {
         }
     }
 
+    /**
+     * This command stops the InternalPluginManager.
+     *
+     * @param context
+     *            The {@link CommandContext}.
+     */
     @Command(aliases = { InternalPluginManagerMain.MAIN_COMMAND, InternalPluginManagerMain.MAIN_COMMAND_ALIAS },
-             secondLevelCommand = "stop")
+            secondLevelCommand = "stop")
     public static void internalpluginmanagerCommand(final CommandContext context) {
         // Suppress unused-warning, suppresses checkstyle warning on
         // @SuppressWarnings("unused").
@@ -65,7 +103,8 @@ public class InternalPluginManagerMain implements CommandEventListener {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.command.event.CommandEventListener#onCommandEvent(com.blockhaus2000.ipm.technical.command.event.CommandEvent)
+     * @see com.blockhaus2000.ipm.technical.command.event.CommandEventListener
+     *      #onCommandEvent(com.blockhaus2000.ipm.technical.command.event.CommandEvent)
      */
     @Override
     public void onCommandEvent(final CommandEvent commandEvent) {
@@ -73,12 +112,12 @@ public class InternalPluginManagerMain implements CommandEventListener {
         if (Arrays.equals(commandEventData.getCommandInfo().getCommandAnot().aliases(), new String[] {
             InternalPluginManagerMain.MAIN_COMMAND, InternalPluginManagerMain.MAIN_COMMAND_ALIAS })) {
             switch (commandEventData.getEventType()) {
-            case UNAVAILABLE_SECOND_LEVEL_COMMAND:
-            case UNKNOWN_SECOND_LEVEL_COMMAND:
-                System.out.println("Usage: <internalpluginmanager|ipm> <stop>");
-                break;
-            default:
-                break;
+                case UNAVAILABLE_SECOND_LEVEL_COMMAND:
+                case UNKNOWN_SECOND_LEVEL_COMMAND:
+                    System.out.println("Usage: <internalpluginmanager|ipm> <stop>");
+                    break;
+                default:
+                    break;
             }
         }
     }

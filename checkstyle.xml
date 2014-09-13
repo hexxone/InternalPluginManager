@@ -110,9 +110,6 @@
 
 		<!-- ===== Coding ===== -->
 
-		<!-- Do not leave a trailing comma at end of an array construction. -->
-		<module name="ArrayTrailingComma" />
-
 		<!-- Do not create methods that are similar to the methods java.lang.Object#equals(java.lang.Object). -->
 		<module name="CovariantEquals" />
 
