@@ -8,9 +8,9 @@
 		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>internalpluginmanager-api</artifactId>
+	<artifactId>internalpluginmanager-plugin-api</artifactId>
 
-	<name>InternalPluginManager API</name>
+	<name>InternalPluginManager Plugin API</name>
 
 
 	<!-- ===== Dependencies ===== -->
@@ -38,11 +38,6 @@
 			<artifactId>internalpluginmanager-configuration-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.blockhaus2000</groupId>
-			<artifactId>internalpluginmanager-plugin-api</artifactId>
-			<version>${project.version}</version>
-		</dependency>
 	</dependencies>
 
 	<build>
@@ -64,7 +59,11 @@
 					<createDependencyReducedPom>false</createDependencyReducedPom>
 					<artifactSet>
 						<includes>
-							<include>com.blockhaus2000:internalpluginmanager-plugin-api</include>
+							<!-- This may create some failures, because both of these are using 
+								the artifact com.blockhaus2000:internalpluginmanager-base-api. Ignore these 
+								erros, they are OK. -->
+							<include>com.blockhaus2000:internalpluginmanager-command-api</include>
+							<include>com.blockhaus2000:internalpluginmanager-configuration-api</include>
 						</includes>
 					</artifactSet>
 				</configuration>

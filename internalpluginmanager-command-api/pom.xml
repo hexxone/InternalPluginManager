@@ -8,9 +8,9 @@
 		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>internalpluginmanager-api</artifactId>
+	<artifactId>internalpluginmanager-command-api</artifactId>
 
-	<name>InternalPluginManager API</name>
+	<name>InternalPluginManager Command API</name>
 
 
 	<!-- ===== Dependencies ===== -->
@@ -26,21 +26,6 @@
 		<dependency>
 			<groupId>com.blockhaus2000</groupId>
 			<artifactId>internalpluginmanager-base-api</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.blockhaus2000</groupId>
-			<artifactId>internalpluginmanager-command-api</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.blockhaus2000</groupId>
-			<artifactId>internalpluginmanager-configuration-api</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.blockhaus2000</groupId>
-			<artifactId>internalpluginmanager-plugin-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
@@ -64,7 +49,7 @@
 					<createDependencyReducedPom>false</createDependencyReducedPom>
 					<artifactSet>
 						<includes>
-							<include>com.blockhaus2000:internalpluginmanager-plugin-api</include>
+							<include>com.blockhaus2000:internalpluginmanager-base-api</include>
 						</includes>
 					</artifactSet>
 				</configuration>

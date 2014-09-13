@@ -8,7 +8,14 @@
 	<packaging>pom</packaging>
 
 	<modules>
+		<!-- This order must be kept! -->
+		<module>internalpluginmanager-base-api</module>
+		<module>internalpluginmanager-command-api</module>
+		<module>internalpluginmanager-configuration-api</module>
+		<module>internalpluginmanager-plugin-api</module>
 		<module>internalpluginmanager-api</module>
+
+		<!-- This can be re-ordered. -->
 		<module>internalpluginmanager-minecraft-api</module>
 		<module>internalpluginmanager-standalone</module>
 	</modules>
