@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.util.injection;
+package com.blockhaus2000.ipm.base.injection;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -23,10 +23,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import com.blockhaus2000.ipm.util.CommonConstants;
-import com.blockhaus2000.ipm.util.exception.IllegalStaticAccessException;
-import com.blockhaus2000.ipm.util.injection.exception.InjectionException;
-import com.blockhaus2000.ipm.util.injection.exception.NotAddedInjectionException;
+import com.blockhaus2000.ipm.base.CommonConstants;
+import com.blockhaus2000.ipm.base.exception.IllegalStaticAccessException;
+import com.blockhaus2000.ipm.base.injection.exception.InjectionException;
+import com.blockhaus2000.ipm.base.injection.exception.NotAddedInjectionException;
 
 /**
  * The {@link InjectionManager} manages injection of field that are specified
@@ -143,7 +143,7 @@ public final class InjectionManager {
      * @param obj
      *            The {@link Object} that contains the fields to inject. Cannot
      *            be <code>null</code>.
-     * @see com.blockhaus2000.ipm.util.injection.InjectionManager#init(java.lang.Class,
+     * @see com.blockhaus2000.ipm.base.injection.InjectionManager#init(java.lang.Class,
      *      java.lang.Object)
      */
     public static void init(final Object obj) {
@@ -158,7 +158,7 @@ public final class InjectionManager {
      *
      * @param clazz
      *            The {@link Class} that contains the fields to inject.
-     * @see com.blockhaus2000.ipm.util.injection.InjectionManager#init(java.lang.Class,
+     * @see com.blockhaus2000.ipm.base.injection.InjectionManager#init(java.lang.Class,
      *      java.lang.Object)
      */
     public static void init(final Class<?> clazz) {

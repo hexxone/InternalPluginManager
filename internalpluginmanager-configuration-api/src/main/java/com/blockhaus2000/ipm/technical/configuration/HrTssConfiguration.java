@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import com.blockhaus2000.ipm.util.CommonStringConstants;
+import com.blockhaus2000.ipm.base.CommonStringConstants;
 import com.blockhaus2000.tagstoragesystem.human.HRTSS;
 
 /**

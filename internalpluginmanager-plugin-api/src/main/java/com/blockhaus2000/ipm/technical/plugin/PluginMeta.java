@@ -27,9 +27,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import com.blockhaus2000.ipm.base.CollectionUtil;
+import com.blockhaus2000.ipm.base.CommonStringConstants;
 import com.blockhaus2000.ipm.technical.plugin.util.exception.PluginException;
-import com.blockhaus2000.ipm.util.CollectionUtil;
-import com.blockhaus2000.ipm.util.CommonStringConstants;
 
 /**
  * The {@link PluginMeta} contains main information about a plugin.

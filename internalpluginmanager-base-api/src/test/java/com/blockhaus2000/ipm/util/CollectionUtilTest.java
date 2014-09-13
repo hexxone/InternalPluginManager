@@ -27,6 +27,9 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.blockhaus2000.ipm.base.CollectionUtil;
+import com.blockhaus2000.ipm.base.Tag;
+
 /**
  * Tests the {@link CollectionUtil}.
  *

@@ -25,11 +25,11 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import com.blockhaus2000.ipm.base.CommonConstants;
 import com.blockhaus2000.ipm.technical.command.SimpleCommandManager;
 import com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration;
 import com.blockhaus2000.ipm.technical.configuration.HrTssConfiguration;
 import com.blockhaus2000.ipm.technical.plugin.util.exception.PluginException;
-import com.blockhaus2000.ipm.util.CommonConstants;
 
 /**
  * An implementation of {@link Plugin}. Extend this to make your plugin

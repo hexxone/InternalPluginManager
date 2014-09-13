@@ -17,7 +17,7 @@
  */
 package com.blockhaus2000.ipm.technical.command.util;
 
-import com.blockhaus2000.ipm.util.Tag;
+import com.blockhaus2000.ipm.base.Tag;
 
 /**
  * All these syntax types can be used to indicate the type of a flag, or (as the

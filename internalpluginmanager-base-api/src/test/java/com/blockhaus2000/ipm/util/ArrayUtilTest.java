@@ -20,6 +20,8 @@ package com.blockhaus2000.ipm.util;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.blockhaus2000.ipm.base.ArrayUtil;
+
 /**
  * Tests the {@link ArrayUtil}.
  *

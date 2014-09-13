@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.blockhaus2000.ipm.util.Tag;
+import com.blockhaus2000.ipm.base.Tag;
 
 /**
  * An implementation of {@link CommandContext}.

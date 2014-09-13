@@ -36,6 +36,13 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.logging.Logger;
 
+import com.blockhaus2000.ipm.base.ArrayUtil;
+import com.blockhaus2000.ipm.base.CollectionUtil;
+import com.blockhaus2000.ipm.base.CommonConstants;
+import com.blockhaus2000.ipm.base.CommonStringConstants;
+import com.blockhaus2000.ipm.base.Tag;
+import com.blockhaus2000.ipm.base.exception.IllegalMethodSignatureException;
+import com.blockhaus2000.ipm.base.exception.IllegalStaticAccessException;
 import com.blockhaus2000.ipm.technical.command.event.CommandEvent;
 import com.blockhaus2000.ipm.technical.command.event.CommandEventData;
 import com.blockhaus2000.ipm.technical.command.event.CommandEventData.CommandEventType;
@@ -49,13 +56,6 @@ import com.blockhaus2000.ipm.technical.command.util.SimpleCommandInfo;
 import com.blockhaus2000.ipm.technical.command.util.SimpleRawCommandContext;
 import com.blockhaus2000.ipm.technical.command.util.SyntaxType;
 import com.blockhaus2000.ipm.technical.command.util.exception.CommandException;
-import com.blockhaus2000.ipm.util.ArrayUtil;
-import com.blockhaus2000.ipm.util.CollectionUtil;
-import com.blockhaus2000.ipm.util.CommonConstants;
-import com.blockhaus2000.ipm.util.CommonStringConstants;
-import com.blockhaus2000.ipm.util.Tag;
-import com.blockhaus2000.ipm.util.exception.IllegalMethodSignatureException;
-import com.blockhaus2000.ipm.util.exception.IllegalStaticAccessException;
 
 /**
  * This is an implementation of {@link CommandManager}.

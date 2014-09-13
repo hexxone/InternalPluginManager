@@ -15,67 +15,58 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.util.exception;
+package com.blockhaus2000.ipm.base.injection.exception;
 
 /**
- * This exception can be thrown whilest using reflection, if a method signature
- * is invalid (if you will invoke that method, and you check the argument types
- * before).
- *
- * <p>
- * <b>Example:</b>
- * <p>
- * You are excpeting a method signature like <code>XXXX(java.lang.String)</code>
- * , and you get a signature like <code>XXXX(java.lang.Integer</code>, you can
- * throw this exception.
- * </p>
- * </p>
+ * This exception is thrown in the
+ * {@link com.blockhaus2000.ipm.base.injection.InjectionManager} if a value is
+ * requested that is not mapped (yet).
  *
  */
-public class IllegalMethodSignatureException extends RuntimeException {
+public class NotAddedInjectionException extends InjectionException {
     /**
      * The serial version uid.
      *
      */
-    private static final long serialVersionUID = -8802427634853307312L;
+    private static final long serialVersionUID = 4661674843310112612L;
 
     /**
-     * Constructor of IllegalMethodSignatureException.
+     * Constructor of NotAddedInjectionException.
      *
      */
-    public IllegalMethodSignatureException() {
+    public NotAddedInjectionException() {
         super();
     }
 
     /**
-     * Constructor of IllegalMethodSignatureException.
+     * Constructor of NotAddedInjectionException.
      *
      * @param message
      *            Will be used in <code>super</code> call.
      * @param cause
      *            Will be used in <code>super</code> call.
      */
-    public IllegalMethodSignatureException(final String message, final Throwable cause) {
+    public NotAddedInjectionException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
     /**
-     * Constructor of IllegalMethodSignatureException.
+     * Constructor of NotAddedInjectionException.
      *
      * @param message
      *            Will be used in <code>super</code> call.
      */
-    public IllegalMethodSignatureException(final String message) {
+    public NotAddedInjectionException(final String message) {
         super(message);
     }
 
     /**
-     * Constructor of IllegalMethodSignatureException.
+     * Constructor of NotAddedInjectionException.
      *
      * @param cause
      *            Will be used in <code>super</code> call.
      */
-    public IllegalMethodSignatureException(final Throwable cause) {
+    public NotAddedInjectionException(final Throwable cause) {
         super(cause);
     }
 }

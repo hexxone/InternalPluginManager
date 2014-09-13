@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.util;
+package com.blockhaus2000.ipm.base;
 
 /**
  * This utility class provides some method for the array using.
@@ -68,7 +68,7 @@ public final class ArrayUtil {
      *            Passed to
      *            {@link ArrayUtil#joinString(String, int, int, String...)}.
      * @return See {@link ArrayUtil#joinString(String, int, int, String...)}.
-     * @see com.blockhaus2000.ipm.util.ArrayUtil#joinString(java.lang.String,
+     * @see com.blockhaus2000.ipm.base.ArrayUtil#joinString(java.lang.String,
      *      int, int, java.lang.String...)
      */
     public static String joinString(final String delimiter, final String... arr) {
@@ -83,7 +83,7 @@ public final class ArrayUtil {
      *            Passed to
      *            {@link ArrayUtil#joinString(String, int, int, String...)}.
      * @return See {@link ArrayUtil#joinString(String, int, int, String...)}.
-     * @see com.blockhaus2000.ipm.util.ArrayUtil#joinString(java.lang.String,
+     * @see com.blockhaus2000.ipm.base.ArrayUtil#joinString(java.lang.String,
      *      int, int, java.lang.String...)
      */
     public static String joinString(final String... arr) {

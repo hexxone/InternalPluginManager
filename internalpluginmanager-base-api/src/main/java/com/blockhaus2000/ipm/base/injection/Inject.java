@@ -15,39 +15,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.util;
+package com.blockhaus2000.ipm.base.injection;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * This class contains some common string constants, such like a blank (" ").
+ * The annotation to indicate a field that has to be injected by the
+ * {@link InjectionManager}.
  *
  */
-public final class CommonStringConstants {
-    /**
-     * <code>" "</code>
-     */
-    public static final String BLANK = " ";
-    /**
-     * <code>"-"</code>
-     */
-    public static final String DASH = "-";
-    /**
-     * <code>""</code>
-     */
-    public static final String EMPTY = "";
-    /**
-     * <code>":"</code>
-     */
-    public static final String COLON = ":";
-    /**
-     * <code>";"</code>
-     */
-    public static final String SEMICOLON = ";";
-
-    /**
-     * Constructor of CommonConstants.
-     *
-     */
-    private CommonStringConstants() {
-        // Utility classes should not have a visible constructor.
-    }
+@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Inject {
+    // empty
 }

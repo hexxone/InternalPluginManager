@@ -22,7 +22,7 @@ import java.io.FileFilter;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-import com.blockhaus2000.ipm.util.CommonConstants;
+import com.blockhaus2000.ipm.base.CommonConstants;
 
 /**
  * The {@link PluginDeployDaemon} scans the deploy directory for new deployed

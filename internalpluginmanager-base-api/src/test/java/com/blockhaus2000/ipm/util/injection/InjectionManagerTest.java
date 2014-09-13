@@ -20,8 +20,10 @@ package com.blockhaus2000.ipm.util.injection;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.blockhaus2000.ipm.util.exception.IllegalStaticAccessException;
-import com.blockhaus2000.ipm.util.injection.exception.NotAddedInjectionException;
+import com.blockhaus2000.ipm.base.exception.IllegalStaticAccessException;
+import com.blockhaus2000.ipm.base.injection.Inject;
+import com.blockhaus2000.ipm.base.injection.InjectionManager;
+import com.blockhaus2000.ipm.base.injection.exception.NotAddedInjectionException;
 
 /**
  * Tests the {@link InjectionManager}.

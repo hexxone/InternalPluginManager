@@ -22,11 +22,11 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.blockhaus2000.ipm.base.Tag;
+import com.blockhaus2000.ipm.base.exception.IllegalMethodSignatureException;
 import com.blockhaus2000.ipm.technical.command.util.CommandContext;
 import com.blockhaus2000.ipm.technical.command.util.exception.CommandException;
 import com.blockhaus2000.ipm.test.mocked.MockedCommandSender;
-import com.blockhaus2000.ipm.util.Tag;
-import com.blockhaus2000.ipm.util.exception.IllegalMethodSignatureException;
 
 /**
  * Executes some test against the {@link SimpleCommandManager} (the heart of the

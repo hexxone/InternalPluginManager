@@ -15,57 +15,59 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.util.exception;
+package com.blockhaus2000.ipm.base.injection.exception;
+
+import com.blockhaus2000.ipm.base.injection.InjectionManager;
 
 /**
- * This exception can be thrown whilest using exception and indicates that a
- * non-static element was tried to access staticly.
+ * This exception is thrown if a general error occurres within the
+ * {@link InjectionManager}.
  *
  */
-public class IllegalStaticAccessException extends RuntimeException {
+public class InjectionException extends RuntimeException {
     /**
      * The serial version uid.
      *
      */
-    private static final long serialVersionUID = -4204719741279343505L;
+    private static final long serialVersionUID = 3079867800122198100L;
 
     /**
-     * Constructor of IllegalStaticAccessException.
+     * Constructor of InjectionException.
      *
      */
-    public IllegalStaticAccessException() {
+    public InjectionException() {
         super();
     }
 
     /**
-     * Constructor of IllegalStaticAccessException.
+     * Constructor of InjectionException.
      *
      * @param message
      *            Will be used in <code>super</code> call.
      * @param cause
      *            Will be used in <code>super</code> call.
      */
-    public IllegalStaticAccessException(final String message, final Throwable cause) {
+    public InjectionException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
     /**
-     * Constructor of IllegalStaticAccessException.
+     * Constructor of InjectionException.
      *
      * @param message
      *            Will be used in <code>super</code> call.
      */
-    public IllegalStaticAccessException(final String message) {
+    public InjectionException(final String message) {
         super(message);
     }
 
     /**
-     * Constructor of IllegalStaticAccessException.
+     * Constructor of InjectionException.
      *
      * @param cause
      *            Will be used in <code>super</code> call.
      */
-    public IllegalStaticAccessException(final Throwable cause) {
+    public InjectionException(final Throwable cause) {
         super(cause);
     }
 }

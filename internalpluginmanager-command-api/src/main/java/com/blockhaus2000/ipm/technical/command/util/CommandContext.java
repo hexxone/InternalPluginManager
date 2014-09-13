@@ -20,7 +20,7 @@ package com.blockhaus2000.ipm.technical.command.util;
 import java.util.List;
 import java.util.Map;
 
-import com.blockhaus2000.ipm.util.Tag;
+import com.blockhaus2000.ipm.base.Tag;
 
 /**
  * A {@link CommandContext} contains all important information to work with a

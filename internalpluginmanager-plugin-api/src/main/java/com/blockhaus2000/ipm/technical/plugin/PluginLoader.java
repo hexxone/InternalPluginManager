@@ -27,9 +27,9 @@ import java.util.jar.JarFile;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 
+import com.blockhaus2000.ipm.base.CommonConstants;
 import com.blockhaus2000.ipm.technical.plugin.util.exception.PluginException;
 import com.blockhaus2000.ipm.technical.plugin.util.exception.PluginIOException;
-import com.blockhaus2000.ipm.util.CommonConstants;
 import com.blockhaus2000.tagstoragesystem.TSS;
 
 /**

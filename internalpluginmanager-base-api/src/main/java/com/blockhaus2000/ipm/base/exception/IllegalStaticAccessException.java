@@ -15,58 +15,57 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.util.injection.exception;
+package com.blockhaus2000.ipm.base.exception;
 
 /**
- * This exception is thrown in the
- * {@link com.blockhaus2000.ipm.util.injection.InjectionManager} if a value is
- * requested that is not mapped (yet).
+ * This exception can be thrown whilest using exception and indicates that a
+ * non-static element was tried to access staticly.
  *
  */
-public class NotAddedInjectionException extends InjectionException {
+public class IllegalStaticAccessException extends RuntimeException {
     /**
      * The serial version uid.
      *
      */
-    private static final long serialVersionUID = 4661674843310112612L;
+    private static final long serialVersionUID = -4204719741279343505L;
 
     /**
-     * Constructor of NotAddedInjectionException.
+     * Constructor of IllegalStaticAccessException.
      *
      */
-    public NotAddedInjectionException() {
+    public IllegalStaticAccessException() {
         super();
     }
 
     /**
-     * Constructor of NotAddedInjectionException.
+     * Constructor of IllegalStaticAccessException.
      *
      * @param message
      *            Will be used in <code>super</code> call.
      * @param cause
      *            Will be used in <code>super</code> call.
      */
-    public NotAddedInjectionException(final String message, final Throwable cause) {
+    public IllegalStaticAccessException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
     /**
-     * Constructor of NotAddedInjectionException.
+     * Constructor of IllegalStaticAccessException.
      *
      * @param message
      *            Will be used in <code>super</code> call.
      */
-    public NotAddedInjectionException(final String message) {
+    public IllegalStaticAccessException(final String message) {
         super(message);
     }
 
     /**
-     * Constructor of NotAddedInjectionException.
+     * Constructor of IllegalStaticAccessException.
      *
      * @param cause
      *            Will be used in <code>super</code> call.
      */
-    public NotAddedInjectionException(final Throwable cause) {
+    public IllegalStaticAccessException(final Throwable cause) {
         super(cause);
     }
 }
