@@ -31,10 +31,8 @@ public interface PluginManager {
      *
      * @param directory
      *            The directory where to create the directopry structure.
-     * @throws IllegalStateException
-     *             Is thrown if the plugin manager is already started.
      */
-    void start(final File directory) throws IllegalStateException;
+    void start(final File directory);
 
     /**
      * Removes/unloads the given plugin.

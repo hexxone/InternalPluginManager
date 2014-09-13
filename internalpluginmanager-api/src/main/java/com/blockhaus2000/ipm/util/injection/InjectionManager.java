@@ -169,6 +169,11 @@ public final class InjectionManager {
      * Associates the given {@link Class} with the given object to be used while
      * injections.
      *
+     * @param <T>
+     *            The class type to associated the given {@link Object} with.
+     * @param <C>
+     *            The type of the {@link Object} to associate with the given
+     *            class.
      * @param obj
      *            The object that has to be associated with the given
      *            {@link Class}. This will be injected at

@@ -36,7 +36,7 @@ package com.blockhaus2000.ipm.technical.command;
  * </p>
  *
  */
-public enum CommandPriority { // TODO: Implement
+public enum CommandPriority {
     /**
      * Very low priority command.
      *
@@ -93,6 +93,6 @@ public enum CommandPriority { // TODO: Implement
      * @return {@link CommandPriority#priority}.
      */
     public int getPriority() {
-        return priority;
+        return this.priority;
     }
 }

@@ -34,7 +34,6 @@ public @interface Command {
      * The aliases for the command. The command will be registered with all of
      * these alisaes, and you can execute with all of these.
      *
-     * @return The {@link String}[] of the aliases.
      */
     String[] aliases();
 
@@ -52,7 +51,6 @@ public @interface Command {
      * Default: <code>""</code>
      * </p>
      *
-     * @return The permission for this command.
      */
     String permission() default "";
 
@@ -69,7 +67,6 @@ public @interface Command {
      * Default: <code>0</code>
      * </p>
      *
-     * @return The minimum arguments of this command.
      */
     int min() default 0;
 
@@ -87,7 +84,6 @@ public @interface Command {
      * Default: <code>-1</code>
      * </p>
      *
-     * @return The minimum arguments of this command.
      */
     int max() default -1;
 
@@ -99,7 +95,6 @@ public @interface Command {
      * Default: {@link CommandPriority#NORMAL}
      * </p>
      *
-     * @return The priority of this command.
      */
     CommandPriority priority() default CommandPriority.NORMAL;
 
@@ -135,7 +130,6 @@ public @interface Command {
      * !</b>
      * </p>
      *
-     * @return A {@link String}[] of flags for this command.
      */
     String[] flags() default "";
 
@@ -164,7 +158,6 @@ public @interface Command {
      * ! </b>
      * </p>
      *
-     * @return The syntax for this command.
      */
     String syntax() default "";
 
@@ -182,7 +175,6 @@ public @interface Command {
      * will be removed completly. </b>
      * </p>
      *
-     * @return The second-level-command for this command.
      */
     String secondLevelCommand() default "";
 
@@ -190,8 +182,6 @@ public @interface Command {
      * Enables the auto maximal argument setting if you use a specific command
      * syntax (specified in {@link Command#syntax()}).
      *
-     * @return The boolean value that auto maximal setting on syntax
-     *         specification is enabled.
      * @see Command#syntax()
      */
     boolean autoSetMaxOnSyntax() default true;

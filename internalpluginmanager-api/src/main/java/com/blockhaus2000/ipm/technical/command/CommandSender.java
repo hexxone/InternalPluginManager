@@ -31,5 +31,5 @@ public interface CommandSender {
      *         or the {@link CommandSender} has the permission.
      *         <code>false</code> in all other cases.
      */
-    public boolean hasPermission(final String permission);
+    boolean hasPermission(final String permission);
 }

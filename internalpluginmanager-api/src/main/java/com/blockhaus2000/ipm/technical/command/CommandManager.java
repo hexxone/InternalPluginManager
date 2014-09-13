@@ -33,6 +33,8 @@ public interface CommandManager {
      * Registers all command methods that are included in the given class,
      * marked with the {@link Command} annotation.
      *
+     * @param <T>
+     *            The type of the object to register.
      * @param clazz
      *            The {@link Class} containing all commands.
      * @param obj
@@ -46,6 +48,8 @@ public interface CommandManager {
      * Delegates to {@link CommandManager#register(Class, Object)} with
      * <code>clazz = obj.getClass()</code>.
      *
+     * @param <T>
+     *            The type of the object to register.
      * @param obj
      *            Will be passed to
      *            {@link CommandManager#register(Class, Object)}.
@@ -63,6 +67,8 @@ public interface CommandManager {
      * <b> NOTE: Only use this of all methods to register are static. </b>
      * </p>
      *
+     * @param <T>
+     *            The type of the object to register.
      * @param clazz
      *            Will be passed to
      *            {@link CommandManager#register(Class, Object)}.

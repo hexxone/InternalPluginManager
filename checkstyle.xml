@@ -17,7 +17,6 @@
 	<module name="TreeWalker">
 		<property name="tabWidth" value="4" />
 
-
 		<!-- ===== Annotations ===== -->
 
 		<!-- Basic Annotation Style -->
@@ -152,7 +151,7 @@
 			<!-- See http://checkstyle.sourceforge.net/apidocs/com/puppycrawl/tools/checkstyle/api/TokenTypes.html 
 				for token list. -->
 			<property name="tokens"
-				value="BAND_ASSIGN,BOR_ASSIGN,BSR_ASSIGN,BXOR_ASSIGN,DEC,DIV_ASSIGN,DO_WHILE,EMPTY_STAT,INC,LITERAL_DO,LITERAL_NATIVE,MINUS_ASSIGN,MOD_ASSIGN,PLUS_ASSIGN,SL_ASSIGN,SR_ASSIGN,STAR_ASSIGN,WILDCARD_TYPE" />
+				value="BAND_ASSIGN,BOR_ASSIGN,BSR_ASSIGN,BXOR_ASSIGN,DEC,DIV_ASSIGN,DO_WHILE,EMPTY_STAT,INC,LITERAL_DO,LITERAL_NATIVE,MINUS_ASSIGN,MOD_ASSIGN,PLUS_ASSIGN,SL_ASSIGN,SR_ASSIGN,STAR_ASSIGN" />
 		</module>
 
 		<!-- Do not use inner assignments. -->
@@ -249,7 +248,7 @@
 			spelling mistakes. -->
 		<module name="MultipleStringLiterals">
 			<!-- Strictly warn on every duplication. -->
-			<property name="allowedDuplicates" value="1" />
+			<property name="allowedDuplicates" value="5" />
 			<!-- Ignore duplicates Strings in annotations, asserts or throws. -->
 			<property name="ignoreOccurrenceContext" value="ANNOTATION,LITERAL_ASSERT,LITERAL_THROW" />
 		</module>
@@ -471,8 +470,8 @@
 
 		<!-- No space should be before the tokend specified below. -->
 		<module name="NoWhitespaceBefore">
-			<!-- No spaces are allowed after the tokens below if the line breaks. -->
-			<property name="allowLineBreaks" value="false" />
+			<!-- Allow spaces before the tokens below if the line breaks before. -->
+			<property name="allowLineBreaks" value="true" />
 			<!-- No spaces after these tokens. -->
 			<property name="tokens" value="SEMI,DOT,POST_DEC,POST_INC" />
 		</module>

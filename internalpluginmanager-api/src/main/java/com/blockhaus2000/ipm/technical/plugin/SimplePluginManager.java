@@ -31,7 +31,7 @@ import com.blockhaus2000.ipm.technical.plugin.util.exception.MissingDependencyPl
  * An implementation of the {@link PluginManager}.
  *
  */
-public class SimplePluginManager implements PluginManager {
+public final class SimplePluginManager implements PluginManager {
     /**
      * THE instance of the {@link SimplePluginManager}.
      *
@@ -81,12 +81,20 @@ public class SimplePluginManager implements PluginManager {
     private File configDir;
 
     /**
+     * Constructor of SimplePluginManager.
+     *
+     */
+    private SimplePluginManager() {
+        // Nothing to do (only to provide singleton).
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @see com.blockhaus2000.ipm.technical.plugin.PluginManager#start(java.io.File)
      */
     @Override
-    public synchronized void start(final File directory) throws IllegalStateException {
+    public synchronized void start(final File directory) {
         if (this.started) {
             throw new IllegalStateException("Already started!");
         }
@@ -307,10 +315,8 @@ public class SimplePluginManager implements PluginManager {
      * Checks if the access is valid. An access is valid if the
      * {@link PluginManager} is started. If not, the access is invalid.
      *
-     * @throws IllegalStateException
-     *             If the {@link PluginManager} is not started.
      */
-    private void checkAccess() throws IllegalStateException {
+    private void checkAccess() {
         if (!this.started) {
             throw new IllegalStateException("Not started yet!");
         }
@@ -320,7 +326,7 @@ public class SimplePluginManager implements PluginManager {
      *
      * @return {@link SimplePluginManager#INSTANCE}
      */
-    public static final PluginManager getInstance() {
+    public static PluginManager getInstance() {
         return SimplePluginManager.INSTANCE;
     }
 
@@ -329,7 +335,7 @@ public class SimplePluginManager implements PluginManager {
      * @return {@link SimplePluginManager#INSTANCE} (casted to
      *         {@link SimplePluginManager}).
      */
-    static final SimplePluginManager getClassInstance() {
+    static SimplePluginManager getClassInstance() {
         return (SimplePluginManager) SimplePluginManager.INSTANCE;
     }
 }

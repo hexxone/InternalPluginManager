@@ -177,7 +177,7 @@
 					<configLocation>checkstyle.xml</configLocation>
 					<encoding>${project.properties.encoding}</encoding>
 					<logViolationsToConsole>true</logViolationsToConsole>
-					<maxAllowedViolations>25</maxAllowedViolations>
+					<!--<maxAllowedViolations>25</maxAllowedViolations>-->
 					<violationSeverity>warning</violationSeverity>
 				</configuration>
 			</plugin>

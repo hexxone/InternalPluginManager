@@ -98,6 +98,30 @@ public class PluginDeployDaemon extends Thread {
      */
     @Override
     public void run() {
+        this.loadAlreadyDeployedPlugins();
+
+        PluginDeployDaemon.LOGGER.fine("Hot deploy daemon started on directory \"" + this.deployDir.getAbsolutePath() + "\".");
+
+        while (!this.isInterrupted()) {
+            for (final File rawFile : this.deployDir.listFiles(PluginDeployDaemon.JAR_FILE_FILTER)) {
+                this.deploy(rawFile);
+            }
+
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (final InterruptedException dummy) {
+                this.interrupt();
+            }
+        }
+
+        PluginDeployDaemon.LOGGER.fine("Hot deploy daemon stopped.");
+    }
+
+    /**
+     * Loads the already deployed plugins from the plugin directory.
+     *
+     */
+    private void loadAlreadyDeployedPlugins() {
         PluginDeployDaemon.LOGGER.fine("Loading plugins in directory \"" + this.pluginDir.getAbsolutePath() + "\".");
 
         for (final File file : this.pluginDir.listFiles(PluginDeployDaemon.JAR_FILE_FILTER)) {
@@ -116,55 +140,47 @@ public class PluginDeployDaemon extends Thread {
         }
 
         PluginDeployDaemon.LOGGER.fine("Loading finished.");
+    }
 
-        PluginDeployDaemon.LOGGER.fine("Hot deploy daemon started on directory \"" + this.deployDir.getAbsolutePath() + "\".");
+    /**
+     * Deploys/Loads the given {@link File}
+     *
+     * @param rawFile
+     *            The {@link File} to load (and deploy).
+     */
+    private void deploy(final File rawFile) {
+        PluginDeployDaemon.LOGGER.info("Jar file \"" + rawFile.getAbsolutePath() + "\" detected.");
 
-        while (!this.isInterrupted()) {
-            for (final File rawFile : this.deployDir.listFiles(PluginDeployDaemon.JAR_FILE_FILTER)) {
-                PluginDeployDaemon.LOGGER.info("Jar file \"" + rawFile.getAbsolutePath() + "\" detected.");
+        final File file = new File(this.pluginDir, rawFile.getName());
 
-                final File file = new File(this.pluginDir, rawFile.getName());
+        PluginDeployDaemon.LOGGER.finer("Deleting old jar file \"" + file.getAbsolutePath() + "\".");
 
-                PluginDeployDaemon.LOGGER.finer("Deleting old jar file \"" + file.getAbsolutePath() + "\".");
+        file.delete();
 
-                file.delete();
+        PluginDeployDaemon.LOGGER.finer("Moving new jar file \"" + rawFile.getAbsolutePath() + "\" to plugin directory.");
 
-                PluginDeployDaemon.LOGGER.finer("Moving new jar file \"" + rawFile.getAbsolutePath() + "\" to plugin directory.");
+        rawFile.renameTo(file);
 
-                rawFile.renameTo(file);
+        PluginDeployDaemon.LOGGER.finer("Starting deployment of file \"" + file.getAbsolutePath() + "\" in a few seconds.");
 
-                PluginDeployDaemon.LOGGER.finer("Starting deployment of file \"" + file.getAbsolutePath()
-                        + "\" in a few seconds.");
+        try {
+            TimeUnit.SECONDS.sleep(2);
 
-                try {
-                    TimeUnit.SECONDS.sleep(2);
-
-                    // Only deploy if no InterruptedException occurred.
-                    try {
-                        SimplePluginManager.getClassInstance().loadPlugin(file, true, true);
-                    } catch (final Exception ex) {
-                        ex.printStackTrace();
-                        PluginDeployDaemon.LOGGER.severe("An error occurred whilest deploying \"" + file.getAbsolutePath()
-                                + "\"!");
-                        PluginDeployDaemon.LOGGER.severe("Deleting \"" + file.getAbsolutePath() + "\"!");
-                        file.delete();
-                    }
-                } catch (final InterruptedException ex) {
-                    PluginDeployDaemon.LOGGER.severe("An Exception occurres while waiting for deployment starting.");
-                    ex.printStackTrace();
-                    this.interrupt();
-                }
-
-                PluginDeployDaemon.LOGGER.finer("Deployment finished.");
-            }
-
+            // Only deploy if no InterruptedException occurred.
             try {
-                TimeUnit.SECONDS.sleep(2);
-            } catch (final InterruptedException dummy) {
-                this.interrupt();
+                SimplePluginManager.getClassInstance().loadPlugin(file, true, true);
+            } catch (final Exception ex) {
+                ex.printStackTrace();
+                PluginDeployDaemon.LOGGER.severe("An error occurred whilest deploying \"" + file.getAbsolutePath() + "\"!");
+                PluginDeployDaemon.LOGGER.severe("Deleting \"" + file.getAbsolutePath() + "\"!");
+                file.delete();
             }
+        } catch (final InterruptedException ex) {
+            PluginDeployDaemon.LOGGER.severe("An Exception occurres while waiting for deployment starting.");
+            ex.printStackTrace();
+            this.interrupt();
         }
 
-        PluginDeployDaemon.LOGGER.fine("Hot deploy daemon stopped.");
+        PluginDeployDaemon.LOGGER.finer("Deployment finished.");
     }
 }

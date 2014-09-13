@@ -28,7 +28,7 @@ import java.util.Set;
  *
  * @see com.blockhaus2000.ipm.technical.command.event.CommandEvent
  */
-public class CommandEventManager {
+public final class CommandEventManager {
     /**
      * The singleton instance of the {@link CommandEventManager}.
      *
@@ -42,6 +42,14 @@ public class CommandEventManager {
      *
      */
     private final Map<String, CommandEventListener> listeners = new HashMap<String, CommandEventListener>();
+
+    /**
+     * Constructor of CommandEventManager.
+     *
+     */
+    private CommandEventManager() {
+        // Nothing to do (only to provide singleton).
+    }
 
     /**
      * Fires the given {@link CommandEvent}.

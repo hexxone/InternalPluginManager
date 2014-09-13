@@ -43,6 +43,8 @@ public interface Plugin extends PropertyChangeListener {
      * disable. Otherwise, you have to handle it manually. </b>
      * </p>
      *
+     * @param <T>
+     *            The type of the object to register.
      * @param clazz
      *            Is passed into {@link CommandManager#register(Class, Object)}
      *            and is used for automatic unregister handling.
@@ -55,6 +57,8 @@ public interface Plugin extends PropertyChangeListener {
      * Delegates to {@link Plugin#registerCommands(Class, Object)} with
      * <code>clazz = obj.getClass()</code> and <code>obj = obj</code>.
      *
+     * @param <T>
+     *            The type of the object to register.
      * @param obj
      *            Is passed into {@link Plugin#registerCommands(Class, Object)}.
      * @see com.blockhaus2000.ipm.technical.plugin.Plugin#registerCommands(java.lang.Class,
@@ -66,6 +70,8 @@ public interface Plugin extends PropertyChangeListener {
      * Delegates to {@link Plugin#registerCommands(Class, Object)} with
      * <code>clazz = clazz</code> and <code>obj = null</code>.
      *
+     * @param <T>
+     *            The type of the object to register.
      * @param clazz
      *            Is passed into {@link Plugin#registerCommands(Class, Object)}.
      * @see com.blockhaus2000.ipm.technical.plugin.Plugin#registerCommands(java.lang.Class,

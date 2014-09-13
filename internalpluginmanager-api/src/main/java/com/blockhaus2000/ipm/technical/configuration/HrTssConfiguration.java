@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import com.blockhaus2000.ipm.util.CommonStringConstants;
 import com.blockhaus2000.tagstoragesystem.human.HRTSS;
 
 /**
@@ -33,8 +34,9 @@ import com.blockhaus2000.tagstoragesystem.human.HRTSS;
  */
 public class HrTssConfiguration extends AbstractFileConfiguration {
     /**
-     * The String that a semicol (<code>";"</code>) is escaped with. The
-     * semicolon is used to split elements in a serialized list.
+     * The String that a semicol (<code>CommonStringConstants.SEMICOLON</code>)
+     * is escaped with. The semicolon is used to split elements in a serialized
+     * list.
      *
      */
     public static final String ESCAPED_SEMICOLON = "&sc";
@@ -110,8 +112,8 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
 
         final List<String> result = new ArrayList<String>();
 
-        for (final String str : Arrays.asList(value.split(";"))) {
-            result.add(str.replace(HrTssConfiguration.ESCAPED_SEMICOLON, ";").trim());
+        for (final String str : Arrays.asList(value.split(CommonStringConstants.SEMICOLON))) {
+            result.add(str.replace(HrTssConfiguration.ESCAPED_SEMICOLON, CommonStringConstants.SEMICOLON).trim());
         }
 
         return result;
@@ -184,9 +186,9 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
         final StringBuilder builder = new StringBuilder();
         for (int i = 0; i < value.size(); i++) {
             if (i != 0) {
-                builder.append(";");
+                builder.append(CommonStringConstants.SEMICOLON);
             }
-            builder.append(value.get(i).trim().replace(";", HrTssConfiguration.ESCAPED_SEMICOLON));
+            builder.append(value.get(i).trim().replace(CommonStringConstants.SEMICOLON, HrTssConfiguration.ESCAPED_SEMICOLON));
         }
         this.set(path, builder.toString());
     }

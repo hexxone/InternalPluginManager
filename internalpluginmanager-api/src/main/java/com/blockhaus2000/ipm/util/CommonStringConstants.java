@@ -38,6 +38,10 @@ public final class CommonStringConstants {
      * <code>":"</code>
      */
     public static final String COLON = ":";
+    /**
+     * <code>";"</code>
+     */
+    public static final String SEMICOLON = ";";
 
     /**
      * Constructor of CommonConstants.

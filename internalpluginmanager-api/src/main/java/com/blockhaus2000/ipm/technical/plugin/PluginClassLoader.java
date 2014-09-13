@@ -24,8 +24,6 @@ import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.blockhaus2000.ipm.util.CheckstyleUtil;
-
 /**
  * An {@link URLClassLoader} to load plugins.
  *
@@ -75,7 +73,9 @@ public final class PluginClassLoader extends URLClassLoader {
     Class<?> findClass(final String name, final boolean global) {
         assert name != null : "Name cannot be null!";
 
+        // First try to get the class.
         Class<?> clazz = this.classes.get(name);
+        // If class not found, second try to get the class.
         if (clazz == null) {
             try {
                 if (global) {
@@ -84,26 +84,34 @@ public final class PluginClassLoader extends URLClassLoader {
                     // Throw Exception to go into the catch block.
                     throw new ClassNotFoundException();
                 }
-            } catch (final ClassNotFoundException d0) {
-                try {
-                    clazz = super.findClass(name);
-                } catch (final ClassNotFoundException d1) {
-                    try {
-                        clazz = Class.forName(name);
-                    } catch (final ClassNotFoundException d2) {
-                        // Fails silent. Class not found.
-
-                        // Suppress checkstyle warnings.
-                        CheckstyleUtil.failsSilent();
-                    }
-                }
+            } catch (final ClassNotFoundException dummy) {
+                // Fails silent. Class not found.
             }
         }
+        // If class not found, third try to get the class.
+        if (clazz == null) {
+            try {
+                clazz = super.findClass(name);
+            } catch (final ClassNotFoundException dummy) {
+                // Fails silent. Class not found.
+            }
+        }
+        // If class not found, fourth try to get the class.
+        if (clazz == null) {
+            try {
+                clazz = Class.forName(name);
+            } catch (final ClassNotFoundException dummy) {
+                // Fails silent. Class not found.
+            }
+        }
+        // If class was not found now, clazz is still null.
 
+        // Add class, if found, to class cache.
         if (clazz != null) {
             this.classes.put(name, clazz);
         }
 
+        // Return found class or, if not found, null.
         return clazz;
     }
 

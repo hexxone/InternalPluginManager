@@ -57,6 +57,9 @@ public final class CollectionUtil {
      * containing all elements of the collection, encapsulated in a {@link Tag}
      * object.
      *
+     * @param <T>
+     *            The type of the tags that will be added to the returned
+     *            collection.
      * @param col
      *            The {@link Collection} containing the elements to encapsulate.
      * @param listType
@@ -74,19 +77,17 @@ public final class CollectionUtil {
         assert !Modifier.isAbstract(listType.getModifiers()) : "ListType cannot be abstract!";
         assert !listType.isInterface() : "ListType cannot be an interface!";
 
-        final Collection<Tag<T>> result;
+        Collection<Tag<T>> result = null;
         try {
             result = listType.newInstance();
+
+            for (final T element : col) {
+                result.add(new Tag<T>(element));
+            }
         } catch (final InstantiationException ex) {
             ex.printStackTrace();
-            return null;
         } catch (final IllegalAccessException ex) {
             ex.printStackTrace();
-            return null;
-        }
-
-        for (final T element : col) {
-            result.add(new Tag<T>(element));
         }
 
         return result;

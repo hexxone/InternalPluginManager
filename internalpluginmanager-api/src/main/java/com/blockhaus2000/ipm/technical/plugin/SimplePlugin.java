@@ -42,13 +42,13 @@ public class SimplePlugin implements Plugin {
      * {@link PropertyChangeEvent}s with the {@link PropertyChangeSupport}.
      *
      */
-    protected static final String ENABLED_PROPERTY_NAME = "enabled";
+    public static final String ENABLED_PROPERTY_NAME = "enabled";
 
     /**
      * The {@link PropertyChangeSupport} for this class.
      *
      */
-    protected final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+    private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     /**
      * This set contains all (command) classes that are registered with
@@ -260,16 +260,24 @@ public class SimplePlugin implements Plugin {
     }
 
     /**
+     *
+     * @return {@link SimplePlugin#propertyChangeSupport}
+     */
+    public PropertyChangeSupport getPropertyChangeSupport() {
+        return this.propertyChangeSupport;
+    }
+
+    /**
      * Initilizes this plugin. Should be callen by the {@link PluginLoader}
      * only.
      *
-     * @param pluginMeta
+     * @param initPluginMeta
      *            The {@link PluginMeta}.
      */
-    void init(final PluginMeta pluginMeta) {
-        this.pluginMeta = pluginMeta;
-        this.logger = Logger.getLogger(CommonConstants.INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME + "." + pluginMeta.getName());
-        this.dataFolder = new File(SimplePluginManager.getClassInstance().getPluginDirectory(), pluginMeta.getName()
+    void init(final PluginMeta initPluginMeta) {
+        this.pluginMeta = initPluginMeta;
+        this.logger = Logger.getLogger(CommonConstants.INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME + "." + initPluginMeta.getName());
+        this.dataFolder = new File(SimplePluginManager.getClassInstance().getPluginDirectory(), initPluginMeta.getName()
                 .toLowerCase());
         this.dataFolder.mkdir();
         try {

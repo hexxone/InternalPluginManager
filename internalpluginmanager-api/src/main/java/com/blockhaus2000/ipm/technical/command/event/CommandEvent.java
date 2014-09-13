@@ -79,7 +79,7 @@ public final class CommandEvent {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + (commandEventData == null ? 0 : commandEventData.hashCode());
+        result = prime * result + (this.commandEventData == null ? 0 : this.commandEventData.hashCode());
         return result;
     }
 
@@ -100,11 +100,11 @@ public final class CommandEvent {
             return false;
         }
         final CommandEvent other = (CommandEvent) obj;
-        if (commandEventData == null) {
+        if (this.commandEventData == null) {
             if (other.commandEventData != null) {
                 return false;
             }
-        } else if (!commandEventData.equals(other.commandEventData)) {
+        } else if (!this.commandEventData.equals(other.commandEventData)) {
             return false;
         }
         return true;
@@ -117,7 +117,7 @@ public final class CommandEvent {
      */
     @Override
     public String toString() {
-        return getClass().getName() + "[commandEventData=" + commandEventData + "]";
+        return this.getClass().getName() + "[commandEventData=" + this.commandEventData + "]";
     }
 
     /**
@@ -125,6 +125,6 @@ public final class CommandEvent {
      * @return {@link CommandEvent#commandEventData}.
      */
     public List<CommandEventData> getCommandEventData() {
-        return commandEventData;
+        return this.commandEventData;
     }
 }
