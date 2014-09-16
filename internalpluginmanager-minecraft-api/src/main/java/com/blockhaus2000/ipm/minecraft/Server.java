@@ -15,29 +15,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.base;
+package com.blockhaus2000.ipm.minecraft;
+
+import com.blockhaus2000.ipm.technical.command.CommandManager;
+import com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager;
 
 /**
- * This class contains some common constants.
+ * The {@link Server} is the main class/interface to interact with the server
+ * (more specific, with the underlying server software implementation).
  *
  */
-public final class CommonConstants {
+public interface Server {
     /**
-     * The name of the InternalPluginManager system logger.
      *
-     * <p>
-     * <b> NOTE: Do NOT use this logger within plugins. Use the plugin logger
-     * instead. </b>
-     * </p>
+     * @return The {@link CommandManager} where to register the commands. This
+     *         is a {@link PluginCommandManager}.
      */
-    public static final String INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME = CommonConstants.class.getPackage().getName()
-            + ".LOGGER";
+    PluginCommandManager getCommandManager();
 
     /**
-     * Constructor of CommonConstants.
+     * Just for testing.
      *
+     * @param obj
+     *            The {@link Object} to print.
      */
-    private CommonConstants() {
-        // Utility classes should not have a visible constructor.
-    }
+    // Just for testing reasons.
+    void println(final Object obj);
 }

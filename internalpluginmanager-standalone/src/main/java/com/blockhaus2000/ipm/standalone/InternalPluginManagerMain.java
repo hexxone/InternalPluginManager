@@ -23,14 +23,12 @@ import java.util.Scanner;
 
 import com.blockhaus2000.ipm.technical.command.Command;
 import com.blockhaus2000.ipm.technical.command.CommandSender;
-import com.blockhaus2000.ipm.technical.command.SimpleCommandManager;
 import com.blockhaus2000.ipm.technical.command.event.CommandEvent;
 import com.blockhaus2000.ipm.technical.command.event.CommandEventData;
 import com.blockhaus2000.ipm.technical.command.event.CommandEventListener;
 import com.blockhaus2000.ipm.technical.command.event.CommandEventManager;
 import com.blockhaus2000.ipm.technical.command.util.CommandContext;
 import com.blockhaus2000.ipm.technical.plugin.PluginManager;
-import com.blockhaus2000.ipm.technical.plugin.SimplePluginManager;
 
 /**
  * The main class of the standalone version of the InternalPluginManager.
@@ -60,23 +58,26 @@ public final class InternalPluginManagerMain implements CommandEventListener {
      * Starts the InternalPluginManager Standalone.
      *
      * <p>
-     * Only invokes {@link PluginManager#start(File)} and registers own
-     * commands.
+     * Only invokes {@link PluginManager#start(File)}, registers own commands
+     * and manages default command execution.
      * </p>
      *
      * @param cmdArgs
      *            The arguments passed to the program on startup.
      */
+    @SuppressWarnings("deprecation")
     public static void main(final String[] cmdArgs) {
-        SimplePluginManager.getInstance().start(new File("plugins"));
+        PluginManager.getInstance().start(new File("plugins"));
 
         CommandEventManager.getInstance().register(new InternalPluginManagerMain());
-        SimpleCommandManager.getInstance().register(InternalPluginManagerMain.class);
+        // Use deprecated method cause the main class does not have an
+        // associated plugin.
+        InternalPluginManager.getCommandManager().register(InternalPluginManagerMain.class);
 
         final Scanner scanner = new Scanner(System.in);
         while (true) {
             final String[] args = scanner.nextLine().split(" +");
-            SimpleCommandManager.getInstance().execute(args[0], new CommandSender() {
+            InternalPluginManager.getCommandManager().execute(args[0], new CommandSender() {
                 @Override
                 public boolean hasPermission(final String permission) {
                     return true;

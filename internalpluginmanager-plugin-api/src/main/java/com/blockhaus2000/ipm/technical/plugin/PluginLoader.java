@@ -58,7 +58,7 @@ public final class PluginLoader {
      * names.
      *
      */
-    private final TSS pluginMetaCache = new TSS(new File(SimplePluginManager.getClassInstance().getPluginDirectory(),
+    private final TSS pluginMetaCache = new TSS(new File(PluginManager.getInstance().getPluginDirectory(),
             "plugin-meta-cache.tss"));
 
     /**

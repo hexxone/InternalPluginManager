@@ -15,29 +15,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.base;
+package com.blockhaus2000.ipm.standalone;
+
+import com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager;
+import com.blockhaus2000.ipm.technical.plugin.command.SimplePluginCommandManager;
 
 /**
- * This class contains some common constants.
+ * This utility class only provides some methods that are important to use the
+ * InternalPluginManager.
  *
  */
-public final class CommonConstants {
+public class InternalPluginManager {
     /**
-     * The name of the InternalPluginManager system logger.
+     * The one and only command manager that should be used.
      *
-     * <p>
-     * <b> NOTE: Do NOT use this logger within plugins. Use the plugin logger
-     * instead. </b>
-     * </p>
      */
-    public static final String INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME = CommonConstants.class.getPackage().getName()
-            + ".LOGGER";
+    private static final PluginCommandManager COMMAND_MANAGER = new SimplePluginCommandManager();
 
     /**
-     * Constructor of CommonConstants.
      *
+     * @return {@link InternalPluginManager#COMMAND_MANAGER}
      */
-    private CommonConstants() {
-        // Utility classes should not have a visible constructor.
+    public static PluginCommandManager getCommandManager() {
+        return InternalPluginManager.COMMAND_MANAGER;
     }
 }

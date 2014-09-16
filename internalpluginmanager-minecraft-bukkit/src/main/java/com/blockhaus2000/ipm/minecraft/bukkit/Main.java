@@ -15,29 +15,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.base;
+package com.blockhaus2000.ipm.minecraft.bukkit;
+
+import java.io.File;
+
+import org.bukkit.plugin.java.JavaPlugin;
+
+import com.blockhaus2000.ipm.base.injection.InjectionManager;
+import com.blockhaus2000.ipm.minecraft.Server;
+import com.blockhaus2000.ipm.technical.plugin.PluginManager;
 
 /**
- * This class contains some common constants.
+ * The main class of the Bukkit implementation of the InternalPluginManager.
  *
  */
-public final class CommonConstants {
+public class Main extends JavaPlugin {
     /**
-     * The name of the InternalPluginManager system logger.
+     * {@inheritDoc}
      *
-     * <p>
-     * <b> NOTE: Do NOT use this logger within plugins. Use the plugin logger
-     * instead. </b>
-     * </p>
+     * @see org.bukkit.plugin.java.JavaPlugin#onEnable()
      */
-    public static final String INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME = CommonConstants.class.getPackage().getName()
-            + ".LOGGER";
-
-    /**
-     * Constructor of CommonConstants.
-     *
-     */
-    private CommonConstants() {
-        // Utility classes should not have a visible constructor.
+    @Override
+    public void onEnable() {
+        InjectionManager.addResource(BukkitServer.getInstance(), Server.class);
+        PluginManager.getInstance().start(new File(super.getDataFolder(), "plugins"));
     }
 }

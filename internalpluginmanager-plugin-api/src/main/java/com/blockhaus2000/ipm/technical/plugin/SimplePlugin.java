@@ -21,12 +21,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.logging.Logger;
 
 import com.blockhaus2000.ipm.base.CommonConstants;
-import com.blockhaus2000.ipm.technical.command.SimpleCommandManager;
 import com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration;
 import com.blockhaus2000.ipm.technical.configuration.HrTssConfiguration;
 import com.blockhaus2000.ipm.technical.plugin.util.exception.PluginException;
@@ -38,25 +35,10 @@ import com.blockhaus2000.ipm.technical.plugin.util.exception.PluginException;
  */
 public class SimplePlugin implements Plugin {
     /**
-     * The name of the enabled-field. This is used whilest fireing
-     * {@link PropertyChangeEvent}s with the {@link PropertyChangeSupport}.
-     *
-     */
-    public static final String ENABLED_PROPERTY_NAME = "enabled";
-
-    /**
      * The {@link PropertyChangeSupport} for this class.
      *
      */
     private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
-
-    /**
-     * This set contains all (command) classes that are registered with
-     * {@link Plugin#registerCommands(Class, Object)}. This is used to
-     * unregister these commands on disable.
-     *
-     */
-    private final Set<Class<?>> registeredCommandClasses = new HashSet<Class<?>>();
 
     /**
      * The plugin {@link Logger}.
@@ -95,45 +77,7 @@ public class SimplePlugin implements Plugin {
      *
      */
     protected SimplePlugin() {
-        this.propertyChangeSupport.addPropertyChangeListener(SimplePlugin.ENABLED_PROPERTY_NAME, this);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see com.blockhaus2000.ipm.technical.plugin.Plugin#registerCommands(java.lang.Class,
-     *      java.lang.Object)
-     */
-    @Override
-    public <T> void registerCommands(final Class<T> clazz, final T obj) {
-        assert clazz != null : "Clazz cannot be null!";
-        assert obj == null || clazz.equals(obj.getClass()) : "Obj has to be null or an object of clazz!";
-
-        SimpleCommandManager.getInstance().register(clazz, obj);
-        this.registeredCommandClasses.add(clazz);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see com.blockhaus2000.ipm.technical.plugin.Plugin#registerCommands(java.lang.Object)
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> void registerCommands(final T obj) {
-        assert obj != null : "Obj cannot be null!";
-
-        this.registerCommands((Class<T>) obj.getClass(), obj);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see com.blockhaus2000.ipm.technical.plugin.Plugin#registerCommands(java.lang.Class)
-     */
-    @Override
-    public <T> void registerCommands(final Class<T> clazz) {
-        this.registerCommands(clazz, null);
+        this.propertyChangeSupport.addPropertyChangeListener(Plugin.ENABLED_PROPERTY_NAME, this);
     }
 
     /**
@@ -189,6 +133,16 @@ public class SimplePlugin implements Plugin {
     /**
      * {@inheritDoc}
      *
+     * @see com.blockhaus2000.ipm.technical.plugin.Plugin#getPropertyChangeSupport()
+     */
+    @Override
+    public PropertyChangeSupport getPropertyChangeSupport() {
+        return this.propertyChangeSupport;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @see com.blockhaus2000.ipm.technical.plugin.Plugin#getLogger()
      */
     @Override
@@ -238,7 +192,7 @@ public class SimplePlugin implements Plugin {
         this.enabled = enabled;
 
         if (oldVal != newVal) {
-            this.propertyChangeSupport.firePropertyChange(SimplePlugin.ENABLED_PROPERTY_NAME, oldVal, newVal);
+            this.propertyChangeSupport.firePropertyChange(Plugin.ENABLED_PROPERTY_NAME, oldVal, newVal);
         }
     }
 
@@ -249,22 +203,13 @@ public class SimplePlugin implements Plugin {
      */
     @Override
     public void propertyChange(final PropertyChangeEvent event) {
-        if ((Boolean) event.getNewValue()) {
-            this.onEnable();
-        } else {
-            this.onDisable();
-            for (final Class<?> clazz : this.registeredCommandClasses) {
-                SimpleCommandManager.getInstance().unregister(clazz);
+        if (event.getPropertyName().equals(Plugin.ENABLED_PROPERTY_NAME)) {
+            if ((Boolean) event.getNewValue()) {
+                this.onEnable();
+            } else {
+                this.onDisable();
             }
         }
-    }
-
-    /**
-     *
-     * @return {@link SimplePlugin#propertyChangeSupport}
-     */
-    public PropertyChangeSupport getPropertyChangeSupport() {
-        return this.propertyChangeSupport;
     }
 
     /**
@@ -277,8 +222,7 @@ public class SimplePlugin implements Plugin {
     void init(final PluginMeta initPluginMeta) {
         this.pluginMeta = initPluginMeta;
         this.logger = Logger.getLogger(CommonConstants.INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME + "." + initPluginMeta.getName());
-        this.dataFolder = new File(SimplePluginManager.getClassInstance().getPluginDirectory(), initPluginMeta.getName()
-                .toLowerCase());
+        this.dataFolder = new File(PluginManager.getInstance().getPluginDirectory(), initPluginMeta.getName().toLowerCase());
         this.dataFolder.mkdir();
         try {
             this.config = new HrTssConfiguration(new File(this.dataFolder, "config.hrtss"));

@@ -15,29 +15,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.base;
+package com.blockhaus2000.ipm.minecraft.bukkit.command;
+
+import com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager;
+import com.blockhaus2000.ipm.technical.plugin.command.SimplePluginCommandManager;
 
 /**
- * This class contains some common constants.
+ * A special extension for the {@link SimplePluginCommandManager} for Bukkit to
+ * hack into the command system of Bukkit.
  *
  */
-public final class CommonConstants {
+public class BukkitCommandManager extends SimplePluginCommandManager {
     /**
-     * The name of the InternalPluginManager system logger.
+     * THE instance of the {@link BukkitCommandManager}.
      *
-     * <p>
-     * <b> NOTE: Do NOT use this logger within plugins. Use the plugin logger
-     * instead. </b>
-     * </p>
      */
-    public static final String INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME = CommonConstants.class.getPackage().getName()
-            + ".LOGGER";
+    private static final PluginCommandManager INSTANCE = new BukkitCommandManager();
 
     /**
-     * Constructor of CommonConstants.
+     * Constructor of BukkitCommandManager.
      *
      */
-    private CommonConstants() {
-        // Utility classes should not have a visible constructor.
+    private BukkitCommandManager() {
+        // Nothing to do (only to provide singleton).
+    }
+
+    public static final PluginCommandManager getInstance() {
+        return BukkitCommandManager.INSTANCE;
     }
 }

@@ -1,0 +1,5 @@
+# Licensed under the ${project.properties.license.name}
+name: ${project.artifactId}
+version: ${project.version}
+
+main: ${project.properties.mainClass}

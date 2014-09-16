@@ -35,6 +35,12 @@ import com.blockhaus2000.ipm.test.mocked.MockedCommandSender;
  */
 public class SimpleCommandManagerTest {
     /**
+     * The {@link CommandManager} to use for the tests.
+     *
+     */
+    private static final CommandManager COMMAND_MANAGER = new SimpleCommandManager();
+
+    /**
      * The mocked console.
      *
      */
@@ -46,7 +52,7 @@ public class SimpleCommandManagerTest {
      */
     @Test
     public void executeSuccessful() {
-        SimpleCommandManager.getInstance().register(new SimpleCommandManagerTestClass());
+        SimpleCommandManagerTest.COMMAND_MANAGER.register(new SimpleCommandManagerTestClass());
 
         Assert.assertTrue(this.testCommand("tc_cmd1", SimpleCommandManagerTest.MOCKED_COMMAND_SENDER));
         Assert.assertTrue(this.testCommand("tc_command1", SimpleCommandManagerTest.MOCKED_COMMAND_SENDER));
@@ -68,7 +74,7 @@ public class SimpleCommandManagerTest {
         Assert.assertTrue(this.testCommand("tc_cmd13", SimpleCommandManagerTest.MOCKED_COMMAND_SENDER, "-b", "1234", "5678"));
         Assert.assertTrue(this.testCommand("tc_cmd13", SimpleCommandManagerTest.MOCKED_COMMAND_SENDER, "-c", "Hello", "World!"));
 
-        Assert.assertFalse(SimpleCommandManager.getInstance().execute("unknown_command",
+        Assert.assertFalse(SimpleCommandManagerTest.COMMAND_MANAGER.execute("unknown_command",
                 SimpleCommandManagerTest.MOCKED_COMMAND_SENDER));
     }
 
@@ -78,7 +84,7 @@ public class SimpleCommandManagerTest {
      */
     @Test(expected = IllegalMethodSignatureException.class)
     public void registerIllegalMethodSignatureException1() {
-        SimpleCommandManager.getInstance().register(new SimpleCommandManagerTestClass1());
+        SimpleCommandManagerTest.COMMAND_MANAGER.register(new SimpleCommandManagerTestClass1());
     }
 
     /**
@@ -87,7 +93,7 @@ public class SimpleCommandManagerTest {
      */
     @Test(expected = IllegalMethodSignatureException.class)
     public void registerIllegalMethodSignatureException2() {
-        SimpleCommandManager.getInstance().register(new SimpleCommandManagerTestClass2());
+        SimpleCommandManagerTest.COMMAND_MANAGER.register(new SimpleCommandManagerTestClass2());
     }
 
     /**
@@ -96,7 +102,7 @@ public class SimpleCommandManagerTest {
      */
     @Test(expected = IllegalMethodSignatureException.class)
     public void registerIllegalMethodSignatureException3() {
-        SimpleCommandManager.getInstance().register(new SimpleCommandManagerTestClass3());
+        SimpleCommandManagerTest.COMMAND_MANAGER.register(new SimpleCommandManagerTestClass3());
     }
 
     /**
@@ -120,7 +126,7 @@ public class SimpleCommandManagerTest {
         }
 
         try {
-            if (!SimpleCommandManager.getInstance().execute(label, sender, args)) {
+            if (!SimpleCommandManagerTest.COMMAND_MANAGER.execute(label, sender, args)) {
                 return false;
             }
         } catch (final CommandException ex) {

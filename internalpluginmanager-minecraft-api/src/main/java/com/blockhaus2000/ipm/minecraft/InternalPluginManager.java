@@ -15,29 +15,36 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.base;
+package com.blockhaus2000.ipm.minecraft;
+
+import com.blockhaus2000.ipm.base.injection.Inject;
+import com.blockhaus2000.ipm.base.injection.InjectionManager;
 
 /**
- * This class contains some common constants.
+ * This is the main class of the InternalPluginManager. This class cotains some
+ * utility methods to access the implementation for the specific server versions
+ * and some other stuff.
  *
  */
-public final class CommonConstants {
+public class InternalPluginManager {
     /**
-     * The name of the InternalPluginManager system logger.
+     * The {@link Server} instance. This is injected by the
+     * {@link InjectionManager}, cause this is the connector to the underlying
+     * implementation.
      *
-     * <p>
-     * <b> NOTE: Do NOT use this logger within plugins. Use the plugin logger
-     * instead. </b>
-     * </p>
      */
-    public static final String INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME = CommonConstants.class.getPackage().getName()
-            + ".LOGGER";
+    @Inject
+    private static Server server;
+
+    static {
+        InjectionManager.init(InternalPluginManager.class);
+    }
 
     /**
-     * Constructor of CommonConstants.
      *
+     * @return {@link InternalPluginManager#server}
      */
-    private CommonConstants() {
-        // Utility classes should not have a visible constructor.
+    public static Server getServer() {
+        return InternalPluginManager.server;
     }
 }

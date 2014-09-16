@@ -130,7 +130,7 @@ public class PluginDeployDaemon extends Thread {
             PluginDeployDaemon.LOGGER.finer("Starting deployment of \"" + file.getAbsolutePath() + "\".");
 
             try {
-                SimplePluginManager.getClassInstance().loadPlugin(file, true, false);
+                PluginManager.getInstance().loadPlugin(file, true, false);
             } catch (final Exception ex) {
                 ex.printStackTrace();
                 PluginDeployDaemon.LOGGER.severe("An error occurred whilest deploying \"" + file.getAbsolutePath() + "\"!");
@@ -168,7 +168,7 @@ public class PluginDeployDaemon extends Thread {
 
             // Only deploy if no InterruptedException occurred.
             try {
-                SimplePluginManager.getClassInstance().loadPlugin(file, true, true);
+                PluginManager.getInstance().loadPlugin(file, true, true);
             } catch (final Exception ex) {
                 ex.printStackTrace();
                 PluginDeployDaemon.LOGGER.severe("An error occurred whilest deploying \"" + file.getAbsolutePath() + "\"!");

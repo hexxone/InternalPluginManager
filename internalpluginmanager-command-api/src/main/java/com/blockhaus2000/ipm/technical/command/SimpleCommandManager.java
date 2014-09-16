@@ -61,7 +61,7 @@ import com.blockhaus2000.ipm.technical.command.util.exception.CommandException;
  * This is an implementation of the {@link CommandManager}.
  *
  */
-public final class SimpleCommandManager implements CommandManager {
+public class SimpleCommandManager implements CommandManager {
     // Improves performance, suppresses checkstyle warning.
     /**
      * <code>'".'</code>
@@ -73,12 +73,6 @@ public final class SimpleCommandManager implements CommandManager {
      *
      */
     private static final Logger LOGGER = Logger.getLogger(CommonConstants.INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME);
-
-    /**
-     * THE instance of the {@link SimpleCommandManager}.
-     *
-     */
-    private static final CommandManager INSTANCE = new SimpleCommandManager();
 
     /**
      * The {@link CommandInfo} comparator.
@@ -114,14 +108,6 @@ public final class SimpleCommandManager implements CommandManager {
      * </ul>
      */
     private final Map<String, List<CommandInfo>> commands = new HashMap<String, List<CommandInfo>>();
-
-    /**
-     * Constructor of SimpleCommandManager.
-     *
-     */
-    private SimpleCommandManager() {
-        // Nothing to do (only to provide singleton).
-    }
 
     /**
      * {@inheritDoc}
@@ -916,14 +902,5 @@ public final class SimpleCommandManager implements CommandManager {
             result.put(entry.getKey(), new ArrayList<CommandInfo>(entry.getValue()));
         }
         return result;
-    }
-
-    /**
-     *
-     * @return An instance of the {@link SimpleCommandManager} (in form of a
-     *         {@link CommandManager}).
-     */
-    public static CommandManager getInstance() {
-        return SimpleCommandManager.INSTANCE;
     }
 }

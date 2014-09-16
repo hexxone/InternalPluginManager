@@ -18,6 +18,7 @@
 		<!-- This can be re-ordered. -->
 		<module>internalpluginmanager-minecraft-api</module>
 		<module>internalpluginmanager-standalone</module>
+		<module>internalpluginmanager-minecraft-bukkit</module>
 	</modules>
 
 	<!-- Some important project properties -->

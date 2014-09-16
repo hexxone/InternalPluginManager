@@ -17,11 +17,12 @@
  */
 package com.blockhaus2000.ipm.technical.plugin;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.util.logging.Logger;
 
-import com.blockhaus2000.ipm.technical.command.CommandManager;
 import com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration;
 
 /**
@@ -32,52 +33,11 @@ import com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration;
  */
 public interface Plugin extends PropertyChangeListener {
     /**
-     * Registers all command in the given class by delegating to
-     * {@link CommandManager#register(Class, Object)}.
+     * The name of the enabled-field. This is used whilest fireing
+     * {@link PropertyChangeEvent}s with the {@link PropertyChangeSupport}.
      *
-     * <p>
-     * <b> NOTE: Use this method instead of calling
-     * {@link CommandManager#register(Class, Object)} directly, because this
-     * method enables also the automatic handling of unregistering commands. So,
-     * if you use this method, the commands will be unregistered automaticly on
-     * disable. Otherwise, you have to handle it manually. </b>
-     * </p>
-     *
-     * @param <T>
-     *            The type of the object to register.
-     * @param clazz
-     *            Is passed into {@link CommandManager#register(Class, Object)}
-     *            and is used for automatic unregister handling.
-     * @param obj
-     *            Is passed into {@link CommandManager#register(Class, Object)}.
      */
-    <T> void registerCommands(final Class<T> clazz, final T obj);
-
-    /**
-     * Delegates to {@link Plugin#registerCommands(Class, Object)} with
-     * <code>clazz = obj.getClass()</code> and <code>obj = obj</code>.
-     *
-     * @param <T>
-     *            The type of the object to register.
-     * @param obj
-     *            Is passed into {@link Plugin#registerCommands(Class, Object)}.
-     * @see com.blockhaus2000.ipm.technical.plugin.Plugin#registerCommands(java.lang.Class,
-     *      java.lang.Object)
-     */
-    <T> void registerCommands(final T obj);
-
-    /**
-     * Delegates to {@link Plugin#registerCommands(Class, Object)} with
-     * <code>clazz = clazz</code> and <code>obj = null</code>.
-     *
-     * @param <T>
-     *            The type of the object to register.
-     * @param clazz
-     *            Is passed into {@link Plugin#registerCommands(Class, Object)}.
-     * @see com.blockhaus2000.ipm.technical.plugin.Plugin#registerCommands(java.lang.Class,
-     *      java.lang.Object)
-     */
-    <T> void registerCommands(final Class<T> clazz);
+    public static final String ENABLED_PROPERTY_NAME = "enabled";
 
     /**
      * If the enabled flag is set to <code>false</code>, this will be callen.
@@ -115,6 +75,13 @@ public interface Plugin extends PropertyChangeListener {
      * @return The configuration for this plugin.
      */
     AbstractFileConfiguration getConfig();
+
+    /**
+     *
+     * @return The {@link PropertyChangeSupport} that is used to fire property
+     *         change events.
+     */
+    PropertyChangeSupport getPropertyChangeSupport();
 
     /**
      *
