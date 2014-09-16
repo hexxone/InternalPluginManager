@@ -36,12 +36,6 @@ import com.blockhaus2000.ipm.technical.plugin.Plugin;
  */
 public class SimplePluginCommandManager extends SimpleCommandManager implements PluginCommandManager, PropertyChangeListener {
     /**
-     * THE instance of the {@link SimplePluginCommandManager}.
-     *
-     */
-    private static final PluginCommandManager INSTANCE = new SimplePluginCommandManager();
-
-    /**
      * A {@link Map} containing all command classes that was registered with the
      * {@link PluginCommandManager}. This is used for auto-unregistering.
      *
@@ -58,9 +52,18 @@ public class SimplePluginCommandManager extends SimpleCommandManager implements 
     private final Map<String, List<Class<?>>> classes = new HashMap<String, List<Class<?>>>();
 
     /**
+     * Constructor of SimplePluginCommandManager.
+     *
+     */
+    public SimplePluginCommandManager() {
+        // Nothing to do.
+    }
+
+    /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager#register(com.blockhaus2000.ipm.technical.plugin.Plugin,
+     * @see com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager#
+     *      register(com.blockhaus2000.ipm.technical.plugin.Plugin,
      *      java.lang.Class, java.lang.Object)
      */
     @Override
@@ -91,7 +94,8 @@ public class SimplePluginCommandManager extends SimpleCommandManager implements 
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager#register(com.blockhaus2000.ipm.technical.plugin.Plugin,
+     * @see com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager#
+     *      register(com.blockhaus2000.ipm.technical.plugin.Plugin,
      *      java.lang.Object)
      */
     @SuppressWarnings("unchecked")
@@ -105,7 +109,8 @@ public class SimplePluginCommandManager extends SimpleCommandManager implements 
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager#register(com.blockhaus2000.ipm.technical.plugin.Plugin,
+     * @see com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager#
+     *      register(com.blockhaus2000.ipm.technical.plugin.Plugin,
      *      java.lang.Class)
      */
     @Override
@@ -137,13 +142,5 @@ public class SimplePluginCommandManager extends SimpleCommandManager implements 
             // Remove all classes for that plugin name.
             this.classes.remove(pluginName);
         }
-    }
-
-    /**
-     *
-     * @return {@link SimplePluginCommandManager#INSTANCE}
-     */
-    public static PluginCommandManager getInstance() {
-        return SimplePluginCommandManager.INSTANCE;
     }
 }

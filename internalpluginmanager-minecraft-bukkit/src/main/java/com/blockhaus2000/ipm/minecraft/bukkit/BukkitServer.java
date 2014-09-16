@@ -37,7 +37,7 @@ public final class BukkitServer implements Server {
      * The {@link CommandManager} for this {@link Server}.
      *
      */
-    private final PluginCommandManager commandManager = BukkitCommandManager.getInstance();
+    private final PluginCommandManager commandManager = new BukkitCommandManager();
 
     /**
      * Constructor of BukkitServer.

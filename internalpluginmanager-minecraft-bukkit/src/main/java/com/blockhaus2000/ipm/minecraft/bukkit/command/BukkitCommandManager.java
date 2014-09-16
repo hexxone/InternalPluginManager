@@ -17,7 +17,6 @@
  */
 package com.blockhaus2000.ipm.minecraft.bukkit.command;
 
-import com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager;
 import com.blockhaus2000.ipm.technical.plugin.command.SimplePluginCommandManager;
 
 /**
@@ -25,22 +24,13 @@ import com.blockhaus2000.ipm.technical.plugin.command.SimplePluginCommandManager
  * hack into the command system of Bukkit.
  *
  */
+// TODO: Add injection into Bukkit.
 public class BukkitCommandManager extends SimplePluginCommandManager {
-    /**
-     * THE instance of the {@link BukkitCommandManager}.
-     *
-     */
-    private static final PluginCommandManager INSTANCE = new BukkitCommandManager();
-
     /**
      * Constructor of BukkitCommandManager.
      *
      */
-    private BukkitCommandManager() {
-        // Nothing to do (only to provide singleton).
-    }
-
-    public static final PluginCommandManager getInstance() {
-        return BukkitCommandManager.INSTANCE;
+    public BukkitCommandManager() {
+        // Nothing to do.
     }
 }

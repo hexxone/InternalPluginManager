@@ -37,7 +37,7 @@ public interface Plugin extends PropertyChangeListener {
      * {@link PropertyChangeEvent}s with the {@link PropertyChangeSupport}.
      *
      */
-    public static final String ENABLED_PROPERTY_NAME = "enabled";
+    static final String ENABLED_PROPERTY_NAME = "enabled";
 
     /**
      * If the enabled flag is set to <code>false</code>, this will be callen.

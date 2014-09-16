@@ -84,44 +84,66 @@ public interface PluginCommandManager extends CommandManager {
      *            Will be passed to
      *            {@link PluginCommandManager#register(Plugin, Class, Object)}.
      * @return See {@link PluginCommandManager#register(Plugin, Class, Object)}.
-     * @see com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager#register(Plugin,
-     *      java.lang.Class, java.lang.Object)
+     * @see com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager#
+     *      register(Plugin, java.lang.Class, java.lang.Object)
      */
     <T> Set<CommandInfo> register(final Plugin plugin, final Class<T> clazz);
 
     /**
      *
+     * @param <T>
+     *            The type of the object to register.
+     * @param clazz
+     *            The {@link Class} containing all commands.
+     * @param obj
+     *            An {@link Object} of the given {@link Class}, if one of the
+     *            methods to register is non-static.
+     * @return A set of registered command informations.
      * @deprecated Use
      *             {@link PluginCommandManager#register(Plugin, Class, Object)}
      *             instead.
-     * @see com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager#register(com.blockhaus2000.ipm.technical.plugin.Plugin,
+     * @see com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager#
+     *      register(com.blockhaus2000.ipm.technical.plugin.Plugin,
      *      java.lang.Class, java.lang.Object)
      */
     @Deprecated
     @Override
-    public <T> Set<CommandInfo> register(Class<T> clazz, T obj);
+    <T> Set<CommandInfo> register(Class<T> clazz, T obj);
 
     /**
      *
+     * @param <T>
+     *            The type of the object to register.
+     * @param obj
+     *            An {@link Object} of the given {@link Class}, if one of the
+     *            methods to register is non-static.
+     * @return A set of registered command informations.
      * @deprecated Use
      *             {@link PluginCommandManager#register(Plugin, Class, Object)}
      *             instead.
-     * @see com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager#register(com.blockhaus2000.ipm.technical.plugin.Plugin,
+     * @see com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager#
+     *      register(com.blockhaus2000.ipm.technical.plugin.Plugin,
      *      java.lang.Object)
      */
     @Deprecated
     @Override
-    public <T> Set<CommandInfo> register(T obj);
+    <T> Set<CommandInfo> register(T obj);
 
     /**
      *
+     * @param <T>
+     *            The type of the object to register.
+     * @param clazz
+     *            The {@link Class} containing all commands.
+     * @return A set of registered command informations.
      * @deprecated Use
      *             {@link PluginCommandManager#register(Plugin, Class, Object)}
      *             instead.
-     * @see com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager#register(com.blockhaus2000.ipm.technical.plugin.Plugin,
+     * @see com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager#
+     *      register(com.blockhaus2000.ipm.technical.plugin.Plugin,
      *      java.lang.Class)
      */
     @Deprecated
     @Override
-    public <T> Set<CommandInfo> register(Class<T> clazz);
+    <T> Set<CommandInfo> register(Class<T> clazz);
 }

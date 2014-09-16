@@ -110,6 +110,14 @@ public class SimpleCommandManager implements CommandManager {
     private final Map<String, List<CommandInfo>> commands = new HashMap<String, List<CommandInfo>>();
 
     /**
+     * Constructor of SimpleCommandManager.
+     *
+     */
+    public SimpleCommandManager() {
+        // Nothing to do.
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @see com.blockhaus2000.ipm.technical.command.CommandManager#register(java.lang.Class,
