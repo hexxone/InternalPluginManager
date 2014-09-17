@@ -15,38 +15,36 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.bukkit;
+package com.blockhaus2000.ipm.minecraft.canary;
 
-import java.io.File;
-
-import org.bukkit.plugin.java.JavaPlugin;
-
-import com.blockhaus2000.ipm.base.injection.InjectionManager;
 import com.blockhaus2000.ipm.minecraft.Server;
-import com.blockhaus2000.ipm.technical.plugin.PluginManager;
+import com.blockhaus2000.ipm.minecraft.canary.command.CanaryCommandManager;
+import com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager;
 
 /**
- * The main class of the Bukkit implementation of the InternalPluginManager
- * Minecraft API.
+ * The implementation of {@link Server} for Canary.
  *
  */
-public class Main extends JavaPlugin {
+public class BukkitServer implements Server {
+    private final PluginCommandManager commandManager = new CanaryCommandManager();
+
     /**
-     * Constructor of Main.
+     * {@inheritDoc}
      *
+     * @see com.blockhaus2000.ipm.minecraft.Server#getCommandManager()
      */
-    public Main() {
-        // Nothing to do.
+    @Override
+    public PluginCommandManager getCommandManager() {
+        return this.commandManager;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @see org.bukkit.plugin.java.JavaPlugin#onEnable()
+     * @see com.blockhaus2000.ipm.minecraft.Server#println(java.lang.Object)
      */
     @Override
-    public void onEnable() {
-        InjectionManager.addResource(BukkitServer.getInstance(), Server.class);
-        PluginManager.getInstance().start(new File(super.getDataFolder(), "plugins"));
+    public void println(final Object obj) {
+        System.out.println("[CANARY] " + obj.toString());
     }
 }

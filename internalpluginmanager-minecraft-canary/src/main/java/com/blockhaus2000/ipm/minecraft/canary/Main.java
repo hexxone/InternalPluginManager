@@ -15,38 +15,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.bukkit;
+package com.blockhaus2000.ipm.minecraft.canary;
 
-import java.io.File;
-
-import org.bukkit.plugin.java.JavaPlugin;
-
-import com.blockhaus2000.ipm.base.injection.InjectionManager;
-import com.blockhaus2000.ipm.minecraft.Server;
-import com.blockhaus2000.ipm.technical.plugin.PluginManager;
+import net.canarymod.plugin.Plugin;
 
 /**
- * The main class of the Bukkit implementation of the InternalPluginManager
- * Minecraft API.
+ * TODO: Add type description!
  *
  */
-public class Main extends JavaPlugin {
+public class Main extends Plugin {
     /**
-     * Constructor of Main.
+     * {@inheritDoc}
      *
+     * @see net.canarymod.plugin.Plugin#enable()
      */
-    public Main() {
-        // Nothing to do.
+    @Override
+    public boolean enable() {
+        // TODO
+        return false;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @see org.bukkit.plugin.java.JavaPlugin#onEnable()
+     * @see net.canarymod.plugin.Plugin#disable()
      */
     @Override
-    public void onEnable() {
-        InjectionManager.addResource(BukkitServer.getInstance(), Server.class);
-        PluginManager.getInstance().start(new File(super.getDataFolder(), "plugins"));
+    public void disable() {
+        // Nothing to do.
     }
 }
