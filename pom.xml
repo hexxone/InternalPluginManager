@@ -153,10 +153,10 @@
 				<configuration>
 					<lowPriorityStrings>
 						<lowPriorityString>IDEA</lowPriorityString> <!-- //TODO-FINDER:IGNORE -->
-					</lowPriorityStrings> 
+					</lowPriorityStrings>
 					<normalPriorityStrings>
 						<normalPriorityString>TODO</normalPriorityString> <!-- //TODO-FINDER:IGNORE -->
-					</normalPriorityStrings> 
+					</normalPriorityStrings>
 					<highPriorityStrings>
 						<highPriorityString>FIXME</highPriorityString> <!-- //TODO-FINDER:IGNORE -->
 					</highPriorityStrings>
