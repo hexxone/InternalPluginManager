@@ -156,7 +156,7 @@
 					</lowPriorityStrings> 
 					<normalPriorityStrings>
 						<normalPriorityString>TODO</normalPriorityString> <!-- //TODO-FINDER:IGNORE -->
-					</normalPriorityStrings>
+					</normalPriorityStrings> 
 					<highPriorityStrings>
 						<highPriorityString>FIXME</highPriorityString> <!-- //TODO-FINDER:IGNORE -->
 					</highPriorityStrings>
