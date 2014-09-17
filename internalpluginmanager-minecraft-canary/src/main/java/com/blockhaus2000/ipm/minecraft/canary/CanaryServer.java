@@ -19,14 +19,33 @@ package com.blockhaus2000.ipm.minecraft.canary;
 
 import com.blockhaus2000.ipm.minecraft.Server;
 import com.blockhaus2000.ipm.minecraft.canary.command.CanaryCommandManager;
+import com.blockhaus2000.ipm.technical.command.CommandManager;
 import com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager;
 
 /**
- * The implementation of {@link Server} for Canary.
+ * The implementation of {@link Server} for Bukkit.
  *
  */
-public class BukkitServer implements Server {
+public final class CanaryServer implements Server {
+    /**
+     * THE instance of the {@link CanaryServer}.
+     *
+     */
+    private static final Server INSTANCE = new CanaryServer();
+
+    /**
+     * The {@link CommandManager} for this {@link Server}.
+     *
+     */
     private final PluginCommandManager commandManager = new CanaryCommandManager();
+
+    /**
+     * Constructor of BukkitServer.
+     *
+     */
+    private CanaryServer() {
+        // Nothing to do (only to provide singleton).
+    }
 
     /**
      * {@inheritDoc}
@@ -46,5 +65,13 @@ public class BukkitServer implements Server {
     @Override
     public void println(final Object obj) {
         System.out.println("[CANARY] " + obj.toString());
+    }
+
+    /**
+     *
+     * @return {@link CanaryServer#INSTANCE}
+     */
+    public static Server getInstance() {
+        return CanaryServer.INSTANCE;
     }
 }

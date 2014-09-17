@@ -47,6 +47,6 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         InjectionManager.addResource(BukkitServer.getInstance(), Server.class);
-        PluginManager.getInstance().start(new File(super.getDataFolder(), "plugins"));
+        PluginManager.getInstance().start(new File(this.getDataFolder(), "plugins"));
     }
 }
