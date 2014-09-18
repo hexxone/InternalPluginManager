@@ -39,7 +39,7 @@
 
 		<!-- Fix encoding warnings -->
 		<project.build.sourceEncoding>${project.properties.encoding}</project.build.sourceEncoding>
-	</properties> 
+	</properties>
 
 
 	<!-- ===== Project Information ===== -->
