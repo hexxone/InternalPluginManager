@@ -13,7 +13,7 @@
 		<module>internalpluginmanager-command-api</module>
 		<module>internalpluginmanager-configuration-api</module>
 		<module>internalpluginmanager-plugin-api</module>
-		<module>internalpluginmanager-api</module>
+		<module>internalpluginmanager-api</module> 
 
 		<!-- This must be built before all other minecraf stuff. It is safest to 
 			build it here. -->
