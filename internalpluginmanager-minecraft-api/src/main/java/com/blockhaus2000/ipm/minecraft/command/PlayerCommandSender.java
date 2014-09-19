@@ -15,20 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft;
+package com.blockhaus2000.ipm.minecraft.command;
 
-import com.blockhaus2000.ipm.base.injection.Inject;
-import com.blockhaus2000.ipm.base.injection.InjectionManager;
-
-public class InternalPluginManager {
-    @Inject
-    private static Server server;
-
-    static {
-        InjectionManager.init(InternalPluginManager.class);
-    }
-
-    public static Server getServer() {
-        return InternalPluginManager.server;
-    }
+public interface PlayerCommandSender extends CommandSender {
 }

@@ -15,37 +15,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.bukkit;
+package com.blockhaus2000.ipm.minecraft.bukkit.command;
 
-import java.io.File;
-
-import org.bukkit.plugin.java.JavaPlugin;
-
-import com.blockhaus2000.ipm.technical.plugin.PluginManager;
+import com.blockhaus2000.ipm.minecraft.command.CommandSenderType;
+import com.blockhaus2000.ipm.minecraft.command.PlayerCommandSender;
 
 /**
- * The main class of the Bukkit implementation of the InternalPluginManager
- * Minecraft API.
+ * The implementation of {@link PlayerCommandSender} for Bukkit.
  *
  */
-public class Main extends JavaPlugin {
-    /**
-     * Constructor of Main.
-     *
-     */
-    public Main() {
-        // Nothing to do.
-    }
-
+public abstract class BukkitPlayerCommandSender implements PlayerCommandSender {
     /**
      * {@inheritDoc}
      *
-     * @see org.bukkit.plugin.java.JavaPlugin#onEnable()
+     * @see com.blockhaus2000.ipm.minecraft.command.CommandSender#getType()
      */
     @Override
-    public void onEnable() {
-        // InjectionManager.addResource(BukkitServer.getInstance(),
-        // Server.class);
-        PluginManager.getInstance().start(new File(this.getDataFolder(), "plugins"));
+    public CommandSenderType getType() {
+        return CommandSenderType.PLAYER;
     }
 }

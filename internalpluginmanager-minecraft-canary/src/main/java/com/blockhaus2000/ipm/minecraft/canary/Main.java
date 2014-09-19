@@ -21,8 +21,6 @@ import java.io.File;
 
 import net.canarymod.plugin.Plugin;
 
-import com.blockhaus2000.ipm.base.injection.InjectionManager;
-import com.blockhaus2000.ipm.minecraft.Server;
 import com.blockhaus2000.ipm.technical.plugin.PluginManager;
 
 /**
@@ -37,7 +35,8 @@ public class Main extends Plugin {
      */
     @Override
     public boolean enable() {
-        InjectionManager.addResource(CanaryServer.getInstance(), Server.class);
+        // InjectionManager.addResource(CanaryServer.getInstance(),
+        // Server.class);
         PluginManager.getInstance().start(new File("plugins" + File.separator + this.getName(), "plugins"));
 
         return true;

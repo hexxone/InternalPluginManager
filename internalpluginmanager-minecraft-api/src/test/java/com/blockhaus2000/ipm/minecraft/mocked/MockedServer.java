@@ -15,41 +15,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.bukkit;
+package com.blockhaus2000.ipm.minecraft.mocked;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-import org.bukkit.Bukkit;
-
 import com.blockhaus2000.ipm.minecraft.Server;
-import com.blockhaus2000.ipm.minecraft.bukkit.command.BukkitCommandManager;
-import com.blockhaus2000.ipm.minecraft.bukkit.entity.BukkitPlayer.BukkitPlayerFactory;
 import com.blockhaus2000.ipm.minecraft.bukkit.entity.Player;
 import com.blockhaus2000.ipm.minecraft.event.EventManager;
-import com.blockhaus2000.ipm.minecraft.event.SimpleEventManager;
 import com.blockhaus2000.ipm.technical.plugin.PluginManager;
 import com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager;
 
 /**
- * The implementation of {@link Server} for Bukkit.
+ * A mock implementation of {@link Server}.
  *
  */
-public class BukkitServer implements Server {
-    /**
-     * THE instance of the {@link BukkitServer}.
-     *
-     */
-    private static final Server INSTANCE = new BukkitServer();
-
-    private final PluginCommandManager commandManager = new BukkitCommandManager();
-    private final EventManager eventManager = new SimpleEventManager();
-    private final PluginManager pluginManager = PluginManager.getInstance();
-    private final Logger logger = Logger.getLogger(this.getClass().getPackage().getName() + ".LOGGER@"
-            + System.currentTimeMillis());
-
+public class MockedServer implements Server {
     /**
      * {@inheritDoc}
      *
@@ -57,7 +39,7 @@ public class BukkitServer implements Server {
      */
     @Override
     public PluginCommandManager getCommandManager() {
-        return this.commandManager;
+        return null;
     }
 
     /**
@@ -67,7 +49,7 @@ public class BukkitServer implements Server {
      */
     @Override
     public EventManager getEventManager() {
-        return this.eventManager;
+        return null;
     }
 
     /**
@@ -77,7 +59,7 @@ public class BukkitServer implements Server {
      */
     @Override
     public PluginManager getPluginManager() {
-        return this.pluginManager;
+        return null;
     }
 
     /**
@@ -87,7 +69,7 @@ public class BukkitServer implements Server {
      */
     @Override
     public Logger getLogger() {
-        return this.logger;
+        return Logger.getLogger(this.getClass().getName() + "_LOGGER");
     }
 
     /**
@@ -98,11 +80,6 @@ public class BukkitServer implements Server {
     @Deprecated
     @Override
     public Player getPlayer(final String name) {
-        for (final Player player : this.getOnlinePlayers()) {
-            if (player.getName().equalsIgnoreCase(name)) {
-                return player;
-            }
-        }
         return null;
     }
 
@@ -113,11 +90,6 @@ public class BukkitServer implements Server {
      */
     @Override
     public Player getPlayer(final UUID uuid) {
-        for (final Player player : this.getOnlinePlayers()) {
-            if (player.getUniqueId().equals(uuid)) {
-                return player;
-            }
-        }
         return null;
     }
 
@@ -128,18 +100,6 @@ public class BukkitServer implements Server {
      */
     @Override
     public Set<Player> getOnlinePlayers() {
-        final Set<Player> players = new HashSet<Player>();
-        for (final org.bukkit.entity.Player player : Bukkit.getServer().getOnlinePlayers()) {
-            players.add(BukkitPlayerFactory.getBukkitPlayer(player));
-        }
-        return players;
-    }
-
-    /**
-     *
-     * @return {@link BukkitServer#INSTANCE}
-     */
-    public static Server getInstance() {
-        return BukkitServer.INSTANCE;
+        return null;
     }
 }

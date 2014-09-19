@@ -15,20 +15,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft;
+package com.blockhaus2000.ipm.minecraft.event;
 
-import com.blockhaus2000.ipm.base.injection.Inject;
-import com.blockhaus2000.ipm.base.injection.InjectionManager;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public class InternalPluginManager {
-    @Inject
-    private static Server server;
-
-    static {
-        InjectionManager.init(InternalPluginManager.class);
-    }
-
-    public static Server getServer() {
-        return InternalPluginManager.server;
-    }
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface EventListener {
+    Class<? extends Event> value();
 }

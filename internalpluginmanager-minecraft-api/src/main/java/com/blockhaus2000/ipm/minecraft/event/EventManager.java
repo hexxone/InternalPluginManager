@@ -15,20 +15,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft;
+package com.blockhaus2000.ipm.minecraft.event;
 
-import com.blockhaus2000.ipm.base.injection.Inject;
-import com.blockhaus2000.ipm.base.injection.InjectionManager;
+public interface EventManager {
+    <T> void register(final Class<T> clazz, final T obj);
 
-public class InternalPluginManager {
-    @Inject
-    private static Server server;
+    <T> void register(final Class<T> clazz);
 
-    static {
-        InjectionManager.init(InternalPluginManager.class);
-    }
+    <T> void register(final T obj);
 
-    public static Server getServer() {
-        return InternalPluginManager.server;
-    }
+    void fire(final Event event);
 }

@@ -17,28 +17,70 @@
  */
 package com.blockhaus2000.ipm.minecraft;
 
-import com.blockhaus2000.ipm.technical.command.CommandManager;
+import java.util.Set;
+import java.util.UUID;
+import java.util.logging.Logger;
+
+import com.blockhaus2000.ipm.minecraft.bukkit.entity.Player;
+import com.blockhaus2000.ipm.minecraft.event.EventManager;
+import com.blockhaus2000.ipm.technical.plugin.PluginManager;
 import com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager;
 
-/**
- * The {@link Server} is the main class/interface to interact with the server
- * (more specific, with the underlying server software implementation).
- *
- */
 public interface Server {
+    // Technical actions.
     /**
      *
-     * @return The {@link CommandManager} where to register the commands. This
-     *         is a {@link PluginCommandManager}.
+     * @return The command manager that manages the commands for this server.
      */
     PluginCommandManager getCommandManager();
 
     /**
-     * Just for testing.
      *
-     * @param obj
-     *            The {@link Object} to print.
+     * @return The event manager that manages the events for this sever.
      */
-    // Just for testing reasons.
-    void println(final Object obj);
+    EventManager getEventManager();
+
+    /**
+     *
+     * @return The plugin manager that manages the plugins for this server.
+     */
+    PluginManager getPluginManager();
+
+    /**
+     *
+     * @return The logger that should be used for logging for this server.
+     */
+    Logger getLogger();
+
+    // Player actions.
+    /**
+     * Searchs for the player that currently has the given name.
+     *
+     * @deprecated Since Minecraft 1.8, it is possible to change names. So, use
+     *             {@link Server#getPlayer(UUID)} instead if it is possible. Do
+     *             only use this this if you only use the name temporarily
+     *             (whilest a command execution, for example). Do NOT store
+     *             player data associated with their names in a database.
+     * @param name
+     *            The player name to search for. The name si case-insensitive.
+     * @return The player, if found. <code>null</code> otherwise.
+     */
+    @Deprecated
+    Player getPlayer(final String name);
+
+    /**
+     * Search for the player with the given UUID.
+     *
+     * @param uuid
+     *            The UUID to search for.
+     * @return The player, if found. <code>null</code> otherwise.
+     */
+    Player getPlayer(final UUID uuid);
+
+    /**
+     *
+     * @return All players that are online. If no player is online, an empty
+     *         set.
+     */
+    Set<Player> getOnlinePlayers();
 }

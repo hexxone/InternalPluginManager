@@ -15,37 +15,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.bukkit;
+package com.blockhaus2000.ipm.minecraft.event;
 
-import java.io.File;
+public class EventException extends RuntimeException {
+    private static final long serialVersionUID = -4134588475064755920L;
 
-import org.bukkit.plugin.java.JavaPlugin;
-
-import com.blockhaus2000.ipm.technical.plugin.PluginManager;
-
-/**
- * The main class of the Bukkit implementation of the InternalPluginManager
- * Minecraft API.
- *
- */
-public class Main extends JavaPlugin {
-    /**
-     * Constructor of Main.
-     *
-     */
-    public Main() {
-        // Nothing to do.
+    public EventException() {
+        super();
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @see org.bukkit.plugin.java.JavaPlugin#onEnable()
-     */
-    @Override
-    public void onEnable() {
-        // InjectionManager.addResource(BukkitServer.getInstance(),
-        // Server.class);
-        PluginManager.getInstance().start(new File(this.getDataFolder(), "plugins"));
+    public EventException(final String message, final Throwable cause) {
+        super(message, cause);
+    }
+
+    public EventException(final String message) {
+        super(message);
+    }
+
+    public EventException(final Throwable cause) {
+        super(cause);
     }
 }
