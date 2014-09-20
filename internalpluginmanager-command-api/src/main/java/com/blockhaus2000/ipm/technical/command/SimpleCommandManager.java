@@ -219,7 +219,7 @@ public class SimpleCommandManager implements CommandManager {
             }
             for (final Iterator<CommandInfo> iterator = commandInfos.iterator(); iterator.hasNext();) {
                 final CommandInfo commandInfo = iterator.next();
-                if (commandInfo.getMethod().getDeclaringClass().equals(clazz)) {
+                if (commandInfo.getMethod().getDeclaringClass().getName().equals(clazz.getName())) {
                     iterator.remove();
                     unregistered.add(commandInfo);
                 }

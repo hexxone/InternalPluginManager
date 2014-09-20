@@ -136,7 +136,7 @@ public class SimplePluginCommandManager extends SimpleCommandManager implements 
 
             // Unregister all classes associated with that plugin name.
             for (final Class<?> clazz : this.classes.get(pluginName)) {
-                super.unregister(clazz);
+                this.unregister(clazz);
             }
 
             // Remove all classes for that plugin name.

@@ -70,10 +70,10 @@ public class CanaryCommandManager extends SimplePluginCommandManager {
             commandsField = CommandManager.class.getDeclaredField("commands");
         } catch (final SecurityException ex) {
             InternalPluginManager.getServer().getLogger()
-            .log(Level.SEVERE, "An error occurred whilest retrieving commands from Canary command manager.", ex);
+                    .log(Level.SEVERE, "An error occurred whilest retrieving commands from Canary command manager.", ex);
         } catch (final NoSuchFieldException ex) {
             InternalPluginManager.getServer().getLogger()
-            .log(Level.SEVERE, "An error occurred whilest retrieving commands from Canary command manager.", ex);
+                    .log(Level.SEVERE, "An error occurred whilest retrieving commands from Canary command manager.", ex);
         }
 
         final boolean commandsFieldAccessible = commandsField.isAccessible();
@@ -84,10 +84,10 @@ public class CanaryCommandManager extends SimplePluginCommandManager {
             canaryCommands = (Map<String, CanaryCommand>) commandsField.get(Canary.commands());
         } catch (final IllegalArgumentException ex) {
             InternalPluginManager.getServer().getLogger()
-            .log(Level.SEVERE, "An error occurred whilest retrieving commands from Canary command manager.", ex);
+                    .log(Level.SEVERE, "An error occurred whilest retrieving commands from Canary command manager.", ex);
         } catch (final IllegalAccessException ex) {
             InternalPluginManager.getServer().getLogger()
-            .log(Level.SEVERE, "An error occurred whilest retrieving commands from Canary command manager.", ex);
+                    .log(Level.SEVERE, "An error occurred whilest retrieving commands from Canary command manager.", ex);
         }
         for (final DynamicCommand dynamicCommand : commands) {
             canaryCommands.put(dynamicCommand.getAlias(), dynamicCommand);

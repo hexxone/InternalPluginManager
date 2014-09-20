@@ -20,6 +20,7 @@ package com.blockhaus2000.ipm.minecraft.canary.command;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
 
+import net.canarymod.Canary;
 import net.canarymod.api.CommandBlockLogic;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
@@ -32,7 +33,7 @@ public class DynamicCommand extends CanaryCommand {
     private final String alias;
 
     public DynamicCommand(final String alias) {
-        super(DummyCommandAnnotation.get(), null, null);
+        super(DummyCommandAnnotation.get(), Canary.getServer(), null);
 
         this.alias = alias;
     }
@@ -70,9 +71,9 @@ public class DynamicCommand extends CanaryCommand {
          */
         // The annotation is returned from the method itself.
         @net.canarymod.commandsys.Command(aliases = { "" },
-                description = "",
-                permissions = { "" },
-                toolTip = "")
+                                          description = "",
+                                          permissions = { "" },
+                                          toolTip = "")
         private static net.canarymod.commandsys.Command get() {
             if (DummyCommandAnnotation.commandAnot == null) {
                 synchronized (DummyCommandAnnotation.LOCK) {
@@ -82,10 +83,10 @@ public class DynamicCommand extends CanaryCommand {
                             method = DummyCommandAnnotation.class.getDeclaredMethod("get");
                         } catch (final SecurityException ex) {
                             InternalPluginManager.getServer().getLogger()
-                                    .log(Level.SEVERE, "An error occurred whilest getting the dummy command annotation!", ex);
+                            .log(Level.SEVERE, "An error occurred whilest getting the dummy command annotation!", ex);
                         } catch (final NoSuchMethodException ex) {
                             InternalPluginManager.getServer().getLogger()
-                                    .log(Level.SEVERE, "An error occurred whilest getting the dummy command annotation!", ex);
+                            .log(Level.SEVERE, "An error occurred whilest getting the dummy command annotation!", ex);
                         }
                         method.setAccessible(true);
                         DummyCommandAnnotation.commandAnot = method.getAnnotation(net.canarymod.commandsys.Command.class);

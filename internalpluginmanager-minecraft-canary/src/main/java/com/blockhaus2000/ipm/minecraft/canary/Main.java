@@ -24,7 +24,8 @@ import net.canarymod.plugin.Plugin;
 import com.blockhaus2000.ipm.technical.plugin.PluginManager;
 
 /**
- * TODO: Add type description!
+ * The main class of the Canary implementation of the InternalPluginManager
+ * Minecraft API.
  *
  */
 public class Main extends Plugin {
@@ -35,8 +36,8 @@ public class Main extends Plugin {
      */
     @Override
     public boolean enable() {
-        // InjectionManager.addResource(CanaryServer.getInstance(),
-        // Server.class);
+        this.addInjectionResources();
+
         PluginManager.getInstance().start(new File("plugins" + File.separator + this.getName(), "plugins"));
 
         return true;
@@ -50,5 +51,14 @@ public class Main extends Plugin {
     @Override
     public void disable() {
         // Nothing to do.
+    }
+
+    /**
+     * Adds all injectable resources to the injection manager.
+     *
+     */
+    private void addInjectionResources() {
+        // For safety reasons, CanaryServer registers itself.
+        CanaryServer.getInstance();
     }
 }
