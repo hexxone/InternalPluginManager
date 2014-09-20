@@ -19,10 +19,13 @@
 			build it here. -->
 		<module>internalpluginmanager-minecraft-api</module>
 
-		<!-- This can be re-ordered -->
+		<!-- This can be re-ordered. -->
 		<module>internalpluginmanager-standalone</module>
 		<module>internalpluginmanager-minecraft-bukkit</module>
 		<module>internalpluginmanager-minecraft-canary</module>
+		
+		<!-- This must be executed at last. -->
+		<module>internalpluginmanager-distribution</module>
 	</modules>
 
 	<!-- Some important project properties -->
