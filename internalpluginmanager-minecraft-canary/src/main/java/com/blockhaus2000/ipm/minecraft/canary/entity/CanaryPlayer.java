@@ -135,6 +135,7 @@ public class CanaryPlayer extends CanaryPlayerCommandSender implements Player {
             CanaryPlayer result = CanaryPlayerFactory.PLAYER_POOL.get(uuid);
             if (result == null) {
                 result = new CanaryPlayer(Canary.getServer().getPlayerFromUUID(uuid));
+                CanaryPlayerFactory.PLAYER_POOL.put(uuid, result);
             }
             return result;
         }
