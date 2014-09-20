@@ -26,16 +26,10 @@ import org.bukkit.entity.Player;
 
 import com.blockhaus2000.ipm.minecraft.InternalPluginManager;
 import com.blockhaus2000.ipm.technical.command.util.CommandInfo;
-import com.blockhaus2000.ipm.technical.command.util.exception.CommandException;
 
 public class DynamicCommand extends Command {
     public DynamicCommand(final CommandInfo commandInfo, final com.blockhaus2000.ipm.technical.command.Command commandAnot) {
         super(commandAnot.aliases()[0], "", "/" + commandAnot.aliases()[0], Arrays.asList(commandAnot.aliases()));
-
-        final String permission = commandAnot.permission();
-        if (permission != null && !permission.isEmpty()) {
-            this.setPermission(permission);
-        }
     }
 
     public DynamicCommand(final CommandInfo commandInfo) {
@@ -52,13 +46,11 @@ public class DynamicCommand extends Command {
     public boolean execute(final CommandSender sender, final String label, final String[] args) {
         final com.blockhaus2000.ipm.technical.command.CommandSender commandSender;
         if (sender instanceof Player) {
-            commandSender = null; // TODO
+            commandSender = InternalPluginManager.getServer().getPlayer(((Player) sender).getUniqueId());
         } else if (sender instanceof BlockCommandSender) {
             commandSender = new BukkitBlockCommandSender();
-        } else if (sender instanceof BukkitConsoleCommandSender) {
-            commandSender = new BukkitConsoleCommandSender();
         } else {
-            throw new CommandException("Unknown command sender \"" + sender + "\"!");
+            commandSender = new BukkitConsoleCommandSender();
         }
 
         return InternalPluginManager.getServer().getCommandManager().execute(label, commandSender, args);

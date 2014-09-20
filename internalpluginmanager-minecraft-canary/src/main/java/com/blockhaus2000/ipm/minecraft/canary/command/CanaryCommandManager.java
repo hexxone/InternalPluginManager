@@ -17,6 +17,19 @@
  */
 package com.blockhaus2000.ipm.minecraft.canary.command;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Level;
+
+import net.canarymod.Canary;
+import net.canarymod.commandsys.CanaryCommand;
+import net.canarymod.commandsys.CommandManager;
+
+import com.blockhaus2000.ipm.minecraft.InternalPluginManager;
+import com.blockhaus2000.ipm.technical.command.util.CommandInfo;
 import com.blockhaus2000.ipm.technical.plugin.command.SimplePluginCommandManager;
 
 /**
@@ -24,7 +37,6 @@ import com.blockhaus2000.ipm.technical.plugin.command.SimplePluginCommandManager
  * hack into the command system of Canary.
  *
  */
-// TODO: Add injection into Canary.
 public class CanaryCommandManager extends SimplePluginCommandManager {
     /**
      * Constructor of BukkitCommandManager.
@@ -32,5 +44,57 @@ public class CanaryCommandManager extends SimplePluginCommandManager {
      */
     public CanaryCommandManager() {
         // Nothing to do.
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.technical.command.SimpleCommandManager#register(java.lang.Class,
+     *      java.lang.Object)
+     */
+    // Cast to "Map<String, CanaryCommand>".
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> Set<CommandInfo> register(final Class<T> clazz, final T obj) {
+        final Set<CommandInfo> registered = super.register(clazz, obj);
+
+        final List<DynamicCommand> commands = new ArrayList<DynamicCommand>();
+        for (final CommandInfo commandInfo : registered) {
+            for (final String alias : commandInfo.getCommandAnot().aliases()) {
+                commands.add(new DynamicCommand(alias));
+            }
+        }
+
+        Field commandsField = null;
+        try {
+            commandsField = CommandManager.class.getDeclaredField("commands");
+        } catch (final SecurityException ex) {
+            InternalPluginManager.getServer().getLogger()
+            .log(Level.SEVERE, "An error occurred whilest retrieving commands from Canary command manager.", ex);
+        } catch (final NoSuchFieldException ex) {
+            InternalPluginManager.getServer().getLogger()
+            .log(Level.SEVERE, "An error occurred whilest retrieving commands from Canary command manager.", ex);
+        }
+
+        final boolean commandsFieldAccessible = commandsField.isAccessible();
+        commandsField.setAccessible(true);
+
+        Map<String, CanaryCommand> canaryCommands = null;
+        try {
+            canaryCommands = (Map<String, CanaryCommand>) commandsField.get(Canary.commands());
+        } catch (final IllegalArgumentException ex) {
+            InternalPluginManager.getServer().getLogger()
+            .log(Level.SEVERE, "An error occurred whilest retrieving commands from Canary command manager.", ex);
+        } catch (final IllegalAccessException ex) {
+            InternalPluginManager.getServer().getLogger()
+            .log(Level.SEVERE, "An error occurred whilest retrieving commands from Canary command manager.", ex);
+        }
+        for (final DynamicCommand dynamicCommand : commands) {
+            canaryCommands.put(dynamicCommand.getAlias(), dynamicCommand);
+        }
+
+        commandsField.setAccessible(commandsFieldAccessible);
+
+        return registered;
     }
 }

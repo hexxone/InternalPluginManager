@@ -34,6 +34,10 @@ public @interface Command {
      * The aliases for the command. The command will be registered with all of
      * these alisaes, and you can execute with all of these.
      *
+     * <p>
+     * <b> NOTE: Maximal 25 aliases are allowed! </b>
+     * </p>
+     *
      */
     String[] aliases();
 

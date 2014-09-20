@@ -15,35 +15,35 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.bukkit;
+package com.blockhaus2000.ipm.minecraft.canary;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-import org.bukkit.Bukkit;
+import net.canarymod.Canary;
 
 import com.blockhaus2000.ipm.base.injection.InjectionManager;
 import com.blockhaus2000.ipm.minecraft.Server;
-import com.blockhaus2000.ipm.minecraft.bukkit.command.BukkitCommandManager;
-import com.blockhaus2000.ipm.minecraft.bukkit.entity.BukkitPlayer.BukkitPlayerFactory;
 import com.blockhaus2000.ipm.minecraft.bukkit.entity.Player;
+import com.blockhaus2000.ipm.minecraft.canary.command.CanaryCommandManager;
+import com.blockhaus2000.ipm.minecraft.canary.entity.CanaryPlayer;
 import com.blockhaus2000.ipm.minecraft.event.EventManager;
 import com.blockhaus2000.ipm.minecraft.event.SimpleEventManager;
 import com.blockhaus2000.ipm.technical.plugin.PluginManager;
 import com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager;
 
 /**
- * The implementation of {@link Server} for Bukkit.
+ * The implementation of {@link Server} for Canary.
  *
  */
-public class BukkitServer implements Server {
+public class CanaryServer implements Server {
     /**
-     * THE instance of the {@link BukkitServer}.
+     * THE instance of the {@link CanaryServer}.
      *
      */
-    private static final Server INSTANCE = new BukkitServer();
+    private static final Server INSTANCE = new CanaryServer();
 
     private final PluginCommandManager commandManager;
     private final EventManager eventManager;
@@ -58,10 +58,10 @@ public class BukkitServer implements Server {
      * </p>
      *
      */
-    private BukkitServer() {
+    private CanaryServer() {
         InjectionManager.addResource(this, Server.class);
 
-        this.commandManager = new BukkitCommandManager();
+        this.commandManager = new CanaryCommandManager();
         this.eventManager = new SimpleEventManager();
         this.pluginManager = PluginManager.getInstance();
         this.logger = Logger.getLogger(this.getClass().getPackage().getName() + ".LOGGER@" + System.currentTimeMillis());
@@ -146,17 +146,19 @@ public class BukkitServer implements Server {
     @Override
     public Set<Player> getOnlinePlayers() {
         final Set<Player> players = new HashSet<Player>();
-        for (final org.bukkit.entity.Player player : Bukkit.getServer().getOnlinePlayers()) {
-            players.add(BukkitPlayerFactory.getBukkitPlayer(player));
+
+        for (final net.canarymod.api.entity.living.humanoid.Player player : Canary.getServer().getPlayerList()) {
+            players.add(CanaryPlayer.CanaryPlayerFactory.getCanaryPlayer(player));
         }
+
         return players;
     }
 
     /**
      *
-     * @return {@link BukkitServer#INSTANCE}
+     * @return {@link CanaryServer#INSTANCE}
      */
     public static Server getInstance() {
-        return BukkitServer.INSTANCE;
+        return CanaryServer.INSTANCE;
     }
 }

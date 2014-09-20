@@ -15,46 +15,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.bukkit;
+package com.blockhaus2000.ipm.minecraft.canary.command;
 
-import java.io.File;
-
-import org.bukkit.plugin.java.JavaPlugin;
-
-import com.blockhaus2000.ipm.technical.plugin.PluginManager;
+import com.blockhaus2000.ipm.minecraft.command.CommandSenderType;
+import com.blockhaus2000.ipm.minecraft.command.ConsoleCommandSender;
 
 /**
- * The main class of the Bukkit implementation of the InternalPluginManager
- * Minecraft API.
+ * The implementation of {@link ConsoleCommandSender} for Canary.
  *
  */
-public class Main extends JavaPlugin {
+public class CanaryConsoleCommandSender implements ConsoleCommandSender {
     /**
-     * Constructor of Main.
+     * {@inheritDoc}
      *
+     * @see com.blockhaus2000.ipm.minecraft.command.CommandSender#getType()
      */
-    public Main() {
-        // Nothing to do.
+    @Override
+    public CommandSenderType getType() {
+        return CommandSenderType.CONSOLE;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @see org.bukkit.plugin.java.JavaPlugin#onEnable()
+     * @see com.blockhaus2000.ipm.technical.command.CommandSender#hasPermission(java.lang.String)
      */
     @Override
-    public void onEnable() {
-        this.addInjectionResources();
-
-        PluginManager.getInstance().start(new File(this.getDataFolder(), "plugins"));
-    }
-
-    /**
-     * Adds all injectable resources to the injection manager.
-     *
-     */
-    private void addInjectionResources() {
-        // For safety reasons, BukkitServer registers itself.
-        BukkitServer.getInstance();
+    public boolean hasPermission(final String permission) {
+        return true;
     }
 }

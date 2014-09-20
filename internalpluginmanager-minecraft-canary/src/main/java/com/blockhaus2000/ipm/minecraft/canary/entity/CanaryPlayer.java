@@ -15,34 +15,37 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.bukkit.entity;
+package com.blockhaus2000.ipm.minecraft.canary.entity;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import org.bukkit.Bukkit;
+import net.canarymod.Canary;
 
-import com.blockhaus2000.ipm.minecraft.bukkit.command.BukkitPlayerCommandSender;
+import com.blockhaus2000.ipm.minecraft.bukkit.entity.Player;
+import com.blockhaus2000.ipm.minecraft.canary.command.CanaryPlayerCommandSender;
 
 /**
- * The implementation of {@link Player} for Bukkit.
+ * The implementation of {@link Player} for Canary.
  *
  */
-public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
+public class CanaryPlayer extends CanaryPlayerCommandSender implements Player {
     /**
-     * The {@link org.bukkit.entity.Player} that is wrapped within this class.
+     * The {@link net.canarymod.api.entity.living.humanoid.Player} that is
+     * wrapped within this class.
      *
      */
-    private final org.bukkit.entity.Player player;
+    private final net.canarymod.api.entity.living.humanoid.Player player;
 
     /**
      * Constructor of BukkitPlayer.
      *
      * @param player
-     *            The {@link org.bukkit.entity.Player} to wrap.
+     *            The {@link net.canarymod.api.entity.living.humanoid.Player} to
+     *            wrap.
      */
-    private BukkitPlayer(final org.bukkit.entity.Player player) {
+    private CanaryPlayer(final net.canarymod.api.entity.living.humanoid.Player player) {
         this.player = player;
     }
 
@@ -62,7 +65,6 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
     /**
      * {@inheritDoc}
      *
-     * @deprecated See {@link Player#getName()}
      * @see com.blockhaus2000.ipm.minecraft.bukkit.entity.Player#getName()
      */
     @Deprecated
@@ -88,7 +90,7 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
      */
     @Override
     public UUID getUniqueId() {
-        return this.player.getUniqueId();
+        return this.player.getUUID();
     }
 
     /**
@@ -101,27 +103,27 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
         return this.player.isOnline();
     }
 
-    public static final class BukkitPlayerFactory {
-        private static final Map<UUID, BukkitPlayer> PLAYER_POOL = new HashMap<UUID, BukkitPlayer>();
+    public static final class CanaryPlayerFactory {
+        private static final Map<UUID, CanaryPlayer> PLAYER_POOL = new HashMap<UUID, CanaryPlayer>();
 
         /**
          * Constructor of BukkitPlayerFactory.
          *
          */
-        private BukkitPlayerFactory() {
+        private CanaryPlayerFactory() {
             // Utility classes should not have a visible constructor.
         }
 
-        public static BukkitPlayer getBukkitPlayer(final UUID uuid) {
-            BukkitPlayer result = BukkitPlayerFactory.PLAYER_POOL.get(uuid);
+        public static CanaryPlayer getCanaryPlayer(final UUID uuid) {
+            CanaryPlayer result = CanaryPlayerFactory.PLAYER_POOL.get(uuid);
             if (result == null) {
-                result = new BukkitPlayer(Bukkit.getServer().getPlayer(uuid));
+                result = new CanaryPlayer(Canary.getServer().getPlayerFromUUID(uuid));
             }
             return result;
         }
 
-        public static BukkitPlayer getBukkitPlayer(final org.bukkit.entity.Player player) {
-            return BukkitPlayerFactory.getBukkitPlayer(player.getUniqueId());
+        public static CanaryPlayer getCanaryPlayer(final net.canarymod.api.entity.living.humanoid.Player player) {
+            return CanaryPlayerFactory.getCanaryPlayer(player.getUUID());
         }
     }
 }

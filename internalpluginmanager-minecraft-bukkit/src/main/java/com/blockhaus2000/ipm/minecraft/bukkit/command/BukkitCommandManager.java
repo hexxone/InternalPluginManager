@@ -18,10 +18,12 @@
 package com.blockhaus2000.ipm.minecraft.bukkit.command;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.SimplePluginManager;
 
@@ -35,14 +37,7 @@ import com.blockhaus2000.ipm.technical.plugin.command.SimplePluginCommandManager
  * hack into the command system of Bukkit.
  *
  */
-// TODO: Add injection into Bukkit.
 public class BukkitCommandManager extends SimplePluginCommandManager {
-    /**
-     * The logger.
-     *
-     */
-    private static final Logger LOGGER = InternalPluginManager.getServer().getLogger();
-
     /**
      * Constructor of BukkitCommandManager.
      *
@@ -63,9 +58,11 @@ public class BukkitCommandManager extends SimplePluginCommandManager {
 
         final CommandMap commandMap = this.getCommandMap();
 
+        final List<Command> commands = new ArrayList<Command>();
         for (final CommandInfo commandInfo : registered) {
-            commandMap.register(InternalPluginManager.class.getName().toLowerCase(), new DynamicCommand(commandInfo));
+            commands.add(new DynamicCommand(commandInfo));
         }
+        commandMap.registerAll(InternalPluginManager.class.getName().toLowerCase(), commands);
 
         return registered;
     }

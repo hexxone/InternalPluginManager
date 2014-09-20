@@ -70,7 +70,7 @@ public class SimplePluginCommandManager extends SimpleCommandManager implements 
     public <T> Set<CommandInfo> register(final Plugin plugin, final Class<T> clazz, final T obj) {
         assert plugin != null : "Plugin cannot be null!";
 
-        final Set<CommandInfo> result = super.register(clazz, obj);
+        final Set<CommandInfo> result = this.register(clazz, obj);
 
         if (!result.isEmpty()) {
             // If nothing was registered, it is faster to NOT execute this and

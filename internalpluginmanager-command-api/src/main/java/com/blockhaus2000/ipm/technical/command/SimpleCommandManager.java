@@ -158,6 +158,11 @@ public class SimpleCommandManager implements CommandManager {
             SimpleCommandManager.LOGGER.fine("Parsing method \"" + method.getName() + "\" with annotation data \"" + commandAnot
                     + SimpleCommandManager.QUOTE_DOT);
 
+            if (commandAnot.aliases().length > 25) {
+                throw new CommandException("Method \"" + method.getName() + "\" with annotation data \"" + commandAnot
+                        + "\" has too many aliases! The maximum of aliases is 25!");
+            }
+
             final Map<Character, SyntaxType> flagData = this.parseFlagData(commandAnot);
             final List<SyntaxType> syntaxData = this.parseSyntaxData(commandAnot);
             final CommandInfo commandInfo = new SimpleCommandInfo(commandAnot, obj, method, flagData, syntaxData);
