@@ -22,6 +22,7 @@ import org.junit.Test;
 
 import com.blockhaus2000.ipm.base.injection.InjectionManager;
 import com.blockhaus2000.ipm.minecraft.Server;
+import com.blockhaus2000.ipm.minecraft.mocked.MockedPlugin;
 import com.blockhaus2000.ipm.minecraft.mocked.MockedServer;
 
 /**
@@ -47,7 +48,7 @@ public class SimpleEventManagerTest {
      */
     @Test
     public void test() {
-        SimpleEventManagerTest.EVENT_MANAGER.register(null, new SimpleEventManagerTestClass0());
+        SimpleEventManagerTest.EVENT_MANAGER.register(new MockedPlugin(), new SimpleEventManagerTestClass0());
 
         SimpleEventManagerTest.EVENT_MANAGER.fire(new SimpleEventManagerTestEvent0());
         Assert.assertTrue(SimpleEventManagerTestClass0.hasBeenCallen());

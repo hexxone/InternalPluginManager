@@ -107,7 +107,7 @@ public class SimpleEventManager implements EventManager {
      */
     @Override
     public <T> void register(final Plugin plugin, final Class<T> clazz) {
-        this.register(null, clazz, null);
+        this.register(plugin, clazz, null);
     }
 
     /**
@@ -121,7 +121,7 @@ public class SimpleEventManager implements EventManager {
     public <T> void register(final Plugin plugin, final T obj) {
         assert obj != null : "Obj cannot be null!";
 
-        this.register(null, (Class<T>) obj.getClass(), obj);
+        this.register(plugin, (Class<T>) obj.getClass(), obj);
     }
 
     /**
@@ -151,6 +151,11 @@ public class SimpleEventManager implements EventManager {
     private void internalFire(final AbstractEvent event) {
         final EventContext<AbstractEvent> context = new EventContext<AbstractEvent>(event);
         for (final EventHandler handler : event.getHandlers()) {
+            if (!handler.getPlugin().isEnabled()) {
+                // Skip listeners from plugins that are disabled.
+                continue;
+            }
+
             try {
                 handler.getListenerMethod().invoke(handler.getListenerObject(), context);
             } catch (final IllegalArgumentException ex) {
