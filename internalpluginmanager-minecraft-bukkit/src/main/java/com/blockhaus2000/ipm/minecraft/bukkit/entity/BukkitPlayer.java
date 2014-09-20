@@ -133,6 +133,7 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
             BukkitPlayer result = BukkitPlayerFactory.PLAYER_POOL.get(uuid);
             if (result == null) {
                 result = new BukkitPlayer(Bukkit.getServer().getPlayer(uuid));
+                BukkitPlayerFactory.PLAYER_POOL.put(uuid, result);
             }
             return result;
         }
