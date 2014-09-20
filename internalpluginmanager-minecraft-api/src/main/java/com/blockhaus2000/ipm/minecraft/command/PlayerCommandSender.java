@@ -17,5 +17,12 @@
  */
 package com.blockhaus2000.ipm.minecraft.command;
 
+/**
+ * The {@link PlayerCommandSender} represents a {@link CommandSender} that is a
+ * player. All commands executed from the chat are from players, command sender
+ * players.
+ *
+ */
 public interface PlayerCommandSender extends CommandSender {
+    // Nothing to do.
 }

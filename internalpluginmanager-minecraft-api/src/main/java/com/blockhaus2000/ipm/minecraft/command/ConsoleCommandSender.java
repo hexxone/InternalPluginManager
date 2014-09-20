@@ -17,5 +17,11 @@
  */
 package com.blockhaus2000.ipm.minecraft.command;
 
+/**
+ * The {@link ConsoleCommandSender} represents a {@link CommandSender} that is
+ * the console (the Minecraft console).
+ *
+ */
 public interface ConsoleCommandSender extends CommandSender {
+    // Nothing to do.
 }

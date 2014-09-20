@@ -25,6 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.blockhaus2000.ipm.minecraft.InternalPluginManager;
+import com.blockhaus2000.ipm.technical.plugin.Plugin;
 
 /**
  * An implementation of the {@link EventManager}.
@@ -38,13 +39,22 @@ public class SimpleEventManager implements EventManager {
     private static final Logger LOGGER = InternalPluginManager.getServer().getLogger();
 
     /**
+     * Constructor of SimpleEventManager.
+     *
+     */
+    public SimpleEventManager() {
+        // Nothing to do.
+    }
+
+    /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.minecraft.event.EventManager#register(java.lang.Class,
-     *      java.lang.Object)
+     * @see com.blockhaus2000.ipm.minecraft.event.EventManager#register(Plugin,
+     *      java.lang.Class, java.lang.Object)
      */
     @Override
-    public <T> void register(final Class<T> clazz, final T obj) {
+    public <T> void register(final Plugin plugin, final Class<T> clazz, final T obj) {
+        assert plugin != null : "Plugin cannot be null!";
         assert clazz != null : "Clazz cannot be null!";
 
         for (final Method method : clazz.getDeclaredMethods()) {
@@ -59,7 +69,7 @@ public class SimpleEventManager implements EventManager {
                     + "\" are wrong! The first (and only) argument should have the type \"" + EventContext.class.getName()
                     + "\"!";
 
-            final Class<? extends Event> eventClass = method.getAnnotation(EventListener.class).value();
+            final Class<? extends AbstractEvent> eventClass = method.getAnnotation(EventListener.class).value();
 
             final HandlerList handlers;
             try {
@@ -85,43 +95,45 @@ public class SimpleEventManager implements EventManager {
                         + "\"!", cause);
             }
 
-            handlers.add(new EventHandler(obj, method));
+            handlers.add(new EventHandler(plugin, obj, method));
         }
     }
 
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.minecraft.event.EventManager#register(java.lang.Class)
+     * @see com.blockhaus2000.ipm.minecraft.event.EventManager#register(Plugin,
+     *      java.lang.Class)
      */
     @Override
-    public <T> void register(final Class<T> clazz) {
-        this.register(clazz, null);
+    public <T> void register(final Plugin plugin, final Class<T> clazz) {
+        this.register(null, clazz, null);
     }
 
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.minecraft.event.EventManager#register(java.lang.Object)
+     * @see com.blockhaus2000.ipm.minecraft.event.EventManager#register(Plugin,
+     *      java.lang.Object)
      */
     @SuppressWarnings("unchecked")
     @Override
-    public <T> void register(final T obj) {
+    public <T> void register(final Plugin plugin, final T obj) {
         assert obj != null : "Obj cannot be null!";
 
-        this.register((Class<T>) obj.getClass(), obj);
+        this.register(null, (Class<T>) obj.getClass(), obj);
     }
 
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.minecraft.event.EventManager#fire(com.blockhaus2000.ipm.minecraft.event.Event)
+     * @see com.blockhaus2000.ipm.minecraft.event.EventManager#fire(com.blockhaus2000.ipm.minecraft.event.AbstractEvent)
      */
     @Override
-    public void fire(final Event event) {
+    public void fire(final AbstractEvent event) {
         assert event != null : "Event cannot be null!";
 
-        if (event instanceof AsynchEvent) {
+        if (event instanceof AbstractAsynchEvent) {
             this.internalFire(event);
         } else {
             synchronized (this) {
@@ -136,8 +148,8 @@ public class SimpleEventManager implements EventManager {
      * @param event
      *            The event to fire.
      */
-    private void internalFire(final Event event) {
-        final EventContext context = new SimpleEventContext(event);
+    private void internalFire(final AbstractEvent event) {
+        final EventContext<AbstractEvent> context = new EventContext<AbstractEvent>(event);
         for (final EventHandler handler : event.getHandlers()) {
             try {
                 handler.getListenerMethod().invoke(handler.getListenerObject(), context);
@@ -151,11 +163,10 @@ public class SimpleEventManager implements EventManager {
                 SimpleEventManager.LOGGER.log(Level.SEVERE, "An error occurred whilest fireing event \"" + event
                         + "\" for method \"" + handler.getListenerMethod().getName() + "\" in clas \""
                         + handler.getListenerMethod().getDeclaringClass().getName() + "\"!", ex);
-            } catch (final InvocationTargetException cause) {
-                throw new EventException("An error occurred in the event listener method \""
-                        + handler.getListenerMethod().getName() + "\" in class \""
-                        + handler.getListenerMethod().getDeclaringClass().getName() + "\" whilest fireing event \"" + event
-                        + "\"!", cause);
+            } catch (final InvocationTargetException ex) {
+                SimpleEventManager.LOGGER.log(Level.SEVERE, "An error occurred whilest fireing event \"" + event
+                        + "\" for method \"" + handler.getListenerMethod().getName() + "\" in clas \""
+                        + handler.getListenerMethod().getDeclaringClass().getName() + "\"!", ex);
             }
         }
     }

@@ -33,6 +33,14 @@ public class InternalPluginManager {
     private static final PluginCommandManager COMMAND_MANAGER = new SimplePluginCommandManager();
 
     /**
+     * Constructor of InternalPluginManager.
+     *
+     */
+    private InternalPluginManager() {
+        // Utility classes should not have a visible constructor.
+    }
+
+    /**
      *
      * @return {@link InternalPluginManager#COMMAND_MANAGER}
      */

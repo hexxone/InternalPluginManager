@@ -31,6 +31,7 @@ import com.blockhaus2000.ipm.minecraft.bukkit.entity.BukkitPlayer.BukkitPlayerFa
 import com.blockhaus2000.ipm.minecraft.bukkit.entity.Player;
 import com.blockhaus2000.ipm.minecraft.event.EventManager;
 import com.blockhaus2000.ipm.minecraft.event.SimpleEventManager;
+import com.blockhaus2000.ipm.technical.plugin.Plugin;
 import com.blockhaus2000.ipm.technical.plugin.PluginManager;
 import com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager;
 
@@ -45,9 +46,30 @@ public class BukkitServer implements Server {
      */
     private static final Server INSTANCE = new BukkitServer();
 
+    /**
+     * The command manager to use for this server.
+     *
+     */
     private final PluginCommandManager commandManager;
+    /**
+     * The evtn manager to use for this server.
+     *
+     */
     private final EventManager eventManager;
+    /**
+     * The plugin manager to use for this server.
+     *
+     */
     private final PluginManager pluginManager;
+    /**
+     * The logger to use for this server.
+     *
+     * <p>
+     * <b> NOTE: If you are within a plugin, use the plugin logger instead (
+     * {@link Plugin#getLogger()}). </b>
+     * </p>
+     *
+     */
     private final Logger logger;
 
     /**

@@ -22,8 +22,16 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Tag a method with this to indicate it as a listener.
+ *
+ */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EventListener {
-    Class<? extends Event> value();
+    /**
+     * The event (class) to listen on.
+     *
+     */
+    Class<? extends AbstractEvent> value();
 }

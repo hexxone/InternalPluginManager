@@ -47,24 +47,17 @@ public class SimpleEventManagerTest {
      */
     @Test
     public void test() {
-        SimpleEventManagerTest.EVENT_MANAGER.register(new SimpleEventManagerTestClass0());
-        Assert.assertTrue(this.testEventFireing(new SimpleEventManagerTestEvent0()));
+        SimpleEventManagerTest.EVENT_MANAGER.register(null, new SimpleEventManagerTestClass0());
+
+        SimpleEventManagerTest.EVENT_MANAGER.fire(new SimpleEventManagerTestEvent0());
+        Assert.assertTrue(SimpleEventManagerTestClass0.hasBeenCallen());
     }
 
-    private boolean testEventFireing(final Event event) {
-        try {
-            SimpleEventManagerTest.EVENT_MANAGER.fire(event);
-        } catch (final EventException ex) {
-            if (ex.getCause() == null || ex.getCause().getCause() == null
-                    || !ex.getCause().getCause().getClass().equals(TestSuccessfulException.class)) {
-                throw ex;
-            }
-            return true;
-        }
-        return false;
-    }
-
-    private static class SimpleEventManagerTestEvent0 extends Event {
+    /**
+     * The test event.
+     *
+     */
+    private static class SimpleEventManagerTestEvent0 extends AbstractEvent {
         /**
          * The event handlers.
          *
@@ -74,7 +67,7 @@ public class SimpleEventManagerTest {
         /**
          * {@inheritDoc}
          *
-         * @see com.blockhaus2000.ipm.minecraft.event.Event#getHandlers()
+         * @see com.blockhaus2000.ipm.minecraft.event.AbstractEvent#getHandlers()
          */
         @Override
         public HandlerList getHandlers() {
@@ -82,16 +75,43 @@ public class SimpleEventManagerTest {
         }
     }
 
+    /**
+     * The class that contains the main test information.
+     *
+     */
     private static class SimpleEventManagerTestClass0 {
+        /**
+         * The object that is assigned to the called-identifier by default. Used
+         * for test identity.
+         *
+         */
+        private static final Object defaultObject = new Object();
+        /**
+         * This object identifies whether a listener was called.
+         *
+         */
+        private static Object calledIdentifier = SimpleEventManagerTestClass0.defaultObject;
+
+        /**
+         * The listener for the test event {@link SimpleEventManagerTestEvent0}.
+         *
+         * @param context
+         *            The event context.
+         */
         @EventListener(SimpleEventManagerTestEvent0.class)
-        public void onSimpleEventManagerTestEvent0(final EventContext context) {
+        public void onSimpleEventManagerTestEvent0(final EventContext<SimpleEventManagerTestEvent0> context) {
             if (context.getEvent().getClass().equals(SimpleEventManagerTestEvent0.class)) {
-                throw new TestSuccessfulException();
+                SimpleEventManagerTestClass0.calledIdentifier = new Object();
             }
         }
-    }
 
-    private static class TestSuccessfulException extends RuntimeException {
-        private static final long serialVersionUID = -501917487315429530L;
+        /**
+         *
+         * @return Whether a listener was called or not. (<code>true</code>/
+         *         <code>false</code>).
+         */
+        private static boolean hasBeenCallen() {
+            return SimpleEventManagerTestClass0.defaultObject != SimpleEventManagerTestClass0.calledIdentifier;
+        }
     }
 }

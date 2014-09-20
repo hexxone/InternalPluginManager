@@ -17,6 +17,35 @@
  */
 package com.blockhaus2000.ipm.minecraft.event;
 
-public interface EventContext {
-    Event getEvent();
+/**
+ * An event context only contains an event and is used as the first and only
+ * argument of event listeners. This is jurt to simplify the event listening.
+ *
+ * @param <T>
+ *            The specific event.
+ */
+public class EventContext<T extends AbstractEvent> {
+    /**
+     * The stored event.
+     *
+     */
+    private final T event;
+
+    /**
+     * Constructor of EventContext.
+     *
+     * @param event
+     *            The event to store.
+     */
+    public EventContext(final T event) {
+        this.event = event;
+    }
+
+    /**
+     *
+     * @return The saved event.
+     */
+    public T getEvent() {
+        return this.event;
+    }
 }

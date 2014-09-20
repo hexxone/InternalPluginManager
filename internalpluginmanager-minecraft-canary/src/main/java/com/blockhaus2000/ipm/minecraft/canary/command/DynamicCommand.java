@@ -25,19 +25,41 @@ import net.canarymod.api.CommandBlockLogic;
 import net.canarymod.api.entity.living.humanoid.Player;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.commandsys.CanaryCommand;
+import net.canarymod.commandsys.Command;
 
 import com.blockhaus2000.ipm.minecraft.InternalPluginManager;
 import com.blockhaus2000.ipm.minecraft.command.CommandSender;
 
+/**
+ * The {@link DynamicCommand} is an extension of the Canary
+ * {@link CanaryCommand} to hack into the Canary command system.
+ *
+ */
 public class DynamicCommand extends CanaryCommand {
+    /**
+     * The alias/command of this command.
+     *
+     */
     private final String alias;
 
+    /**
+     * Constructs a new {@link DynamicCommand} for the given alias/command.
+     *
+     * @param alias
+     *            The alias of this command ("the command").
+     */
     public DynamicCommand(final String alias) {
         super(DummyCommandAnnotation.get(), Canary.getServer(), null);
 
         this.alias = alias;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @see net.canarymod.commandsys.CanaryCommand#execute(net.canarymod.chat.MessageReceiver,
+     *      java.lang.String[])
+     */
     @Override
     protected void execute(final MessageReceiver sender, final String[] args) {
         final CommandSender commandSender;
@@ -60,21 +82,34 @@ public class DynamicCommand extends CanaryCommand {
         return this.alias;
     }
 
+    /**
+     * The {@link DummyCommandAnnotation} is used to get a {@link Command}
+     * annotation to hack into the Canary command system.
+     *
+     */
     private static final class DummyCommandAnnotation {
+        /**
+         * The object to create locks on.
+         *
+         */
         private static final Object LOCK = new Object();
 
-        private static volatile net.canarymod.commandsys.Command commandAnot;
+        /**
+         * The {@link Command} annotation that is cached to speed up.
+         *
+         */
+        private static volatile Command commandAnot;
 
         /**
          *
          * @return The dummy command annotation.
          */
         // The annotation is returned from the method itself.
-        @net.canarymod.commandsys.Command(aliases = { "" },
-                                          description = "",
-                                          permissions = { "" },
-                                          toolTip = "")
-        private static net.canarymod.commandsys.Command get() {
+        @Command(aliases = { "" },
+                 description = "",
+                 permissions = { "" },
+                 toolTip = "")
+        private static Command get() {
             if (DummyCommandAnnotation.commandAnot == null) {
                 synchronized (DummyCommandAnnotation.LOCK) {
                     if (DummyCommandAnnotation.commandAnot == null) {

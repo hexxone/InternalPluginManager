@@ -26,6 +26,11 @@ import com.blockhaus2000.ipm.minecraft.event.EventManager;
 import com.blockhaus2000.ipm.technical.plugin.PluginManager;
 import com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager;
 
+/**
+ * The server (interface) is the main access point to the underlying
+ * implementation. It defines some technical methods.
+ *
+ */
 public interface Server {
     // Technical actions.
     /**

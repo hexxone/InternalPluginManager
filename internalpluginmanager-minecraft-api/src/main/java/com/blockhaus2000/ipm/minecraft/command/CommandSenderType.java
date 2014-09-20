@@ -17,8 +17,26 @@
  */
 package com.blockhaus2000.ipm.minecraft.command;
 
+/**
+ * The command sender type can be get by a Minecraft command sender (
+ * {@link CommandSender#getType()}) to easyly check if the command sender is
+ * correct.
+ *
+ */
 public enum CommandSenderType {
+    /**
+     * The {@link PlayerCommandSender}.
+     *
+     */
     PLAYER,
+    /**
+     * The {@link ConsoleCommandSender}.
+     *
+     */
     CONSOLE,
+    /**
+     * The {@link BlockCommandSender}.
+     *
+     */
     BLOCK;
 }

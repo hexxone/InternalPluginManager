@@ -101,7 +101,17 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
         return this.player.isOnline();
     }
 
+    /**
+     * This factory for players caches them and manages that not more than one
+     * instance for one player UUID exist.
+     *
+     */
     public static final class BukkitPlayerFactory {
+        /**
+         * The cache to manage player instantion (max. one BukkitPlayer per
+         * UUID).
+         *
+         */
         private static final Map<UUID, BukkitPlayer> PLAYER_POOL = new HashMap<UUID, BukkitPlayer>();
 
         /**
@@ -112,6 +122,13 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
             // Utility classes should not have a visible constructor.
         }
 
+        /**
+         * Creates of loads the BukkitPlayer with the given UUID.
+         *
+         * @param uuid
+         *            The {@link UUID} of the BukkitPlayer.
+         * @return The newly created or cached BukkitPlayer.
+         */
         public static BukkitPlayer getBukkitPlayer(final UUID uuid) {
             BukkitPlayer result = BukkitPlayerFactory.PLAYER_POOL.get(uuid);
             if (result == null) {
@@ -120,6 +137,16 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
             return result;
         }
 
+        /**
+         * Delegates to {@link BukkitPlayerFactory#getBukkitPlayer(UUID)} with
+         * <code>uuid = player.getUniqueId()</code>.
+         *
+         * @param player
+         *            Is passed to
+         *            {@link BukkitPlayerFactory#getBukkitPlayer(UUID)}.
+         * @return See {@link BukkitPlayerFactory#getBukkitPlayer(UUID)}.
+         * @see com.blockhaus2000.ipm.minecraft.bukkit.entity.BukkitPlayer.BukkitPlayerFactory#getBukkitPlayer(java.util.UUID)
+         */
         public static BukkitPlayer getBukkitPlayer(final org.bukkit.entity.Player player) {
             return BukkitPlayerFactory.getBukkitPlayer(player.getUniqueId());
         }

@@ -69,6 +69,12 @@ public class SimpleCommandManager implements CommandManager {
     private static final String QUOTE_DOT = "\".";
 
     /**
+     * The maximum amount of aliases per command.
+     *
+     */
+    private static final int MAX_ALIAS_PER_COMMAND = 25;
+
+    /**
      * The InternalPluginManager system logger.
      *
      */
@@ -158,7 +164,7 @@ public class SimpleCommandManager implements CommandManager {
             SimpleCommandManager.LOGGER.fine("Parsing method \"" + method.getName() + "\" with annotation data \"" + commandAnot
                     + SimpleCommandManager.QUOTE_DOT);
 
-            if (commandAnot.aliases().length > 25) {
+            if (commandAnot.aliases().length > SimpleCommandManager.MAX_ALIAS_PER_COMMAND) {
                 throw new CommandException("Method \"" + method.getName() + "\" with annotation data \"" + commandAnot
                         + "\" has too many aliases! The maximum of aliases is 25!");
             }

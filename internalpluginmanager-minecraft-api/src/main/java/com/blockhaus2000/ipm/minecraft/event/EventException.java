@@ -17,21 +17,53 @@
  */
 package com.blockhaus2000.ipm.minecraft.event;
 
+/**
+ * This exception is thrown if an error occurres whilest registering events.
+ *
+ */
 public class EventException extends RuntimeException {
+    /**
+     * The serial version uid.
+     *
+     */
     private static final long serialVersionUID = -4134588475064755920L;
 
+    /**
+     * Constructor of EventException.
+     *
+     */
     public EventException() {
         super();
     }
 
+    /**
+     * Constructor of EventException.
+     *
+     * @param message
+     *            Is passed into <code>super</code> call.
+     * @param cause
+     *            Is passed into <code>super</code> call.
+     */
     public EventException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
+    /**
+     * Constructor of EventException.
+     *
+     * @param message
+     *            Is passed into <code>super</code> call.
+     */
     public EventException(final String message) {
         super(message);
     }
 
+    /**
+     * Constructor of EventException.
+     *
+     * @param cause
+     *            Is passed into <code>super</code> call.
+     */
     public EventException(final Throwable cause) {
         super(cause);
     }

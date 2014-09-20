@@ -17,6 +17,11 @@
  */
 package com.blockhaus2000.ipm.minecraft.event;
 
-public abstract class AsynchEvent extends Event {
+/**
+ * This is an extension to a regular {@link AbstractEvent} that can be fired
+ * asynchron. So extend this to enable asynchron firing.
+ *
+ */
+public abstract class AbstractAsynchEvent extends AbstractEvent {
     // Nothing to do.
 }

@@ -21,13 +21,46 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+/**
+ * The handler list id used to store {@link EventHandler}s easyly. This just
+ * delegates to the methods of a {@link Set}.
+ *
+ */
 public class HandlerList implements Iterable<EventHandler> {
+    /**
+     * The real list of handlers.
+     *
+     */
     private final Set<EventHandler> handlers = new HashSet<EventHandler>();
 
+    /**
+     * Constructor of HandlerList.
+     *
+     */
+    public HandlerList() {
+        // Nothing to do.
+    }
+
+    /**
+     * Adds the given handler.
+     *
+     * @param handler
+     *            The {@link EventHandler} to add.
+     * @return <code>true</code> if it was added correctly, <code>false</code>
+     *         if it already exist.
+     */
     public boolean add(final EventHandler handler) {
         return this.handlers.add(handler);
     }
 
+    /**
+     * Removes the given handler.
+     *
+     * @param handler
+     *            The {@link EventHandler} to remove.
+     * @return <code>true</code> it was removed correctly, <code>false</code>if
+     *         it does not exist.
+     */
     public boolean remove(final EventHandler handler) {
         return this.handlers.remove(handler);
     }

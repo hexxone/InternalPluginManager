@@ -21,6 +21,11 @@ import java.util.UUID;
 
 import com.blockhaus2000.ipm.minecraft.command.PlayerCommandSender;
 
+/**
+ * The player is a player that plays on the unerlying Minecraft server. Is
+ * mostly used to teleport them, send messages, etc.
+ *
+ */
 public interface Player extends PlayerCommandSender {
     /**
      *

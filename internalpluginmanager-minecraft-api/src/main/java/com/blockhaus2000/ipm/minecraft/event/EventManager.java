@@ -17,12 +17,84 @@
  */
 package com.blockhaus2000.ipm.minecraft.event;
 
+import com.blockhaus2000.ipm.technical.plugin.Plugin;
+
+/**
+ * An {@link EventManager} handles the fireing and registration of events and
+ * event listeners. It is the main access point to fire events or listen to
+ * them.
+ * <p>
+ * The system is based on annotations. To listen for an specific event, simply
+ * tag your listener method with the {@link EventListener} annotation and
+ * specify the event to listen on. Then call one of the register methods of this
+ * class.
+ * </p>
+ *
+ */
 public interface EventManager {
-    <T> void register(final Class<T> clazz, final T obj);
+    /**
+     * Searchs for command listeners in the given class. If found, registers
+     * them.
+     *
+     * <p>
+     * <b> NOTE: A method can not be non-static in a static context (
+     * <code>obj = null</code>). </b>
+     * </p>
+     *
+     * @param plugin
+     *            The plugin that has registered the listener.
+     * @param clazz
+     *            The class that contains the methods/listeners to register.
+     * @param obj
+     *            An object of the given class. Can be <code>null</code> if all
+     *            methods to register are static.
+     */
+    <T> void register(final Plugin plugin, final Class<T> clazz, final T obj);
 
-    <T> void register(final Class<T> clazz);
+    /**
+     * Delegates to {@link EventManager#register(Plugin, Class, Object)} with
+     * <code>plugin = plugin</code> <code>clazz = clazz</code> and
+     * <code>obj = null</code>.
+     *
+     * <p>
+     * <b> NOTE: Only use this method if no non-static listener methods are
+     * present in the given class. </b>
+     * </p>
+     *
+     * @param plugin
+     *            Is passed into
+     *            {@link EventManager#register(Plugin, Class, Object)}.
+     * @param clazz
+     *            Is passed into
+     *            {@link EventManager#register(Plugin, Class, Object)}.
+     *
+     * @see com.blockhaus2000.ipm.minecraft.event.EventManager#register(Plugin,
+     *      java.lang.Class, java.lang.Object)
+     */
+    <T> void register(final Plugin plugin, final Class<T> clazz);
 
-    <T> void register(final T obj);
+    /**
+     * Delegates to {@link EventManager#register(Plugin, Class, Object)} with
+     * <code>plugin = plugin</code> <code>clazz = obj.getClass()</code> and
+     * <code>obj = obj</code>.
+     *
+     * @param plugin
+     *            Is passed into
+     *            {@link EventManager#register(Plugin, Class, Object)}.
+     * @param obj
+     *            Is passed into
+     *            {@link EventManager#register(Plugin, Class, Object)}.
+     *
+     * @see com.blockhaus2000.ipm.minecraft.event.EventManager#register(Plugin,
+     *      java.lang.Class, java.lang.Object)
+     */
+    <T> void register(final Plugin plugin, final T obj);
 
-    void fire(final Event event);
+    /**
+     * Fires the given event.
+     *
+     * @param event
+     *            The event to fire.
+     */
+    void fire(final AbstractEvent event);
 }

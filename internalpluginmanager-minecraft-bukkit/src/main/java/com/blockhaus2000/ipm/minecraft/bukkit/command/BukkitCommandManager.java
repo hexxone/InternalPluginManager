@@ -60,13 +60,19 @@ public class BukkitCommandManager extends SimplePluginCommandManager {
 
         final List<Command> commands = new ArrayList<Command>();
         for (final CommandInfo commandInfo : registered) {
-            commands.add(new DynamicCommand(commandInfo));
+            commands.add(new DynamicCommand(commandInfo.getCommandAnot()));
         }
         commandMap.registerAll(InternalPluginManager.class.getName().toLowerCase(), commands);
 
         return registered;
     }
 
+    /**
+     * Gets the command map from Bukkit. Used to hack into the command system of
+     * Bukkit.
+     *
+     * @return The Bukkit command map {@link CommandMap}.
+     */
     private CommandMap getCommandMap() {
         CommandMap commandMap = null;
         try {

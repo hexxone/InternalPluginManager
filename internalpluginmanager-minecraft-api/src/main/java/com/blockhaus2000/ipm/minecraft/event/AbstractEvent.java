@@ -23,12 +23,13 @@ package com.blockhaus2000.ipm.minecraft.event;
  * <p>
  * To implement an extra event, simply follow these instructions:
  * <ol>
- * <li>Create a class extending this class ({@link Event}).</li>
+ * <li>Create a class extending this class ({@link AbstractEvent}).</li>
  * <li>Add a field named <code>HANDLERS</code> with the type {@link HandlerList}
  * that has the modifiers <code>private</code>, <code>static</code> (very
  * important!) and <code>final</code>.</li>
- * <li>Implement the method {@link Event#getHandlers()} and simply return the
+ * <li>Implement the method {@link AbstractEvent#getHandlers()} and simply return the
  * field described above.</li>
+ * </ol>
  * </p>
  * <p>
  * <b> NOTE: Do NOT create the {@link HandlerList}-field in a non-static
@@ -36,7 +37,7 @@ package com.blockhaus2000.ipm.minecraft.event;
  * </p>
  *
  */
-public abstract class Event {
+public abstract class AbstractEvent {
     /**
      *
      * @return A {@link HandlerList} containing all {@link EventHandler}s for

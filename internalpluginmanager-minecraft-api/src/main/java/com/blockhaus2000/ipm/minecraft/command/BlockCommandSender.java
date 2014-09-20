@@ -17,5 +17,11 @@
  */
 package com.blockhaus2000.ipm.minecraft.command;
 
+/**
+ * The {@link BlockCommandSender} represents a {@link CommandSender} that is a
+ * block (the CommandBlock in Minecraft).
+ *
+ */
 public interface BlockCommandSender extends CommandSender {
+    // Nothing to do.
 }

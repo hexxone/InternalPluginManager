@@ -103,7 +103,17 @@ public class CanaryPlayer extends CanaryPlayerCommandSender implements Player {
         return this.player.isOnline();
     }
 
+    /**
+     * This factory for players caches them and manages that not more than one
+     * instance for one player UUID exist.
+     *
+     */
     public static final class CanaryPlayerFactory {
+        /**
+         * The cache to manage player instantion (max. one CanaryPlayer per
+         * UUID).
+         *
+         */
         private static final Map<UUID, CanaryPlayer> PLAYER_POOL = new HashMap<UUID, CanaryPlayer>();
 
         /**
@@ -114,6 +124,13 @@ public class CanaryPlayer extends CanaryPlayerCommandSender implements Player {
             // Utility classes should not have a visible constructor.
         }
 
+        /**
+         * Creates of loads the CanaryPlayer with the given UUID.
+         *
+         * @param uuid
+         *            The {@link UUID} of the CanaryPlayer.
+         * @return The newly created or cached CanaryPlayer.
+         */
         public static CanaryPlayer getCanaryPlayer(final UUID uuid) {
             CanaryPlayer result = CanaryPlayerFactory.PLAYER_POOL.get(uuid);
             if (result == null) {
@@ -122,6 +139,16 @@ public class CanaryPlayer extends CanaryPlayerCommandSender implements Player {
             return result;
         }
 
+        /**
+         * Delegates to {@link CanaryPlayerFactory#getCanaryPlayer(UUID)} with
+         * <code>uuid = player.getUniqueId()</code>.
+         *
+         * @param player
+         *            Is passed to
+         *            {@link CanaryPlayerFactory#getCanaryPlayer(UUID)}.
+         * @return See {@link CanaryPlayerFactory#getCanaryPlayer(UUID)}.
+         * @see com.blockhaus2000.ipm.minecraft.canary.entity.CanaryPlayer.CanaryPlayerFactory#getCanaryPlayer(java.util.UUID)
+         */
         public static CanaryPlayer getCanaryPlayer(final net.canarymod.api.entity.living.humanoid.Player player) {
             return CanaryPlayerFactory.getCanaryPlayer(player.getUUID());
         }

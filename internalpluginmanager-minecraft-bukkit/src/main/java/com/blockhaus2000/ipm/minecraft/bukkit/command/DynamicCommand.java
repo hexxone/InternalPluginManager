@@ -25,15 +25,23 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.blockhaus2000.ipm.minecraft.InternalPluginManager;
-import com.blockhaus2000.ipm.technical.command.util.CommandInfo;
 
+/**
+ * The dynamic command is an extension of the Bukkit {@link Command} to hack
+ * into the Bukkit command system.
+ *
+ */
 public class DynamicCommand extends Command {
-    public DynamicCommand(final CommandInfo commandInfo, final com.blockhaus2000.ipm.technical.command.Command commandAnot) {
+    /**
+     * Constructor of DynamicCommand. uses all information of the commandAnot
+     * for the <code>super</code> call.
+     *
+     * @param commandAnot
+     *            The command annotation that contains all information that is
+     *            needed for the <code>super</code> call like aliases, etc.
+     */
+    public DynamicCommand(final com.blockhaus2000.ipm.technical.command.Command commandAnot) {
         super(commandAnot.aliases()[0], "", "/" + commandAnot.aliases()[0], Arrays.asList(commandAnot.aliases()));
-    }
-
-    public DynamicCommand(final CommandInfo commandInfo) {
-        this(commandInfo, commandInfo.getCommandAnot());
     }
 
     /**

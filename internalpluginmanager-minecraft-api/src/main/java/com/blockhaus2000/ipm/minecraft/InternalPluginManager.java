@@ -20,7 +20,18 @@ package com.blockhaus2000.ipm.minecraft;
 import com.blockhaus2000.ipm.base.injection.Inject;
 import com.blockhaus2000.ipm.base.injection.InjectionManager;
 
+/**
+ * This is the main access class to the underlying implementation of the
+ * Minecraft API.
+ *
+ */
 public class InternalPluginManager {
+    /**
+     * The {@link Server} that represents the access to the underlying
+     * implementation of the Minecraft API. Will be injected via the
+     * {@link InjectionManager}.
+     *
+     */
     @Inject
     private static Server server;
 
@@ -28,6 +39,18 @@ public class InternalPluginManager {
         InjectionManager.init(InternalPluginManager.class);
     }
 
+    /**
+     * Constructor of InternalPluginManager.
+     *
+     */
+    private InternalPluginManager() {
+        // Utility classes should not have a visible constructor.
+    }
+
+    /**
+     *
+     * @return {@link InternalPluginManager#server}
+     */
     public static Server getServer() {
         return InternalPluginManager.server;
     }

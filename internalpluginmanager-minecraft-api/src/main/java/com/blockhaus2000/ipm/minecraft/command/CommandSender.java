@@ -17,6 +17,15 @@
  */
 package com.blockhaus2000.ipm.minecraft.command;
 
+/**
+ * The Minecraft command sender is an extension of the ddefault
+ * {@link CommandSender} to provide an easy access to the command sender type.
+ *
+ */
 public interface CommandSender extends com.blockhaus2000.ipm.technical.command.CommandSender {
+    /**
+     *
+     * @return The type of the command sender (command block, console, etc.).
+     */
     CommandSenderType getType();
 }
