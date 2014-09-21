@@ -12,5 +12,7 @@ target/
 dependency-reduced-pom.xml
 # Binary files from Visual Paradigm
 *.vpp*
+# Binary files from Gimp
+*.xcf
 # Testing stuff
 dist/
