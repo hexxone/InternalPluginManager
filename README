@@ -1,0 +1,163 @@
+	=================================
+	===== InternalPluginManager =====
+	=================================
+
+
+General Information
+-------------------
+
+"The InternalPluginManager" does not exist. It is a collection of multiple projects which are:
+	- The InternalPluginManager API
+	- The InternalPluginManager Base API
+	- The InternalPluginManager Plugin API
+	- The InternalPluginManager Command API
+	- The InternalPluginManager Configuration API
+	- The InternalPluginManager Minecraft API
+	- The InternalPluginManager Standalone Edition
+	- The InternalPluginManager Minecraft Bukkit Edition
+	- The InternalPluginManager Minecraft Canary Edition
+
+
+InternalPluginManager API
+-------------------------
+
+Contains:
+	- The InternalPluginManager Base API
+	- The InternalPluginManager Plugin API
+	- The InternalPluginManager Command API
+	- The InternalPluginManager Configuration API
+
+Description:
+The InternalPluginmanager API provides some components to simplify the usage of the APIs listed above.
+
+
+InternalPluginManager Base API
+------------------------------
+
+Description:
+The InternalPluginManager Base API provides some utility components to simplify the usage of the Java SE Libraries (e.g. the
+usage of strings) and manages injections, so that you can simply inject an object to a field with a specific interface. Please
+lookup Javadoc for detailed explenation.
+
+
+InternalPluginManager Plugin API
+--------------------------------
+
+Contains:
+	- The InternalPluginManager Base API
+	- The InternalPluginManager Command API
+	- The InternalPluginManager Configuration API
+
+Description:
+The InternalPluginManager Plugin API provides and API to load plugins and binds them into the class path to simply implement a
+plugin system in every software. It creates a folder structure like this:
+	/deploy/
+	/plugins/
+	/plugins/config/
+	/plugins/plugin/
+where you simply throw an IPM-Plugin into the "deploy" folder and the InternalPluginManager Plugin API loads and binds it into
+the class path automaticly. You can simply delete deployed plugins in the "plugins/plugin" dir and the
+InternalPluginManager unloads and deletes it from the class path automaticly. All configuration stored with the
+InternalPluginManager Configuration API are stored in the "plugins/config" directory in seperated directories for each plugin,
+so you do not have to search for configuration a long time and to keep them in one place.
+Because of the InternalPluginManager Command API is included, you do naot have to add more than one API to your software
+to provide also a nice command API.
+
+
+InternalPluginManager Command API
+---------------------------------
+
+Contains:
+	- The InternalPluginManager Base API
+
+Description:
+The InternalPluginManager Command API provides an easy-to-use API to use commands in your software. You can alaso use this as a
+bus system, were every element gets the information that it needs. The command API is based on annotations and checks
+permissions, argument length, argument syntax, parsed flags and many, many more. You just have to call one method to execute
+commands and you just have to register your command executers ("listeners"). That is all, no more work for you. The API does
+the rest.
+
+
+InternalPluginManager Configuration API
+---------------------------------------
+
+Contains:
+	- The InternalPluginManager Base API
+
+Description:
+The InternalPluginManager Configuration API provides a simple use for configuration files, like to simply add lists, integers,
+doubles, etc.
+
+
+InternalPluginManager Minecraft API
+-----------------------------------
+
+
+Contains:
+	- The InternalPluginManager API
+		+ Contains the InternalPluginManager Base API
+		+ Contains the InternalPluginManager Plugin API
+		+ Contains the InternalPluginManager Command API
+		+ Contains the InternalPluginManager Configuration API
+
+Description:
+The InternalPluginManager Minecraft API provides a Minecraft server API specification that can be implemented for every
+Minecraft server mod that provides all features specified by this API. The advantage is, you can use Minecraft server plugins
+that are written for the InternalPluginManager Plugin API using the InternalPluginManager Minecraft API on EVERY server
+software/mod that has an implementation of this API specification. That makes your plugin fully compatible and everyone
+can use this. Also, you have all advantages of the InternalPluginManager Plugin API (e.g. the possibility to update, add and
+delete plugins withing runtime). Also, you have all advantages of the internalPluginManager Command API and the
+InternalPluginmanager Configuration API.
+
+
+InternalPluginManager Standalone Edition
+----------------------------------------
+
+
+Contains:
+	- The InternalPluginManager API
+		+ Contains the InternalPluginManager Base API
+		+ Contains the InternalPluginManager Plugin API
+		+ Contains the InternalPluginManager Command API
+		+ Contains the InternalPluginManager Configuration API
+
+Description:
+The InternalPluginManager Standalone Edition can run without any other software. That is why it is called "Standalone". But it
+still can load plugins and these plugins can use the InternalPluginManager Command API, the InternalPluginManager Command API
+and the InternalPluginManager Configuration API.
+
+
+InternalPluginManager Minecraft Bukkit Edition
+----------------------------------------------
+
+Contains:
+	- The InternalPluginManager Minecraft API
+		+ Contains the InternalPluginManager API
+			~ Contains the InternalPluginManager Base API
+			~ Contains the InternalPluginManager Plugin API
+			~ Contains the InternalPluginManager Command API
+			~ Contains the InternalPluginManager Configuration API
+
+Description:
+The InternalPluginManager Bukkit Edition is an implementation of the InternalPluginManager Minecraft API for a Bukkit
+Minecraft server. So, every plugin written for the InternalPluginManager Plugin API can run within a Bukkit server. If
+the plugin is written with the InternalPluginManager Minecraft API, it can also interact with the Minecraft world and other
+Minecraft stuff (players, entities, etc.).
+
+
+InternalPluginManager Minecraft Canary Edition
+----------------------------------------------
+
+Contains:
+	- The InternalPluginManager Minecraft API
+		+ Contains the InternalPluginManager API
+			~ Contains the InternalPluginManager Base API
+			~ Contains the InternalPluginManager Plugin API
+			~ Contains the InternalPluginManager Command API
+			~ Contains the InternalPluginManager Configuration API
+
+Description:
+The InternalPluginManager Canary Edition is an implementation of the InternalPluginManager Minecraft API for a Canary
+Minecraft server. So, every plugin written for the InternalPluginManager Plugin API can run within a Canary server. If
+the plugin is written with the InternalPluginManager Minecraft API, it can also interact with the Minecraft world and other
+Minecraft stuff (players, entities, etc.).
