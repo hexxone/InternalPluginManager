@@ -19,6 +19,7 @@ package com.blockhaus2000.ipm.minecraft.bukkit;
 
 import java.io.File;
 
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.blockhaus2000.ipm.technical.plugin.PluginManager;
@@ -30,11 +31,20 @@ import com.blockhaus2000.ipm.technical.plugin.PluginManager;
  */
 public class Main extends JavaPlugin {
     /**
+     * The instance of this class.
+     *
+     */
+    private static Plugin plugin;
+
+    /**
      * Constructor of Main.
      *
      */
     public Main() {
-        // Nothing to do.
+        if (Main.plugin != null) {
+            throw new IllegalStateException("Only one instance of this class can exist!");
+        }
+        Main.plugin = this;
     }
 
     /**
@@ -56,5 +66,13 @@ public class Main extends JavaPlugin {
     private void addInjectionResources() {
         // For safety reasons, BukkitServer registers itself.
         BukkitServer.getInstance();
+    }
+
+    /**
+     *
+     * @return {@link Main#plugin}
+     */
+    public static Plugin getPlugin() {
+        return Main.plugin;
     }
 }

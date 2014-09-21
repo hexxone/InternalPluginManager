@@ -26,6 +26,13 @@ import com.blockhaus2000.ipm.minecraft.command.ConsoleCommandSender;
  */
 public class BukkitConsoleCommandSender implements ConsoleCommandSender {
     /**
+     * An instance of the {@link BukkitConsoleCommandSender} to reduce heap
+     * memory usage.
+     *
+     */
+    private static final ConsoleCommandSender INSTANCE = new BukkitConsoleCommandSender();
+
+    /**
      * {@inheritDoc}
      *
      * @see com.blockhaus2000.ipm.minecraft.command.CommandSender#getType()
@@ -44,5 +51,17 @@ public class BukkitConsoleCommandSender implements ConsoleCommandSender {
     public boolean hasPermission(final String permission) {
         // The console has all permissions.
         return true;
+    }
+
+    /**
+     * <p>
+     * <b> NOTE: This is only a method to get an instance! This is no singleton!
+     * </b>
+     * </p>
+     *
+     * @return An instance of the {@link BukkitConsoleCommandSender}.
+     */
+    public static ConsoleCommandSender getInstance() {
+        return BukkitConsoleCommandSender.INSTANCE;
     }
 }

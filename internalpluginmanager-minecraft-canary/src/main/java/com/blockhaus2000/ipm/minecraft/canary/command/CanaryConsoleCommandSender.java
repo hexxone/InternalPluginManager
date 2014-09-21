@@ -26,6 +26,13 @@ import com.blockhaus2000.ipm.minecraft.command.ConsoleCommandSender;
  */
 public class CanaryConsoleCommandSender implements ConsoleCommandSender {
     /**
+     * An instance of the {@link CanaryConsoleCommandSender} to reduce heap
+     * memory usage.
+     *
+     */
+    private static final ConsoleCommandSender INSTANCE = new CanaryConsoleCommandSender();
+
+    /**
      * {@inheritDoc}
      *
      * @see com.blockhaus2000.ipm.minecraft.command.CommandSender#getType()
@@ -43,5 +50,17 @@ public class CanaryConsoleCommandSender implements ConsoleCommandSender {
     @Override
     public boolean hasPermission(final String permission) {
         return true;
+    }
+
+    /**
+     * <p>
+     * <b> NOTE: This is only a method to get an instance! This is no singleton!
+     * </b>
+     * </p>
+     *
+     * @return An instance of the {@link CanaryConsoleCommandSender}.
+     */
+    public static ConsoleCommandSender getInstance() {
+        return CanaryConsoleCommandSender.INSTANCE;
     }
 }

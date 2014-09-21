@@ -15,20 +15,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.bukkit.entity;
+package com.blockhaus2000.ipm.minecraft.scheduler;
 
-import com.blockhaus2000.ipm.minecraft.OfflinePlayer;
-import com.blockhaus2000.ipm.minecraft.command.PlayerCommandSender;
-
-/**
- * The player is a player that plays on the unerlying Minecraft server. Is
- * mostly used to teleport them, send messages, etc.
- *
- */
-public interface Player extends OfflinePlayer, PlayerCommandSender {
-    /**
-     *
-     * @return The display name of this player as shown in the chat.
-     */
-    String getDisplayName();
+public interface Scheduler {
+    // TODO: Implement definition.
 }

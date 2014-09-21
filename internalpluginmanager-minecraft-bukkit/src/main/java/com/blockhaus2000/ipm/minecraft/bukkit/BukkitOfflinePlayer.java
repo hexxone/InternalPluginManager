@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.bukkit.entity;
+package com.blockhaus2000.ipm.minecraft.bukkit;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,27 +25,15 @@ import javax.xml.stream.Location;
 
 import org.bukkit.Bukkit;
 
-import com.blockhaus2000.ipm.minecraft.bukkit.command.BukkitPlayerCommandSender;
+import com.blockhaus2000.ipm.minecraft.OfflinePlayer;
+import com.blockhaus2000.ipm.minecraft.bukkit.entity.BukkitPlayer.BukkitPlayerFactory;
+import com.blockhaus2000.ipm.minecraft.bukkit.entity.Player;
 
-/**
- * The implementation of {@link Player} for Bukkit.
- *
- */
-public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
-    /**
-     * The {@link org.bukkit.entity.Player} that is wrapped within this class.
-     *
-     */
-    private final org.bukkit.entity.Player player;
+public class BukkitOfflinePlayer implements OfflinePlayer {
+    private final org.bukkit.OfflinePlayer offlinePlayer;
 
-    /**
-     * Constructor of BukkitPlayer.
-     *
-     * @param player
-     *            The {@link org.bukkit.entity.Player} to wrap.
-     */
-    private BukkitPlayer(final org.bukkit.entity.Player player) {
-        this.player = player;
+    private BukkitOfflinePlayer(final org.bukkit.OfflinePlayer offlinePlayer) {
+        this.offlinePlayer = offlinePlayer;
     }
 
     /**
@@ -55,7 +43,7 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
      */
     @Override
     public UUID getUniqueId() {
-        return this.player.getUniqueId();
+        return this.offlinePlayer.getUniqueId();
     }
 
     /**
@@ -66,7 +54,7 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
     @Deprecated
     @Override
     public String getName() {
-        return this.player.getName().toLowerCase().trim();
+        return this.offlinePlayer.getName().toLowerCase().trim();
     }
 
     /**
@@ -76,7 +64,7 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
      */
     @Override
     public Player getPlayer() {
-        return this;
+        return BukkitPlayerFactory.getBukkitPlayer(this.offlinePlayer.getPlayer());
     }
 
     /**
@@ -86,7 +74,7 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
      */
     @Override
     public long getFirstPlayed() {
-        return this.player.getFirstPlayed();
+        return this.offlinePlayer.getFirstPlayed();
     }
 
     /**
@@ -96,7 +84,7 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
      */
     @Override
     public long getLastplayed() {
-        return this.player.getLastPlayed();
+        return this.offlinePlayer.getLastPlayed();
     }
 
     /**
@@ -106,7 +94,7 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
      */
     @Override
     public boolean isNew() {
-        return !this.player.hasPlayedBefore();
+        return !this.offlinePlayer.hasPlayedBefore();
     }
 
     /**
@@ -127,7 +115,7 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
      */
     @Override
     public boolean isOnline() {
-        return this.player.isOnline();
+        return this.offlinePlayer.isOnline();
     }
 
     /**
@@ -137,7 +125,7 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
      */
     @Override
     public boolean isBanned() {
-        return this.player.isBanned();
+        return this.offlinePlayer.isBanned();
     }
 
     /**
@@ -147,7 +135,7 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
      */
     @Override
     public boolean isWhitelisted() {
-        return this.player.isWhitelisted();
+        return this.offlinePlayer.isWhitelisted();
     }
 
     /**
@@ -158,7 +146,7 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
     @SuppressWarnings("deprecation")
     @Override
     public void setBanned(final boolean banned) {
-        this.player.setBanned(true);
+        this.offlinePlayer.setBanned(true);
     }
 
     /**
@@ -168,27 +156,7 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
      */
     @Override
     public void setWhitelisted(final boolean whitelisted) {
-        this.player.setWhitelisted(true);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see com.blockhaus2000.ipm.technical.command.CommandSender#hasPermission(java.lang.String)
-     */
-    @Override
-    public boolean hasPermission(final String permission) {
-        return permission == null || permission.isEmpty() || this.player.hasPermission(permission);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see com.blockhaus2000.ipm.minecraft.bukkit.entity.Player#getDisplayName()
-     */
-    @Override
-    public String getDisplayName() {
-        return this.player.getDisplayName();
+        this.offlinePlayer.setWhitelisted(whitelisted);
     }
 
     /**
@@ -196,7 +164,7 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
      * instance for one player UUID exist.
      *
      */
-    public static final class BukkitPlayerFactory {
+    public static final class BukkitOfflinePlayerFactory {
         /**
          * An object to create locks on.
          *
@@ -204,35 +172,35 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
         private static final Object LOCK = new Object();
 
         /**
-         * The cache to manage player instantion (max. one BukkitPlayer per
-         * UUID).
+         * The cache to manage player instantion (max. one BukkitOfflinePlayer
+         * per UUID).
          *
          */
-        private static final Map<UUID, BukkitPlayer> PLAYER_POOL = new HashMap<UUID, BukkitPlayer>();
+        private static final Map<UUID, BukkitOfflinePlayer> PLAYER_POOL = new HashMap<UUID, BukkitOfflinePlayer>();
 
         /**
-         * Constructor of BukkitPlayerFactory.
+         * Constructor of BukkitOfflinePlayerFactory.
          *
          */
-        private BukkitPlayerFactory() {
+        private BukkitOfflinePlayerFactory() {
             // Utility classes should not have a visible constructor.
         }
 
         /**
-         * Creates of loads the BukkitPlayer with the given UUID.
+         * Creates of loads the BukkitOfflinePlayer with the given UUID.
          *
          * @param uuid
-         *            The {@link UUID} of the BukkitPlayer.
-         * @return The newly created or cached BukkitPlayer.
+         *            The {@link UUID} of the BukkitOfflinePlayer.
+         * @return The newly created or cached BukkitOfflinePlayer.
          */
-        public static BukkitPlayer getBukkitPlayer(final UUID uuid) {
-            BukkitPlayer result = BukkitPlayerFactory.PLAYER_POOL.get(uuid);
+        public static BukkitOfflinePlayer getBukkitOfflinePlayer(final UUID uuid) {
+            BukkitOfflinePlayer result = BukkitOfflinePlayerFactory.PLAYER_POOL.get(uuid);
             if (result == null) {
-                synchronized (BukkitPlayerFactory.LOCK) {
-                    result = BukkitPlayerFactory.PLAYER_POOL.get(uuid);
+                synchronized (BukkitOfflinePlayerFactory.LOCK) {
+                    result = BukkitOfflinePlayerFactory.PLAYER_POOL.get(uuid);
                     if (result == null) {
-                        result = new BukkitPlayer(Bukkit.getServer().getPlayer(uuid));
-                        BukkitPlayerFactory.PLAYER_POOL.put(uuid, result);
+                        result = new BukkitOfflinePlayer(Bukkit.getServer().getPlayer(uuid));
+                        BukkitOfflinePlayerFactory.PLAYER_POOL.put(uuid, result);
                     }
                 }
             }
@@ -240,17 +208,22 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
         }
 
         /**
-         * Delegates to {@link BukkitPlayerFactory#getBukkitPlayer(UUID)} with
+         * Delegates to
+         * {@link BukkitOfflinePlayerFactory#getBukkitOfflinePlayer(UUID)} with
          * <code>uuid = player.getUniqueId()</code>.
          *
          * @param player
          *            Is passed to
-         *            {@link BukkitPlayerFactory#getBukkitPlayer(UUID)}.
-         * @return See {@link BukkitPlayerFactory#getBukkitPlayer(UUID)}.
-         * @see com.blockhaus2000.ipm.minecraft.bukkit.entity.BukkitPlayer.BukkitPlayerFactory#getBukkitPlayer(java.util.UUID)
+         *            {@link BukkitOfflinePlayerFactory #getBukkitOfflinePlayer(UUID)}
+         *            .
+         * @return See
+         *         {@link BukkitOfflinePlayerFactory #getBukkitOfflinePlayer(UUID)}
+         *         .
+         * @see com.blockhaus2000.ipm.minecraft.bukkit.BukkitOfflinePlayer.BukkitOfflinePlayerFactory
+         *      #getBukkitOfflinePlayer(java.util.UUID)
          */
-        public static BukkitPlayer getBukkitPlayer(final org.bukkit.entity.Player player) {
-            return BukkitPlayerFactory.getBukkitPlayer(player.getUniqueId());
+        public static BukkitOfflinePlayer getBukkitOfflinePlayer(final org.bukkit.OfflinePlayer player) {
+            return BukkitOfflinePlayerFactory.getBukkitOfflinePlayer(player.getUniqueId());
         }
     }
 }

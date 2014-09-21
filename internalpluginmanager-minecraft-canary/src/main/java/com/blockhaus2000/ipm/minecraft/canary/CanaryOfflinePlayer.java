@@ -15,37 +15,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.bukkit.entity;
+package com.blockhaus2000.ipm.minecraft.canary;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.xml.stream.Location;
 
-import org.bukkit.Bukkit;
+import net.canarymod.Canary;
 
-import com.blockhaus2000.ipm.minecraft.bukkit.command.BukkitPlayerCommandSender;
+import com.blockhaus2000.ipm.minecraft.InternalPluginManager;
+import com.blockhaus2000.ipm.minecraft.OfflinePlayer;
+import com.blockhaus2000.ipm.minecraft.bukkit.entity.Player;
 
-/**
- * The implementation of {@link Player} for Bukkit.
- *
- */
-public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
-    /**
-     * The {@link org.bukkit.entity.Player} that is wrapped within this class.
-     *
-     */
-    private final org.bukkit.entity.Player player;
+public class CanaryOfflinePlayer implements OfflinePlayer {
+    private static final SimpleDateFormat DEFAULT_SIMPLE_DATE_FORMAT = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
 
-    /**
-     * Constructor of BukkitPlayer.
-     *
-     * @param player
-     *            The {@link org.bukkit.entity.Player} to wrap.
-     */
-    private BukkitPlayer(final org.bukkit.entity.Player player) {
-        this.player = player;
+    private final net.canarymod.api.OfflinePlayer offlinePlayer;
+
+    private CanaryOfflinePlayer(final net.canarymod.api.OfflinePlayer offlinePlayer) {
+        this.offlinePlayer = offlinePlayer;
     }
 
     /**
@@ -55,7 +47,7 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
      */
     @Override
     public UUID getUniqueId() {
-        return this.player.getUniqueId();
+        return this.offlinePlayer.getUUID();
     }
 
     /**
@@ -66,7 +58,7 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
     @Deprecated
     @Override
     public String getName() {
-        return this.player.getName().toLowerCase().trim();
+        return this.offlinePlayer.getName().toLowerCase().trim();
     }
 
     /**
@@ -76,7 +68,7 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
      */
     @Override
     public Player getPlayer() {
-        return this;
+        return InternalPluginManager.getServer().getPlayer(this.offlinePlayer.getUUID());
     }
 
     /**
@@ -86,7 +78,11 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
      */
     @Override
     public long getFirstPlayed() {
-        return this.player.getFirstPlayed();
+        try {
+            return CanaryOfflinePlayer.DEFAULT_SIMPLE_DATE_FORMAT.parse(this.offlinePlayer.getFirstJoined()).getTime();
+        } catch (final ParseException dummy) {
+            return 0;
+        }
     }
 
     /**
@@ -96,7 +92,11 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
      */
     @Override
     public long getLastplayed() {
-        return this.player.getLastPlayed();
+        try {
+            return CanaryOfflinePlayer.DEFAULT_SIMPLE_DATE_FORMAT.parse(this.offlinePlayer.getFirstJoined()).getTime();
+        } catch (final ParseException dummy) {
+            return 0;
+        }
     }
 
     /**
@@ -106,7 +106,8 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
      */
     @Override
     public boolean isNew() {
-        return !this.player.hasPlayedBefore();
+        // TODO Auto-generated method body.
+        return false;
     }
 
     /**
@@ -127,7 +128,7 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
      */
     @Override
     public boolean isOnline() {
-        return this.player.isOnline();
+        return this.offlinePlayer.isOnline();
     }
 
     /**
@@ -137,7 +138,8 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
      */
     @Override
     public boolean isBanned() {
-        return this.player.isBanned();
+        // TODO Auto-generated method body.
+        return false;
     }
 
     /**
@@ -147,7 +149,8 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
      */
     @Override
     public boolean isWhitelisted() {
-        return this.player.isWhitelisted();
+        // TODO Auto-generated method body.
+        return false;
     }
 
     /**
@@ -158,7 +161,8 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
     @SuppressWarnings("deprecation")
     @Override
     public void setBanned(final boolean banned) {
-        this.player.setBanned(true);
+        // TODO Auto-generated method body.
+
     }
 
     /**
@@ -168,27 +172,8 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
      */
     @Override
     public void setWhitelisted(final boolean whitelisted) {
-        this.player.setWhitelisted(true);
-    }
+        // TODO Auto-generated method body.
 
-    /**
-     * {@inheritDoc}
-     *
-     * @see com.blockhaus2000.ipm.technical.command.CommandSender#hasPermission(java.lang.String)
-     */
-    @Override
-    public boolean hasPermission(final String permission) {
-        return permission == null || permission.isEmpty() || this.player.hasPermission(permission);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see com.blockhaus2000.ipm.minecraft.bukkit.entity.Player#getDisplayName()
-     */
-    @Override
-    public String getDisplayName() {
-        return this.player.getDisplayName();
     }
 
     /**
@@ -196,7 +181,7 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
      * instance for one player UUID exist.
      *
      */
-    public static final class BukkitPlayerFactory {
+    public static final class CanaryOfflinePlayerFactory {
         /**
          * An object to create locks on.
          *
@@ -204,35 +189,35 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
         private static final Object LOCK = new Object();
 
         /**
-         * The cache to manage player instantion (max. one BukkitPlayer per
-         * UUID).
+         * The cache to manage player instantion (max. one CanaryOfflinePlayer
+         * per name).
          *
          */
-        private static final Map<UUID, BukkitPlayer> PLAYER_POOL = new HashMap<UUID, BukkitPlayer>();
+        private static final Map<String, CanaryOfflinePlayer> PLAYER_POOL = new HashMap<String, CanaryOfflinePlayer>();
 
         /**
-         * Constructor of BukkitPlayerFactory.
+         * Constructor of CanaryOfflinePlayerFactory.
          *
          */
-        private BukkitPlayerFactory() {
+        private CanaryOfflinePlayerFactory() {
             // Utility classes should not have a visible constructor.
         }
 
         /**
-         * Creates of loads the BukkitPlayer with the given UUID.
+         * Creates of loads the CanaryOfflinePlayer with the given UUID.
          *
-         * @param uuid
-         *            The {@link UUID} of the BukkitPlayer.
-         * @return The newly created or cached BukkitPlayer.
+         * @param name
+         *            The name of the CanaryOfflinePlayer.
+         * @return The newly created or cached CanaryOfflinePlayer.
          */
-        public static BukkitPlayer getBukkitPlayer(final UUID uuid) {
-            BukkitPlayer result = BukkitPlayerFactory.PLAYER_POOL.get(uuid);
+        public static CanaryOfflinePlayer getCanaryOfflinePlayer(final String name) {
+            CanaryOfflinePlayer result = CanaryOfflinePlayerFactory.PLAYER_POOL.get(name);
             if (result == null) {
-                synchronized (BukkitPlayerFactory.LOCK) {
-                    result = BukkitPlayerFactory.PLAYER_POOL.get(uuid);
+                synchronized (CanaryOfflinePlayerFactory.LOCK) {
+                    result = CanaryOfflinePlayerFactory.PLAYER_POOL.get(name);
                     if (result == null) {
-                        result = new BukkitPlayer(Bukkit.getServer().getPlayer(uuid));
-                        BukkitPlayerFactory.PLAYER_POOL.put(uuid, result);
+                        result = new CanaryOfflinePlayer(Canary.getServer().getOfflinePlayer(name));
+                        CanaryOfflinePlayerFactory.PLAYER_POOL.put(name, result);
                     }
                 }
             }
@@ -240,17 +225,22 @@ public class BukkitPlayer extends BukkitPlayerCommandSender implements Player {
         }
 
         /**
-         * Delegates to {@link BukkitPlayerFactory#getBukkitPlayer(UUID)} with
-         * <code>uuid = player.getUniqueId()</code>.
+         * Delegates to
+         * {@link CanaryOfflinePlayerFactory#getCanaryOfflinePlayer(String)}
+         * with <code>uuid = player.getUniqueId()</code>.
          *
          * @param player
          *            Is passed to
-         *            {@link BukkitPlayerFactory#getBukkitPlayer(UUID)}.
-         * @return See {@link BukkitPlayerFactory#getBukkitPlayer(UUID)}.
-         * @see com.blockhaus2000.ipm.minecraft.bukkit.entity.BukkitPlayer.BukkitPlayerFactory#getBukkitPlayer(java.util.UUID)
+         *            {@link CanaryOfflinePlayerFactory#getCanaryOfflinePlayer(String)}
+         *            .
+         * @return See
+         *         {@link CanaryOfflinePlayerFactory#getCanaryOfflinePlayer(String)}
+         *         .
+         * @see com.blockhaus2000.ipm.minecraft.canary.CanaryOfflinePlayer.CanaryOfflinePlayerFactory
+         *      #getCanaryOfflinePlayer(java.lang.String)
          */
-        public static BukkitPlayer getBukkitPlayer(final org.bukkit.entity.Player player) {
-            return BukkitPlayerFactory.getBukkitPlayer(player.getUniqueId());
+        public static CanaryOfflinePlayer getCanaryOfflinePlayer(final net.canarymod.api.OfflinePlayer player) {
+            return CanaryOfflinePlayerFactory.getCanaryOfflinePlayer(player.getName());
         }
     }
 }

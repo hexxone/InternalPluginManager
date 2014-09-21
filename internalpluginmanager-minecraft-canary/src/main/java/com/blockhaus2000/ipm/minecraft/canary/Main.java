@@ -30,6 +30,23 @@ import com.blockhaus2000.ipm.technical.plugin.PluginManager;
  */
 public class Main extends Plugin {
     /**
+     * The instance of this class.
+     *
+     */
+    private static Plugin plugin;
+
+    /**
+     * Constructor of Main.
+     *
+     */
+    public Main() {
+        if (Main.plugin != null) {
+            throw new IllegalStateException("Only one instance of this class can exist!");
+        }
+        Main.plugin = this;
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @see net.canarymod.plugin.Plugin#enable()
@@ -60,5 +77,13 @@ public class Main extends Plugin {
     private void addInjectionResources() {
         // For safety reasons, CanaryServer registers itself.
         CanaryServer.getInstance();
+    }
+
+    /**
+     *
+     * @return {@link Main#plugin}
+     */
+    public static Plugin getInstance() {
+        return Main.plugin;
     }
 }
