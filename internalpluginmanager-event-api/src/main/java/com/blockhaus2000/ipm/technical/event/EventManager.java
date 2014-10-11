@@ -48,7 +48,7 @@ public interface EventManager {
     <T> void register(final Class<T> clazz, final T obj);
 
     /**
-     * Delegates to {@link EventManager#register(Plugin, Class, Object)} with
+     * Delegates to {@link EventManager#register(Class, Object)} with
      * <code>clazz = clazz</code> and <code>obj = null</code>.
      *
      * <p>
@@ -57,24 +57,22 @@ public interface EventManager {
      * </p>
      *
      * @param clazz
-     *            Is passed into
-     *            {@link EventManager#register(Plugin, Class, Object)}.
+     *            Is passed into {@link EventManager#register(Class, Object)}.
      *
-     * @see com.blockhaus2000.ipm.technical.event.EventManager#register(Plugin,
-     *      java.lang.Class, java.lang.Object)
+     * @see com.blockhaus2000.ipm.technical.event.EventManager#register(java.lang.Class,
+     *      java.lang.Object)
      */
     <T> void register(final Class<T> clazz);
 
     /**
-     * Delegates to {@link EventManager#register(Plugin, Class, Object)} with
+     * Delegates to {@link EventManager#register(Class, Object)} with
      * <code>clazz = obj.getClass()</code> and <code>obj = obj</code>.
      *
      * @param obj
-     *            Is passed into
-     *            {@link EventManager#register(Plugin, Class, Object)}.
+     *            Is passed into {@link EventManager#register(Class, Object)}.
      *
-     * @see com.blockhaus2000.ipm.technical.event.EventManager#register(Plugin,
-     *      java.lang.Class, java.lang.Object)
+     * @see com.blockhaus2000.ipm.technical.event.EventManager#register(java.lang.Class,
+     *      java.lang.Object)
      */
     <T> void register(final T obj);
 

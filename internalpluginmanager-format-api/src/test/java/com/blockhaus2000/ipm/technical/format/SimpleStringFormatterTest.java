@@ -32,11 +32,23 @@ public class SimpleStringFormatterTest {
      */
     @Test
     public void format() {
-        Assert.assertEquals("Hello, Prozent-A!",
+        Assert.assertEquals("Hello, Percent-A!",
                 new SimpleStringFormatter().format("Hello, :%a:!", SimpleStringFormatterTestEnum.TEST));
+        Assert.assertEquals(":Hello:, Percent-A!",
+                new SimpleStringFormatter().format(":Hello:, :%a:!", SimpleStringFormatterTestEnum.TEST));
+        Assert.assertEquals("Hello, Percent-A! Here is Ampersand-B.", new SimpleStringFormatter().format(
+                "Hello, :%a:! Here is :&b:.", SimpleStringFormatterTestEnum.TEST, SimpleStringFormatterTestEnum.TEST_2));
     }
 
+    /**
+     * An enum that provides some string format mappings for testing.
+     *
+     */
     private static enum SimpleStringFormatterTestEnum implements StringFormatMappable {
+        /**
+         * Maps <code>%a</code> to <code>Percent-A</code>.
+         *
+         */
         TEST {
             /**
              * {@inheritDoc}
@@ -45,8 +57,22 @@ public class SimpleStringFormatterTest {
              */
             @Override
             public StringFormatMapping getStringFormatMapping() {
-                return new StringFormatMapping(new StringFormatMappingKey(StringFormatKeyPrefix.PERCENT_SIGN, 'a'),
-                        "Prozent-A");
+                return new StringFormatMapping(new StringFormatMappingKey(StringFormatKeyPrefix.PERCENT_SIGN, 'a'), "Percent-A");
+            }
+        },
+        /**
+         * Maps <code>&b</code> to <code>Ampersand-B</code>.
+         *
+         */
+        TEST_2 {
+            /**
+             * {@inheritDoc}
+             *
+             * @see com.blockhaus2000.ipm.technical.format.StringFormatMappable#getStringFormatMapping()
+             */
+            @Override
+            public StringFormatMapping getStringFormatMapping() {
+                return new StringFormatMapping(new StringFormatMappingKey(StringFormatKeyPrefix.AMPERSAND, 'b'), "Ampersand-B");
             }
         };
     }

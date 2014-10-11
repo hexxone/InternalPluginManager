@@ -41,8 +41,6 @@ public class SimpleEventHandler implements EventHandler {
      *
      * Constructor of EventHandler.
      *
-     * @param plugin
-     *            The plugin that has registered the listener.
      * @param listenerObject
      *            The object the given method has to be invoked with. Can be
      *            <code>null</code>.

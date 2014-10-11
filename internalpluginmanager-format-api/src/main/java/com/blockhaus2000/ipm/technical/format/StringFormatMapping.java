@@ -17,10 +17,31 @@
  */
 package com.blockhaus2000.ipm.technical.format;
 
+/**
+ * A {@link StringFormatMapping} maps a {@link StringFormatMappingKey} to a
+ * String to be used within the {@link StringFormatter}.
+ *
+ */
 public class StringFormatMapping {
+    /**
+     * The key that is mapped to the String.
+     *
+     */
     private final StringFormatMappingKey key;
+    /**
+     * The mapped String.
+     *
+     */
     private final String formatted;
 
+    /**
+     * Constructor of StringFormatMapping.
+     *
+     * @param key
+     *            The key to use for mapping.
+     * @param formatted
+     *            The mapped String.
+     */
     public StringFormatMapping(final StringFormatMappingKey key, final String formatted) {
         this.key = key;
         this.formatted = formatted;

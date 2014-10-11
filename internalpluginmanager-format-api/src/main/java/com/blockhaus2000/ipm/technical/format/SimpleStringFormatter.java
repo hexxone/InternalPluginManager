@@ -35,27 +35,27 @@ public class SimpleStringFormatter implements StringFormatter {
      *      com.blockhaus2000.ipm.technical.format.StringFormatMapping[])
      */
     @Override
-    public String format(final String str, final StringFormatMapping... chatMappings) {
+    public String format(final String str, final StringFormatMapping... mappings) {
         final Map<String, String> maps = new HashMap<String, String>();
-        for (final StringFormatMapping chatMapping : chatMappings) {
-            maps.put(chatMapping.getKey().getStringKey(), chatMapping.getFormatted());
+        for (final StringFormatMapping mapping : mappings) {
+            maps.put(mapping.getKey().getStringKey(), mapping.getFormatted());
         }
 
         final StringBuilder builder = new StringBuilder();
-        boolean found = false;
         for (final String key : str.split(CommonStringConstants.COLON)) {
             final String value = maps.get(key);
             if (value == null) {
                 builder.append(key);
-                if (!found) {
-                    builder.append(CommonStringConstants.COLON);
-                    found = false;
-                }
+                builder.append(CommonStringConstants.COLON);
             } else {
-                builder.setLength(builder.length() > 0 ? builder.length() - 1 : 0);
+                if (builder.charAt(builder.length() - 1) == CommonStringConstants.COLON.charAt(0)) {
+                    builder.setLength(builder.length() - 1);
+                }
                 builder.append(value);
-                found = true;
             }
+        }
+        if (!str.endsWith(":")) {
+            builder.setLength(builder.length() - 1);
         }
 
         return builder.toString();
@@ -68,11 +68,11 @@ public class SimpleStringFormatter implements StringFormatter {
      *      com.blockhaus2000.ipm.technical.format.StringFormatMappable[])
      */
     @Override
-    public String format(final String str, final StringFormatMappable... chatMappables) {
-        final StringFormatMapping[] chatMappings = new StringFormatMapping[chatMappables.length];
-        for (int i = 0; i < chatMappables.length; i++) {
-            chatMappings[i] = chatMappables[i].getStringFormatMapping();
+    public String format(final String str, final StringFormatMappable... mappables) {
+        final StringFormatMapping[] mappings = new StringFormatMapping[mappables.length];
+        for (int i = 0; i < mappables.length; i++) {
+            mappings[i] = mappables[i].getStringFormatMapping();
         }
-        return this.format(str, chatMappings);
+        return this.format(str, mappings);
     }
 }

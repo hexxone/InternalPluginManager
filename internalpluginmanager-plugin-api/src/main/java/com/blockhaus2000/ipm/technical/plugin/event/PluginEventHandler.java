@@ -19,12 +19,32 @@ package com.blockhaus2000.ipm.technical.plugin.event;
 
 import java.lang.reflect.Method;
 
+import com.blockhaus2000.ipm.technical.event.EventHandler;
 import com.blockhaus2000.ipm.technical.event.SimpleEventHandler;
 import com.blockhaus2000.ipm.technical.plugin.Plugin;
 
+/**
+ * A special extension of the {@link SimpleEventHandler} to delegate the
+ * {@link EventHandler#isEnabled()} call to {@link Plugin#isEnabled()}.
+ *
+ */
 public class PluginEventHandler extends SimpleEventHandler {
+    /**
+     * The plugin that is used to get the enabled-status.
+     *
+     */
     private final Plugin plugin;
 
+    /**
+     * Constructor of PluginEventHandler.
+     *
+     * @param plugin
+     *            The plugin that is the event listener holder.
+     * @param listenerObject
+     *            Is used withing <code>super</code>-call.
+     * @param listenerMethod
+     *            Is used withing <code>super</code>-call.
+     */
     public PluginEventHandler(final Plugin plugin, final Object listenerObject, final Method listenerMethod) {
         super(listenerObject, listenerMethod);
 

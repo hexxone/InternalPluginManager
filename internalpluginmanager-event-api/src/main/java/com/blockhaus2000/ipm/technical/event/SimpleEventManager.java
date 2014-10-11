@@ -48,8 +48,8 @@ public class SimpleEventManager implements EventManager {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.event.EventManager#register(Plugin,
-     *      java.lang.Class, java.lang.Object)
+     * @see com.blockhaus2000.ipm.technical.event.EventManager#register(java.lang.Class,
+     *      java.lang.Object)
      */
     @Override
     public <T> void register(final Class<T> clazz, final T obj) {
@@ -57,15 +57,14 @@ public class SimpleEventManager implements EventManager {
         assert obj == null || obj.getClass().equals(clazz) : "Obj has to be an instance of clazz!";
 
         for (final Method method : clazz.getDeclaredMethods()) {
-            this.register(new SimpleEventHandler(obj, method), clazz);
+            this.register(new SimpleEventHandler(obj, method));
         }
     }
 
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.event.EventManager#register(Plugin,
-     *      java.lang.Class)
+     * @see com.blockhaus2000.ipm.technical.event.EventManager#register(java.lang.Class)
      */
     @Override
     public <T> void register(final Class<T> clazz) {
@@ -75,8 +74,7 @@ public class SimpleEventManager implements EventManager {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.event.EventManager#register(Plugin,
-     *      java.lang.Object)
+     * @see com.blockhaus2000.ipm.technical.event.EventManager#register(java.lang.Object)
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -104,11 +102,18 @@ public class SimpleEventManager implements EventManager {
         }
     }
 
-    protected void register(final EventHandler handler, final Class<?> clazz) {
+    /**
+     * Registers the given event handler.
+     *
+     * @param handler
+     *            The {@link EventHandler} to register.
+     */
+    protected void register(final EventHandler handler) {
         assert handler != null : "Handler cannot be null!";
 
         final Object obj = handler.getListenerObject();
         final Method method = handler.getListenerMethod();
+        final Class<?> clazz = method.getDeclaringClass();
 
         if (!method.isAnnotationPresent(EventListener.class)) {
             return;

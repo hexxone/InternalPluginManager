@@ -22,6 +22,12 @@ import java.lang.reflect.Method;
 import com.blockhaus2000.ipm.technical.event.SimpleEventManager;
 import com.blockhaus2000.ipm.technical.plugin.Plugin;
 
+/**
+ * This is a special extension for the {@link SimpleEventManager} to make it
+ * compatible with the plugin system. That means that event are not fired for
+ * event listeners that where registered by disabled plugins, etc.
+ *
+ */
 public class SimplePluginEventManager extends SimpleEventManager implements PluginEventManager {
     /**
      * {@inheritDoc}
@@ -35,7 +41,7 @@ public class SimplePluginEventManager extends SimpleEventManager implements Plug
         assert clazz != null : "Clazz cannot be null!";
 
         for (final Method method : clazz.getDeclaredMethods()) {
-            this.register(new PluginEventHandler(plugin, obj, method), clazz);
+            this.register(new PluginEventHandler(plugin, obj, method));
         }
     }
 

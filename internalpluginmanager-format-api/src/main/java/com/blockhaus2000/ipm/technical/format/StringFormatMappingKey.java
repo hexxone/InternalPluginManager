@@ -17,10 +17,34 @@
  */
 package com.blockhaus2000.ipm.technical.format;
 
+/**
+ * The {@link StringFormatMappingKey} is used by the {@link StringFormatMapping}
+ * as a key. A can only be a sequence of two chars.
+ *
+ */
 public class StringFormatMappingKey {
+    /**
+     * The prefix of the key.
+     *
+     */
     private final StringFormatKeyPrefix prefix;
+    /**
+     * The real key. Can only be a valid letter (<code>A</code> to
+     * <code>Z</code> in high and low case) or a number (<code>0</code> to
+     * <code>9</code>).
+     *
+     */
     private final char key;
 
+    /**
+     * Constructor of StringFormatMappingKey.
+     *
+     * @param prefix
+     *            The key prefix to use.
+     * @param key
+     *            The real key to use. Has to math the regex
+     *            <code>[a-zA-Z0-9]</code>.
+     */
     public StringFormatMappingKey(final StringFormatKeyPrefix prefix, final char key) {
         assert prefix != null : "Prefix cannot be null!";
         assert String.valueOf(key).matches("[a-zA-Z0-9]") : "Key has to match the regex \"[a-zA-Z0-9]\"!";
@@ -29,6 +53,10 @@ public class StringFormatMappingKey {
         this.key = key;
     }
 
+    /**
+     *
+     * @return <code>{@link StringFormatMappingKey#prefix} + {@link StringFormatMappingKey#key}</code>
+     */
     public String getStringKey() {
         return "" + this.prefix.getPrefix() + this.key;
     }

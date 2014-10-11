@@ -17,8 +17,36 @@
  */
 package com.blockhaus2000.ipm.technical.format;
 
-public interface StringFormatter {
-    String format(final String str, final StringFormatMapping... chatMappings);
+import java.util.Formatter;
 
-    String format(final String str, final StringFormatMappable... chatMappables);
+/**
+ * The {@link StringFormatter} is a tool to easily "format" Strings with custom
+ * mappings for String-variables (like <code>%s</code> for a String for the
+ * {@link Formatter}).
+ *
+ */
+public interface StringFormatter {
+    /**
+     * Formats the given String with the given string mappings.
+     *
+     * @param str
+     *            The String to format.
+     * @param mappings
+     *            The {@link StringFormatMapping}s to use for the given String.
+     * @return The formatted String.
+     */
+    String format(final String str, final StringFormatMapping... mappings);
+
+    /**
+     * Gets all format mappings from the given format mappables and delegates to
+     * {@link StringFormatter#format(String, StringFormatMapping...)}.
+     *
+     * @param str
+     *            The String to format.
+     * @param mappables
+     *            The {@link StringFormatMappable}s storing the
+     *            {@link StringFormatMapping}s to use for the given String.
+     * @return The formatted String.
+     */
+    String format(final String str, final StringFormatMappable... mappables);
 }

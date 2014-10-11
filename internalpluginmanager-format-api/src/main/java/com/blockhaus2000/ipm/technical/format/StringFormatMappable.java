@@ -17,6 +17,15 @@
  */
 package com.blockhaus2000.ipm.technical.format;
 
+/**
+ * A {@link StringFormatMappable} can be used within the {@link StringFormatter}
+ * as a mapping provider.
+ *
+ */
 public interface StringFormatMappable {
+    /**
+     *
+     * @return The associated {@link StringFormatMapping}.
+     */
     StringFormatMapping getStringFormatMapping();
 }

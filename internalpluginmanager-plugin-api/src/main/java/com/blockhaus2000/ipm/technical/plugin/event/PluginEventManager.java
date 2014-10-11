@@ -20,16 +20,64 @@ package com.blockhaus2000.ipm.technical.plugin.event;
 import com.blockhaus2000.ipm.technical.event.EventManager;
 import com.blockhaus2000.ipm.technical.plugin.Plugin;
 
+/**
+ * A special extension for the normal {@link EventManager} to enable
+ * auto-disabling of event listeners that are holded by disabled plugins.
+ *
+ */
 public interface PluginEventManager extends EventManager {
+    /**
+     * Registers the event handlers of the given class for the given plugin. The
+     * plugin is used to auto-disable event listeners for plugins that where
+     * disabled.
+     *
+     * @param plugin
+     *            The plugin to use for the auto-disabling.
+     * @param clazz
+     *            The class that contains the event listeners.
+     * @param obj
+     *            An object of the given class. Can only be <code>null</code> if
+     *            all event listeners are static methods.
+     * @see com.blockhaus2000.ipm.technical.event.EventManager#register(java.lang.Class,
+     *      java.lang.Object)
+     */
     public <T> void register(final Plugin plugin, final Class<T> clazz, final T obj);
 
+    /**
+     * Delegates to {@link PluginEventManager#register(Plugin, Class, Object)}
+     * with <code>plugin = plugin</code>, <code>clazz = clazz</code> and
+     * <code>obj = null</code>.
+     *
+     * @param plugin
+     *            Is passed into
+     *            {@link PluginEventManager#register(Plugin, Class, Object)}.
+     * @param clazz
+     *            Is passed into
+     *            {@link PluginEventManager#register(Plugin, Class, Object)}.
+     */
     public <T> void register(final Plugin plugin, final Class<T> clazz);
 
+    /**
+     * Delegates to {@link PluginEventManager#register(Plugin, Class, Object)}
+     * with <code>plugin = plugin</code>, <code>clazz = obj.getClass()</code>
+     * and <code>obj = obj</code>.
+     *
+     * @param plugin
+     *            Is passed into
+     *            {@link PluginEventManager#register(Plugin, Class, Object)}.
+     * @param obj
+     *            Is passed into
+     *            {@link PluginEventManager#register(Plugin, Class, Object)}.
+     */
     public <T> void register(final Plugin plugin, final T obj);
 
     /**
      * {@inheritDoc}
      *
+     * @deprecated Use
+     *             {@link PluginEventManager#register(Plugin, Class, Object)},
+     *             {@link PluginEventManager#register(Plugin, Class)} or
+     *             {@link PluginEventManager#register(Plugin, Object)} instead.
      * @see com.blockhaus2000.ipm.technical.event.EventManager#register(java.lang.Class,
      *      java.lang.Object)
      */
@@ -40,6 +88,10 @@ public interface PluginEventManager extends EventManager {
     /**
      * {@inheritDoc}
      *
+     * @deprecated Use
+     *             {@link PluginEventManager#register(Plugin, Class, Object)},
+     *             {@link PluginEventManager#register(Plugin, Class)} or
+     *             {@link PluginEventManager#register(Plugin, Object)} instead.
      * @see com.blockhaus2000.ipm.technical.event.EventManager#register(java.lang.Class)
      */
     @Deprecated
@@ -49,6 +101,10 @@ public interface PluginEventManager extends EventManager {
     /**
      * {@inheritDoc}
      *
+     * @deprecated Use
+     *             {@link PluginEventManager#register(Plugin, Class, Object)},
+     *             {@link PluginEventManager#register(Plugin, Class)} or
+     *             {@link PluginEventManager#register(Plugin, Object)} instead.
      * @see com.blockhaus2000.ipm.technical.event.EventManager#register(java.lang.Object)
      */
     @Deprecated

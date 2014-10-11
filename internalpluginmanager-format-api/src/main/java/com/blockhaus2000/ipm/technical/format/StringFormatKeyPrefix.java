@@ -17,6 +17,11 @@
  */
 package com.blockhaus2000.ipm.technical.format;
 
+/**
+ * The {@link StringFormatKeyPrefix} is an enum of valid prefixes that can be
+ * used to create a complete {@link StringFormatMappingKey}.
+ *
+ */
 public enum StringFormatKeyPrefix {
     /**
      * <code>#</code>
@@ -44,12 +49,26 @@ public enum StringFormatKeyPrefix {
      */
     COMMERCIAL_AT('@');
 
+    /**
+     * The prefix char.
+     *
+     */
     private final char prefix;
 
+    /**
+     * Constructor of StringFormatKeyPrefix.
+     *
+     * @param prefix
+     *            The prefix char.
+     */
     private StringFormatKeyPrefix(final char prefix) {
         this.prefix = prefix;
     }
 
+    /**
+     *
+     * @return {@link StringFormatKeyPrefix#prefix}
+     */
     public char getPrefix() {
         return this.prefix;
     }
