@@ -40,6 +40,21 @@
 		</dependency>
 		<dependency>
 			<groupId>com.blockhaus2000</groupId>
+			<artifactId>internalpluginmanager-event-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.blockhaus2000</groupId>
+			<artifactId>internalpluginmanager-format-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.blockhaus2000</groupId>
+			<artifactId>internalpluginmanager-scheduler-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.blockhaus2000</groupId>
 			<artifactId>internalpluginmanager-plugin-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>

@@ -32,4 +32,11 @@ public interface CommandSender {
      *         <code>false</code> in all other cases.
      */
     boolean hasPermission(final String permission);
+
+    /**
+     *
+     * @param message
+     *            Sends a message to this command sender.
+     */
+    void sendMessage(final String message);
 }

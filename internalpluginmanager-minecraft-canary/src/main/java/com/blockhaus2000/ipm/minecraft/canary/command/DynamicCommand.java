@@ -31,8 +31,8 @@ import com.blockhaus2000.ipm.minecraft.InternalPluginManager;
 import com.blockhaus2000.ipm.minecraft.command.CommandSender;
 
 /**
- * The {@link DynamicCommand} is an extension of the Canary
- * {@link CanaryCommand} to hack into the Canary command system.
+ * The dynamic command is an extension of the Canary {@link CanaryCommand} to
+ * hack into the Canary command system.
  *
  */
 public class DynamicCommand extends CanaryCommand {
@@ -106,9 +106,9 @@ public class DynamicCommand extends CanaryCommand {
          */
         // The annotation is returned from the method itself.
         @Command(aliases = { "" },
-                 description = "",
-                 permissions = { "" },
-                 toolTip = "")
+                description = "",
+                permissions = { "" },
+                toolTip = "")
         private static Command get() {
             if (DummyCommandAnnotation.commandAnot == null) {
                 synchronized (DummyCommandAnnotation.LOCK) {
@@ -118,10 +118,10 @@ public class DynamicCommand extends CanaryCommand {
                             method = DummyCommandAnnotation.class.getDeclaredMethod("get");
                         } catch (final SecurityException ex) {
                             InternalPluginManager.getServer().getLogger()
-                            .log(Level.SEVERE, "An error occurred whilest getting the dummy command annotation!", ex);
+                                    .log(Level.SEVERE, "An error occurred whilest getting the dummy command annotation!", ex);
                         } catch (final NoSuchMethodException ex) {
                             InternalPluginManager.getServer().getLogger()
-                            .log(Level.SEVERE, "An error occurred whilest getting the dummy command annotation!", ex);
+                                    .log(Level.SEVERE, "An error occurred whilest getting the dummy command annotation!", ex);
                         }
                         method.setAccessible(true);
                         DummyCommandAnnotation.commandAnot = method.getAnnotation(net.canarymod.commandsys.Command.class);

@@ -22,16 +22,8 @@ import java.util.UUID;
 import java.util.logging.Logger;
 
 import com.blockhaus2000.ipm.minecraft.bukkit.entity.Player;
-import com.blockhaus2000.ipm.minecraft.command.CommandSender;
 import com.blockhaus2000.ipm.minecraft.command.ConsoleCommandSender;
-import com.blockhaus2000.ipm.minecraft.event.EventManager;
-import com.blockhaus2000.ipm.minecraft.inventory.ItemStack;
-import com.blockhaus2000.ipm.minecraft.inventory.Recipe;
-import com.blockhaus2000.ipm.minecraft.map.MapView;
-import com.blockhaus2000.ipm.minecraft.scheduler.Scheduler;
-import com.blockhaus2000.ipm.minecraft.scoreboard.ScoreboardManager;
-import com.blockhaus2000.ipm.minecraft.world.World;
-import com.blockhaus2000.ipm.minecraft.world.WorldCreator;
+import com.blockhaus2000.ipm.technical.event.EventManager;
 import com.blockhaus2000.ipm.technical.plugin.PluginManager;
 import com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager;
 

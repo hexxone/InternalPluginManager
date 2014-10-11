@@ -90,34 +90,21 @@ public interface PluginCommandManager extends CommandManager {
     <T> Set<CommandInfo> register(final Plugin plugin, final Class<T> clazz);
 
     /**
+     * {@inheritDoc}
      *
-     * @param <T>
-     *            The type of the object to register.
-     * @param clazz
-     *            The {@link Class} containing all commands.
-     * @param obj
-     *            An {@link Object} of the given {@link Class}, if one of the
-     *            methods to register is non-static.
-     * @return A set of registered command informations.
      * @deprecated Use
      *             {@link PluginCommandManager#register(Plugin, Class, Object)}
      *             instead.
-     * @see com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager#
-     *      register(com.blockhaus2000.ipm.technical.plugin.Plugin,
-     *      java.lang.Class, java.lang.Object)
+     * @see com.blockhaus2000.ipm.technical.command.CommandManager#register(java.lang.Class,
+     *      java.lang.Object)
      */
     @Deprecated
     @Override
     <T> Set<CommandInfo> register(Class<T> clazz, T obj);
 
     /**
+     * {@inheritDoc}
      *
-     * @param <T>
-     *            The type of the object to register.
-     * @param obj
-     *            An {@link Object} of the given {@link Class}, if one of the
-     *            methods to register is non-static.
-     * @return A set of registered command informations.
      * @deprecated Use
      *             {@link PluginCommandManager#register(Plugin, Class, Object)}
      *             instead.
@@ -130,12 +117,8 @@ public interface PluginCommandManager extends CommandManager {
     <T> Set<CommandInfo> register(T obj);
 
     /**
+     * {@inheritDoc}
      *
-     * @param <T>
-     *            The type of the object to register.
-     * @param clazz
-     *            The {@link Class} containing all commands.
-     * @return A set of registered command informations.
      * @deprecated Use
      *             {@link PluginCommandManager#register(Plugin, Class, Object)}
      *             instead.

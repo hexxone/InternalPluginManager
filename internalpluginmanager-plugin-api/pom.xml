@@ -35,6 +35,21 @@
 		</dependency>
 		<dependency>
 			<groupId>com.blockhaus2000</groupId>
+			<artifactId>internalpluginmanager-event-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.blockhaus2000</groupId>
+			<artifactId>internalpluginmanager-format-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.blockhaus2000</groupId>
+			<artifactId>internalpluginmanager-scheduler-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.blockhaus2000</groupId>
 			<artifactId>internalpluginmanager-configuration-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
@@ -64,6 +79,9 @@
 								erros, they are OK. -->
 							<include>com.blockhaus2000:internalpluginmanager-command-api</include>
 							<include>com.blockhaus2000:internalpluginmanager-configuration-api</include>
+							<include>com.blockhaus2000:internalpluginmanager-event-api</include>
+							<include>com.blockhaus2000:internalpluginmanager-format-api</include>
+							<include>com.blockhaus2000:internalpluginmanager-scheduler-api</include>
 						</includes>
 					</artifactSet>
 				</configuration>

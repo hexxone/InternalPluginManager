@@ -21,17 +21,10 @@ import com.blockhaus2000.ipm.minecraft.command.CommandSenderType;
 import com.blockhaus2000.ipm.minecraft.command.ConsoleCommandSender;
 
 /**
- * The implementation of {@link ConsoleCommandSender} for Canary.
+ * The Canary implementation of {@link ConsoleCommandSender}.
  *
  */
 public class CanaryConsoleCommandSender implements ConsoleCommandSender {
-    /**
-     * An instance of the {@link CanaryConsoleCommandSender} to reduce heap
-     * memory usage.
-     *
-     */
-    private static final ConsoleCommandSender INSTANCE = new CanaryConsoleCommandSender();
-
     /**
      * {@inheritDoc}
      *
@@ -53,14 +46,12 @@ public class CanaryConsoleCommandSender implements ConsoleCommandSender {
     }
 
     /**
-     * <p>
-     * <b> NOTE: This is only a method to get an instance! This is no singleton!
-     * </b>
-     * </p>
+     * {@inheritDoc}
      *
-     * @return An instance of the {@link CanaryConsoleCommandSender}.
+     * @see com.blockhaus2000.ipm.technical.command.CommandSender#sendMessage(java.lang.String)
      */
-    public static ConsoleCommandSender getInstance() {
-        return CanaryConsoleCommandSender.INSTANCE;
+    @Override
+    public void sendMessage(final String message) {
+        System.out.println(message);
     }
 }

@@ -33,7 +33,7 @@ import com.blockhaus2000.ipm.technical.command.util.exception.CommandException;
 import com.blockhaus2000.ipm.technical.plugin.command.SimplePluginCommandManager;
 
 /**
- * A special extension for the {@link SimplePluginCommandManager} for Bukkit to
+ * A special extension of the {@link SimplePluginCommandManager} for Bukkit to
  * hack into the command system of Bukkit.
  *
  */

@@ -24,8 +24,8 @@ import net.canarymod.plugin.Plugin;
 import com.blockhaus2000.ipm.technical.plugin.PluginManager;
 
 /**
- * The main class of the Canary implementation of the InternalPluginManager
- * Minecraft API.
+ * The main class of the InternalPluginManager Minecraft API implementation for
+ * Bukkit.
  *
  */
 public class Main extends Plugin {
@@ -76,7 +76,8 @@ public class Main extends Plugin {
      */
     private void addInjectionResources() {
         // For safety reasons, CanaryServer registers itself.
-        CanaryServer.getInstance();
+        // TODO: Uncomment
+        // CanaryServer.getInstance();
     }
 
     /**

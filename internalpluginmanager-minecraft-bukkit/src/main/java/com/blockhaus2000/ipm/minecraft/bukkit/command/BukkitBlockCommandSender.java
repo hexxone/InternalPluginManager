@@ -21,7 +21,7 @@ import com.blockhaus2000.ipm.minecraft.command.BlockCommandSender;
 import com.blockhaus2000.ipm.minecraft.command.CommandSenderType;
 
 /**
- * The implementation of {@link BlockCommandSender} for Bukkit.
+ * The Bukkit implementation of {@link BlockCommandSender}.
  *
  */
 public class BukkitBlockCommandSender implements BlockCommandSender {
@@ -32,7 +32,7 @@ public class BukkitBlockCommandSender implements BlockCommandSender {
      */
     @Override
     public CommandSenderType getType() {
-        return null;
+        return CommandSenderType.BLOCK;
     }
 
     /**
@@ -42,6 +42,16 @@ public class BukkitBlockCommandSender implements BlockCommandSender {
      */
     @Override
     public boolean hasPermission(final String permission) {
-        return false;
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.technical.command.CommandSender#sendMessage(java.lang.String)
+     */
+    @Override
+    public void sendMessage(final String message) {
+        System.out.println(message);
     }
 }

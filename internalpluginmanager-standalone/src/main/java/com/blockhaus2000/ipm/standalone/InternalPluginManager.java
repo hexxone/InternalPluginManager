@@ -19,6 +19,8 @@ package com.blockhaus2000.ipm.standalone;
 
 import com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager;
 import com.blockhaus2000.ipm.technical.plugin.command.SimplePluginCommandManager;
+import com.blockhaus2000.ipm.technical.plugin.event.PluginEventManager;
+import com.blockhaus2000.ipm.technical.plugin.event.SimplePluginEventManager;
 
 /**
  * This utility class only provides some methods that are important to use the
@@ -31,6 +33,12 @@ public class InternalPluginManager {
      *
      */
     private static final PluginCommandManager COMMAND_MANAGER = new SimplePluginCommandManager();
+
+    /**
+     * The one and only event manager that should be used.
+     *
+     */
+    private static final PluginEventManager EVENT_MANAGER = new SimplePluginEventManager();
 
     /**
      * Constructor of InternalPluginManager.
@@ -46,5 +54,13 @@ public class InternalPluginManager {
      */
     public static PluginCommandManager getCommandManager() {
         return InternalPluginManager.COMMAND_MANAGER;
+    }
+
+    /**
+     *
+     * @return {@link InternalPluginManager#EVENT_MANAGER}
+     */
+    public static PluginEventManager getEventManager() {
+        return InternalPluginManager.EVENT_MANAGER;
     }
 }

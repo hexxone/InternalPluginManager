@@ -41,4 +41,14 @@ public class MockedCommandSender implements CommandSender {
     public boolean hasPermission(final String permission) {
         return permission == null || permission.equals("") || permission.equals(MockedCommandSender.JUNIT_TEST_PERIMSSION);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.technical.command.CommandSender#sendMessage(java.lang.String)
+     */
+    @Override
+    public void sendMessage(final String message) {
+        // Nothing to do.
+    }
 }

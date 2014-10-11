@@ -21,17 +21,10 @@ import com.blockhaus2000.ipm.minecraft.command.CommandSenderType;
 import com.blockhaus2000.ipm.minecraft.command.ConsoleCommandSender;
 
 /**
- * The implementation of {@link ConsoleCommandSender} for Bukkit.
+ * The Bukkit implementation of {@link ConsoleCommandSender}.
  *
  */
 public class BukkitConsoleCommandSender implements ConsoleCommandSender {
-    /**
-     * An instance of the {@link BukkitConsoleCommandSender} to reduce heap
-     * memory usage.
-     *
-     */
-    private static final ConsoleCommandSender INSTANCE = new BukkitConsoleCommandSender();
-
     /**
      * {@inheritDoc}
      *
@@ -49,19 +42,16 @@ public class BukkitConsoleCommandSender implements ConsoleCommandSender {
      */
     @Override
     public boolean hasPermission(final String permission) {
-        // The console has all permissions.
         return true;
     }
 
     /**
-     * <p>
-     * <b> NOTE: This is only a method to get an instance! This is no singleton!
-     * </b>
-     * </p>
+     * {@inheritDoc}
      *
-     * @return An instance of the {@link BukkitConsoleCommandSender}.
+     * @see com.blockhaus2000.ipm.technical.command.CommandSender#sendMessage(java.lang.String)
      */
-    public static ConsoleCommandSender getInstance() {
-        return BukkitConsoleCommandSender.INSTANCE;
+    @Override
+    public void sendMessage(final String message) {
+        System.out.println(message);
     }
 }

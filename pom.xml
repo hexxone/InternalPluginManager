@@ -12,6 +12,9 @@
 		<module>internalpluginmanager-base-api</module>
 		<module>internalpluginmanager-command-api</module>
 		<module>internalpluginmanager-configuration-api</module>
+		<module>internalpluginmanager-event-api</module>
+		<module>internalpluginmanager-format-api</module>
+		<module>internalpluginmanager-scheduler-api</module>
 		<module>internalpluginmanager-plugin-api</module>
 		<module>internalpluginmanager-api</module>
 

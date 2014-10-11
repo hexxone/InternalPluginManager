@@ -19,9 +19,8 @@ package com.blockhaus2000.ipm.minecraft;
 
 import java.util.UUID;
 
-import javax.xml.stream.Location;
-
 import com.blockhaus2000.ipm.minecraft.bukkit.entity.Player;
+import com.blockhaus2000.ipm.minecraft.world.Location;
 
 public interface OfflinePlayer {
     /**
@@ -101,7 +100,7 @@ public interface OfflinePlayer {
      * @param banned
      *            The new banned state.
      */
-    void setBanned(final boolean banned);
+    void setBanned(final boolean banned, final String reason);
 
     /**
      * Set whether this player is whitelisted.

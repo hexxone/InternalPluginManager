@@ -25,8 +25,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.blockhaus2000.ipm.technical.plugin.PluginManager;
 
 /**
- * The main class of the Bukkit implementation of the InternalPluginManager
- * Minecraft API.
+ * The main class of the InternalPluginManager Minecraft API implementation for
+ * Bukkit.
  *
  */
 public class Main extends JavaPlugin {
@@ -65,7 +65,8 @@ public class Main extends JavaPlugin {
      */
     private void addInjectionResources() {
         // For safety reasons, BukkitServer registers itself.
-        BukkitServer.getInstance();
+        // TODO: Uncomment.
+        // BukkitServer.getInstance();
     }
 
     /**
