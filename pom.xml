@@ -18,6 +18,12 @@
 		<module>internalpluginmanager-plugin-api</module>
 		<module>internalpluginmanager-api</module>
 
+		<!-- The IPM-Extensions are using this plugin. -->
+		<module>internalpluginmanager-maven-plugin</module>
+
+		<!-- Extensions are based on the API, so must be executed at last. -->
+		<module>internalpluginmanager-extension</module>
+
 		<!-- This must be built before all other minecraf stuff. It is safest to 
 			build it here. -->
 		<module>internalpluginmanager-minecraft-api</module>
@@ -26,7 +32,7 @@
 		<module>internalpluginmanager-standalone</module>
 		<module>internalpluginmanager-minecraft-bukkit</module>
 		<module>internalpluginmanager-minecraft-canary</module>
-		
+
 		<!-- This must be executed at last. -->
 		<module>internalpluginmanager-distribution</module>
 	</modules>
