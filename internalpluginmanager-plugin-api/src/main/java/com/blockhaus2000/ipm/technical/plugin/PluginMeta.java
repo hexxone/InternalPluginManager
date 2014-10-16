@@ -107,6 +107,8 @@ public class PluginMeta implements Cloneable, Serializable {
      *            The {@link PluginMeta} to get the information from.
      */
     private PluginMeta(final PluginMeta meta) {
+        assert meta != null : "Meta cannot be null!";
+
         this.file = meta.file;
         this.name = meta.name;
         this.version = meta.version;
@@ -123,6 +125,8 @@ public class PluginMeta implements Cloneable, Serializable {
      * @return The parsed plugin meta.
      */
     private Map<PluginMetaEntry, String> parse(final InputStream in) {
+        assert in != null : "In cannot be null!";
+
         final List<String> dataLines = new ArrayList<String>();
 
         final Scanner scanner = new Scanner(new BufferedInputStream(in));
@@ -158,6 +162,12 @@ public class PluginMeta implements Cloneable, Serializable {
      *            The new {@link File}.
      */
     void setFile(final File file) {
+        assert file != null : "File cannot be null!";
+
+        if (this.file != null) {
+            throw new IllegalStateException("File has been already initilized!");
+        }
+
         this.file = file;
     }
 

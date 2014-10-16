@@ -58,6 +58,8 @@ public class Connection implements Closeable {
      *             If an I/O error occurres.
      */
     protected Connection(final Socket socket) throws IOException {
+        assert socket != null : "Socket cannot be null!";
+
         this.socket = socket;
 
         this.in = new DataInputStream(socket.getInputStream());

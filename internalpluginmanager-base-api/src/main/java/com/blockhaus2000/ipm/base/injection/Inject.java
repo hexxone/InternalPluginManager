@@ -30,5 +30,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Inject {
-    // empty
+    // Nothing to do.
 }

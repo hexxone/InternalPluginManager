@@ -49,6 +49,8 @@ public final class ServerUtil {
      *             If an I/O error occurres.
      */
     public static byte[] readPacket(final InputStream in) throws IOException {
+        assert in != null : "In cannot be null!";
+
         final DataInputStream dataIn = new DataInputStream(in);
 
         final List<Byte> rawData = new LinkedList<Byte>();

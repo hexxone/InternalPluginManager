@@ -58,6 +58,8 @@ public class PluginInformationRequestPacket implements RequestPacket {
      *            The plugin name to request information for.
      */
     public PluginInformationRequestPacket(final String pluginName) {
+        assert pluginName != null : "PluginName cannot be null!";
+
         this.pluginName = pluginName;
     }
 
@@ -70,6 +72,8 @@ public class PluginInformationRequestPacket implements RequestPacket {
      *            from. Must be a valid packet.
      */
     public PluginInformationRequestPacket(final byte[] requestData) {
+        assert requestData != null : "RequestData cannot be null!";
+
         final int requestPluginNameLength = BitUtil.fromBytes(requestData[1], requestData[2],
                 requestData[PluginInformationRequestPacket._3], requestData[PluginInformationRequestPacket._4]);
 

@@ -90,6 +90,8 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
      */
     @Override
     public String getString(final String path, final String def) {
+        assert path != null : "Path cannot be null!";
+
         String result = this.config.get(path);
         if (result == null || result.isEmpty()) {
             result = def;
@@ -105,6 +107,8 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
      */
     @Override
     public List<String> getStringList(final String path, final List<String> def) {
+        assert path != null : "Path cannot be null!";
+
         final String value = this.getString(path);
         if (value == null) {
             return def;
@@ -127,6 +131,8 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
      */
     @Override
     public boolean getBoolean(final String path, final boolean def) {
+        assert path != null : "Path cannot be null!";
+
         return Boolean.valueOf(this.getString(path, Boolean.toString(def))).booleanValue();
     }
 
@@ -138,6 +144,8 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
      */
     @Override
     public int getInteger(final String path, final int def) {
+        assert path != null : "Path cannot be null!";
+
         return Integer.valueOf(this.getString(path, Integer.toString(def))).intValue();
     }
 
@@ -149,6 +157,8 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
      */
     @Override
     public long getLong(final String path, final long def) {
+        assert path != null : "Path cannot be null!";
+
         return Long.valueOf(this.getString(path, Long.toString(def))).longValue();
     }
 
@@ -160,6 +170,8 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
      */
     @Override
     public double getDouble(final String path, final double def) {
+        assert path != null : "Path cannot be null!";
+
         return Double.valueOf(this.getString(path, Double.toString(def))).doubleValue();
     }
 
@@ -172,6 +184,8 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
      */
     @Override
     public void set(final String path, final String value) {
+        assert path != null : "Path cannot be null!";
+
         this.config.set(path, value);
     }
 
@@ -183,6 +197,8 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
      */
     @Override
     public void set(final String path, final List<String> value) {
+        assert path != null : "Path cannot be null!";
+
         final StringBuilder builder = new StringBuilder();
         for (int i = 0; i < value.size(); i++) {
             if (i != 0) {
@@ -201,6 +217,8 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
      */
     @Override
     public void set(final String path, final boolean value) {
+        assert path != null : "Path cannot be null!";
+
         this.config.set(path, Boolean.toString(value));
     }
 
@@ -212,6 +230,8 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
      */
     @Override
     public void set(final String path, final int value) {
+        assert path != null : "Path cannot be null!";
+
         this.config.set(path, Integer.toString(value));
     }
 
@@ -223,6 +243,8 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
      */
     @Override
     public void set(final String path, final long value) {
+        assert path != null : "Path cannot be null!";
+
         this.config.set(path, Long.toString(value));
     }
 
@@ -234,6 +256,8 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
      */
     @Override
     public void set(final String path, final double value) {
+        assert path != null : "Path cannot be null!";
+
         this.config.set(path, Double.toString(value));
     }
 
@@ -246,6 +270,8 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
      */
     @Override
     public void add(final String path, final String def) {
+        assert path != null : "Path cannot be null!";
+
         if (this.getString(path) == null) {
             this.set(path, def);
         }
@@ -259,6 +285,8 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
      */
     @Override
     public void add(final String path, final List<String> def) {
+        assert path != null : "Path cannot be null!";
+
         if (this.getString(path) == null) {
             this.set(path, def);
         }
@@ -272,6 +300,8 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
      */
     @Override
     public void add(final String path, final boolean def) {
+        assert path != null : "Path cannot be null!";
+
         if (this.getString(path) == null) {
             this.set(path, def);
         }
@@ -285,6 +315,8 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
      */
     @Override
     public void add(final String path, final int def) {
+        assert path != null : "Path cannot be null!";
+
         if (this.getString(path) == null) {
             this.set(path, def);
         }
@@ -298,6 +330,8 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
      */
     @Override
     public void add(final String path, final long def) {
+        assert path != null : "Path cannot be null!";
+
         if (this.getString(path) == null) {
             this.set(path, def);
         }
@@ -311,6 +345,8 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
      */
     @Override
     public void add(final String path, final double def) {
+        assert path != null : "Path cannot be null!";
+
         if (this.getString(path) == null) {
             this.set(path, def);
         }
@@ -324,6 +360,8 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
      */
     @Override
     public void remove(final String path) {
+        assert path != null : "Path cannot be null!";
+
         this.config.remove(path);
     }
 

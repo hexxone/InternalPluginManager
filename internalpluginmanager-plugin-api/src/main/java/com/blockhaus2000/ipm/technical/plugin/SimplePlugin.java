@@ -77,7 +77,7 @@ public class SimplePlugin implements Plugin {
      *
      */
     protected SimplePlugin() {
-        this.propertyChangeSupport.addPropertyChangeListener(Plugin.ENABLED_PROPERTY_NAME, this);
+        this.propertyChangeSupport.addPropertyChangeListener(this);
     }
 
     /**
@@ -203,6 +203,8 @@ public class SimplePlugin implements Plugin {
      */
     @Override
     public void propertyChange(final PropertyChangeEvent event) {
+        assert event != null : "Event cannot be null!";
+
         if (event.getPropertyName().equals(Plugin.ENABLED_PROPERTY_NAME)) {
             if ((Boolean) event.getNewValue()) {
                 this.onEnable();
@@ -220,6 +222,12 @@ public class SimplePlugin implements Plugin {
      *            The {@link PluginMeta}.
      */
     void init(final PluginMeta initPluginMeta) {
+        assert this.pluginMeta != null : "InitPluginMeta cannot be null!";
+
+        if (this.pluginMeta != null) {
+            throw new IllegalStateException("Already initilized!");
+        }
+
         this.pluginMeta = initPluginMeta;
         this.logger = Logger.getLogger(CommonConstants.INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME + "." + initPluginMeta.getName());
         this.dataFolder = new File(PluginManager.getInstance().getConfigDirectory(), initPluginMeta.getName().toLowerCase());

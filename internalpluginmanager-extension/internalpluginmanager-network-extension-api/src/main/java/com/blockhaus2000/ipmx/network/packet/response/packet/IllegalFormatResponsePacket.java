@@ -59,6 +59,8 @@ public class IllegalFormatResponsePacket implements ResponsePacket {
      *            The error message.
      */
     public IllegalFormatResponsePacket(final String message) {
+        assert message != null : "Message cannot be null!";
+
         this.message = message;
     }
 
@@ -70,6 +72,8 @@ public class IllegalFormatResponsePacket implements ResponsePacket {
      *            The <code>byte[]</code> to read the data from.
      */
     public IllegalFormatResponsePacket(final byte[] responseData) {
+        assert responseData != null : "ResponseData cannot be null!";
+
         final int start = IllegalFormatResponsePacket._5;
         final int end = start
                 + BitUtil.fromBytes(responseData[1], responseData[2], responseData[IllegalFormatResponsePacket._3],

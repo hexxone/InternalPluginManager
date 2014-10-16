@@ -112,6 +112,8 @@ public final class BitUtil {
      * @return The joined byte array.
      */
     public static byte[] toByteArray(final byte... bytes) {
+        assert bytes != null : "Bytes cannot be null!";
+
         final byte[] result = new byte[bytes.length];
 
         for (int i = 0; i < bytes.length; i++) {
@@ -132,6 +134,8 @@ public final class BitUtil {
      * @return The converted and joined shorts.
      */
     public static byte[] toByteArray(final short... shorts) {
+        assert shorts != null : "Shorts cannot be null!";
+
         final byte[] result = new byte[shorts.length * 2];
 
         for (int i = 0; i < shorts.length * 2; i = i + 2) {
@@ -151,6 +155,8 @@ public final class BitUtil {
      * @return The converted and joined ints.
      */
     public static byte[] toByteArray(final int... ints) {
+        assert ints != null : "Ints cannot be null!";
+
         final byte[] result = new byte[ints.length * BitUtil._4];
 
         for (int i = 0; i < ints.length * BitUtil._4; i = i + BitUtil._4) {
@@ -172,6 +178,8 @@ public final class BitUtil {
      * @return The converted and joined longs.
      */
     public static byte[] toByteArray(final long... longs) {
+        assert longs != null : "Longs cannot be null!";
+
         final byte[] result = new byte[longs.length * BitUtil._8];
 
         for (int i = 0; i < longs.length * BitUtil._8; i = i + BitUtil._8) {
@@ -210,9 +218,15 @@ public final class BitUtil {
      * @return The joined and converted Strings.
      */
     public static byte[] toByteArray(final String... strings) {
+        assert strings != null : "Strings cannot be null!";
+
         final StringBuilder builder = new StringBuilder();
         for (final String s : strings) {
-            builder.append(s);
+            if (s == null) {
+                builder.append("");
+            } else {
+                builder.append(s);
+            }
         }
         final String str = builder.toString();
 
@@ -234,6 +248,8 @@ public final class BitUtil {
      * @return The joined byte arrays.
      */
     public static byte[] toByteArray(final byte[]... bytes) {
+        assert bytes != null : "Bytes cannot be null!";
+
         int length = 0;
         for (final byte[] bs : bytes) {
             length = length + bs.length;
@@ -272,6 +288,8 @@ public final class BitUtil {
      * @return The converted bytes.
      */
     public static String fromBytesToString(final byte... bytes) {
+        assert bytes != null : "Bytes cannot be null!";
+
         final StringBuilder builder = new StringBuilder();
         for (final byte b : bytes) {
             builder.append((char) b);

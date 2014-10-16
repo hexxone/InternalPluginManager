@@ -38,6 +38,8 @@ public class EventContext<T extends AbstractEvent> {
      *            The event to store.
      */
     public EventContext(final T event) {
+        assert event != null : "Event cannot be null!";
+
         this.event = event;
     }
 

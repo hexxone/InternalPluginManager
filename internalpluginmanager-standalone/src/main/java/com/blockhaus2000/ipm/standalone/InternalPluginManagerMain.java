@@ -98,7 +98,7 @@ public final class InternalPluginManagerMain implements CommandEventListener {
      *            The {@link CommandContext}.
      */
     @Command(aliases = { InternalPluginManagerMain.MAIN_COMMAND, InternalPluginManagerMain.MAIN_COMMAND_ALIAS },
-            secondLevelCommand = "stop")
+             secondLevelCommand = "stop")
     public static void internalpluginmanagerCommand(final CommandContext context) {
         // Suppress unused-warning, suppresses checkstyle warning on
         // @SuppressWarnings("unused").
@@ -116,7 +116,7 @@ public final class InternalPluginManagerMain implements CommandEventListener {
     public void onCommandEvent(final CommandEvent commandEvent) {
         final CommandEventData commandEventData = commandEvent.getCommandEventData().get(0);
         if (Arrays.equals(commandEventData.getCommandInfo().getCommandAnot().aliases(), new String[] {
-            InternalPluginManagerMain.MAIN_COMMAND, InternalPluginManagerMain.MAIN_COMMAND_ALIAS })) {
+                InternalPluginManagerMain.MAIN_COMMAND, InternalPluginManagerMain.MAIN_COMMAND_ALIAS })) {
             switch (commandEventData.getEventType()) {
                 case UNAVAILABLE_SECOND_LEVEL_COMMAND:
                 case UNKNOWN_SECOND_LEVEL_COMMAND:

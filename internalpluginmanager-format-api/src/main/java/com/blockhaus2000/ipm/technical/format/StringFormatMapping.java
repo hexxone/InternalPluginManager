@@ -43,6 +43,9 @@ public class StringFormatMapping {
      *            The mapped String.
      */
     public StringFormatMapping(final StringFormatMappingKey key, final String formatted) {
+        assert key != null : "Key cannot be null!";
+        assert formatted != null : "Formatted cannot be null!";
+
         this.key = key;
         this.formatted = formatted;
     }

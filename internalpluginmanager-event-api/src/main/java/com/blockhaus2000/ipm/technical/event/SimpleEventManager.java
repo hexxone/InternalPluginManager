@@ -161,6 +161,8 @@ public class SimpleEventManager implements EventManager {
      *            The event to fire.
      */
     private void internalFire(final AbstractEvent event) {
+        assert event != null : "Event cannot be null!";
+
         final EventContext<AbstractEvent> context = new EventContext<AbstractEvent>(event);
         for (final EventHandler handler : event.getHandlers()) {
             if (!handler.isEnabled()) {

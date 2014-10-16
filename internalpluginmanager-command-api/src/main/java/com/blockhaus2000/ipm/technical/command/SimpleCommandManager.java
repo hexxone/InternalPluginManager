@@ -212,6 +212,8 @@ public class SimpleCommandManager implements CommandManager {
      */
     @Override
     public Set<CommandInfo> unregister(final Class<?> clazz) {
+        assert clazz != null : "Clazz cannot be null!";
+
         final Set<CommandInfo> unregistered = new HashSet<CommandInfo>();
 
         for (final Method method : clazz.getDeclaredMethods()) {
@@ -242,6 +244,8 @@ public class SimpleCommandManager implements CommandManager {
      */
     @Override
     public Set<CommandInfo> unregister(final Object obj) {
+        assert obj != null : "Obj cannot be null!";
+
         return this.unregister(obj.getClass());
     }
 
@@ -254,11 +258,12 @@ public class SimpleCommandManager implements CommandManager {
      */
     @Override
     public boolean execute(final String rawLabel, final CommandSender sender, final String... rawArgs) {
-        final String label = rawLabel == null ? null : rawLabel.toLowerCase().trim();
-
-        assert label != null && !label.isEmpty() : "Label cannot be null or empty!";
+        assert rawLabel != null && !rawLabel.toLowerCase().trim().isEmpty() : "RawLabel cannot be null or empty "
+                + "(lowercased and trimmed)!";
         assert sender != null : "Sender cannot be null!";
         assert rawArgs != null : "RawArgs cannot be null!";
+
+        final String label = rawLabel.toLowerCase().trim();
 
         SimpleCommandManager.LOGGER.fine("\"" + sender + "\" executed \"" + label + "\" with arguments \""
                 + Arrays.asList(rawArgs) + "\"");
@@ -478,6 +483,7 @@ public class SimpleCommandManager implements CommandManager {
     private CommandContext createCommandInfo(final RawCommandContext rawCommandContext,
             final List<CommandEventData> commandEventData) {
         assert rawCommandContext != null : "RawCommandContext cannot be null!";
+        assert commandEventData != null : "CommandEventData cannot be null!";
 
         CommandContext result = null;
 
@@ -730,6 +736,12 @@ public class SimpleCommandManager implements CommandManager {
     private Tag<?> parseFlagValue(final RawCommandContext rawCommandContext, final SyntaxType flagSyntaxType,
             final List<String> rawArgs, final int flagIndex, final Set<Integer> toRemove,
             final List<CommandEventData> commandEventData) {
+        assert rawCommandContext != null : "RawCommandContext cannot be null!";
+        assert flagSyntaxType != null : "FlagSyntaxType cannot be null!";
+        assert rawArgs != null : "RawArgs cannot be null!";
+        assert toRemove != null : "ToRemove cannot be null!";
+        assert commandEventData != null : "CommandEventData cannot be null!";
+
         Tag<?> result = null;
         try {
             switch (flagSyntaxType) {

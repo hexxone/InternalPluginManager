@@ -98,6 +98,9 @@ public final class PluginManager {
      *            The directory where to create the directopry structure.
      */
     public synchronized void start(final File directory) {
+        assert directory != null : "Directory cannot be null!";
+        assert !directory.exists() || directory.isDirectory() : "Directory has to be a directory!";
+
         if (this.started) {
             throw new IllegalStateException("Already started!");
         }
@@ -132,6 +135,8 @@ public final class PluginManager {
      *            The {@link Plugin} to remove/unload.
      */
     public synchronized void remove(final Plugin plugin) {
+        assert plugin != null : "Plugin cannot be null!";
+
         this.remove(plugin, false);
     }
 
@@ -142,6 +147,8 @@ public final class PluginManager {
      *            The {@link Plugin} to remove/unload and delete.
      */
     public void delete(final Plugin plugin) {
+        assert plugin != null : "Plugin cannot be null!";
+
         this.remove(plugin, true);
     }
 
@@ -152,6 +159,8 @@ public final class PluginManager {
      *            The {@link Plugin} to disable.
      */
     public synchronized void disable(final Plugin plugin) {
+        assert plugin != null : "Plugin cannot be null!";
+
         this.checkAccess();
 
         if (!plugin.isEnabled()) {
@@ -193,6 +202,8 @@ public final class PluginManager {
      *            The {@link Plugin} to enable.
      */
     public synchronized void enable(final Plugin plugin) {
+        assert plugin != null : "Plugin cannot be null!";
+
         this.checkAccess();
 
         if (plugin.isEnabled()) {
@@ -233,6 +244,8 @@ public final class PluginManager {
      *         <code>null</code> if not found.
      */
     public Plugin getPlugin(final String name) {
+        assert name != null : "Name cannot be null!";
+
         this.checkAccess();
 
         return this.plugins.get(name.toLowerCase());
@@ -264,6 +277,10 @@ public final class PluginManager {
      *             throws it.
      */
     synchronized void loadPlugin(final File file, final boolean enable, final boolean updateMeta) throws IOException {
+        assert file != null : "File cannot be null!";
+        assert file.exists() : "File has to exist!";
+        assert file.isFile() : "File has to be a file!";
+
         this.checkAccess();
 
         assert file != null : "File cannot be null!";
@@ -318,6 +335,8 @@ public final class PluginManager {
      *            If <code>true</code>, the plugin will be deleted.
      */
     private synchronized void remove(final Plugin plugin, final boolean delete) {
+        assert plugin != null : "Plugin cannot be null!";
+
         this.checkAccess();
 
         this.disable(plugin);

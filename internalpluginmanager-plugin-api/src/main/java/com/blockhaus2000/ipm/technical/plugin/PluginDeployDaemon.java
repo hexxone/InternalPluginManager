@@ -149,6 +149,10 @@ public class PluginDeployDaemon extends Thread {
      *            The {@link File} to load (and deploy).
      */
     private void deploy(final File rawFile) {
+        assert rawFile != null : "RawFile cannot be null!";
+        assert rawFile.exists() : "RawFile has to exist!";
+        assert rawFile.isFile() : "RawFile has to be a file!";
+
         PluginDeployDaemon.LOGGER.info("Jar file \"" + rawFile.getAbsolutePath() + "\" detected.");
 
         final File file = new File(this.pluginDir, rawFile.getName());

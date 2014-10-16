@@ -56,6 +56,7 @@ public final class CommandEvent {
      */
     public CommandEvent(final List<CommandEventData> commandEventData) {
         assert commandEventData != null && !commandEventData.isEmpty() : "CommandEventData cannot be null or empty!";
+
         this.commandEventData = commandEventData;
     }
 

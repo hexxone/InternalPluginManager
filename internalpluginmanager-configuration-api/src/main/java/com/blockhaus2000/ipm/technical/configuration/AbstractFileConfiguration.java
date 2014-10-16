@@ -43,6 +43,7 @@ public abstract class AbstractFileConfiguration {
      *            is a directory.
      */
     public AbstractFileConfiguration(final File file) {
+        assert file != null : "File cannot be null!";
         assert !file.exists() || file.isFile() : "File has to be a file!";
 
         this.file = file;

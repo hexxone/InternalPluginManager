@@ -105,6 +105,8 @@ public final class PluginLoader {
      *            The name of the plugin to remove from the plugin loader.
      */
     synchronized void remove(final String rawName) {
+        assert rawName != null : "RawName cannot be null!";
+
         final String name = rawName.toLowerCase();
 
         final PluginClassLoader classLoader = this.classLoaders.get(name);
@@ -123,6 +125,8 @@ public final class PluginLoader {
      *            Is passed into {@link PluginLoader#remove(String)}.
      */
     synchronized void remove(final Plugin plugin) {
+        assert plugin != null : "Plugin cannot be null!";
+
         this.remove(plugin.getName());
     }
 
@@ -134,6 +138,8 @@ public final class PluginLoader {
      *            The plugin to delete.
      */
     synchronized void delete(final Plugin plugin) {
+        assert plugin != null : "Plugin cannot be null!";
+
         this.remove(plugin.getName());
         plugin.getPluginMeta().getFile().delete();
     }
@@ -160,6 +166,10 @@ public final class PluginLoader {
      *             </ol>
      */
     PluginMeta getMeta(final File file, final boolean update) throws IOException {
+        assert file != null : "File cannot be null!";
+        assert file.exists() : "File has to exist!";
+        assert file.isFile() : "File has to be a file!";
+
         final PluginMeta pluginMeta;
         if (update) {
             final JarFile jarFile = new JarFile(file);
@@ -200,6 +210,8 @@ public final class PluginLoader {
      * @return The loaded {@link Plugin}.
      */
     synchronized Plugin load(final PluginMeta meta) {
+        assert meta != null : "Meta cannot be null!";
+
         final String name = meta.getName();
         final String main = meta.getMain();
 
@@ -247,6 +259,8 @@ public final class PluginLoader {
      *             Is thrown if the class cannot be found.
      */
     Class<?> findClass(final String name) throws ClassNotFoundException {
+        assert name != null : "Name cannot be null!";
+
         for (final PluginClassLoader classLoader : this.classLoaders.values()) {
             final Class<?> clazz = classLoader.findClass(name, false);
             if (clazz != null) {

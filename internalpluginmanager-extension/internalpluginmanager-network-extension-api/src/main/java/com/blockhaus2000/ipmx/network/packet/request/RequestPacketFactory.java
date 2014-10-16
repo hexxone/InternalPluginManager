@@ -46,6 +46,8 @@ public abstract class RequestPacketFactory {
      *         given request packet.
      */
     public static byte[] createRequestPacket(final RequestPacket requestPacket) {
+        assert requestPacket != null : "RequestPacket cannot be null!";
+
         return BitUtil.toByteArray(requestPacket.getRequestData());
     }
 
@@ -61,6 +63,8 @@ public abstract class RequestPacketFactory {
      *             If the packet format is wrong.
      */
     public static RequestPacket createRequestPacket(final byte[] requestData) throws PacketFormatException {
+        assert requestData != null : "RequestData cannot be null!";
+
         final PacketID packetId = PacketID.getById(requestData[0]);
 
         if (packetId == null) {

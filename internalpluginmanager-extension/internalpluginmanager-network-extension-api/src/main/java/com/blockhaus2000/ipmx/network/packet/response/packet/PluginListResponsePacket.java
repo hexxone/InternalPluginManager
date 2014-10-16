@@ -62,7 +62,7 @@ public class PluginListResponsePacket implements ResponsePacket {
      *            The whole plugin list.
      */
     public PluginListResponsePacket(final String[] plugins) {
-        this.plugins = plugins;
+        this.plugins = plugins == null || plugins.length == 0 ? new String[0] : plugins;
     }
 
     /**
@@ -73,6 +73,8 @@ public class PluginListResponsePacket implements ResponsePacket {
      *            The <code>byte[]</code> to read the data from.
      */
     public PluginListResponsePacket(final byte[] responseData) {
+        assert responseData != null : "ResponseData cannot be null!";
+
         final int responsePluginCount = BitUtil.fromBytes(responseData[1], responseData[2],
                 responseData[PluginListResponsePacket._3], responseData[PluginListResponsePacket._4]);
         final List<String> pluginsList = new ArrayList<String>();
@@ -84,8 +86,8 @@ public class PluginListResponsePacket implements ResponsePacket {
             final int start = (i == 0 ? PluginListResponsePacket._8 : indexes.get(indexes.size() - 1).get(1)
                     + PluginListResponsePacket._4) + 1;
             final int end = BitUtil.fromBytes(responseData[start - PluginListResponsePacket._4], responseData[start
-                    - PluginListResponsePacket._3], responseData[start - 2], responseData[start - 1])
-                    + start;
+                                                                                                              - PluginListResponsePacket._3], responseData[start - 2], responseData[start - 1])
+                                                                                                              + start;
 
             curIndexes.add(start);
             curIndexes.add(end);

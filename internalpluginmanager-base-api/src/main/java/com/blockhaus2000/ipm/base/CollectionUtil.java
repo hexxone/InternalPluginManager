@@ -44,6 +44,9 @@ public final class CollectionUtil {
      * @return The index of the first occurrence. If not found, <code>-1</code>.
      */
     public static int indexOf(final String regex, final List<String> list) {
+        assert regex != null : "Regex cannot be null!";
+        assert list != null : "List cannot be null!";
+
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).matches(regex)) {
                 return i;

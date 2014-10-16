@@ -49,6 +49,8 @@ public abstract class ResponsePacketFactory {
      *         given response packet.
      */
     public static byte[] createResponsePacket(final ResponsePacket responsePacket) {
+        assert responsePacket != null : "ResponsePacket cannot be null!";
+
         return BitUtil.toByteArray(responsePacket.getResponseData());
     }
 
@@ -64,6 +66,8 @@ public abstract class ResponsePacketFactory {
      *             If the packet format is wrong.
      */
     public static ResponsePacket createResponsePacket(final byte[] responseData) throws PacketFormatException {
+        assert responseData != null : "ResponseData cannot be null!";
+
         final PacketID packetId = PacketID.getById(responseData[0]);
 
         if (packetId == null) {

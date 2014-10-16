@@ -48,6 +48,8 @@ public class PluginEventHandler extends SimpleEventHandler {
     public PluginEventHandler(final Plugin plugin, final Object listenerObject, final Method listenerMethod) {
         super(listenerObject, listenerMethod);
 
+        assert plugin != null : "Plugin cannot be null!";
+
         this.plugin = plugin;
     }
 

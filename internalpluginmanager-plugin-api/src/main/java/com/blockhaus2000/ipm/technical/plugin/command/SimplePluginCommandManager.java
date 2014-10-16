@@ -125,6 +125,8 @@ public class SimplePluginCommandManager extends SimpleCommandManager implements 
      */
     @Override
     public void propertyChange(final PropertyChangeEvent event) {
+        assert event != null : "Event cannot be null!";
+
         if (event.getPropertyName().equals(Plugin.ENABLED_PROPERTY_NAME) && !((Boolean) event.getNewValue())) {
             if (!(event.getSource() instanceof Plugin)) {
                 throw new IllegalArgumentException("The source (\"" + event.getSource() + "\") of the property change event \""

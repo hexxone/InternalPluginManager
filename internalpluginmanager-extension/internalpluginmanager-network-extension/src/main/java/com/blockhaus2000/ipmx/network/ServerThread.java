@@ -75,6 +75,8 @@ public class ServerThread extends Thread {
      *            should be disabled.
      */
     public ServerThread(final int port, final List<String> whitelist) {
+        assert port > 0 : "Port cannot be <=0!";
+
         this.port = port;
         this.whitelist = whitelist;
 
@@ -170,6 +172,8 @@ public class ServerThread extends Thread {
      *             If an I/O error occurres.
      */
     private Connection acceptConnection(final ServerSocket server) throws IOException {
+        assert server != null : "Server cannot be null!";
+
         final Connection con;
         try {
             con = new Connection(server.accept());
@@ -207,6 +211,8 @@ public class ServerThread extends Thread {
      * @return The created response packet.
      */
     private ResponsePacket getResponsePacket(final byte[] requestData) {
+        assert requestData != null : "RequestData cannot be null!";
+
         ResponsePacket responsePacket = new IllegalFormatResponsePacket("Unknown error.");
         try {
             responsePacket = this.getReponsePacket(requestData, RequestPacketFactory.createRequestPacket(requestData));
@@ -230,6 +236,9 @@ public class ServerThread extends Thread {
      */
     private ResponsePacket getReponsePacket(final byte[] requestData, final RequestPacket requestPacket)
             throws PacketFormatException {
+        assert requestData != null : "RequestData cannot be null!";
+        assert requestPacket != null : "RequestPacket cannot be null!";
+
         final ResponsePacket responsePacket;
         switch (requestPacket.getPacketID()) {
             case REQUEST_PLUGIN_INFORMATION:

@@ -90,6 +90,8 @@ public final class RequestConnection extends Connection {
      */
     public PluginInformationResponsePacket getPluginInformation(final String pluginName) throws IOException,
             PacketFormatException {
+        assert pluginName != null : "PluginName cannot be null or empty!";
+
         this.out().write(RequestPacketFactory.createRequestPacket(new PluginInformationRequestPacket(pluginName)));
 
         final ResponsePacket responsePacket = ResponsePacketFactory.createResponsePacket(ServerUtil.readPacket(this.in()));
@@ -134,6 +136,9 @@ public final class RequestConnection extends Connection {
          */
         public static RequestConnection createRequestConnection(final String host, final int port) throws IOException,
                 AccessDeniedException {
+            assert host != null : "Host cannot be null!";
+            assert port > 0 : "Port cannot be <=0!";
+
             final RequestConnection con = new RequestConnection(new Socket(host, port));
 
             ResponsePacket responsePacket;

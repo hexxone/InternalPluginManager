@@ -156,10 +156,14 @@ public class PluginInformationResponsePacket implements ResponsePacket {
      */
     public PluginInformationResponsePacket(final String pluginName, final String pluginVersion, final String pluginAuthor,
             final String[] pluginDependencies, final boolean pluginEnabled) {
+        assert pluginName != null : "PluginName cannot be null!";
+        assert pluginVersion != null : "PluginVersion cannot be null!";
+
         this.pluginName = pluginName;
         this.pluginVersion = pluginVersion;
-        this.pluginAuthor = pluginAuthor;
-        this.pluginDependencies = pluginDependencies;
+        this.pluginAuthor = pluginAuthor == null || pluginAuthor.isEmpty() ? null : pluginAuthor;
+        this.pluginDependencies = pluginDependencies == null || pluginDependencies.length == 0 ? new String[0]
+                : pluginDependencies;
         this.pluginEnabled = pluginEnabled;
     }
 
@@ -171,6 +175,8 @@ public class PluginInformationResponsePacket implements ResponsePacket {
      *            The <code>byte[]</code> to read the data from.
      */
     public PluginInformationResponsePacket(final byte[] responseData) {
+        assert responseData != null : "ResponseData cannot be null!";
+
         final int responsePluginNameLength = BitUtil.fromBytes(responseData[1], responseData[2],
                 responseData[PluginInformationResponsePacket._3], responseData[PluginInformationResponsePacket._4]);
         final int responsePluginVersionLength = BitUtil.fromBytes(responseData[PluginInformationResponsePacket._5],

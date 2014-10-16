@@ -36,6 +36,9 @@ public class SimpleStringFormatter implements StringFormatter {
      */
     @Override
     public String format(final String str, final StringFormatMapping... mappings) {
+        assert str != null : "Str cannot be null!";
+        assert mappings != null : "Mapping cannot be null!";
+
         final Map<String, String> maps = new HashMap<String, String>();
         for (final StringFormatMapping mapping : mappings) {
             maps.put(mapping.getKey().getStringKey(), mapping.getFormatted());
@@ -69,6 +72,9 @@ public class SimpleStringFormatter implements StringFormatter {
      */
     @Override
     public String format(final String str, final StringFormatMappable... mappables) {
+        assert str != null : "Str cannot be null!";
+        assert mappables != null : "Mappables cannot be null!";
+
         final StringFormatMapping[] mappings = new StringFormatMapping[mappables.length];
         for (int i = 0; i < mappables.length; i++) {
             mappings[i] = mappables[i].getStringFormatMapping();

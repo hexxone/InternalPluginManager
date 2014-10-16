@@ -50,6 +50,8 @@ public class HandlerList implements Iterable<EventHandler> {
      *         if it already exist.
      */
     public boolean add(final EventHandler handler) {
+        assert handler != null : "Handler cannot be null!";
+
         return this.handlers.add(handler);
     }
 
@@ -62,6 +64,8 @@ public class HandlerList implements Iterable<EventHandler> {
      *         it does not exist.
      */
     public boolean remove(final EventHandler handler) {
+        assert handler != null : "Handler cannot be null!";
+
         return this.handlers.remove(handler);
     }
 
