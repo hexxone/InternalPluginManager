@@ -27,7 +27,15 @@ import com.blockhaus2000.ipmx.network.packet.request.packet.PluginListRequestPac
  * The request factory is used to simplify the handling of request packets.
  *
  */
-public class RequestPacketFactory {
+public abstract class RequestPacketFactory {
+    /**
+     * Constructor of RequestPacketFactory.
+     *
+     */
+    private RequestPacketFactory() {
+        // Utility classes should not have a visible constructor.
+    }
+
     /**
      * Creates the sendable data (a byte array (<code>byte[]</code>)) from the
      * given request packet.

@@ -32,6 +32,23 @@ import com.blockhaus2000.ipmx.network.packet.response.ResponsePacket;
  *
  */
 public class PluginListResponsePacket implements ResponsePacket {
+    // Suppress Checkstyle warnings (Magic Number).
+    /**
+     * <code>3</code>
+     *
+     */
+    private static final int _3 = 3;
+    /**
+     * <code>4</code>
+     *
+     */
+    private static final int _4 = 4;
+    /**
+     * <code>8</code>
+     *
+     */
+    private static final int _8 = 8;
+
     /**
      * The whole plugin list.
      *
@@ -56,16 +73,19 @@ public class PluginListResponsePacket implements ResponsePacket {
      *            The <code>byte[]</code> to read the data from.
      */
     public PluginListResponsePacket(final byte[] responseData) {
-        final int responsePluginCount = BitUtil.fromBytes(responseData[1], responseData[2], responseData[3], responseData[4]);
-        final List<String> plugins = new ArrayList<String>();
+        final int responsePluginCount = BitUtil.fromBytes(responseData[1], responseData[2],
+                responseData[PluginListResponsePacket._3], responseData[PluginListResponsePacket._4]);
+        final List<String> pluginsList = new ArrayList<String>();
 
         final List<List<Integer>> indexes = new LinkedList<List<Integer>>();
         for (int i = 0; i < responsePluginCount; i++) {
             final List<Integer> curIndexes = new LinkedList<Integer>();
 
-            final int start = (i == 0 ? 8 : indexes.get(indexes.size() - 1).get(1) + 4) + 1;
-            final int end = BitUtil.fromBytes(responseData[start - 4], responseData[start - 3], responseData[start - 2],
-                    responseData[start - 1]) + start;
+            final int start = (i == 0 ? PluginListResponsePacket._8 : indexes.get(indexes.size() - 1).get(1)
+                    + PluginListResponsePacket._4) + 1;
+            final int end = BitUtil.fromBytes(responseData[start - PluginListResponsePacket._4], responseData[start
+                    - PluginListResponsePacket._3], responseData[start - 2], responseData[start - 1])
+                    + start;
 
             curIndexes.add(start);
             curIndexes.add(end);
@@ -73,10 +93,10 @@ public class PluginListResponsePacket implements ResponsePacket {
         }
 
         for (final List<Integer> lst : indexes) {
-            plugins.add(BitUtil.fromBytesToString(Arrays.copyOfRange(responseData, lst.get(0), lst.get(1))));
+            pluginsList.add(BitUtil.fromBytesToString(Arrays.copyOfRange(responseData, lst.get(0), lst.get(1))));
         }
 
-        this.plugins = plugins.toArray(new String[plugins.size()]);
+        this.plugins = pluginsList.toArray(new String[pluginsList.size()]);
     }
 
     /**

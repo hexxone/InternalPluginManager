@@ -19,7 +19,6 @@ package com.blockhaus2000.ipmx.network;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 import com.blockhaus2000.ipmx.network.exception.AccessDeniedException;
 import com.blockhaus2000.ipmx.network.exception.PacketFormatException;
@@ -37,7 +36,7 @@ import com.blockhaus2000.ipmx.network.packet.response.packet.PluginListResponseP
  * to easy speak with a IPMNE server.
  *
  */
-public class RequestConnection extends Connection {
+public final class RequestConnection extends Connection {
     /**
      * Constructor of RequestConnection. Only invokes <code>super(Socket)</code>
      * .
@@ -111,7 +110,15 @@ public class RequestConnection extends Connection {
      * rights, etc.
      *
      */
-    public static class Factory {
+    public abstract static class Factory {
+        /**
+         * Constructor of AbstractFactory.
+         *
+         */
+        private Factory() {
+            // Utility classes should not have a visible constructor.
+        }
+
         /**
          * Creates a new {@link RequestConnection}.
          *
@@ -120,15 +127,13 @@ public class RequestConnection extends Connection {
          * @param port
          *            The port to connect to.
          * @return The created {@link RequestConnection}.
-         * @throws UnknownHostException
-         *             If the host is unknown.
          * @throws IOException
          *             If an I/O error occurress.
          * @throws AccessDeniedException
          *             If the connection was denied from the IPMNE server.
          */
-        public static RequestConnection createRequestConnection(final String host, final int port) throws UnknownHostException,
-                IOException, AccessDeniedException {
+        public static RequestConnection createRequestConnection(final String host, final int port) throws IOException,
+                AccessDeniedException {
             final RequestConnection con = new RequestConnection(new Socket(host, port));
 
             ResponsePacket responsePacket;

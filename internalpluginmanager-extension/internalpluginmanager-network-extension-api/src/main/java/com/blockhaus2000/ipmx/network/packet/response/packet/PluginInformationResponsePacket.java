@@ -32,6 +32,88 @@ import com.blockhaus2000.ipmx.network.packet.response.ResponsePacket;
  *
  */
 public class PluginInformationResponsePacket implements ResponsePacket {
+    // Suppress Checkstyle warnings (Magic Number).
+    /**
+     * <code>3</code>
+     *
+     */
+    private static final int _3 = 3;
+    /**
+     * <code>4</code>
+     *
+     */
+    private static final int _4 = 4;
+    /**
+     * <code>5</code>
+     *
+     */
+    private static final int _5 = 5;
+    /**
+     * <code>6</code>
+     *
+     */
+    private static final int _6 = 6;
+    /**
+     * <code>7</code>
+     *
+     */
+    private static final int _7 = 7;
+    /**
+     * <code>8</code>
+     *
+     */
+    private static final int _8 = 8;
+    /**
+     * <code>9</code>
+     *
+     */
+    private static final int _9 = 9;
+    /**
+     * <code>10</code>
+     *
+     */
+    private static final int _10 = 10;
+    /**
+     * <code>11</code>
+     *
+     */
+    private static final int _11 = 12;
+    /**
+     * <code>12</code>
+     *
+     */
+    private static final int _12 = 12;
+    /**
+     * <code>13</code>
+     *
+     */
+    private static final int _13 = 13;
+    /**
+     * <code>14</code>
+     *
+     */
+    private static final int _14 = 14;
+    /**
+     * <code>15</code>
+     *
+     */
+    private static final int _15 = 15;
+    /**
+     * <code>16</code>
+     *
+     */
+    private static final int _16 = 16;
+    /**
+     * <code>17</code>
+     *
+     */
+    private static final int _17 = 17;
+    /**
+     * <code>18</code>
+     *
+     */
+    private static final int _18 = 18;
+
     /**
      * The plugin name.
      *
@@ -89,17 +171,20 @@ public class PluginInformationResponsePacket implements ResponsePacket {
      *            The <code>byte[]</code> to read the data from.
      */
     public PluginInformationResponsePacket(final byte[] responseData) {
-        final int responsePluginNameLength = BitUtil
-                .fromBytes(responseData[1], responseData[2], responseData[3], responseData[4]);
-        final int responsePluginVersionLength = BitUtil.fromBytes(responseData[5], responseData[6], responseData[7],
-                responseData[8]);
-        final int responsePluginAuthorLength = BitUtil.fromBytes(responseData[9], responseData[10], responseData[11],
-                responseData[12]);
-        final int responsePluginDependencyLength = BitUtil.fromBytes(responseData[13], responseData[14], responseData[15],
-                responseData[16]);
-        final boolean responsePluginEnabled = BitUtil.fromBytesToBoolean(responseData[17]);
+        final int responsePluginNameLength = BitUtil.fromBytes(responseData[1], responseData[2],
+                responseData[PluginInformationResponsePacket._3], responseData[PluginInformationResponsePacket._4]);
+        final int responsePluginVersionLength = BitUtil.fromBytes(responseData[PluginInformationResponsePacket._5],
+                responseData[PluginInformationResponsePacket._6], responseData[PluginInformationResponsePacket._7],
+                responseData[PluginInformationResponsePacket._8]);
+        final int responsePluginAuthorLength = BitUtil.fromBytes(responseData[PluginInformationResponsePacket._9],
+                responseData[PluginInformationResponsePacket._10], responseData[PluginInformationResponsePacket._11],
+                responseData[PluginInformationResponsePacket._12]);
+        final int responsePluginDependencyLength = BitUtil.fromBytes(responseData[PluginInformationResponsePacket._13],
+                responseData[PluginInformationResponsePacket._14], responseData[PluginInformationResponsePacket._15],
+                responseData[PluginInformationResponsePacket._16]);
+        final boolean responsePluginEnabled = BitUtil.fromBytesToBoolean(responseData[PluginInformationResponsePacket._17]);
 
-        int index = 18;
+        int index = PluginInformationResponsePacket._18;
         final String responsePluginName = BitUtil.fromBytesToString(Arrays.copyOfRange(responseData, index, index
                 + responsePluginNameLength));
         index = index + responsePluginNameLength;
@@ -114,14 +199,15 @@ public class PluginInformationResponsePacket implements ResponsePacket {
 
         final List<String> dependencies = new ArrayList<String>();
 
-        index = index + 3;
+        index = index + PluginInformationResponsePacket._3;
         final List<List<Integer>> indexes = new LinkedList<List<Integer>>();
         for (int i = 0; i < responsePluginDependencyLength; i++) {
             final List<Integer> curIndexes = new LinkedList<Integer>();
 
-            final int start = (i == 0 ? index : indexes.get(indexes.size() - 1).get(1) + 4) + 1;
-            final int end = BitUtil.fromBytes(responseData[start - 4], responseData[start - 3], responseData[start - 2],
-                    responseData[start - 1]) + start - 1;
+            final int start = (i == 0 ? index : indexes.get(indexes.size() - 1).get(1) + PluginInformationResponsePacket._4) + 1;
+            final int end = BitUtil.fromBytes(responseData[start - PluginInformationResponsePacket._4], responseData[start
+                                                                                                                     - PluginInformationResponsePacket._3], responseData[start - 2], responseData[start - 1])
+                                                                                                                     + start - 1;
 
             curIndexes.add(start);
             curIndexes.add(end);

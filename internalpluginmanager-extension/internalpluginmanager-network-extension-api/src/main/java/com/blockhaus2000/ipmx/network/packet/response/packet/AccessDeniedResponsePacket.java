@@ -27,6 +27,14 @@ import com.blockhaus2000.ipmx.network.packet.response.ResponsePacket;
  */
 public class AccessDeniedResponsePacket implements ResponsePacket {
     /**
+     * Constructor of PluginListRequestPacket.
+     *
+     */
+    public AccessDeniedResponsePacket() {
+        // nothing to do.
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @see com.blockhaus2000.ipmx.network.packet.response.ResponsePacket#getResponseData()

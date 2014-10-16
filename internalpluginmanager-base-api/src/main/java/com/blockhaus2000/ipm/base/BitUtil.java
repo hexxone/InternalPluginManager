@@ -22,37 +22,37 @@ package com.blockhaus2000.ipm.base;
  *
  */
 public final class BitUtil {
-    // Checkstyle suppressions.
+    // Suppress Checkstyle warnings (Magic Number).
     /**
      * <code>3</code>
      *
      */
-    private static final int MAGIC_NUMBER_3 = 3;
+    private static final int _3 = 3;
     /**
      * <code>4</code>
      *
      */
-    private static final int MAGIC_NUMBER_4 = 4;
+    private static final int _4 = 4;
     /**
      * <code>5</code>
      *
      */
-    private static final int MAGIC_NUMBER_5 = 5;
+    private static final int _5 = 5;
     /**
      * <code>6</code>
      *
      */
-    private static final int MAGIC_NUMBER_6 = 6;
+    private static final int _6 = 6;
     /**
      * <code>7</code>
      *
      */
-    private static final int MAGIC_NUMBER_7 = 7;
+    private static final int _7 = 7;
     /**
      * <code>8</code>
      *
      */
-    private static final int MAGIC_NUMBER_8 = 8;
+    private static final int _8 = 8;
 
     // Masks.
     /**
@@ -136,7 +136,7 @@ public final class BitUtil {
 
         for (int i = 0; i < shorts.length * 2; i = i + 2) {
             final short s = shorts[i / 2];
-            result[i] = (byte) ((s & BitUtil.MASK_SECOND_BYTE) >> BitUtil.MAGIC_NUMBER_8);
+            result[i] = (byte) ((s & BitUtil.MASK_SECOND_BYTE) >> BitUtil._8);
             result[i + 1] = (byte) (s & BitUtil.MASK_FIRST_BYTE);
         }
 
@@ -151,14 +151,14 @@ public final class BitUtil {
      * @return The converted and joined ints.
      */
     public static byte[] toByteArray(final int... ints) {
-        final byte[] result = new byte[ints.length * BitUtil.MAGIC_NUMBER_4];
+        final byte[] result = new byte[ints.length * BitUtil._4];
 
-        for (int i = 0; i < ints.length * BitUtil.MAGIC_NUMBER_4; i = i + BitUtil.MAGIC_NUMBER_4) {
-            final int j = ints[i / BitUtil.MAGIC_NUMBER_4];
-            result[i] = (byte) ((j & BitUtil.MASK_FOURTH_BYTE) >> BitUtil.MAGIC_NUMBER_8 * BitUtil.MAGIC_NUMBER_3);
-            result[i + 1] = (byte) ((j & BitUtil.MASK_THIRD_BYTE) >> BitUtil.MAGIC_NUMBER_8 * 2);
-            result[i + 2] = (byte) ((j & BitUtil.MASK_SECOND_BYTE) >> BitUtil.MAGIC_NUMBER_8);
-            result[i + BitUtil.MAGIC_NUMBER_3] = (byte) (j & BitUtil.MASK_FIRST_BYTE);
+        for (int i = 0; i < ints.length * BitUtil._4; i = i + BitUtil._4) {
+            final int j = ints[i / BitUtil._4];
+            result[i] = (byte) ((j & BitUtil.MASK_FOURTH_BYTE) >> BitUtil._8 * BitUtil._3);
+            result[i + 1] = (byte) ((j & BitUtil.MASK_THIRD_BYTE) >> BitUtil._8 * 2);
+            result[i + 2] = (byte) ((j & BitUtil.MASK_SECOND_BYTE) >> BitUtil._8);
+            result[i + BitUtil._3] = (byte) (j & BitUtil.MASK_FIRST_BYTE);
         }
 
         return result;
@@ -172,20 +172,18 @@ public final class BitUtil {
      * @return The converted and joined longs.
      */
     public static byte[] toByteArray(final long... longs) {
-        final byte[] result = new byte[longs.length * BitUtil.MAGIC_NUMBER_8];
+        final byte[] result = new byte[longs.length * BitUtil._8];
 
-        for (int i = 0; i < longs.length * BitUtil.MAGIC_NUMBER_8; i = i + BitUtil.MAGIC_NUMBER_8) {
-            final long l = longs[i / BitUtil.MAGIC_NUMBER_8];
-            result[i] = (byte) ((l & BitUtil.MASK_EIGTH_BYTE) >> BitUtil.MAGIC_NUMBER_8 * BitUtil.MAGIC_NUMBER_7);
-            result[i + 1] = (byte) ((l & BitUtil.MASK_SEVENTH_BYTE) >> BitUtil.MAGIC_NUMBER_8 * BitUtil.MAGIC_NUMBER_6);
-            result[i + 2] = (byte) ((l & BitUtil.MASK_SIXTH_BYTE) >> BitUtil.MAGIC_NUMBER_8 * BitUtil.MAGIC_NUMBER_5);
-            result[i + BitUtil.MAGIC_NUMBER_3] = (byte) ((l & BitUtil.MASK_FIFTH_BYTE) >> BitUtil.MAGIC_NUMBER_8
-                    * BitUtil.MAGIC_NUMBER_4);
-            result[i + BitUtil.MAGIC_NUMBER_4] = (byte) ((l & BitUtil.MASK_FOURTH_BYTE) >> BitUtil.MAGIC_NUMBER_8
-                    * BitUtil.MAGIC_NUMBER_3);
-            result[i + BitUtil.MAGIC_NUMBER_5] = (byte) ((l & BitUtil.MASK_THIRD_BYTE) >> BitUtil.MAGIC_NUMBER_8 * 2);
-            result[i + BitUtil.MAGIC_NUMBER_6] = (byte) ((l & BitUtil.MASK_SECOND_BYTE) >> BitUtil.MAGIC_NUMBER_8);
-            result[i + BitUtil.MAGIC_NUMBER_7] = (byte) (l & BitUtil.MASK_FIRST_BYTE);
+        for (int i = 0; i < longs.length * BitUtil._8; i = i + BitUtil._8) {
+            final long l = longs[i / BitUtil._8];
+            result[i] = (byte) ((l & BitUtil.MASK_EIGTH_BYTE) >> BitUtil._8 * BitUtil._7);
+            result[i + 1] = (byte) ((l & BitUtil.MASK_SEVENTH_BYTE) >> BitUtil._8 * BitUtil._6);
+            result[i + 2] = (byte) ((l & BitUtil.MASK_SIXTH_BYTE) >> BitUtil._8 * BitUtil._5);
+            result[i + BitUtil._3] = (byte) ((l & BitUtil.MASK_FIFTH_BYTE) >> BitUtil._8 * BitUtil._4);
+            result[i + BitUtil._4] = (byte) ((l & BitUtil.MASK_FOURTH_BYTE) >> BitUtil._8 * BitUtil._3);
+            result[i + BitUtil._5] = (byte) ((l & BitUtil.MASK_THIRD_BYTE) >> BitUtil._8 * 2);
+            result[i + BitUtil._6] = (byte) ((l & BitUtil.MASK_SECOND_BYTE) >> BitUtil._8);
+            result[i + BitUtil._7] = (byte) (l & BitUtil.MASK_FIRST_BYTE);
         }
 
         return result;
@@ -306,7 +304,7 @@ public final class BitUtil {
     public static short fromBytes(final byte b0, final byte b1) {
         short result = 0;
 
-        result = (short) (result | b0 << BitUtil.MAGIC_NUMBER_8);
+        result = (short) (result | b0 << BitUtil._8);
         result = (short) (result | b1);
 
         return result;
@@ -329,9 +327,9 @@ public final class BitUtil {
     public static int fromBytes(final byte b0, final byte b1, final byte b2, final byte b3) {
         int result = 0;
 
-        result = result | b0 << BitUtil.MAGIC_NUMBER_8 * BitUtil.MAGIC_NUMBER_3;
-        result = result | b1 << BitUtil.MAGIC_NUMBER_8 * 2;
-        result = result | b2 << BitUtil.MAGIC_NUMBER_8;
+        result = result | b0 << BitUtil._8 * BitUtil._3;
+        result = result | b1 << BitUtil._8 * 2;
+        result = result | b2 << BitUtil._8;
         result = result | b3;
 
         return result;
@@ -363,13 +361,13 @@ public final class BitUtil {
             final byte b6, final byte b7) {
         long result = 0;
 
-        result = result | (long) b0 << BitUtil.MAGIC_NUMBER_8 * BitUtil.MAGIC_NUMBER_7;
-        result = result | (long) b1 << BitUtil.MAGIC_NUMBER_8 * BitUtil.MAGIC_NUMBER_6;
-        result = result | (long) b2 << BitUtil.MAGIC_NUMBER_8 * BitUtil.MAGIC_NUMBER_5;
-        result = result | (long) b3 << BitUtil.MAGIC_NUMBER_8 * BitUtil.MAGIC_NUMBER_4;
-        result = result | (long) b4 << BitUtil.MAGIC_NUMBER_8 * BitUtil.MAGIC_NUMBER_3;
-        result = result | (long) b5 << BitUtil.MAGIC_NUMBER_8 * 2;
-        result = result | (long) b6 << BitUtil.MAGIC_NUMBER_8;
+        result = result | (long) b0 << BitUtil._8 * BitUtil._7;
+        result = result | (long) b1 << BitUtil._8 * BitUtil._6;
+        result = result | (long) b2 << BitUtil._8 * BitUtil._5;
+        result = result | (long) b3 << BitUtil._8 * BitUtil._4;
+        result = result | (long) b4 << BitUtil._8 * BitUtil._3;
+        result = result | (long) b5 << BitUtil._8 * 2;
+        result = result | (long) b6 << BitUtil._8;
         result = result | b7;
 
         return result;

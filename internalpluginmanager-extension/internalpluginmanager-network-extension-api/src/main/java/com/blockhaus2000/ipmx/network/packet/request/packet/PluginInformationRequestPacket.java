@@ -28,6 +28,23 @@ import com.blockhaus2000.ipmx.network.packet.request.RequestPacket;
  *
  */
 public class PluginInformationRequestPacket implements RequestPacket {
+    // Suppress Checkstyle warnings (Magic Number).
+    /**
+     * <code>3</code>
+     *
+     */
+    private static final int _3 = 3;
+    /**
+     * <code>4</code>
+     *
+     */
+    private static final int _4 = 4;
+    /**
+     * <code>5</code>
+     *
+     */
+    private static final int _5 = 5;
+
     /**
      * The plugin name to request information for.
      *
@@ -53,10 +70,11 @@ public class PluginInformationRequestPacket implements RequestPacket {
      *            from. Must be a valid packet.
      */
     public PluginInformationRequestPacket(final byte[] requestData) {
-        final int requestPluginNameLength = BitUtil.fromBytes(requestData[1], requestData[2], requestData[3], requestData[4]);
+        final int requestPluginNameLength = BitUtil.fromBytes(requestData[1], requestData[2],
+                requestData[PluginInformationRequestPacket._3], requestData[PluginInformationRequestPacket._4]);
 
-        final String requestPluginName = BitUtil.fromBytesToString(Arrays
-                .copyOfRange(requestData, 5, requestPluginNameLength + 5));
+        final String requestPluginName = BitUtil.fromBytesToString(Arrays.copyOfRange(requestData,
+                PluginInformationRequestPacket._5, requestPluginNameLength + PluginInformationRequestPacket._5));
 
         this.pluginName = requestPluginName;
     }
@@ -68,12 +86,12 @@ public class PluginInformationRequestPacket implements RequestPacket {
      */
     @Override
     public byte[][] getRequestData() {
-        final byte[][] requestData = new byte[4][];
+        final byte[][] requestData = new byte[PluginInformationRequestPacket._4][];
 
         requestData[0] = BitUtil.toByteArray(PacketID.REQUEST_PLUGIN_INFORMATION.getId());
         requestData[1] = BitUtil.toByteArray(this.pluginName.length());
         requestData[2] = BitUtil.toByteArray(this.pluginName);
-        requestData[3] = BitUtil.toByteArray(PacketID.TECHNICAL_PACKET_END.getId());
+        requestData[PluginInformationRequestPacket._3] = BitUtil.toByteArray(PacketID.TECHNICAL_PACKET_END.getId());
 
         return requestData;
     }

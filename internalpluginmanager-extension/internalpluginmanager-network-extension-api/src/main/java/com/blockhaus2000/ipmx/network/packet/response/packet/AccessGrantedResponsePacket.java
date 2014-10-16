@@ -27,6 +27,14 @@ import com.blockhaus2000.ipmx.network.packet.response.ResponsePacket;
  */
 public class AccessGrantedResponsePacket implements ResponsePacket {
     /**
+     * Constructor of PluginListRequestPacket.
+     *
+     */
+    public AccessGrantedResponsePacket() {
+        // nothing to do.
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @see com.blockhaus2000.ipmx.network.packet.response.ResponsePacket#getResponseData()

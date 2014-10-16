@@ -30,7 +30,15 @@ import com.blockhaus2000.ipmx.network.packet.response.packet.PluginListResponseP
  * The response factory is used to simplify the handling of response packets.
  *
  */
-public class ResponsePacketFactory {
+public abstract class ResponsePacketFactory {
+    /**
+     * Constructor of ResponsePacketFactory.
+     *
+     */
+    private ResponsePacketFactory() {
+        // Utility classes should not have a visible constructor.
+    }
+
     /**
      * Creates the sendable data (a byte array (<code>byte[]</code>)) from the
      * given response packet.

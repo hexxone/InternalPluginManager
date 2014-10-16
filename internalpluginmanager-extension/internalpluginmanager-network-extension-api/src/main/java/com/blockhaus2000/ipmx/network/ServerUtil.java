@@ -30,7 +30,7 @@ import com.blockhaus2000.ipmx.network.packet.PacketID;
  * This is a utility class to work with an IPMNE server.
  *
  */
-public class ServerUtil {
+public final class ServerUtil {
     /**
      * Constructor of ServerUtil.
      *

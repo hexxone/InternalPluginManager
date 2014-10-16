@@ -27,6 +27,14 @@ import com.blockhaus2000.ipmx.network.packet.request.RequestPacket;
  */
 public class PluginListRequestPacket implements RequestPacket {
     /**
+     * Constructor of PluginListRequestPacket.
+     *
+     */
+    public PluginListRequestPacket() {
+        // nothing to do.
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @see com.blockhaus2000.ipmx.network.packet.request.RequestPacket#getRequestData()

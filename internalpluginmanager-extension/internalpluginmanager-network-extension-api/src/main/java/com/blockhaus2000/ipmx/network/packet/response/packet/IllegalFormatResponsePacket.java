@@ -29,6 +29,23 @@ import com.blockhaus2000.ipmx.network.packet.response.ResponsePacket;
  *
  */
 public class IllegalFormatResponsePacket implements ResponsePacket {
+    // Suppress Checkstyle warnings (Magic Number).
+    /**
+     * <code>3</code>
+     *
+     */
+    private static final int _3 = 3;
+    /**
+     * <code>4</code>
+     *
+     */
+    private static final int _4 = 4;
+    /**
+     * <code>5</code>
+     *
+     */
+    private static final int _5 = 5;
+
     /**
      * The error message.
      *
@@ -53,11 +70,12 @@ public class IllegalFormatResponsePacket implements ResponsePacket {
      *            The <code>byte[]</code> to read the data from.
      */
     public IllegalFormatResponsePacket(final byte[] responseData) {
-        final int start = 5;
-        final int end = start + BitUtil.fromBytes(responseData[1], responseData[2], responseData[3], responseData[4]);
-        final String message = BitUtil.fromBytesToString(Arrays.copyOfRange(responseData, start, end));
+        final int start = IllegalFormatResponsePacket._5;
+        final int end = start
+                + BitUtil.fromBytes(responseData[1], responseData[2], responseData[IllegalFormatResponsePacket._3],
+                        responseData[IllegalFormatResponsePacket._4]);
 
-        this.message = message;
+        this.message = BitUtil.fromBytesToString(Arrays.copyOfRange(responseData, start, end));
     }
 
     /**
@@ -67,12 +85,12 @@ public class IllegalFormatResponsePacket implements ResponsePacket {
      */
     @Override
     public byte[][] getResponseData() {
-        final byte[][] responseData = new byte[4][];
+        final byte[][] responseData = new byte[IllegalFormatResponsePacket._4][];
 
         responseData[0] = BitUtil.toByteArray(PacketID.RESPONSE_ILLEGAL_FORMAT.getId());
         responseData[1] = BitUtil.toByteArray(this.message.length());
         responseData[2] = BitUtil.toByteArray(this.message);
-        responseData[3] = BitUtil.toByteArray(PacketID.TECHNICAL_PACKET_END.getId());
+        responseData[IllegalFormatResponsePacket._3] = BitUtil.toByteArray(PacketID.TECHNICAL_PACKET_END.getId());
 
         return responseData;
     }
