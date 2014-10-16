@@ -30,9 +30,18 @@ import com.blockhaus2000.ipm.technical.plugin.Plugin;
  */
 public class SimplePluginEventManager extends SimpleEventManager implements PluginEventManager {
     /**
+     * Constructor of SimplePluginEventManager.
+     *
+     */
+    public SimplePluginEventManager() {
+        // Nothing to do.
+    }
+
+    /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.plugin.event.PluginEventManager#register(com.blockhaus2000.ipm.technical.plugin.Plugin,
+     * @see com.blockhaus2000.ipm.technical.plugin.event.PluginEventManager
+     *      #register(com.blockhaus2000.ipm.technical.plugin.Plugin,
      *      java.lang.Class, java.lang.Object)
      */
     @Override
@@ -48,7 +57,8 @@ public class SimplePluginEventManager extends SimpleEventManager implements Plug
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.plugin.event.PluginEventManager#register(com.blockhaus2000.ipm.technical.plugin.Plugin,
+     * @see com.blockhaus2000.ipm.technical.plugin.event.PluginEventManager
+     *      #register(com.blockhaus2000.ipm.technical.plugin.Plugin,
      *      java.lang.Class)
      */
     @Override
@@ -59,7 +69,8 @@ public class SimplePluginEventManager extends SimpleEventManager implements Plug
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.plugin.event.PluginEventManager#register(com.blockhaus2000.ipm.technical.plugin.Plugin,
+     * @see com.blockhaus2000.ipm.technical.plugin.event.PluginEventManager
+     *      #register(com.blockhaus2000.ipm.technical.plugin.Plugin,
      *      java.lang.Object)
      */
     @SuppressWarnings("unchecked")

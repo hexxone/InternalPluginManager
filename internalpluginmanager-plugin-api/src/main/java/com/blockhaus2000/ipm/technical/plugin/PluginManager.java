@@ -20,6 +20,7 @@ package com.blockhaus2000.ipm.technical.plugin;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,17 +108,17 @@ public final class PluginManager {
 
         this.deployDir = new File(directory, "deploy");
         assert !this.deployDir.exists() || this.deployDir.isDirectory() : "\"" + this.deployDir.getAbsolutePath()
-        + "\" has to be a directory!";
+                + "\" has to be a directory!";
         this.deployDir.mkdirs();
 
         this.pluginDir = new File(directory, "plugins" + File.separator + "plugin");
         assert !this.pluginDir.exists() || this.pluginDir.isDirectory() : "\"" + this.pluginDir.getAbsolutePath()
-        + "\" has to be a directory!";
+                + "\" has to be a directory!";
         this.pluginDir.mkdirs();
 
         this.configDir = new File(directory, "plugins" + File.separator + "config");
         assert !this.configDir.exists() || this.configDir.isDirectory() : "\"" + this.configDir.getAbsolutePath()
-        + "\" has to be a directory!";
+                + "\" has to be a directory!";
         this.configDir.mkdirs();
 
         this.deployDaemon = new PluginDeployDaemon(this.deployDir, this.pluginDir);
@@ -238,6 +239,14 @@ public final class PluginManager {
     }
 
     /**
+     *
+     * @return All loaded plugins.
+     */
+    public Collection<Plugin> getPlugins() {
+        return this.plugins.values();
+    }
+
+    /**
      * Loads the plugin for the given {@link File}. If <code>enabled</code> is
      * <code>true</code>, this also enables the plugin after loading it.
      *
@@ -288,6 +297,16 @@ public final class PluginManager {
         this.checkAccess();
 
         return this.pluginDir;
+    }
+
+    /**
+     *
+     * @return {@link PluginManager#configDir}
+     */
+    File getConfigDirectory() {
+        this.checkAccess();
+
+        return this.configDir;
     }
 
     /**

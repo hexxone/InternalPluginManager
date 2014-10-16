@@ -1,3 +1,0 @@
-name InternalPluginManager Network Extension
-version $(project.version)
-main com.blockhaus2000.ipmx.network.IpmxNetworkMain

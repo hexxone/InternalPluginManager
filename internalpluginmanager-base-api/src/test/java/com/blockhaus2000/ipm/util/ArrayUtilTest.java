@@ -41,5 +41,6 @@ public class ArrayUtilTest {
         Assert.assertEquals("e0-e1-e2-e3-e4", ArrayUtil.joinString("-", arr));
         Assert.assertEquals("e1 e2 e3 e4", ArrayUtil.joinString(" ", 1, -1, arr));
         Assert.assertEquals("e1 e2 e3", ArrayUtil.joinString(" ", 1, 4, arr));
+        Assert.assertEquals("", ArrayUtil.joinString(", ", new String[0]));
     }
 }

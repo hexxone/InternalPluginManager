@@ -31,6 +31,8 @@ public interface PluginEventManager extends EventManager {
      * plugin is used to auto-disable event listeners for plugins that where
      * disabled.
      *
+     * @param <T>
+     *            The type of the class/object.
      * @param plugin
      *            The plugin to use for the auto-disabling.
      * @param clazz
@@ -41,13 +43,15 @@ public interface PluginEventManager extends EventManager {
      * @see com.blockhaus2000.ipm.technical.event.EventManager#register(java.lang.Class,
      *      java.lang.Object)
      */
-    public <T> void register(final Plugin plugin, final Class<T> clazz, final T obj);
+    <T> void register(final Plugin plugin, final Class<T> clazz, final T obj);
 
     /**
      * Delegates to {@link PluginEventManager#register(Plugin, Class, Object)}
      * with <code>plugin = plugin</code>, <code>clazz = clazz</code> and
      * <code>obj = null</code>.
      *
+     * @param <T>
+     *            The type of the class.
      * @param plugin
      *            Is passed into
      *            {@link PluginEventManager#register(Plugin, Class, Object)}.
@@ -55,13 +59,15 @@ public interface PluginEventManager extends EventManager {
      *            Is passed into
      *            {@link PluginEventManager#register(Plugin, Class, Object)}.
      */
-    public <T> void register(final Plugin plugin, final Class<T> clazz);
+    <T> void register(final Plugin plugin, final Class<T> clazz);
 
     /**
      * Delegates to {@link PluginEventManager#register(Plugin, Class, Object)}
      * with <code>plugin = plugin</code>, <code>clazz = obj.getClass()</code>
      * and <code>obj = obj</code>.
      *
+     * @param <T>
+     *            The type of the object.
      * @param plugin
      *            Is passed into
      *            {@link PluginEventManager#register(Plugin, Class, Object)}.
@@ -69,7 +75,7 @@ public interface PluginEventManager extends EventManager {
      *            Is passed into
      *            {@link PluginEventManager#register(Plugin, Class, Object)}.
      */
-    public <T> void register(final Plugin plugin, final T obj);
+    <T> void register(final Plugin plugin, final T obj);
 
     /**
      * {@inheritDoc}
@@ -83,7 +89,7 @@ public interface PluginEventManager extends EventManager {
      */
     @Deprecated
     @Override
-    public <T> void register(final Class<T> clazz, T obj);
+    <T> void register(final Class<T> clazz, T obj);
 
     /**
      * {@inheritDoc}
@@ -96,7 +102,7 @@ public interface PluginEventManager extends EventManager {
      */
     @Deprecated
     @Override
-    public <T> void register(final Class<T> clazz);
+    <T> void register(final Class<T> clazz);
 
     /**
      * {@inheritDoc}
@@ -109,5 +115,5 @@ public interface PluginEventManager extends EventManager {
      */
     @Deprecated
     @Override
-    public <T> void register(final T obj);
+    <T> void register(final T obj);
 }

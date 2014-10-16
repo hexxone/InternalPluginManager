@@ -54,7 +54,11 @@ public final class ArrayUtil {
         for (int i = start; i < endIndex; i++) {
             buffer.append(arr[i] + delimiter);
         }
-        return buffer.substring(0, buffer.length() - delimiter.length());
+
+        if (buffer.length() > 0) {
+            return buffer.substring(0, buffer.length() - delimiter.length());
+        }
+        return buffer.toString();
     }
 
     /**

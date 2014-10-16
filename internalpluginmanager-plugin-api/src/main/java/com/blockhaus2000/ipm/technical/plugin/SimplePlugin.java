@@ -222,7 +222,7 @@ public class SimplePlugin implements Plugin {
     void init(final PluginMeta initPluginMeta) {
         this.pluginMeta = initPluginMeta;
         this.logger = Logger.getLogger(CommonConstants.INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME + "." + initPluginMeta.getName());
-        this.dataFolder = new File(PluginManager.getInstance().getPluginDirectory(), initPluginMeta.getName().toLowerCase());
+        this.dataFolder = new File(PluginManager.getInstance().getConfigDirectory(), initPluginMeta.getName().toLowerCase());
         this.dataFolder.mkdir();
         try {
             this.config = new HrTssConfiguration(new File(this.dataFolder, "config.hrtss"));
