@@ -8,32 +8,46 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<!-- This order must be kept! -->
+		<module>internalpluginmanager-maven-plugin</module>
+
+		<!-- The base is used by every other module, so build as first. -->
 		<module>internalpluginmanager-base-api</module>
+
+		<!-- These modules are completly independent from each other, so this order 
+			is not important. -->
 		<module>internalpluginmanager-command-api</module>
 		<module>internalpluginmanager-configuration-api</module>
 		<module>internalpluginmanager-event-api</module>
 		<module>internalpluginmanager-format-api</module>
 		<module>internalpluginmanager-scheduler-api</module>
+
+		<!-- The plugin API depends on the command, config, event, format and scheduler 
+			API, so build after them all. -->
 		<module>internalpluginmanager-plugin-api</module>
+
+		<!-- The main API contains all other APIs, so build at last of the (main) 
+			APIs. -->
 		<module>internalpluginmanager-api</module>
 
-		<!-- The IPM-Extensions are using this plugin. -->
-		<module>internalpluginmanager-maven-plugin</module>
-
-		<!-- Extensions are based on the API, so must be executed at last. -->
+		<!-- The extensions should be allowed to use all APIs, so build after them 
+			all (including the main API). -->
 		<module>internalpluginmanager-extension</module>
 
-		<!-- This must be built before all other minecraf stuff. It is safest to 
-			build it here. -->
-		<module>internalpluginmanager-minecraft-api</module>
-
-		<!-- This can be re-ordered. -->
+		<!-- The standalone version of the main API. Is independent from the Minecraft 
+			stuff. -->
 		<module>internalpluginmanager-standalone</module>
-		<module>internalpluginmanager-minecraft-bukkit</module>
-		<module>internalpluginmanager-minecraft-canary</module>
 
-		<!-- This must be executed at last. -->
+
+		<!-- Skip the Minecraft stuff until compile errors are resolved. -->
+
+		<!-- The Minecraft API depends on the main API. -->
+		<!-- <module>internalpluginmanager-minecraft-api</module> -->
+
+		<!-- The Minecraft API implementations are depending on the Minecraft API, 
+			so build after it. -->
+		<!-- <module>internalpluginmanager-minecraft-bukkit</module> <module>internalpluginmanager-minecraft-canary</module> -->
+
+		<!-- The assembly. Packs the runnable version into a ZIP-file. -->
 		<module>internalpluginmanager-distribution</module>
 	</modules>
 

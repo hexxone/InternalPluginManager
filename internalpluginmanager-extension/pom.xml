@@ -9,7 +9,10 @@
 	</parent>
 
 	<modules>
+		<!-- The IPMNE protocol API. -->
 		<module>internalpluginmanager-network-extension-api</module>
+
+		<!-- An IPMNE server implementation as an IPM plugin. -->
 		<module>internalpluginmanager-network-extension</module>
 	</modules>
 

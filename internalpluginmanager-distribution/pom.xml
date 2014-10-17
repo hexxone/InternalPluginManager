@@ -63,6 +63,18 @@
 							<outputDirectory>${project.build.directory}/jars/minecraft/</outputDirectory>
 							<destFileName>internalpluginmanager-minecraft-canary_v${project.version}.jar</destFileName>
 						</artifactItem>
+
+						<!-- InternalPluginManager extensions -->
+						<!-- Network extension -->
+						<artifactItem>
+							<groupId>com.blockhaus2000</groupId>
+							<artifactId>internalpluginmanager-network-extension</artifactId>
+							<version>${project.version}</version>
+							<type>jar</type>
+							<overWrite>false</overWrite>
+							<outputDirectory>${project.build.directory}/jars/extensions/</outputDirectory>
+							<destFileName>internalpluginmanager-network-extension_v${project.version}.jar</destFileName>
+						</artifactItem>
 					</artifactItems>
 				</configuration>
 			</plugin>
