@@ -93,37 +93,20 @@ public class ServerThread extends Thread {
         final ServerSocket server = this.startServer();
 
         while (!this.isInterrupted()) {
-            Connection con = null;
-            String ip = "Unknown.";
+            String ip = "undefined";
             try {
-                con = this.acceptConnection(server);
+                @SuppressWarnings("resource")
+                final Connection con = this.acceptConnection(server);
                 if (con == null) {
                     continue;
                 }
+
                 ip = con.socket().getInetAddress().getHostAddress();
 
-                final byte[] requestData = ServerUtil.readPacket(con.socket().getInputStream());
-
-                ServerThread.LOGGER.log(Level.FINEST, "Raw data from " + ip + ": " + Arrays.toString(requestData));
-
-                final byte[] responseData = ResponsePacketFactory.createResponsePacket(this.getResponsePacket(requestData));
-
-                ServerThread.LOGGER.log(Level.FINEST, "Sending response data (" + Arrays.toString(responseData) + ").");
-
-                con.out().write(responseData);
-
-                con.out().close();
+                final Thread connectionHandlerThread = new ConnectionHandlerThread(con);
+                connectionHandlerThread.start();
             } catch (final IOException cause) {
                 ServerThread.LOGGER.log(Level.SEVERE, "An error occurred whilest handling connection of \"" + ip + "\"!", cause);
-            } finally {
-                if (con != null) {
-                    try {
-                        con.close();
-                    } catch (final IOException cause) {
-                        ServerThread.LOGGER.log(Level.SEVERE, "An error occurred whilest closing connection to \"" + ip + "\"!",
-                                cause);
-                    }
-                }
             }
         }
 
@@ -204,69 +187,142 @@ public class ServerThread extends Thread {
     }
 
     /**
-     * Gets the response packet for the given request data.
+     * The connection handler hanles a given connection to support multiple
+     * requests per connection and parallel requests.
      *
-     * @param requestData
-     *            The received request data.
-     * @return The created response packet.
      */
-    private ResponsePacket getResponsePacket(final byte[] requestData) {
-        assert requestData != null : "RequestData cannot be null!";
+    public class ConnectionHandlerThread extends Thread {
+        /**
+         * The connection to handle.
+         *
+         */
+        private final Connection con;
 
-        ResponsePacket responsePacket = new IllegalFormatResponsePacket("Unknown error.");
-        try {
-            responsePacket = this.getReponsePacket(requestData, RequestPacketFactory.createRequestPacket(requestData));
-        } catch (final PacketFormatException ex) {
-            responsePacket = new IllegalFormatResponsePacket(ex.getLocalizedMessage());
+        /**
+         * Constructor of ConnectionHandlerThread.
+         *
+         * @param con
+         *            The connection to handle.
+         */
+        public ConnectionHandlerThread(final Connection con) {
+            this.con = con;
         }
-        return responsePacket;
-    }
 
-    /**
-     * Gets the response packet for the given request data and the given request
-     * packet.
-     *
-     * @param requestData
-     *            The request data.
-     * @param requestPacket
-     *            The request packet.
-     * @return The created response packet.
-     * @throws PacketFormatException
-     *             The the request packet is not correct formatted.
-     */
-    private ResponsePacket getReponsePacket(final byte[] requestData, final RequestPacket requestPacket)
-            throws PacketFormatException {
-        assert requestData != null : "RequestData cannot be null!";
-        assert requestPacket != null : "RequestPacket cannot be null!";
-
-        final ResponsePacket responsePacket;
-        switch (requestPacket.getPacketID()) {
-            case REQUEST_PLUGIN_INFORMATION:
-                final PluginInformationRequestPacket specRequestPacket = (PluginInformationRequestPacket) requestPacket;
-                final Plugin plugin = PluginManager.getInstance().getPlugin(specRequestPacket.getPluginName());
-
-                if (plugin == null) {
-                    throw new PacketFormatException("Plugin \"" + specRequestPacket.getPluginName() + "\" can not be find!");
+        /**
+         * {@inheritDoc}
+         *
+         * @see java.lang.Thread#run()
+         */
+        @Override
+        public void run() {
+            while (!this.con.socket().isClosed()) {
+                try {
+                    this.internalRun();
+                } catch (final IOException cause) {
+                    ServerThread.LOGGER.log(Level.SEVERE, "An error occurred whilest handling connection from \"" + this.con
+                            + "\"!", cause);
                 }
-
-                final PluginMeta pluginMeta = plugin.getPluginMeta();
-                responsePacket = new PluginInformationResponsePacket(plugin.getName(), pluginMeta.getVersion(),
-                        pluginMeta.getAuthor(), pluginMeta.getDependencies(), plugin.isEnabled());
-
-                break;
-            case REQUEST_PLUGIN_LIST:
-                final List<String> pluginNames = new ArrayList<String>();
-
-                for (final Plugin p : PluginManager.getInstance().getPlugins()) {
-                    pluginNames.add(p.getName());
-                }
-
-                responsePacket = new PluginListResponsePacket(pluginNames.toArray(new String[pluginNames.size()]));
-
-                break;
-            default:
-                throw new PacketFormatException("Illegal packet content: " + Arrays.toString(requestData));
+            }
+            try {
+                this.con.close();
+            } catch (final IOException cause) {
+                ServerThread.LOGGER.log(Level.SEVERE, "An error occurred whilest closing connection to \"" + this.con + "\"!",
+                        cause);
+            }
         }
-        return responsePacket;
+
+        /**
+         * The handler.
+         *
+         * @throws IOException
+         *             If an I/O error occurres.
+         */
+        // This method is made to avoid too deep netsing of all the code within
+        // this method, cause ever IOException has to be handled the same.
+        private void internalRun() throws IOException {
+            final byte[] requestData = ServerUtil.readPacket(this.con.socket().getInputStream());
+
+            // The request data is empty only, and only if the connection was
+            // closed whilest waiting for input.
+            if (requestData.length == 0) {
+                return;
+            }
+
+            ServerThread.LOGGER.log(Level.FINEST, "Raw data from " + this.con.socket().getInetAddress().getHostAddress() + ": "
+                    + Arrays.toString(requestData));
+
+            final byte[] responseData = ResponsePacketFactory.createResponsePacket(this.getResponsePacket(requestData));
+
+            ServerThread.LOGGER.log(Level.FINEST, "Sending response data (" + Arrays.toString(responseData) + ").");
+
+            this.con.out().write(responseData);
+        }
+
+        /**
+         * Gets the response packet for the given request data.
+         *
+         * @param requestData
+         *            The received request data.
+         * @return The created response packet.
+         */
+        private ResponsePacket getResponsePacket(final byte[] requestData) {
+            assert requestData != null : "RequestData cannot be null!";
+
+            ResponsePacket responsePacket = new IllegalFormatResponsePacket("Unknown error.");
+            try {
+                responsePacket = this.getReponsePacket(requestData, RequestPacketFactory.createRequestPacket(requestData));
+            } catch (final PacketFormatException ex) {
+                responsePacket = new IllegalFormatResponsePacket(ex.getLocalizedMessage());
+            }
+            return responsePacket;
+        }
+
+        /**
+         * Gets the response packet for the given request data and the given
+         * request packet.
+         *
+         * @param requestData
+         *            The request data.
+         * @param requestPacket
+         *            The request packet.
+         * @return The created response packet.
+         * @throws PacketFormatException
+         *             The the request packet is not correct formatted.
+         */
+        private ResponsePacket getReponsePacket(final byte[] requestData, final RequestPacket requestPacket)
+                throws PacketFormatException {
+            assert requestData != null : "RequestData cannot be null!";
+            assert requestPacket != null : "RequestPacket cannot be null!";
+
+            final ResponsePacket responsePacket;
+            switch (requestPacket.getPacketID()) {
+                case REQUEST_PLUGIN_INFORMATION:
+                    final PluginInformationRequestPacket specRequestPacket = (PluginInformationRequestPacket) requestPacket;
+                    final Plugin plugin = PluginManager.getInstance().getPlugin(specRequestPacket.getPluginName());
+
+                    if (plugin == null) {
+                        throw new PacketFormatException("Plugin \"" + specRequestPacket.getPluginName() + "\" can not be find!");
+                    }
+
+                    final PluginMeta pluginMeta = plugin.getPluginMeta();
+                    responsePacket = new PluginInformationResponsePacket(plugin.getName(), pluginMeta.getVersion(),
+                            pluginMeta.getAuthor(), pluginMeta.getDependencies(), plugin.isEnabled());
+
+                    break;
+                case REQUEST_PLUGIN_LIST:
+                    final List<String> pluginNames = new ArrayList<String>();
+
+                    for (final Plugin p : PluginManager.getInstance().getPlugins()) {
+                        pluginNames.add(p.getName());
+                    }
+
+                    responsePacket = new PluginListResponsePacket(pluginNames.toArray(new String[pluginNames.size()]));
+
+                    break;
+                default:
+                    throw new PacketFormatException("Illegal packet content: " + Arrays.toString(requestData));
+            }
+            return responsePacket;
+        }
     }
 }
