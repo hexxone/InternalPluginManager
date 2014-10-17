@@ -69,6 +69,12 @@ public class PluginDeployDaemon extends Thread {
     private final File pluginDir;
 
     /**
+     * The undeploy daemon (the other hand of this daemon).
+     *
+     */
+    private final Thread pluginUndeployDaemon;
+
+    /**
      * Constructor of PluginDeployDeamon.
      *
      * @param deployDir
@@ -88,11 +94,20 @@ public class PluginDeployDaemon extends Thread {
         this.deployDir = deployDir;
         this.pluginDir = pluginDir;
 
+        this.pluginUndeployDaemon = new PluginUndeployDaemon(pluginDir);
+
+        // Auto-Stop this thread at the and of the program, if not interrupted
+        // earlier.
         this.setDaemon(true);
     }
 
     /**
      * {@inheritDoc}
+     *
+     * <p>
+     * <b> NOTE: This also starts a {@link PluginUndeployDaemon}. </b>
+     * </p>
+     *
      *
      * @see java.lang.Thread#run()
      */
@@ -101,6 +116,9 @@ public class PluginDeployDaemon extends Thread {
         this.loadAlreadyDeployedPlugins();
 
         PluginDeployDaemon.LOGGER.fine("Hot deploy daemon started on directory \"" + this.deployDir.getAbsolutePath() + "\".");
+
+        // Start undeploy daemon after loading all already deplyoed plugins.
+        this.pluginUndeployDaemon.start();
 
         while (!this.isInterrupted()) {
             for (final File rawFile : this.deployDir.listFiles(PluginDeployDaemon.JAR_FILE_FILTER)) {

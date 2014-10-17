@@ -193,7 +193,9 @@ public final class PluginLoader {
                 return this.getMeta(file, true);
             }
 
-            pluginMeta.setFile(file);
+            if (!pluginMeta.isFileInitilized()) {
+                pluginMeta.setFile(file);
+            }
         }
         return pluginMeta;
     }

@@ -23,6 +23,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -56,12 +58,36 @@ public class CollectionUtilTest {
     @Test
     @SuppressWarnings("unchecked")
     public void toTagList() {
-        final List<Tag<String>> expected = new ArrayList<Tag<String>>(Arrays.asList(new Tag<String>("e1"), new Tag<String>("e2"),
-                new Tag<String>("e3"), new Tag<String>("e4"), new Tag<String>("e5")));
+        final List<Tag<String>> expected = new LinkedList<Tag<String>>(Arrays.asList(new Tag<String>("e1"),
+                new Tag<String>("e2"), new Tag<String>("e3"), new Tag<String>("e4"), new Tag<String>("e5")));
         final List<String> target = new ArrayList<String>(Arrays.asList("e1", "e2", "e3", "e4", "e5"));
 
         Assert.assertEquals(new ArrayList<Tag<String>>(expected), CollectionUtil.toTagCollection(target, ArrayList.class));
         Assert.assertEquals(new HashSet<Tag<String>>(expected), CollectionUtil.toTagCollection(target, HashSet.class));
         Assert.assertEquals(new LinkedList<Tag<String>>(expected), CollectionUtil.toTagCollection(target, LinkedList.class));
+    }
+
+    /**
+     * Tests {@link CollectionUtil#toSet(Class, Object...)}.
+     *
+     */
+    @Test
+    public void toSet() {
+        final Set<String> expected = new TreeSet<String>(Arrays.asList("e1", "e2", "e3", "e4", "e5"));
+        final String[] target = new String[] { "e1", "e2", "e3", "e4", "e5" };
+
+        Assert.assertEquals(new TreeSet<String>(expected), CollectionUtil.toSet(TreeSet.class, target));
+    }
+
+    /**
+     * Tests {@link CollectionUtil#getDifferenceSet(Set, Set)}.
+     *
+     */
+    @Test
+    public void getDifferenceSet() {
+        final Set<String> s0 = new HashSet<String>(Arrays.asList("e0", "e1", "e2"));
+        final Set<String> s1 = new HashSet<String>(Arrays.asList("e0", "e2", "e4"));
+
+        Assert.assertEquals(new HashSet<String>(Arrays.asList("e1")), CollectionUtil.getDifferenceSet(s0, s1));
     }
 }

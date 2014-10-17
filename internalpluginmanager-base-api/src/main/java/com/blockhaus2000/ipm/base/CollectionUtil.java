@@ -18,8 +18,11 @@
 package com.blockhaus2000.ipm.base;
 
 import java.lang.reflect.Modifier;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * This utility class simplifies the use of {@link Collection}s.
@@ -93,6 +96,58 @@ public final class CollectionUtil {
             ex.printStackTrace();
         }
 
+        return result;
+    }
+
+    /**
+     * Converts the given array to a set with the given type. Works like
+     * {@link Arrays#asList(Object...)}.
+     *
+     * @param setType
+     *            The set type to return.
+     * @param arr
+     *            The array to convert into a set.
+     * @return An object of the given set or, if, and only if, an error
+     *         occurred, <code>null</code>.
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> Set<T> toSet(@SuppressWarnings("rawtypes") final Class<? extends Set> setType, final T... arr) {
+        assert setType != null : "SetType cannot be null!";
+        assert !Modifier.isAbstract(setType.getModifiers()) : "SetType cannot be abstract!";
+        assert !setType.isInterface() : "SetType cannot be an interface!";
+        assert arr != null : "Arr cannot be null!";
+
+        Set<T> result = null;
+        try {
+            result = setType.newInstance();
+
+            for (final T t : arr) {
+                result.add(t);
+            }
+        } catch (final InstantiationException ex) {
+            ex.printStackTrace();
+        } catch (final IllegalAccessException ex) {
+            ex.printStackTrace();
+        }
+
+        return result;
+    }
+
+    /**
+     *
+     * @param s0
+     *            Set <code>a</code>.
+     * @param s1
+     *            Set <code>b</code>.
+     * @return Returns all value that are present in set a, but also not in set
+     *         b.
+     */
+    public static <T> Set<T> getDifferenceSet(final Set<T> s0, final Set<T> s1) {
+        assert s0 != null : "S0 cannot be null!";
+        assert s1 != null : "S1 cannot be null!";
+
+        final Set<T> result = new HashSet<T>(s0);
+        result.removeAll(s1);
         return result;
     }
 }

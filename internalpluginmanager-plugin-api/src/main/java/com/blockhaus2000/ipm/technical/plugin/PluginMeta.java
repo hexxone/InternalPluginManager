@@ -156,6 +156,14 @@ public class PluginMeta implements Cloneable, Serializable {
     }
 
     /**
+     *
+     * @return Whether {@link PluginMeta#file} has been initilized already.
+     */
+    boolean isFileInitilized() {
+        return this.file != null;
+    }
+
+    /**
      * Sets the file for this plugin meta.
      *
      * @param file

@@ -111,19 +111,20 @@ public final class PluginManager {
 
         this.deployDir = new File(directory, "deploy");
         assert !this.deployDir.exists() || this.deployDir.isDirectory() : "\"" + this.deployDir.getAbsolutePath()
-                + "\" has to be a directory!";
+        + "\" has to be a directory!";
         this.deployDir.mkdirs();
 
         this.pluginDir = new File(directory, "plugins" + File.separator + "plugin");
         assert !this.pluginDir.exists() || this.pluginDir.isDirectory() : "\"" + this.pluginDir.getAbsolutePath()
-                + "\" has to be a directory!";
+        + "\" has to be a directory!";
         this.pluginDir.mkdirs();
 
         this.configDir = new File(directory, "plugins" + File.separator + "config");
         assert !this.configDir.exists() || this.configDir.isDirectory() : "\"" + this.configDir.getAbsolutePath()
-                + "\" has to be a directory!";
+        + "\" has to be a directory!";
         this.configDir.mkdirs();
 
+        // The plugin deploy daemon also starts the undeploy daemon.
         this.deployDaemon = new PluginDeployDaemon(this.deployDir, this.pluginDir);
         this.deployDaemon.start();
     }
@@ -248,7 +249,7 @@ public final class PluginManager {
 
         this.checkAccess();
 
-        return this.plugins.get(name.toLowerCase());
+        return this.plugins.get(name.toLowerCase().trim());
     }
 
     /**
