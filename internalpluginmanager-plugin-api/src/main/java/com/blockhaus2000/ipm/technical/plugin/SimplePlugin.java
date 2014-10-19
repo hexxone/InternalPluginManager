@@ -186,7 +186,7 @@ public class SimplePlugin implements Plugin {
      * @see com.blockhaus2000.ipm.technical.plugin.Plugin#setEnabled(boolean)
      */
     @Override
-    public void setEnabled(final boolean enabled) {
+    public synchronized void setEnabled(final boolean enabled) {
         final boolean oldVal = this.enabled;
         final boolean newVal = enabled;
         this.enabled = enabled;
@@ -221,7 +221,7 @@ public class SimplePlugin implements Plugin {
      * @param initPluginMeta
      *            The {@link PluginMeta}.
      */
-    void init(final PluginMeta initPluginMeta) {
+    synchronized void init(final PluginMeta initPluginMeta) {
         assert this.pluginMeta != null : "InitPluginMeta cannot be null!";
 
         if (this.pluginMeta != null) {

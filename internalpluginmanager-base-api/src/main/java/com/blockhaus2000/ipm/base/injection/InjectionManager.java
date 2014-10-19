@@ -91,7 +91,7 @@ public final class InjectionManager {
      *            An {@link Object} of the given {@link Class}. Can be
      *            <code>null</code> if any field can be accessed static.
      */
-    public static void init(final Class<?> clazz, final Object obj) {
+    public static synchronized void init(final Class<?> clazz, final Object obj) {
         assert clazz != null : "Clazz cannot be null!";
         assert obj == null || clazz.equals(obj.getClass()) : "Obj has to be null or an object of clazz!";
 
@@ -146,7 +146,7 @@ public final class InjectionManager {
      * @see com.blockhaus2000.ipm.base.injection.InjectionManager#init(java.lang.Class,
      *      java.lang.Object)
      */
-    public static void init(final Object obj) {
+    public static synchronized void init(final Object obj) {
         assert obj != null : "Object cannot be null!";
 
         InjectionManager.init(obj.getClass(), obj);
@@ -161,7 +161,7 @@ public final class InjectionManager {
      * @see com.blockhaus2000.ipm.base.injection.InjectionManager#init(java.lang.Class,
      *      java.lang.Object)
      */
-    public static void init(final Class<?> clazz) {
+    public static synchronized void init(final Class<?> clazz) {
         InjectionManager.init(clazz, null);
     }
 
@@ -183,7 +183,7 @@ public final class InjectionManager {
      * @return <code>true</code> if association was added, <code>false</code> if
      *         not.
      */
-    public static <T, C extends T> boolean addResource(final C obj, final Class<T> clazz) {
+    public static synchronized <T, C extends T> boolean addResource(final C obj, final Class<T> clazz) {
         assert obj != null : "Obj cannot be null!";
         assert clazz != null : "Clazz cannot be null!";
 

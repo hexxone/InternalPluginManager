@@ -72,7 +72,7 @@ public final class CommandEventManager {
      * @param listener
      *            The {@link CommandEventListener} to register.
      */
-    public void register(final CommandEventListener listener) {
+    public synchronized void register(final CommandEventListener listener) {
         assert listener != null : "Listener cannot be null!";
 
         this.listeners.put(listener.getClass().getName(), listener);
@@ -87,7 +87,7 @@ public final class CommandEventManager {
      * @return <code>true</code> if a value was removed, <code>false</code> if
      *         no value was removed.
      */
-    public boolean unregister(final Class<? extends CommandEventListener> listenerClass) {
+    public synchronized boolean unregister(final Class<? extends CommandEventListener> listenerClass) {
         assert listenerClass != null : "ListenerClass cannot be null!";
 
         return this.listeners.remove(listenerClass.getName()) != null;
@@ -101,7 +101,7 @@ public final class CommandEventManager {
      * @return <code>true</code> if a value was removed, <code>false</code> if
      *         no value was removed.
      */
-    public boolean unregister(final CommandEventListener listener) {
+    public synchronized boolean unregister(final CommandEventListener listener) {
         assert listener != null : "Listener cannot be null!";
 
         return this.unregister(listener.getClass());

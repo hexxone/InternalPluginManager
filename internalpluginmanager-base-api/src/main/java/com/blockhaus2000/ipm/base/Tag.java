@@ -58,6 +58,9 @@ public class Tag<T> {
     }
 
     /**
+     * <p>
+     * <b> NOTE: This is NOT thread-save!. </b>
+     * </p>
      *
      * @param data
      *            The {@link Tag#data} to set

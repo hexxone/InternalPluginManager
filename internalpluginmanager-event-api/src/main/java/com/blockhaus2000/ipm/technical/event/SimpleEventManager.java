@@ -52,7 +52,7 @@ public class SimpleEventManager implements EventManager {
      *      java.lang.Object)
      */
     @Override
-    public <T> void register(final Class<T> clazz, final T obj) {
+    public synchronized <T> void register(final Class<T> clazz, final T obj) {
         assert clazz != null : "Clazz cannot be null!";
         assert obj == null || obj.getClass().equals(clazz) : "Obj has to be an instance of clazz!";
 
@@ -67,7 +67,7 @@ public class SimpleEventManager implements EventManager {
      * @see com.blockhaus2000.ipm.technical.event.EventManager#register(java.lang.Class)
      */
     @Override
-    public <T> void register(final Class<T> clazz) {
+    public synchronized <T> void register(final Class<T> clazz) {
         this.register(clazz, null);
     }
 
@@ -78,7 +78,7 @@ public class SimpleEventManager implements EventManager {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public <T> void register(final T obj) {
+    public synchronized <T> void register(final T obj) {
         assert obj != null : "Obj cannot be null!";
 
         this.register((Class<T>) obj.getClass(), obj);
@@ -108,7 +108,7 @@ public class SimpleEventManager implements EventManager {
      * @param handler
      *            The {@link EventHandler} to register.
      */
-    protected void register(final EventHandler handler) {
+    protected synchronized void register(final EventHandler handler) {
         assert handler != null : "Handler cannot be null!";
 
         final Object obj = handler.getListenerObject();

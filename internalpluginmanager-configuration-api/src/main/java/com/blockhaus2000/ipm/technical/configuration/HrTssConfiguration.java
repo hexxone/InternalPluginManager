@@ -67,7 +67,7 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
      * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#save()
      */
     @Override
-    public void save() {
+    public synchronized void save() {
         this.config.save();
     }
 
@@ -77,7 +77,7 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
      * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#load()
      */
     @Override
-    public void load() {
+    public synchronized void load() {
         this.config.load();
     }
 
@@ -179,6 +179,10 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
     /**
      * {@inheritDoc}
      *
+     * <p>
+     * <b> NOTE: This is NOT thread-save!. </b>
+     * </p>
+     *
      * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#set(java.lang.String,
      *      java.lang.String)
      */
@@ -191,6 +195,10 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
 
     /**
      * {@inheritDoc}
+     *
+     * <p>
+     * <b> NOTE: This is NOT thread-save!. </b>
+     * </p>
      *
      * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#set(java.lang.String,
      *      java.util.List)
@@ -212,6 +220,10 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
     /**
      * {@inheritDoc}
      *
+     * <p>
+     * <b> NOTE: This is NOT thread-save!. </b>
+     * </p>
+     *
      * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#set(java.lang.String,
      *      boolean)
      */
@@ -224,6 +236,10 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
 
     /**
      * {@inheritDoc}
+     *
+     * <p>
+     * <b> NOTE: This is NOT thread-save!. </b>
+     * </p>
      *
      * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#set(java.lang.String,
      *      int)
@@ -238,6 +254,10 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
     /**
      * {@inheritDoc}
      *
+     * <p>
+     * <b> NOTE: This is NOT thread-save!. </b>
+     * </p>
+     *
      * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#set(java.lang.String,
      *      long)
      */
@@ -250,6 +270,10 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
 
     /**
      * {@inheritDoc}
+     *
+     * <p>
+     * <b> NOTE: This is NOT thread-save!. </b>
+     * </p>
      *
      * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#set(java.lang.String,
      *      double)
@@ -264,6 +288,10 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
     // Config Default Setters
     /**
      * {@inheritDoc}
+     *
+     * <p>
+     * <b> NOTE: This is NOT thread-save!. </b>
+     * </p>
      *
      * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#add(java.lang.String,
      *      java.lang.String)
@@ -280,6 +308,10 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
     /**
      * {@inheritDoc}
      *
+     * <p>
+     * <b> NOTE: This is NOT thread-save!. </b>
+     * </p>
+     *
      * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#add(java.lang.String,
      *      java.util.List)
      */
@@ -294,6 +326,10 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
 
     /**
      * {@inheritDoc}
+     *
+     * <p>
+     * <b> NOTE: This is NOT thread-save!. </b>
+     * </p>
      *
      * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#add(java.lang.String,
      *      boolean)
@@ -310,6 +346,10 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
     /**
      * {@inheritDoc}
      *
+     * <p>
+     * <b> NOTE: This is NOT thread-save!. </b>
+     * </p>
+     *
      * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#add(java.lang.String,
      *      int)
      */
@@ -324,6 +364,10 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
 
     /**
      * {@inheritDoc}
+     *
+     * <p>
+     * <b> NOTE: This is NOT thread-save!. </b>
+     * </p>
      *
      * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#add(java.lang.String,
      *      long)
@@ -340,6 +384,10 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
     /**
      * {@inheritDoc}
      *
+     * <p>
+     * <b> NOTE: This is NOT thread-save!. </b>
+     * </p>
+     *
      * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#add(java.lang.String,
      *      double)
      */
@@ -355,6 +403,10 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
     // Other Config Operations
     /**
      * {@inheritDoc}
+     *
+     * <p>
+     * <b> NOTE: This is NOT thread-save!. </b>
+     * </p>
      *
      * @see com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration#remove(java.lang.String)
      */

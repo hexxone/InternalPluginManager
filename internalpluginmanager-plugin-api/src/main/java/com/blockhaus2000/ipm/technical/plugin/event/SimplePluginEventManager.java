@@ -45,7 +45,7 @@ public class SimplePluginEventManager extends SimpleEventManager implements Plug
      *      java.lang.Class, java.lang.Object)
      */
     @Override
-    public <T> void register(final Plugin plugin, final Class<T> clazz, final T obj) {
+    public synchronized <T> void register(final Plugin plugin, final Class<T> clazz, final T obj) {
         assert plugin != null : "Plugin cannot be null!";
         assert clazz != null : "Clazz cannot be null!";
 
@@ -62,7 +62,7 @@ public class SimplePluginEventManager extends SimpleEventManager implements Plug
      *      java.lang.Class)
      */
     @Override
-    public <T> void register(final Plugin plugin, final Class<T> clazz) {
+    public synchronized <T> void register(final Plugin plugin, final Class<T> clazz) {
         this.register(plugin, clazz, null);
     }
 
@@ -75,7 +75,7 @@ public class SimplePluginEventManager extends SimpleEventManager implements Plug
      */
     @SuppressWarnings("unchecked")
     @Override
-    public <T> void register(final Plugin plugin, final T obj) {
+    public synchronized <T> void register(final Plugin plugin, final T obj) {
         assert obj != null : "Obj cannot be null!";
 
         this.register(plugin, (Class<T>) obj.getClass(), obj);

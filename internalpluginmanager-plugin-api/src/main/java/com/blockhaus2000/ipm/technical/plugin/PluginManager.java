@@ -111,17 +111,17 @@ public final class PluginManager {
 
         this.deployDir = new File(directory, "deploy");
         assert !this.deployDir.exists() || this.deployDir.isDirectory() : "\"" + this.deployDir.getAbsolutePath()
-        + "\" has to be a directory!";
+                + "\" has to be a directory!";
         this.deployDir.mkdirs();
 
         this.pluginDir = new File(directory, "plugins" + File.separator + "plugin");
         assert !this.pluginDir.exists() || this.pluginDir.isDirectory() : "\"" + this.pluginDir.getAbsolutePath()
-        + "\" has to be a directory!";
+                + "\" has to be a directory!";
         this.pluginDir.mkdirs();
 
         this.configDir = new File(directory, "plugins" + File.separator + "config");
         assert !this.configDir.exists() || this.configDir.isDirectory() : "\"" + this.configDir.getAbsolutePath()
-        + "\" has to be a directory!";
+                + "\" has to be a directory!";
         this.configDir.mkdirs();
 
         // The plugin deploy daemon also starts the undeploy daemon.
@@ -147,7 +147,7 @@ public final class PluginManager {
      * @param plugin
      *            The {@link Plugin} to remove/unload and delete.
      */
-    public void delete(final Plugin plugin) {
+    public synchronized void delete(final Plugin plugin) {
         assert plugin != null : "Plugin cannot be null!";
 
         this.remove(plugin, true);
@@ -188,7 +188,7 @@ public final class PluginManager {
      * Disables all loaded plugins.
      *
      */
-    public void disableAll() {
+    public synchronized void disableAll() {
         this.checkAccess();
 
         for (final Plugin plugin : this.plugins.values()) {
@@ -229,7 +229,7 @@ public final class PluginManager {
      *
      */
     // TODO: Add dependecy resolving
-    public void enableAll() {
+    public synchronized void enableAll() {
         this.checkAccess();
 
         for (final Plugin plugin : this.plugins.values()) {

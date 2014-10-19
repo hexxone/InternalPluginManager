@@ -189,7 +189,7 @@ public class SimpleCommandManager implements CommandManager {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public <T> Set<CommandInfo> register(final T obj) {
+    public synchronized <T> Set<CommandInfo> register(final T obj) {
         assert obj != null : "Obj cannot be null!";
 
         return this.register((Class<T>) obj.getClass(), obj);
@@ -201,7 +201,7 @@ public class SimpleCommandManager implements CommandManager {
      * @see com.blockhaus2000.ipm.technical.command.CommandManager#register(java.lang.Class)
      */
     @Override
-    public <T> Set<CommandInfo> register(final Class<T> clazz) {
+    public synchronized <T> Set<CommandInfo> register(final Class<T> clazz) {
         return this.register(clazz, null);
     }
 
@@ -211,7 +211,7 @@ public class SimpleCommandManager implements CommandManager {
      * @see com.blockhaus2000.ipm.technical.command.CommandManager#unregister(java.lang.Class)
      */
     @Override
-    public Set<CommandInfo> unregister(final Class<?> clazz) {
+    public synchronized Set<CommandInfo> unregister(final Class<?> clazz) {
         assert clazz != null : "Clazz cannot be null!";
 
         final Set<CommandInfo> unregistered = new HashSet<CommandInfo>();
@@ -243,7 +243,7 @@ public class SimpleCommandManager implements CommandManager {
      * @see com.blockhaus2000.ipm.technical.command.CommandManager#unregister(java.lang.Object)
      */
     @Override
-    public Set<CommandInfo> unregister(final Object obj) {
+    public synchronized Set<CommandInfo> unregister(final Object obj) {
         assert obj != null : "Obj cannot be null!";
 
         return this.unregister(obj.getClass());
@@ -424,7 +424,7 @@ public class SimpleCommandManager implements CommandManager {
      * @return <code>true</code> if the command info was registered successful.
      *         <code>false</code> otherwise.
      */
-    private boolean registerCommandInfo(final CommandInfo commandInfo) {
+    private synchronized boolean registerCommandInfo(final CommandInfo commandInfo) {
         assert commandInfo != null : "CommandInfo cannot be null!";
 
         boolean registered = false;

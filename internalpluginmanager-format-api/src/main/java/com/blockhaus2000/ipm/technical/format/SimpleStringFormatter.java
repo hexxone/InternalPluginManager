@@ -28,6 +28,17 @@ import com.blockhaus2000.ipm.base.CommonStringConstants;
  */
 public class SimpleStringFormatter implements StringFormatter {
     /**
+     * An instance of this class.
+     *
+     * <p>
+     * See {@link SimpleStringFormatter#getInstance()} for exact description,
+     * why this is NO singleton class.
+     * </p>
+     *
+     */
+    private static final StringFormatter INSTANCE = new SimpleStringFormatter();
+
+    /**
      *
      * {@inheritDoc}
      *
@@ -80,5 +91,20 @@ public class SimpleStringFormatter implements StringFormatter {
             mappings[i] = mappables[i].getStringFormatMapping();
         }
         return this.format(str, mappings);
+    }
+
+    /**
+     * <p>
+     * <b> NOTE: This class is NOT a singleton! This method simply provides the
+     * possibility to reduce the heap space use with only creating one instance
+     * of this class! Also, you should be able to override this class, so a
+     * utility and/or a singleton class with a private constructor does not make
+     * sense. </b>
+     * </p>
+     *
+     * @return {@link SimpleStringFormatter#INSTANCE}
+     */
+    public static StringFormatter getInstance() {
+        return SimpleStringFormatter.INSTANCE;
     }
 }
