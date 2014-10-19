@@ -26,6 +26,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.blockhaus2000.ipm.technical.plugin.dependency.Dependency;
+import com.blockhaus2000.ipm.technical.plugin.dependency.DependencyBuilder;
+import com.blockhaus2000.ipm.technical.plugin.dependency.exception.UnresolveableDependencyException;
 import com.blockhaus2000.ipm.technical.plugin.util.exception.MissingDependencyPluginException;
 
 /**
@@ -111,17 +114,17 @@ public final class PluginManager {
 
         this.deployDir = new File(directory, "deploy");
         assert !this.deployDir.exists() || this.deployDir.isDirectory() : "\"" + this.deployDir.getAbsolutePath()
-                + "\" has to be a directory!";
+        + "\" has to be a directory!";
         this.deployDir.mkdirs();
 
         this.pluginDir = new File(directory, "plugins" + File.separator + "plugin");
         assert !this.pluginDir.exists() || this.pluginDir.isDirectory() : "\"" + this.pluginDir.getAbsolutePath()
-                + "\" has to be a directory!";
+        + "\" has to be a directory!";
         this.pluginDir.mkdirs();
 
         this.configDir = new File(directory, "plugins" + File.separator + "config");
         assert !this.configDir.exists() || this.configDir.isDirectory() : "\"" + this.configDir.getAbsolutePath()
-                + "\" has to be a directory!";
+        + "\" has to be a directory!";
         this.configDir.mkdirs();
 
         // The plugin deploy daemon also starts the undeploy daemon.
@@ -227,13 +230,22 @@ public final class PluginManager {
     /**
      * Enables all loaded plugins.
      *
+     * @throws UnresolveableDependencyException
+     *             If a plugin dependency cannot be resolved (e.g. if the plugin
+     *             is not loaded properly).
      */
-    // TODO: Add dependecy resolving
-    public synchronized void enableAll() {
+    public synchronized void enableAll() throws UnresolveableDependencyException {
         this.checkAccess();
 
-        for (final Plugin plugin : this.plugins.values()) {
-            this.enable(plugin);
+        final Map<String, Dependency> dependencies = new HashMap<String, Dependency>();
+        for (final String pluginName : this.plugins.keySet()) {
+            dependencies.put(pluginName, new DependencyBuilder(pluginName).getDependency());
+        }
+
+        for (final Map.Entry<String, Dependency> dependencyEntry : dependencies.entrySet()) {
+            if (this.isDependecyEnabled(dependencyEntry.getValue())) {
+                this.enable(this.getPlugin(dependencyEntry.getKey()));
+            }
         }
     }
 
@@ -347,6 +359,24 @@ public final class PluginManager {
             PluginLoader.getInstance().remove(plugin);
         }
         this.plugins.remove(plugin.getName().toLowerCase());
+    }
+
+    /**
+     * Tests whether the given depenency plugins are enabled.
+     *
+     * @param dependency
+     *            The dependency to check for.
+     * @return Whether ALL dependency plugins are enabled. If, and only if, all
+     *         are enabled, returns <code>true</code>. Otherwise,
+     *         <code>false</code>.
+     */
+    private boolean isDependecyEnabled(final Dependency dependency) {
+        for (final String dependencyName : dependency.getDependencyNames()) {
+            if (!this.getPlugin(dependencyName).isEnabled()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

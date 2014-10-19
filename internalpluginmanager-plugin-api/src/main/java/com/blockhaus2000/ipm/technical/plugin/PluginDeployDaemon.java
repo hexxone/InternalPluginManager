@@ -20,6 +20,7 @@ package com.blockhaus2000.ipm.technical.plugin;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.blockhaus2000.ipm.base.CommonConstants;
@@ -133,6 +134,9 @@ public class PluginDeployDaemon extends Thread {
         }
 
         PluginDeployDaemon.LOGGER.fine("Hot deploy daemon stopped.");
+
+        // Also stop undeploy daemon.
+        this.pluginUndeployDaemon.interrupt();
     }
 
     /**
@@ -148,15 +152,21 @@ public class PluginDeployDaemon extends Thread {
             PluginDeployDaemon.LOGGER.finer("Starting deployment of \"" + file.getAbsolutePath() + "\".");
 
             try {
-                PluginManager.getInstance().loadPlugin(file, true, false);
-            } catch (final Exception ex) {
-                ex.printStackTrace();
-                PluginDeployDaemon.LOGGER.severe("An error occurred whilest deploying \"" + file.getAbsolutePath() + "\"!");
+                PluginManager.getInstance().loadPlugin(file, false, false);
+            } catch (final Exception cause) {
+                PluginDeployDaemon.LOGGER.log(Level.SEVERE, "An error occurred whilest deploying \"" + file.getAbsolutePath()
+                        + "\"!", cause);
             }
 
             PluginDeployDaemon.LOGGER.finer("Deployment finished");
         }
 
+        PluginDeployDaemon.LOGGER.finer("Enabling all loaded plugins.");
+        try {
+            PluginManager.getInstance().enableAll();
+        } catch (final Exception cause) {
+            PluginDeployDaemon.LOGGER.log(Level.SEVERE, "An error occurred whilest enabling all (loaded) plugins!", cause);
+        }
         PluginDeployDaemon.LOGGER.fine("Loading finished.");
     }
 
