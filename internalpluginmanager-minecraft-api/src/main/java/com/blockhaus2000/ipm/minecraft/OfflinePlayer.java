@@ -19,9 +19,16 @@ package com.blockhaus2000.ipm.minecraft;
 
 import java.util.UUID;
 
-import com.blockhaus2000.ipm.minecraft.bukkit.entity.Player;
-import com.blockhaus2000.ipm.minecraft.world.Location;
+import javax.xml.stream.Location;
 
+import com.blockhaus2000.ipm.minecraft.bukkit.entity.Player;
+
+/**
+ * The offline player is a version of the regular {@link Player}, that is not
+ * online. This can only be used to make regular, non-interacting changes for
+ * the player, like ban him, etc.
+ *
+ */
 public interface OfflinePlayer {
     /**
      *
@@ -99,6 +106,8 @@ public interface OfflinePlayer {
      *
      * @param banned
      *            The new banned state.
+     * @param reason
+     *            The reason why this player is banned.
      */
     void setBanned(final boolean banned, final String reason);
 

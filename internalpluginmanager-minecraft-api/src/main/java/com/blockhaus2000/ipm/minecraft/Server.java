@@ -22,10 +22,17 @@ import java.util.UUID;
 import java.util.logging.Logger;
 
 import com.blockhaus2000.ipm.minecraft.bukkit.entity.Player;
+import com.blockhaus2000.ipm.minecraft.command.CommandSender;
 import com.blockhaus2000.ipm.minecraft.command.ConsoleCommandSender;
+import com.blockhaus2000.ipm.minecraft.inventory.InventoryBuilder;
+import com.blockhaus2000.ipm.minecraft.recipe.Recipe;
+import com.blockhaus2000.ipm.minecraft.recipe.RecipeBuilder;
+import com.blockhaus2000.ipm.minecraft.scoreboard.ScoreboardManager;
+import com.blockhaus2000.ipm.minecraft.world.WorldBuilder;
 import com.blockhaus2000.ipm.technical.event.EventManager;
 import com.blockhaus2000.ipm.technical.plugin.PluginManager;
 import com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager;
+import com.blockhaus2000.technical.scheduler.Scheduler;
 
 /**
  * The server (interface) is the main access point to the underlying
@@ -63,6 +70,24 @@ public interface Server {
      * @return The scheduler that manages tasks.
      */
     Scheduler getScheduler();
+
+    /**
+     *
+     * @return The recipe builder for this server.
+     */
+    RecipeBuilder getRecipeBuilder();
+
+    /**
+     *
+     * @return The inventory builder for this server.
+     */
+    InventoryBuilder getInventoryBuilder();
+
+    /**
+     *
+     * @return The world builder for this server.
+     */
+    WorldBuilder getWorldBuilder();
 
     /**
      *
@@ -107,20 +132,6 @@ public interface Server {
      *            The new default game mode.
      */
     void setDefaultGameMode(final GameMode gameMode);
-
-    /**
-     *
-     * @return The icon of this server.
-     */
-    ServerIcon getServerIcon();
-
-    /**
-     * Sets the server icon.
-     *
-     * @param serverIcon
-     *            The new server icon.
-     */
-    void setServerIcon(final ServerIcon serverIcon);
 
     /**
      *
@@ -284,62 +295,6 @@ public interface Server {
      * @return Whether "The Nether" is enabled.
      */
     boolean isNetherEnabled();
-
-    /**
-     *
-     * @param name
-     *            The world name to search for.
-     * @return The world with the given name. <code>null</code> if no world with
-     *         the given name exist.
-     */
-    World getWorld(final String name);
-
-    /**
-     *
-     * @param uuid
-     *            The world UUID to search for.
-     * @return The world with the given UUID. <code>null</code> if no world with
-     *         the given UUID exist.
-     */
-    World getWorld(final UUID uuid);
-
-    /**
-     *
-     * @return All worlds on this server.
-     */
-    Set<World> getWorlds();
-
-    /**
-     * If the world with the name specified in the given world creator is not
-     * present, creates a new world. Otherwise, returns already generated world.
-     *
-     * @param creator
-     *            The world creator to use for creation.
-     * @return The newly created world or, if the world already exist, the
-     *         already generated world.
-     */
-    World createWorld(final WorldCreator creator);
-
-    /**
-     * Saves the given world. If <code>save == true</code>, saves the chunks
-     * before unloading.
-     *
-     * @param world
-     *            The world to unload.
-     * @param save
-     *            hether to save the chucks before unloading.
-     * @return <code>true</code> if removing was successful, <code>false</code>
-     *         otherwise.
-     */
-    boolean unloadWorld(final World world, final boolean save);
-
-    /**
-     *
-     * @param world
-     *            The world to create a map view from.
-     * @return The newly created map view.
-     */
-    MapView createMap(final World world);
 
     // Recipe actions.
     /**
