@@ -37,15 +37,13 @@
 			stuff. -->
 		<module>internalpluginmanager-standalone</module>
 
-
-		<!-- Skip the Minecraft stuff until compile errors are resolved. -->
-
 		<!-- The Minecraft API depends on the main API. -->
-		<!-- <module>internalpluginmanager-minecraft-api</module> -->
+		<module>internalpluginmanager-minecraft-api</module>
 
 		<!-- The Minecraft API implementations are depending on the Minecraft API, 
 			so build after it. -->
-		<!-- <module>internalpluginmanager-minecraft-bukkit</module> <module>internalpluginmanager-minecraft-canary</module> -->
+		<module>internalpluginmanager-minecraft-bukkit</module>
+		<module>internalpluginmanager-minecraft-canary</module>
 
 		<!-- The assembly. Packs the runnable version into a ZIP-file. -->
 		<module>internalpluginmanager-distribution</module>
