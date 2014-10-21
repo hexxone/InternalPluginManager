@@ -16,3 +16,7 @@ dependency-reduced-pom.xml
 *.xcf
 # Testing stuff
 dist/
+
+# This are ignored for now. Will be re-added soon.
+archtitecture.png
+contributing-workflow.png
