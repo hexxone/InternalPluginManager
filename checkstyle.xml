@@ -510,7 +510,7 @@
 	<!-- Always include this header. -->
 	<module name="Header">
 		<!-- The header file. -->
-		<property name="headerFile" value="HEADER" />
+		<property name="headerFile" value="HEADER.txt" />
 		<!-- But only in Java files. -->
 		<property name="fileExtensions" value="java" />
 	</module>
