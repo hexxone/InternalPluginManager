@@ -15,28 +15,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft;
+package com.blockhaus2000.ipm.minecraft.world;
 
-import com.blockhaus2000.ipm.base.injection.Inject;
-import com.blockhaus2000.ipm.base.injection.InjectionManager;
+public enum WorldType {
+    NORMAL("DEFAULT"),
+    FLAT("FLAT"),
+    LARGE_BIOMES("LARGEBIOMES"),
+    AMPLIFIED("AMPLIFIED"),
+    CUSTOMIZED("CUSTOMIZED");
 
-public class InternalPluginManager {
-    @Inject
-    private static Server server;
+    private final String name;
 
-    static {
-        InjectionManager.init(InternalPluginManager.class);
+    private WorldType(final String name) {
+        this.name = name;
     }
 
-    private InternalPluginManager() {
-        // Utility classes should not have a visible constructor.
+    public String getName() {
+        return this.name;
     }
 
-    /**
-     *
-     * @return {@link InternalPluginManager#server}
-     */
-    public static Server getServer() {
-        return InternalPluginManager.server;
+    public WorldType getByName(final String name) {
+        for (final WorldType worldType : WorldType.values()) {
+            if (worldType.getName().equalsIgnoreCase(name)) {
+                return worldType;
+            }
+        }
+        return null;
     }
 }

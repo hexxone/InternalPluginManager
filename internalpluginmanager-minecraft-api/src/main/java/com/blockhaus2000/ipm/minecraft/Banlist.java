@@ -17,26 +17,14 @@
  */
 package com.blockhaus2000.ipm.minecraft;
 
-import com.blockhaus2000.ipm.base.injection.Inject;
-import com.blockhaus2000.ipm.base.injection.InjectionManager;
+import java.util.Set;
 
-public class InternalPluginManager {
-    @Inject
-    private static Server server;
+public interface Banlist {
+    void ban(final OfflinePlayer player, final String reason);
 
-    static {
-        InjectionManager.init(InternalPluginManager.class);
-    }
+    boolean unban(final OfflinePlayer player);
 
-    private InternalPluginManager() {
-        // Utility classes should not have a visible constructor.
-    }
+    void reload();
 
-    /**
-     *
-     * @return {@link InternalPluginManager#server}
-     */
-    public static Server getServer() {
-        return InternalPluginManager.server;
-    }
+    Set<OfflinePlayer> getBannedPlayers();
 }

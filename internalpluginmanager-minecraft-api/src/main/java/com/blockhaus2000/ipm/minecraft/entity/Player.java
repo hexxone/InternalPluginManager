@@ -15,19 +15,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.world;
+package com.blockhaus2000.ipm.minecraft.entity;
 
-import com.blockhaus2000.ipm.minecraft.Location;
+import com.blockhaus2000.ipm.minecraft.OfflinePlayer;
+import com.blockhaus2000.ipm.minecraft.command.PlayerCommandSender;
+import com.blockhaus2000.ipm.minecraft.util.WorldLocation;
 
-/**
- * A subinterface of {@link Location} with the same functionality, but
- * containing a world also.
- *
- */
-public interface WorldLocation extends Location {
-    /**
-     *
-     * @return The world of this location.
-     */
-    World getWorld();
+public interface Player extends OfflinePlayer, PlayerCommandSender {
+    WorldLocation getLocation();
+
+    String getIp();
+
+    // IP-ban stuff.
+    boolean isIpBanned();
+
+    void banIp(final String reason);
+
+    void unbanIp();
 }

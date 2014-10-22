@@ -19,103 +19,20 @@ package com.blockhaus2000.ipm.minecraft;
 
 import java.util.UUID;
 
-import javax.xml.stream.Location;
-
-import com.blockhaus2000.ipm.minecraft.bukkit.entity.Player;
-
-/**
- * The offline player is a version of the regular {@link Player}, that is not
- * online. This can only be used to make regular, non-interacting changes for
- * the player, like ban him, etc.
- *
- */
 public interface OfflinePlayer {
-    /**
-     *
-     * @return The UUID of this player.
-     */
-    UUID getUniqueId();
-
-    /**
-     *
-     * @deprecated Since Minecraft 1.8, name changes are possible. Because of
-     *             that, UUIDs where added. So use {@link Player#getUniqueId()}
-     *             instead of using the name to associated data with a player
-     *             (in a database, for example).
-     * @return The name of this player that has been lower-cased and trimmed.
-     */
-    @Deprecated
     String getName();
 
-    /**
-     *
-     * @return The player object of this offline player object, if found.
-     *         <code>null</code> otherwise.
-     */
-    Player getPlayer();
+    UUID getUUID();
 
-    /**
-     *
-     * @return The unix time stamp of the time this player has first played on
-     *         this server. If the player has not played on this server until
-     *         now, returning <code>0</code>.
-     */
-    long getFirstPlayed();
-
-    /**
-     *
-     * @return The unix time stamp of the time this player has last played on
-     *         this server. If the player has not played on this server until
-     *         now, returning <code>0</code>.
-     */
-    long getLastplayed();
-
-    /**
-     *
-     * @return Whether the player plays the first time on this server.
-     */
-    boolean isNew();
-
-    /**
-     *
-     * @return The location of the bed where the player spawns on death. If the
-     *         player "has no bed", returning <code>null</code>.
-     */
-    Location getBedSpawnLoaction();
-
-    /**
-     *
-     * @return Whether this player is online.
-     */
-    boolean isOnline();
-
-    /**
-     *
-     * @return Whether this player is banned.
-     */
-    boolean isBanned();
-
-    /**
-     *
-     * @return Whether this player is whitelisted.
-     */
+    // Whitelist stuff.
     boolean isWhitelisted();
 
-    /**
-     * Set whether this player is banned.
-     *
-     * @param banned
-     *            The new banned state.
-     * @param reason
-     *            The reason why this player is banned.
-     */
-    void setBanned(final boolean banned, final String reason);
-
-    /**
-     * Set whether this player is whitelisted.
-     *
-     * @param whitelisted
-     *            The new whitelisted state.
-     */
     void setWhitelisted(final boolean whitelisted);
+
+    // Ban stuff.
+    boolean isBanned();
+
+    void ban(final String reason);
+
+    void unban();
 }

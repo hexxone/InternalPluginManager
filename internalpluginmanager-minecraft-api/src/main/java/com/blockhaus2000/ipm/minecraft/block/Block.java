@@ -15,14 +15,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.recipe;
+package com.blockhaus2000.ipm.minecraft.block;
 
-import java.util.List;
+import com.blockhaus2000.ipm.minecraft.chunk.Chunk;
+import com.blockhaus2000.ipm.minecraft.util.Location;
+import com.blockhaus2000.ipm.minecraft.util.WorldLocation;
 
-import com.blockhaus2000.ipm.minecraft.ItemStack;
+public interface Block {
+    int getSeverity();
 
-public interface Recipe {
-    boolean isShaped();
+    int getLightlevel();
 
-    List<ItemStack> getRequiredItems();
+    boolean isSolid();
+
+    boolean hasGravity();
+
+    WorldLocation getLocation();
+
+    Block getBlockRelative(final Location loc);
+
+    Block getBlockRelative(final int x, final int y, final int z);
+
+    Chunk getChunk();
+
+    BlockMaterial getMaterial();
+
+    void setMaterial(final BlockMaterial material);
 }

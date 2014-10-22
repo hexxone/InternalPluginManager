@@ -15,14 +15,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.recipe;
+package com.blockhaus2000.ipm.minecraft.util;
 
-import java.util.List;
+import com.blockhaus2000.ipm.minecraft.world.World;
 
-import com.blockhaus2000.ipm.minecraft.ItemStack;
+public class WorldLocation extends Location {
+    private final World world;
 
-public interface RecipeBuilder {
-    Recipe buildRecipe(final List<ItemStack> items);
+    public WorldLocation(final int x, final int y, final int z, final World world) {
+        super(x, y, z);
 
-    ShapedRecipe buildShapedRecipe(final RecipeShape shape);
+        this.world = world;
+    }
+
+    public World getWorld() {
+        return this.world;
+    }
 }

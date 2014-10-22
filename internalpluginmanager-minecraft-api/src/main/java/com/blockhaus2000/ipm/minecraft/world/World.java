@@ -17,27 +17,35 @@
  */
 package com.blockhaus2000.ipm.minecraft.world;
 
-public interface World {
-    // TODO: Define API.
+import java.util.Set;
+import java.util.UUID;
 
-    // Item dropItem(final Location loc, final ItemStack item);
-    //
-    // Arrow spawnArrow(Location location, Vector direction, float speed, float
-    // spread);
-    //
-    // boolean generateTree(final Location loc, final TreeType treeType);
-    //
-    // Block getBlockAt(final Location loc);
-    //
-    // Block getBlockAt(final int x, final int y, final int z);
-    //
-    // Block getHighestBlockAt(final Location loc);
-    //
-    // Block getHighestBlockAt(final int x, final int z);
-    //
-    // Material getMaterial();
-    //
-    // String getDisplayName();
-    //
-    // UUID getUniqueId();
+import com.blockhaus2000.ipm.minecraft.GameRule;
+import com.blockhaus2000.ipm.minecraft.block.Block;
+import com.blockhaus2000.ipm.minecraft.chunk.Chunk;
+import com.blockhaus2000.ipm.minecraft.util.Location;
+
+public interface World {
+    UUID getUUID();
+
+    @Deprecated
+    String getName();
+
+    String getDisplayName();
+
+    Block getBlockAt(final Location loc);
+
+    Block getBlockAt(final int x, final int y, final int z);
+
+    Block getHighestBlockAt(final Location loc);
+
+    Block getHighestBlockAt(final int x, final int z);
+
+    Chunk getChunkAt(final Location loc);
+
+    Chunk getChunkAt(final int x, final int z);
+
+    Chunk getChunkAt(final Block block);
+
+    Set<GameRule> getGameRules();
 }

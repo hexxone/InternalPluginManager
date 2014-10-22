@@ -64,7 +64,7 @@ public class DynamicCommand extends CanaryCommand {
     protected void execute(final MessageReceiver sender, final String[] args) {
         final CommandSender commandSender;
         if (sender instanceof Player) {
-            commandSender = InternalPluginManager.getServer().getPlayer(((Player) sender).getUUID());
+            commandSender = InternalPluginManager.getServer().getPlayerManager().getPlayer(((Player) sender).getUUID());
         } else if (sender instanceof CommandBlockLogic) {
             commandSender = new CanaryBlockCommandSender();
         } else {
@@ -106,9 +106,9 @@ public class DynamicCommand extends CanaryCommand {
          */
         // The annotation is returned from the method itself.
         @Command(aliases = { "" },
-                description = "",
-                permissions = { "" },
-                toolTip = "")
+                 description = "",
+                 permissions = { "" },
+                 toolTip = "")
         private static Command get() {
             if (DummyCommandAnnotation.commandAnot == null) {
                 synchronized (DummyCommandAnnotation.LOCK) {
@@ -118,10 +118,10 @@ public class DynamicCommand extends CanaryCommand {
                             method = DummyCommandAnnotation.class.getDeclaredMethod("get");
                         } catch (final SecurityException ex) {
                             InternalPluginManager.getServer().getLogger()
-                                    .log(Level.SEVERE, "An error occurred whilest getting the dummy command annotation!", ex);
+                            .log(Level.SEVERE, "An error occurred whilest getting the dummy command annotation!", ex);
                         } catch (final NoSuchMethodException ex) {
                             InternalPluginManager.getServer().getLogger()
-                                    .log(Level.SEVERE, "An error occurred whilest getting the dummy command annotation!", ex);
+                            .log(Level.SEVERE, "An error occurred whilest getting the dummy command annotation!", ex);
                         }
                         method.setAccessible(true);
                         DummyCommandAnnotation.commandAnot = method.getAnnotation(net.canarymod.commandsys.Command.class);

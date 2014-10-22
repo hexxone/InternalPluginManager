@@ -15,8 +15,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.world;
+package com.blockhaus2000.ipm.minecraft;
 
-public interface WorldBuilder {
-    // TODO: Define API.
+import java.util.Set;
+import java.util.UUID;
+
+import com.blockhaus2000.ipm.minecraft.entity.Player;
+
+public interface PlayerManager {
+    Player getPlayer(final UUID uuid);
+
+    @Deprecated
+    Player getPlayer(final String name);
+
+    Set<Player> getPlayers();
+
+    OfflinePlayer getOfflinePlayer(final UUID uuid);
+
+    @Deprecated
+    OfflinePlayer getOfflinePlayer(final String name);
+
+    Set<OfflinePlayer> getOfflinePlayers();
 }

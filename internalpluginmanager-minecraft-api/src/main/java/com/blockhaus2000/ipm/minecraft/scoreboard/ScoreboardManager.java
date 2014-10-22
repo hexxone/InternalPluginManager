@@ -18,5 +18,5 @@
 package com.blockhaus2000.ipm.minecraft.scoreboard;
 
 public interface ScoreboardManager {
-    // TODO: Define API.
+    // TODO Auto-generated interface body.
 }

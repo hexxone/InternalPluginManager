@@ -15,28 +15,44 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft;
+package com.blockhaus2000.ipm.minecraft.util;
 
-import com.blockhaus2000.ipm.base.injection.Inject;
-import com.blockhaus2000.ipm.base.injection.InjectionManager;
+public class Location {
+    private final int x;
+    private final int y;
+    private final int z;
 
-public class InternalPluginManager {
-    @Inject
-    private static Server server;
-
-    static {
-        InjectionManager.init(InternalPluginManager.class);
+    public Location(final int x, final int y, final int z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
-    private InternalPluginManager() {
-        // Utility classes should not have a visible constructor.
+    public Location add(final Location loc) {
+        return new Location(this.x + loc.getX(), this.y + loc.getY(), this.z + loc.getZ());
     }
 
     /**
      *
-     * @return {@link InternalPluginManager#server}
+     * @return {@link Location#x}.
      */
-    public static Server getServer() {
-        return InternalPluginManager.server;
+    public int getX() {
+        return this.x;
+    }
+
+    /**
+     *
+     * @return {@link Location#y}.
+     */
+    public int getY() {
+        return this.y;
+    }
+
+    /**
+     *
+     * @return {@link Location#z}.
+     */
+    public int getZ() {
+        return this.z;
     }
 }

@@ -15,28 +15,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft;
+package com.blockhaus2000.ipm.minecraft.world;
 
-import com.blockhaus2000.ipm.base.injection.Inject;
-import com.blockhaus2000.ipm.base.injection.InjectionManager;
+import java.util.UUID;
 
-public class InternalPluginManager {
-    @Inject
-    private static Server server;
+public interface WorldManager {
+    // TODO Auto-generated interface body.
 
-    static {
-        InjectionManager.init(InternalPluginManager.class);
-    }
+    World getWorld(final UUID uuid);
 
-    private InternalPluginManager() {
-        // Utility classes should not have a visible constructor.
-    }
-
-    /**
-     *
-     * @return {@link InternalPluginManager#server}
-     */
-    public static Server getServer() {
-        return InternalPluginManager.server;
-    }
+    World getWorld(final String name);
 }

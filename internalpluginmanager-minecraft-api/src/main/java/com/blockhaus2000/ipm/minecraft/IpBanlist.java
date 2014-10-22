@@ -15,8 +15,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.recipe;
+package com.blockhaus2000.ipm.minecraft;
 
-public interface ShapedRecipe {
-    RecipeShape getShape();
+import java.util.Set;
+
+public interface IpBanlist {
+    void ban(final String ip, final String reason);
+
+    boolean unban(final String ip);
+
+    void reload();
+
+    Set<String> getBannedIps();
 }

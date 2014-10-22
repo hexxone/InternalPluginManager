@@ -15,8 +15,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.material;
+package com.blockhaus2000.ipm.minecraft;
 
-public enum Material {
-    // TODO: Define API.
+public enum OperatorLevel {
+    LEVEL_1(1),
+    LEVEL_2(2),
+    LEVEL_3(3),
+    LEVEL_4(4);
+
+    private final int level;
+
+    private OperatorLevel(final int level) {
+        this.level = level;
+    }
+
+    public int getLevel() {
+        return this.level;
+    }
+
+    public static OperatorLevel getByLevel(final int level) {
+        for (final OperatorLevel operatorLevel : OperatorLevel.values()) {
+            if (operatorLevel.getLevel() == level) {
+                return operatorLevel;
+            }
+        }
+        return null;
+    }
 }

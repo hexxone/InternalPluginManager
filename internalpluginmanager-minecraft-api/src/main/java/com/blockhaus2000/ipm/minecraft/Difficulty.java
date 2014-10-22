@@ -17,26 +17,28 @@
  */
 package com.blockhaus2000.ipm.minecraft;
 
-import com.blockhaus2000.ipm.base.injection.Inject;
-import com.blockhaus2000.ipm.base.injection.InjectionManager;
+public enum Difficulty {
+    PEACEFUL(0),
+    EASY(1),
+    NORMAL(2),
+    HARD(3);
 
-public class InternalPluginManager {
-    @Inject
-    private static Server server;
+    private final int id;
 
-    static {
-        InjectionManager.init(InternalPluginManager.class);
+    private Difficulty(final int id) {
+        this.id = id;
     }
 
-    private InternalPluginManager() {
-        // Utility classes should not have a visible constructor.
+    public int getId() {
+        return this.id;
     }
 
-    /**
-     *
-     * @return {@link InternalPluginManager#server}
-     */
-    public static Server getServer() {
-        return InternalPluginManager.server;
+    public Difficulty getById(final int id) {
+        for (final Difficulty difficulty : Difficulty.values()) {
+            if (difficulty.getId() == id) {
+                return difficulty;
+            }
+        }
+        return null;
     }
 }

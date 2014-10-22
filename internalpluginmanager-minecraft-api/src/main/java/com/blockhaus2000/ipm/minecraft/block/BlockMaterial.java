@@ -15,34 +15,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.recipe;
+package com.blockhaus2000.ipm.minecraft.block;
 
-import com.blockhaus2000.ipm.minecraft.ItemStack;
-
-public interface RecipeShape {
-    ItemStack getAt(final RecipeShape.Location loc);
-
-    public static enum Location {
-        TOP_LEFT(0),
-        TOP_MIDDLE(1),
-        TOP_RIGHT(2),
-
-        MIDDLE_LEFT(3),
-        MIDDLE_MIDDLE(4),
-        MIDDLE_RIGHT(5),
-
-        BOTTOM_LEFT(6),
-        BOTTOM_MIDDLE(7),
-        BOTTOM_RIGHT(8);
-
-        private final int index;
-
-        private Location(final int index) {
-            this.index = index;
-        }
-
-        public int getIndex() {
-            return this.index;
-        }
-    }
+public enum BlockMaterial {
+    // TODO: Auto-generated enum body.
 }

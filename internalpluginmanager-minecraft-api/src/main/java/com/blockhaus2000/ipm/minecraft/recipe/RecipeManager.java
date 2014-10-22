@@ -15,8 +15,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.inventory;
+package com.blockhaus2000.ipm.minecraft.recipe;
 
-public interface InventoryBuilder {
-    // TODO: Define API.
+public interface RecipeManager {
+    // TODO Auto-generated interface body.
 }

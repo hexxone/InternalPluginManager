@@ -17,26 +17,15 @@
  */
 package com.blockhaus2000.ipm.minecraft;
 
-import com.blockhaus2000.ipm.base.injection.Inject;
-import com.blockhaus2000.ipm.base.injection.InjectionManager;
-
-public class InternalPluginManager {
-    @Inject
-    private static Server server;
-
-    static {
-        InjectionManager.init(InternalPluginManager.class);
-    }
-
-    private InternalPluginManager() {
-        // Utility classes should not have a visible constructor.
-    }
-
-    /**
-     *
-     * @return {@link InternalPluginManager#server}
-     */
-    public static Server getServer() {
-        return InternalPluginManager.server;
-    }
+public enum Record {
+    RECORD_3,
+    RECORD_4,
+    RECORD_5,
+    RECORD_6,
+    RECORD_7,
+    RECORD_8,
+    RECORD_9,
+    RECORD_10,
+    RECORD_11,
+    RECORD_12;
 }

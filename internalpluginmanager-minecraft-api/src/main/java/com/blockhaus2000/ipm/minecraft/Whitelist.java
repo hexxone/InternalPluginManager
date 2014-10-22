@@ -17,10 +17,18 @@
  */
 package com.blockhaus2000.ipm.minecraft;
 
-import com.blockhaus2000.ipm.minecraft.material.Material;
+import java.util.Set;
 
-public interface ItemStack {
-    Material getMaterial();
+public interface Whitelist {
+    void add(final OfflinePlayer player);
 
-    int getAmount();
+    boolean remove(final OfflinePlayer player);
+
+    void reload();
+
+    Set<OfflinePlayer> getWhitelistedPlayers();
+
+    boolean isEnabled();
+
+    void setEnabled(final boolean enabled);
 }

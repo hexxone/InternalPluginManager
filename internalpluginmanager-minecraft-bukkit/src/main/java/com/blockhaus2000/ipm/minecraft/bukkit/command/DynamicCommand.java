@@ -54,7 +54,7 @@ public class DynamicCommand extends Command {
     public boolean execute(final CommandSender sender, final String label, final String[] args) {
         final com.blockhaus2000.ipm.minecraft.command.CommandSender commandSender;
         if (sender instanceof Player) {
-            commandSender = InternalPluginManager.getServer().getPlayer(((Player) sender).getUniqueId());
+            commandSender = InternalPluginManager.getServer().getPlayerManager().getPlayer(((Player) sender).getUniqueId());
         } else if (sender instanceof BlockCommandSender) {
             commandSender = new BukkitBlockCommandSender();
         } else {

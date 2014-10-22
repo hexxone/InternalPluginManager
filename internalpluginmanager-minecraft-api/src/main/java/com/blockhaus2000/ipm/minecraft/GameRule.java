@@ -17,26 +17,12 @@
  */
 package com.blockhaus2000.ipm.minecraft;
 
-import com.blockhaus2000.ipm.base.injection.Inject;
-import com.blockhaus2000.ipm.base.injection.InjectionManager;
+public interface GameRule<T> {
+    GameRule.Name getName();
 
-public class InternalPluginManager {
-    @Inject
-    private static Server server;
+    T getValue();
 
-    static {
-        InjectionManager.init(InternalPluginManager.class);
-    }
-
-    private InternalPluginManager() {
-        // Utility classes should not have a visible constructor.
-    }
-
-    /**
-     *
-     * @return {@link InternalPluginManager#server}
-     */
-    public static Server getServer() {
-        return InternalPluginManager.server;
+    public static enum Name {
+        // TODO Auto-generated enum body.
     }
 }

@@ -15,28 +15,34 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft;
+package com.blockhaus2000.ipm.minecraft.chunk;
 
-/**
- * A location is location in a 3D-room, defined by x, y and z.
- *
- */
-public interface Location {
-    /**
-     *
-     * @return The X value of this location.
-     */
-    int getX();
+import java.util.List;
+import java.util.Set;
 
-    /**
-     *
-     * @return The Y value of this location.
-     */
-    int getY();
+import com.blockhaus2000.ipm.minecraft.block.Block;
+import com.blockhaus2000.ipm.minecraft.entity.Entity;
+import com.blockhaus2000.ipm.minecraft.entity.Player;
+import com.blockhaus2000.ipm.minecraft.util.WorldLocation;
 
-    /**
-     *
-     * @return The Z value of this location.
-     */
-    int getZ();
+public interface Chunk {
+    WorldLocation getLocation();
+
+    boolean isLoaded();
+
+    void generate();
+
+    void load(final boolean generate);
+
+    void load();
+
+    void unload(final boolean save);
+
+    void unload();
+
+    boolean containsBlock(final Block block);
+
+    List<Entity> getEnities();
+
+    Set<Player> getPlayers();
 }
