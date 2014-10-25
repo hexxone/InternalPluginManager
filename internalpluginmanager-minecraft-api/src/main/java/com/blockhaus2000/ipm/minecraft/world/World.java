@@ -23,25 +23,26 @@ import java.util.UUID;
 import com.blockhaus2000.ipm.minecraft.GameRule;
 import com.blockhaus2000.ipm.minecraft.block.Block;
 import com.blockhaus2000.ipm.minecraft.chunk.Chunk;
-import com.blockhaus2000.ipm.minecraft.util.Location;
+import com.blockhaus2000.ipm.minecraft.util.Vector;
 
 public interface World {
     UUID getUUID();
 
-    @Deprecated
     String getName();
 
-    String getDisplayName();
+    void setBlock(final Block block);
 
-    Block getBlockAt(final Location loc);
+    Block getBlockAt(final Vector loc);
 
     Block getBlockAt(final int x, final int y, final int z);
 
-    Block getHighestBlockAt(final Location loc);
+    Block getHighestBlockAt(final Vector loc);
 
     Block getHighestBlockAt(final int x, final int z);
 
-    Chunk getChunkAt(final Location loc);
+    Chunk getChunkContainingLocation(final Vector loc);
+
+    Chunk getChunkAt(final Vector loc);
 
     Chunk getChunkAt(final int x, final int z);
 

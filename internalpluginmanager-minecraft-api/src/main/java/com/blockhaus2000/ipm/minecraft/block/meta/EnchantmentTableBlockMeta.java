@@ -15,17 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft;
+package com.blockhaus2000.ipm.minecraft.block.meta;
 
-public enum Record {
-    RECORD_3,
-    RECORD_4,
-    RECORD_5,
-    RECORD_6,
-    RECORD_7,
-    RECORD_8,
-    RECORD_9,
-    RECORD_10,
-    RECORD_11,
-    RECORD_12;
+import com.blockhaus2000.ipm.minecraft.enchantment.Enchantment;
+
+public interface EnchantmentTableBlockMeta extends BlockMeta, Container {
+    Enchantment[] getCurrentEnchantments();
 }

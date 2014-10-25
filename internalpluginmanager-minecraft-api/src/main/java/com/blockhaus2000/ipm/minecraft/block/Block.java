@@ -17,28 +17,13 @@
  */
 package com.blockhaus2000.ipm.minecraft.block;
 
-import com.blockhaus2000.ipm.minecraft.chunk.Chunk;
-import com.blockhaus2000.ipm.minecraft.util.Location;
+import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.util.WorldLocation;
 
-public interface Block {
-    int getSeverity();
-
-    int getLightlevel();
-
-    boolean isSolid();
-
-    boolean hasGravity();
+public interface Block<T extends BlockMeta> {
+    T getMeta();
 
     WorldLocation getLocation();
 
-    Block getBlockRelative(final Location loc);
-
-    Block getBlockRelative(final int x, final int y, final int z);
-
-    Chunk getChunk();
-
     BlockMaterial getMaterial();
-
-    void setMaterial(final BlockMaterial material);
 }

@@ -15,32 +15,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.util;
+package com.blockhaus2000.ipm.minecraft.block.meta;
 
-import com.blockhaus2000.ipm.minecraft.world.World;
+public interface SignBlockMeta extends BlockMeta {
+    String getFirstLine();
 
-public class WorldLocation {
-    private final Vector vector;
-    private final World world;
+    String getSecondLine();
 
-    public WorldLocation(final int x, final int y, final int z, final World world) {
-        this.vector = new Vector(x, y, z);
-        this.world = world;
-    }
+    String getThirdLine();
 
-    /**
-     *
-     * @return {@link WorldLocation#vector}
-     */
-    public Vector getVector() {
-        return this.vector;
-    }
+    String getFourthLine();
 
-    /**
-     *
-     * @return {@link WorldLocation#world}
-     */
-    public World getWorld() {
-        return this.world;
-    }
+    void setFirstLine(final String text);
+
+    void setSecondLine(final String text);
+
+    void setThirdLine(final String text);
+
+    void setFourthLine(final String text);
 }

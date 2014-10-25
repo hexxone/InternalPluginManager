@@ -17,30 +17,42 @@
  */
 package com.blockhaus2000.ipm.minecraft.util;
 
-import com.blockhaus2000.ipm.minecraft.world.World;
+public class Vector {
+    private final int x;
+    private final int y;
+    private final int z;
 
-public class WorldLocation {
-    private final Vector vector;
-    private final World world;
+    public Vector(final int x, final int y, final int z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
 
-    public WorldLocation(final int x, final int y, final int z, final World world) {
-        this.vector = new Vector(x, y, z);
-        this.world = world;
+    public Vector add(final Vector vec) {
+        return new Vector(this.x + vec.getX(), this.y + vec.getY(), this.z + vec.getZ());
     }
 
     /**
      *
-     * @return {@link WorldLocation#vector}
+     * @return {@link Vector#x}.
      */
-    public Vector getVector() {
-        return this.vector;
+    public int getX() {
+        return this.x;
     }
 
     /**
      *
-     * @return {@link WorldLocation#world}
+     * @return {@link Vector#y}.
      */
-    public World getWorld() {
-        return this.world;
+    public int getY() {
+        return this.y;
+    }
+
+    /**
+     *
+     * @return {@link Vector#z}.
+     */
+    public int getZ() {
+        return this.z;
     }
 }

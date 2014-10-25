@@ -15,44 +15,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.util;
+package com.blockhaus2000.ipm.minecraft;
 
-public class Location {
-    private final int x;
-    private final int y;
-    private final int z;
+public enum Note {
+    // TODO: Add notes.
+    ;
 
-    public Location(final int x, final int y, final int z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+    private final int id;
+
+    private Note(final int id) {
+        this.id = id;
     }
 
-    public Location add(final Location loc) {
-        return new Location(this.x + loc.getX(), this.y + loc.getY(), this.z + loc.getZ());
-    }
-
-    /**
-     *
-     * @return {@link Location#x}.
-     */
-    public int getX() {
-        return this.x;
-    }
-
-    /**
-     *
-     * @return {@link Location#y}.
-     */
-    public int getY() {
-        return this.y;
-    }
-
-    /**
-     *
-     * @return {@link Location#z}.
-     */
-    public int getZ() {
-        return this.z;
+    public int getId() {
+        return this.id;
     }
 }
