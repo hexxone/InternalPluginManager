@@ -15,8 +15,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.block.meta;
+package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
-public interface DispenserAndDropperBlockMeta extends BlockMeta, Container {
-    // Nothing to do.
+import com.blockhaus2000.ipm.minecraft.block.meta.ActivatorRailBlockMeta;
+import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
+
+public class ConcreteActivatorRailBlockMeta extends ConcreteBlockMeta implements ActivatorRailBlockMeta {
+    private final boolean active;
+
+    public ConcreteActivatorRailBlockMeta(final BlockMeta blockMeta, final boolean active) {
+        super(blockMeta);
+
+        this.active = active;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.minecraft.block.meta.ActivatorRailBlockMeta#isActive()
+     */
+    @Override
+    public boolean isActive() {
+        return this.active;
+    }
 }

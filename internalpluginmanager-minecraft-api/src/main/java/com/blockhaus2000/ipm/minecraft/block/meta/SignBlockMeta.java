@@ -25,12 +25,4 @@ public interface SignBlockMeta extends BlockMeta {
     String getThirdLine();
 
     String getFourthLine();
-
-    void setFirstLine(final String text);
-
-    void setSecondLine(final String text);
-
-    void setThirdLine(final String text);
-
-    void setFourthLine(final String text);
 }

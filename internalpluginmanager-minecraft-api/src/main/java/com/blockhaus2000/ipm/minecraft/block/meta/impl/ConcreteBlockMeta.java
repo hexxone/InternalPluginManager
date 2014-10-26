@@ -15,83 +15,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.block.meta.concrete;
+package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
 import com.blockhaus2000.ipm.minecraft.Direction;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
+import com.blockhaus2000.ipm.minecraft.block.meta.RawBlockMeta;
 
-public class ConcreteBlockMeta implements BlockMeta {
-    private final int lightLevel;
-    private final int explosionResistance;
-    private final int severity;
-
-    private final boolean gravity;
-    private final boolean solid;
+public class ConcreteBlockMeta extends ConcreteRawBlockMeta implements BlockMeta {
     private final boolean redstonePowered;
     private final boolean indirectRedstonePowered;
-
     private final Direction direction;
 
-    public ConcreteBlockMeta(final int lightLevel, final int explosionResistance, final int severity, final boolean gravity,
-            final boolean solid, final boolean redstonePowered, final boolean indirectRedstonePowered, final Direction direction) {
-        this.lightLevel = lightLevel;
-        this.explosionResistance = explosionResistance;
-        this.severity = severity;
-        this.gravity = gravity;
-        this.solid = solid;
+    public ConcreteBlockMeta(final RawBlockMeta rawBlockMeta, final boolean redstonePowered,
+            final boolean indirectRedstonePowered, final Direction direction) {
+        super(rawBlockMeta);
+
         this.redstonePowered = redstonePowered;
         this.indirectRedstonePowered = indirectRedstonePowered;
         this.direction = direction;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @see com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta#getLightLevel()
-     */
-    @Override
-    public int getLightLevel() {
-        return this.lightLevel;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta#getExplosionResistance()
-     */
-    @Override
-    public int getExplosionResistance() {
-        return this.explosionResistance;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta#getSeverity()
-     */
-    @Override
-    public int getSeverity() {
-        return this.severity;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta#hasGravity()
-     */
-    @Override
-    public boolean hasGravity() {
-        return this.gravity;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta#isSolid()
-     */
-    @Override
-    public boolean isSolid() {
-        return this.solid;
+    public ConcreteBlockMeta(final BlockMeta blockMeta) {
+        this(blockMeta, blockMeta.isRedstonePowered(), blockMeta.isIndirectRedstonePowered(), blockMeta.getDirection());
     }
 
     /**

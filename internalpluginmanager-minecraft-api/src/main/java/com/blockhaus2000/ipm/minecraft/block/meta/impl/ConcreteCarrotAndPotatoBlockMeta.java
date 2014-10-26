@@ -15,18 +15,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.block;
+package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
-import com.blockhaus2000.ipm.minecraft.Direction;
+import com.blockhaus2000.ipm.minecraft.CarrotAndPotatoGrowState;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
-import com.blockhaus2000.ipm.minecraft.util.WorldLocation;
+import com.blockhaus2000.ipm.minecraft.block.meta.CarrotAndPotatoBlockMeta;
 
-public interface Block {
-    BlockMeta getMeta();
+public class ConcreteCarrotAndPotatoBlockMeta extends ConcreteBlockMeta implements CarrotAndPotatoBlockMeta {
+    private final CarrotAndPotatoGrowState growState;
 
-    Direction getFaceDirection();
+    public ConcreteCarrotAndPotatoBlockMeta(final BlockMeta blockMeta, final CarrotAndPotatoGrowState growState) {
+        super(blockMeta);
 
-    WorldLocation getLocation();
+        this.growState = growState;
+    }
 
-    BlockMaterial getMaterial();
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.minecraft.block.meta.CarrotAndPotatoBlockMeta#getGrowState()
+     */
+    @Override
+    public CarrotAndPotatoGrowState getGrowState() {
+        return this.growState;
+    }
 }

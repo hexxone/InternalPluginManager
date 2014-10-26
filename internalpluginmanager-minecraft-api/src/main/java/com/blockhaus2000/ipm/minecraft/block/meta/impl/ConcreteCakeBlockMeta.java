@@ -15,8 +15,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.block.meta;
+package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
-public interface DispenserAndDropperBlockMeta extends BlockMeta, Container {
-    // Nothing to do.
+import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
+import com.blockhaus2000.ipm.minecraft.block.meta.CakeBlockMeta;
+
+public class ConcreteCakeBlockMeta extends ConcreteBlockMeta implements CakeBlockMeta {
+    private final int size;
+
+    public ConcreteCakeBlockMeta(final BlockMeta blockMeta, final int size) {
+        super(blockMeta);
+
+        this.size = size;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.minecraft.block.meta.CakeBlockMeta#getSize()
+     */
+    @Override
+    public int getSize() {
+        return this.size;
+    }
 }

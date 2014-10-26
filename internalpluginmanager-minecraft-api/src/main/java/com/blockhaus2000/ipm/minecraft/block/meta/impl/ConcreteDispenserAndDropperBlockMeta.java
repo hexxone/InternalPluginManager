@@ -15,18 +15,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.block;
+package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
-import com.blockhaus2000.ipm.minecraft.Direction;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
-import com.blockhaus2000.ipm.minecraft.util.WorldLocation;
+import com.blockhaus2000.ipm.minecraft.block.meta.DispenserAndDropperBlockMeta;
+import com.blockhaus2000.ipm.minecraft.inventory.Inventory;
 
-public interface Block {
-    BlockMeta getMeta();
+public class ConcreteDispenserAndDropperBlockMeta extends ConcreteBlockMeta implements DispenserAndDropperBlockMeta {
+    private final Inventory inventory;
 
-    Direction getFaceDirection();
+    public ConcreteDispenserAndDropperBlockMeta(final BlockMeta blockMeta, final Inventory inventory) {
+        super(blockMeta);
 
-    WorldLocation getLocation();
+        this.inventory = inventory;
+    }
 
-    BlockMaterial getMaterial();
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.minecraft.block.meta.Container#getInventory()
+     */
+    @Override
+    public Inventory getInventory() {
+        return this.inventory;
+    }
 }

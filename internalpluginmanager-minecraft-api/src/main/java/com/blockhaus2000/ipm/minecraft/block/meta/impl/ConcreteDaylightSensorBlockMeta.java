@@ -15,18 +15,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.block;
+package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
-import com.blockhaus2000.ipm.minecraft.Direction;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
-import com.blockhaus2000.ipm.minecraft.util.WorldLocation;
+import com.blockhaus2000.ipm.minecraft.block.meta.DaylightSensorBlockMeta;
 
-public interface Block {
-    BlockMeta getMeta();
+public class ConcreteDaylightSensorBlockMeta extends ConcreteBlockMeta implements DaylightSensorBlockMeta {
+    private final int outputStrength;
 
-    Direction getFaceDirection();
+    public ConcreteDaylightSensorBlockMeta(final BlockMeta blockMeta, final int outputStrength) {
+        super(blockMeta);
 
-    WorldLocation getLocation();
+        this.outputStrength = outputStrength;
+    }
 
-    BlockMaterial getMaterial();
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.minecraft.block.meta.DaylightSensorBlockMeta#getOutputStrength()
+     */
+    @Override
+    public int getOutputStrength() {
+        return this.outputStrength;
+    }
 }

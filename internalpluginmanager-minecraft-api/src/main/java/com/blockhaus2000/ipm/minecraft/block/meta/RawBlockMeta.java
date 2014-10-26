@@ -17,6 +17,16 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
-public interface DispenserAndDropperBlockMeta extends BlockMeta, Container {
-    // Nothing to do.
+public interface RawBlockMeta {
+    int getLightLevel();
+
+    double getExplosionResistance();
+
+    double getSeverity();
+
+    boolean hasGravity();
+
+    boolean isSolid();
+
+    boolean isTransparent();
 }

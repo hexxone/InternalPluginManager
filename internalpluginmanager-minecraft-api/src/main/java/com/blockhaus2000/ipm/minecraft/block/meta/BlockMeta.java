@@ -19,17 +19,7 @@ package com.blockhaus2000.ipm.minecraft.block.meta;
 
 import com.blockhaus2000.ipm.minecraft.Direction;
 
-public interface BlockMeta {
-    int getLightLevel();
-
-    int getExplosionResistance();
-
-    int getSeverity();
-
-    boolean hasGravity();
-
-    boolean isSolid();
-
+public interface BlockMeta extends RawBlockMeta {
     boolean isRedstonePowered();
 
     boolean isIndirectRedstonePowered();

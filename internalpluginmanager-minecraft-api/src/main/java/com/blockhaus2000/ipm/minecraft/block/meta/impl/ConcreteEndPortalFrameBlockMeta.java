@@ -15,8 +15,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.block.meta;
+package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
-public interface DispenserAndDropperBlockMeta extends BlockMeta, Container {
-    // Nothing to do.
+import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
+import com.blockhaus2000.ipm.minecraft.block.meta.EndPortalFrameBlockMeta;
+
+public class ConcreteEndPortalFrameBlockMeta extends ConcreteBlockMeta implements EndPortalFrameBlockMeta {
+    private final boolean enderPerl;
+
+    public ConcreteEndPortalFrameBlockMeta(final BlockMeta blockMeta, final boolean enderPerl) {
+        super(blockMeta);
+
+        this.enderPerl = enderPerl;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.minecraft.block.meta.EndPortalFrameBlockMeta#containsEnderPerl()
+     */
+    @Override
+    public boolean containsEnderPerl() {
+        return this.enderPerl;
+    }
 }

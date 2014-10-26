@@ -15,8 +15,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.block.meta;
+package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
-public interface DispenserAndDropperBlockMeta extends BlockMeta, Container {
-    // Nothing to do.
+import com.blockhaus2000.ipm.minecraft.block.meta.BedBlockMeta;
+import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
+import com.blockhaus2000.ipm.minecraft.entity.Player;
+
+public class ConcreteBedBlockMeta extends ConcreteBlockMeta implements BedBlockMeta {
+    private final Player player;
+
+    public ConcreteBedBlockMeta(final BlockMeta blockMeta, final Player player) {
+        super(blockMeta);
+
+        this.player = player;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.minecraft.block.meta.BedBlockMeta#getPlayer()
+     */
+    @Override
+    public Player getPlayer() {
+        return this.player;
+    }
 }

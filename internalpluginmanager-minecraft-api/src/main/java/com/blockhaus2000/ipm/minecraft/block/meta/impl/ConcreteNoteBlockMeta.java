@@ -15,8 +15,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.block.meta;
+package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
-public interface DispenserAndDropperBlockMeta extends BlockMeta, Container {
-    // Nothing to do.
+import com.blockhaus2000.ipm.minecraft.Note;
+import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
+import com.blockhaus2000.ipm.minecraft.block.meta.NoteBlockMeta;
+
+public class ConcreteNoteBlockMeta extends ConcreteBlockMeta implements NoteBlockMeta {
+    private final Note note;
+
+    public ConcreteNoteBlockMeta(final BlockMeta blockMeta, final Note note) {
+        super(blockMeta);
+
+        this.note = note;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.minecraft.block.meta.NoteBlockMeta#getNote()
+     */
+    @Override
+    public Note getNote() {
+        return this.note;
+    }
 }

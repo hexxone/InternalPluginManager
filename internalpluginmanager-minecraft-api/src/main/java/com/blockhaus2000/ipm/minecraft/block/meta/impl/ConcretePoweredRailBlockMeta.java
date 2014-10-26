@@ -15,8 +15,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.block.meta;
+package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
-public interface DispenserAndDropperBlockMeta extends BlockMeta, Container {
-    // Nothing to do.
+import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
+import com.blockhaus2000.ipm.minecraft.block.meta.PoweredRailBlockMeta;
+
+public class ConcretePoweredRailBlockMeta extends ConcreteBlockMeta implements PoweredRailBlockMeta {
+    private final boolean powered;
+
+    public ConcretePoweredRailBlockMeta(final BlockMeta blockMeta, final boolean powered) {
+        super(blockMeta);
+
+        this.powered = powered;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.minecraft.block.meta.PoweredRailBlockMeta#isPowered()
+     */
+    @Override
+    public boolean isPowered() {
+        return this.powered;
+    }
 }

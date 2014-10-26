@@ -15,8 +15,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.block.meta;
+package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
-public interface DispenserAndDropperBlockMeta extends BlockMeta, Container {
-    // Nothing to do.
+import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
+import com.blockhaus2000.ipm.minecraft.block.meta.PressurePlateBlockMeta;
+
+public class ConcretePressurePlateBlockMeta extends ConcreteBlockMeta implements PressurePlateBlockMeta {
+    private final boolean pressed;
+
+    public ConcretePressurePlateBlockMeta(final BlockMeta blockMeta, final boolean pressed) {
+        super(blockMeta);
+
+        this.pressed = pressed;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.minecraft.block.meta.PressurePlateBlockMeta#isPressed()
+     */
+    @Override
+    public boolean isPressed() {
+        return this.pressed;
+    }
 }

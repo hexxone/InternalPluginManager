@@ -15,18 +15,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.block;
+package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
-import com.blockhaus2000.ipm.minecraft.Direction;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
-import com.blockhaus2000.ipm.minecraft.util.WorldLocation;
+import com.blockhaus2000.ipm.minecraft.block.meta.FlowerPotBlockMeta;
+import com.blockhaus2000.ipm.minecraft.item.ItemMaterial;
 
-public interface Block {
-    BlockMeta getMeta();
+public class ConcreteFlowerPotBlockMeta extends ConcreteBlockMeta implements FlowerPotBlockMeta {
+    private final ItemMaterial itemType;
 
-    Direction getFaceDirection();
+    public ConcreteFlowerPotBlockMeta(final BlockMeta blockMeta, final ItemMaterial itemType) {
+        super(blockMeta);
 
-    WorldLocation getLocation();
+        this.itemType = itemType;
+    }
 
-    BlockMaterial getMaterial();
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.minecraft.block.meta.FlowerPotBlockMeta#getItemType()
+     */
+    @Override
+    public ItemMaterial getItemType() {
+        return this.itemType;
+    }
 }

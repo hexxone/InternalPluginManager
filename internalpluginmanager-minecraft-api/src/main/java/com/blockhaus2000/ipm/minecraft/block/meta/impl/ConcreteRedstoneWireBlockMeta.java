@@ -15,18 +15,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.block;
+package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
-import com.blockhaus2000.ipm.minecraft.Direction;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
-import com.blockhaus2000.ipm.minecraft.util.WorldLocation;
+import com.blockhaus2000.ipm.minecraft.block.meta.RedstoneWireBlockMeta;
 
-public interface Block {
-    BlockMeta getMeta();
+public class ConcreteRedstoneWireBlockMeta extends ConcreteBlockMeta implements RedstoneWireBlockMeta {
+    private final int redstoneStrength;
 
-    Direction getFaceDirection();
+    public ConcreteRedstoneWireBlockMeta(final BlockMeta blockMeta, final int redstoneStrength) {
+        super(blockMeta);
 
-    WorldLocation getLocation();
+        this.redstoneStrength = redstoneStrength;
+    }
 
-    BlockMaterial getMaterial();
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.minecraft.block.meta.RedstoneWireBlockMeta#getRedstoneStrength()
+     */
+    @Override
+    public int getRedstoneStrength() {
+        return this.redstoneStrength;
+    }
 }

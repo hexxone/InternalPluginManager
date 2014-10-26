@@ -17,9 +17,8 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
-
 public interface BrewingStandBlockMeta extends BlockMeta, Container {
-    int getRemainingBrewingTime();
+    long getRemainingBrewingTime();
 
     boolean isBrewing();
 }

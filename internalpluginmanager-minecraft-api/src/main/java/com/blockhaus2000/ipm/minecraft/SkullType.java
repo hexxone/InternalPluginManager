@@ -18,8 +18,9 @@
 package com.blockhaus2000.ipm.minecraft;
 
 public enum SkullType {
+    PLAYER,
     ZOMBIE,
+    CREEPER,
     SKELETON,
-    WITHER_SKELETON,
-    PLAYER;
+    WITHER_SKELETON;
 }

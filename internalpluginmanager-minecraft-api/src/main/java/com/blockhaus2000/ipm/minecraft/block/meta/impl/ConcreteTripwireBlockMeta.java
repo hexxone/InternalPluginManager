@@ -15,8 +15,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.block.meta;
+package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
-public interface DispenserAndDropperBlockMeta extends BlockMeta, Container {
-    // Nothing to do.
+import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
+import com.blockhaus2000.ipm.minecraft.block.meta.TripwireBlockMeta;
+
+public class ConcreteTripwireBlockMeta extends ConcreteBlockMeta implements TripwireBlockMeta {
+    private final boolean active;
+
+    public ConcreteTripwireBlockMeta(final BlockMeta blockMeta, final boolean active) {
+        super(blockMeta);
+
+        this.active = active;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.minecraft.block.meta.TripwireBlockMeta#isActive()
+     */
+    @Override
+    public boolean isActive() {
+        return this.active;
+    }
 }

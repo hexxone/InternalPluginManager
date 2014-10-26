@@ -15,8 +15,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.block.meta;
+package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
-public interface DispenserAndDropperBlockMeta extends BlockMeta, Container {
-    // Nothing to do.
+import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
+import com.blockhaus2000.ipm.minecraft.block.meta.CommandBlockMeta;
+
+public class ConcreteCauldronBlockMeta extends ConcreteBlockMeta implements CommandBlockMeta {
+    private final String command;
+
+    public ConcreteCauldronBlockMeta(final BlockMeta blockMeta, final String command) {
+        super(blockMeta);
+
+        this.command = command;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.minecraft.block.meta.CommandBlockMeta#getCommand()
+     */
+    @Override
+    public String getCommand() {
+        return this.command;
+    }
 }

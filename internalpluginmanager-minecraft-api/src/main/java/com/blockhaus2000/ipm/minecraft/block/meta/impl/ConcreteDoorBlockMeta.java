@@ -15,8 +15,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.block.meta;
+package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
-public interface DispenserAndDropperBlockMeta extends BlockMeta, Container {
-    // Nothing to do.
+import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
+import com.blockhaus2000.ipm.minecraft.block.meta.DoorBlockMeta;
+
+public class ConcreteDoorBlockMeta extends ConcreteBlockMeta implements DoorBlockMeta {
+    private final boolean open;
+
+    public ConcreteDoorBlockMeta(final BlockMeta blockMeta, final boolean open) {
+        super(blockMeta);
+
+        this.open = open;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.minecraft.block.meta.DoorBlockMeta#isOpen()
+     */
+    @Override
+    public boolean isOpen() {
+        return this.open;
+    }
 }
