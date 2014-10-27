@@ -207,10 +207,6 @@
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
-						<configuration>
-							<destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
-							<propertyName>surefireArgLine</propertyName>
-						</configuration>
 					</execution>
 					<execution>
 						<id>post-unit-test</id>
@@ -218,13 +214,12 @@
 						<goals>
 							<goal>check</goal>
 						</goals>
-						<configuration>
-							<dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
-						</configuration>
 					</execution>
 				</executions>
 				<configuration>
 					<haltOnFailure>false</haltOnFailure>
+					<dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
+					<propertyName>surefireArgLine</propertyName>
 					<rules>
 						<rule>
 							<element>METHOD</element>
