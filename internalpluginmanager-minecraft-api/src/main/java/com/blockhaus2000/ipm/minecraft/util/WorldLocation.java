@@ -17,15 +17,57 @@
  */
 package com.blockhaus2000.ipm.minecraft.util;
 
+import java.util.UUID;
+
+import com.blockhaus2000.ipm.minecraft.InternalPluginManager;
 import com.blockhaus2000.ipm.minecraft.world.World;
 
+/**
+ * Represents a location in world.
+ *
+ */
 public class WorldLocation {
+    /**
+     * The {@link Vector} in the world.
+     *
+     */
     private final Vector vector;
-    private final World world;
+    /**
+     * The {@link UUID} of the world of this location.
+     *
+     */
+    private final UUID world;
 
+    /**
+     * Constructor of WorldLocation.
+     *
+     * @param vector
+     *            The {@link Vector} this location is located in the given
+     *            world.
+     * @param world
+     *            The {@link World} this location is located in.
+     */
+    public WorldLocation(final Vector vector, final World world) {
+        assert world != null : "World cannot be null!";
+
+        this.vector = vector;
+        this.world = world.getUUID();
+    }
+
+    /**
+     * Constructor of WorldLocation.
+     *
+     * @param x
+     *            The <code>x</code> value.
+     * @param y
+     *            The <code>x</code> value.
+     * @param z
+     *            The <code>z</code> value.
+     * @param world
+     *            The world this location is located in.
+     */
     public WorldLocation(final int x, final int y, final int z, final World world) {
-        this.vector = new Vector(x, y, z);
-        this.world = world;
+        this(new Vector(x, y, z), world);
     }
 
     /**
@@ -41,6 +83,6 @@ public class WorldLocation {
      * @return {@link WorldLocation#world}
      */
     public World getWorld() {
-        return this.world;
+        return InternalPluginManager.getServer().getWorldManager().getWorld(this.world);
     }
 }

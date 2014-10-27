@@ -25,28 +25,118 @@ import com.blockhaus2000.ipm.minecraft.block.Block;
 import com.blockhaus2000.ipm.minecraft.chunk.Chunk;
 import com.blockhaus2000.ipm.minecraft.util.Vector;
 
+/**
+ * Represents a Minecraft world build of {@link Block}s.
+ *
+ */
 public interface World {
+    /**
+     *
+     * @return The {@link UUID} of this world.
+     */
     UUID getUUID();
 
+    /**
+     *
+     * @return The name of this world.
+     */
     String getName();
 
-    void setBlock(final Block block);
+    /**
+     * Sets the given {@link Block} at the given vector.
+     *
+     * @param vector
+     *            The vector where to set the {@link Block}.
+     * @param block
+     *            The block that will be setted at the given vector.
+     */
+    void setBlockAt(final Vector vector, final Block block);
 
-    Block getBlockAt(final Vector loc);
+    /**
+     * Sets the given {@link Block} at the given coordinates.
+     *
+     * @param x
+     *            The x coordinate.
+     * @param y
+     *            The y coordinate.
+     * @param z
+     *            The z coordinate.
+     * @param block
+     *            The block that will be setted at the given coordinates.
+     */
+    void setBlockAt(final int x, final int y, final int z, final Block block);
 
+    /**
+     *
+     * @param vector
+     *            The {@link Vector} to get the {@link Block} from.
+     * @return The {@link Block} that is placed at the given {@link Vector}.
+     */
+    Block getBlockAt(final Vector vector);
+
+    /**
+     *
+     * @param x
+     *            The x coordinate
+     * @param y
+     *            The y coordinate
+     * @param z
+     *            The z coordinate
+     * @return The {@link Block} that is placed at the given coordinates.
+     */
     Block getBlockAt(final int x, final int y, final int z);
 
-    Block getHighestBlockAt(final Vector loc);
+    /**
+     * Gets the highest non-air {@link Block} at the given {@link Vector}.
+     *
+     * @param vector
+     *            The {@link Vector} from where to find the highest
+     *            {@link Block}.
+     * @return The highest block at the given {@link Vector}.
+     */
+    Block getHighestBlockAt(final Vector vector);
 
+    /**
+     * Gets the highest non-air {@link Block} at the given coordinate.
+     *
+     * @param x
+     *            The x coordinate.
+     * @param z
+     *            The z coordinate.
+     * @return The highest block at the given {@link Vector}.
+     */
     Block getHighestBlockAt(final int x, final int z);
 
-    Chunk getChunkContainingLocation(final Vector loc);
+    /**
+     * Searchs for the chunk that contains the given {@link Vector}.
+     *
+     * @param vector
+     *            The {@link Vector} to search for.
+     * @return The {@link Chunk} that contains the given {@link Vector}.
+     */
+    Chunk getChunkContainingLocation(final Vector vector);
 
-    Chunk getChunkAt(final Vector loc);
+    /**
+     *
+     * @param vector
+     *            The {@link Vector} of the {@link Chunk}.
+     * @return The {@link Chunk} that represents the given {@link Vector}.
+     */
+    Chunk getChunkAt(final Vector vector);
 
+    /**
+     *
+     * @param x
+     *            The x coordinate.
+     * @param z
+     *            The z coordinate.
+     * @return The {@link Chunk} that represents the given coordinates.
+     */
     Chunk getChunkAt(final int x, final int z);
 
-    Chunk getChunkAt(final Block block);
-
-    Set<GameRule> getGameRules();
+    /**
+     *
+     * @return All {@link GameRule}s that are setted for this world.
+     */
+    Set<GameRule<?>> getGameRules();
 }

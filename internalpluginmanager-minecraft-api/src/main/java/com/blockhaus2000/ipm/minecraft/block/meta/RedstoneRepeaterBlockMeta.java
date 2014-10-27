@@ -17,8 +17,21 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
+/**
+ * The {@link BlockMeta} of a redstone repeater block.
+ *
+ */
 public interface RedstoneRepeaterBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return Whether this repeater is powered or not.
+     */
     boolean isPowered();
 
+    /**
+     *
+     * @return The state of this repeater (the delay in ticks that this repeater
+     *         delays the redstone signal that is sent through it).
+     */
     int getState();
 }

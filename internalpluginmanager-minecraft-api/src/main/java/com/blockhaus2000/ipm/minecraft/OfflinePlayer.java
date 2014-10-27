@@ -19,20 +19,60 @@ package com.blockhaus2000.ipm.minecraft;
 
 import java.util.UUID;
 
+import com.blockhaus2000.ipm.minecraft.entity.Player;
+
+/**
+ * A representation of {@link Player} for players that are not online but have
+ * available data. This can be used to ban or unban players also if they are not
+ * online, for example.
+ *
+ */
 public interface OfflinePlayer {
+    /**
+     *
+     * @return The name of this player.
+     */
     String getName();
 
+    /**
+     *
+     * @return The {@link UUID} of this player.
+     */
     UUID getUUID();
 
     // Whitelist stuff.
+    /**
+     *
+     * @return Whether this player is whitelisted or not.
+     */
     boolean isWhitelisted();
 
+    /**
+     * Adds or removes this player to the whitelist.
+     *
+     * @param whitelisted
+     *            Whether this player should be whitelisted or not.
+     */
     void setWhitelisted(final boolean whitelisted);
 
     // Ban stuff.
+    /**
+     *
+     * @return Whether this player is banned.
+     */
     boolean isBanned();
 
+    /**
+     * Bans this player for the given reason.
+     *
+     * @param reason
+     *            The reason why this player should be banned,
+     */
     void ban(final String reason);
 
+    /**
+     * Unbans this player.
+     *
+     */
     void unban();
 }

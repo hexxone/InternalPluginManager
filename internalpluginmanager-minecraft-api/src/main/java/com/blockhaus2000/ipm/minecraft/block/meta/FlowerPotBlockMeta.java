@@ -19,6 +19,15 @@ package com.blockhaus2000.ipm.minecraft.block.meta;
 
 import com.blockhaus2000.ipm.minecraft.item.ItemMaterial;
 
+/**
+ * The {@link BlockMeta} of a flower pot.
+ *
+ */
 public interface FlowerPotBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return The item that this flower pot comtains. Or, if no item is
+     *         present, <code>null</code>.
+     */
     ItemMaterial getItemType();
 }

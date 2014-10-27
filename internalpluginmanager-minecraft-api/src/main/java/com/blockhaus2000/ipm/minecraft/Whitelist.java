@@ -19,16 +19,58 @@ package com.blockhaus2000.ipm.minecraft;
 
 import java.util.Set;
 
+/**
+ * The whitelist of this server.
+ *
+ */
 public interface Whitelist {
+    /**
+     * Adds the given player to the whitelist.
+     *
+     * @param player
+     *            The player to add to the whitelist.
+     */
     void add(final OfflinePlayer player);
 
+    /**
+     * Removes the given player from the whitelist.
+     *
+     * @param player
+     *            The player to remove from the whitelist.
+     * @return Whether the player was removed successfully of not (not, if the
+     *         player was not found).
+     */
     boolean remove(final OfflinePlayer player);
 
+    /**
+     * Reloads the whitelist from disk.
+     *
+     */
     void reload();
 
+    /**
+     * Saves the whitelist to disk.
+     *
+     */
+    void save();
+
+    /**
+     *
+     * @return A set of all whitelisted players.
+     */
     Set<OfflinePlayer> getWhitelistedPlayers();
 
+    /**
+     *
+     * @return Whether the whitelist is enabled or not.
+     */
     boolean isEnabled();
 
+    /**
+     * Enables/Disables the whitelist.
+     *
+     * @param enabled
+     *            Whether to enable or disable the whitelist.
+     */
     void setEnabled(final boolean enabled);
 }

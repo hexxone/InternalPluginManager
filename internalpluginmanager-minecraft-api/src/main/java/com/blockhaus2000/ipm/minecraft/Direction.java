@@ -17,70 +17,324 @@
  */
 package com.blockhaus2000.ipm.minecraft;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
+/**
+ * All available directions.
+ *
+ */
 public enum Direction {
+    /**
+     * <code>
+     * ################# <br />
+     * # - - - - - - - # <br />
+     * # - - - | - - - # <br />
+     * # - - - | - - - # <br />
+     * # - - - X - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * ################# <br />
+     * </code>
+     *
+     */
     NORTH(0),
+    /**
+     * <code>
+     * ################# <br />
+     * # - - - - - - - # <br />
+     * # - - - - | - - # <br />
+     * # - - - - | - - # <br />
+     * # - - - X - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * ################# <br />
+     * </code>
+     *
+     */
     NORTH_NORTH_EAST(1),
+    /**
+     * <code>
+     * ################# <br />
+     * # - - - - - - - # <br />
+     * # - - - - - / - # <br />
+     * # - - - - / - - # <br />
+     * # - - - X - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * ################# <br />
+     * </code>
+     *
+     */
     NORTH_EAST(2),
+    /**
+     * <code>
+     * ################# <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - -~~~~~- # <br />
+     * # - - - X - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * ################# <br />
+     * </code>
+     *
+     */
     NORTH_EAST_EAST(3),
+    /**
+     * <code>
+     * ################# <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - X~~~~~- # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * ################# <br />
+     * </code>
+     *
+     */
     EAST(4),
+    /**
+     * <code>
+     * ################# <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - X - - - # <br />
+     * # - - - -~~~~~- # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * ################# <br />
+     * </code>
+     *
+     */
     EAST_EAST_SOUTH(5),
+    /**
+     * <code>
+     * ################# <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - X - - - # <br />
+     * # - - - - \ - - # <br />
+     * # - - - - - \ - # <br />
+     * # - - - - - - - # <br />
+     * ################# <br />
+     * </code>
+     *
+     */
     EAST_SOUTH(6),
+    /**
+     * <code>
+     * ################# <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - X - - - # <br />
+     * # - - - - | - - # <br />
+     * # - - - - | - - # <br />
+     * # - - - - - - - # <br />
+     * ################# <br />
+     * </code>
+     *
+     */
     EAST_SOUTH_SOUTH(7),
+    /**
+     * <code>
+     * ################# <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - X - - - # <br />
+     * # - - - | - - - # <br />
+     * # - - - | - - - # <br />
+     * # - - - - - - - # <br />
+     * ################# <br />
+     * </code>
+     *
+     */
     SOUTH(8),
+    /**
+     * <code>
+     * ################# <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - X - - - # <br />
+     * # - - | - - - - # <br />
+     * # - - | - - - - # <br />
+     * # - - - - - - - # <br />
+     * ################# <br />
+     * </code>
+     *
+     */
     SOUTH_SOUTH_WEST(9),
+    /**
+     * <code>
+     * ################# <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - X - - - # <br />
+     * # - - / - - - - # <br />
+     * # - / - - - - - # <br />
+     * # - - - - - - - # <br />
+     * ################# <br />
+     * </code>
+     *
+     */
     SOUTH_WEST(10),
+    /**
+     * <code>
+     * ################# <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - X - - - # <br />
+     * # -~~~~~- - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * ################# <br />
+     * </code>
+     *
+     */
     SOUTH_WEST_WEST(11),
+    /**
+     * <code>
+     * ################# <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # -~~~~~X - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * ################# <br />
+     * </code>
+     *
+     */
     WEST(12),
+    /**
+     * <code>
+     * ################# <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # -~~~~~- - - - # <br />
+     * # - - - X - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * ################# <br />
+     * </code>
+     *
+     */
     WEST_WEST_NORTH(13),
+    /**
+     * <code>
+     * ################# <br />
+     * # - - - - - - - # <br />
+     * # - \ - - - - - # <br />
+     * # - - \ - - - - # <br />
+     * # - - - X - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * ################# <br />
+     * </code>
+     *
+     */
     WEST_NORTH(14),
+    /**
+     * <code>
+     * ################# <br />
+     * # - - - - - - - # <br />
+     * # - - | - - - - # <br />
+     * # - - | - - - - # <br />
+     * # - - - X - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * # - - - - - - - # <br />
+     * ################# <br />
+     * </code>
+     *
+     */
     WEST_NORTH_NORTH(15);
 
-    private static final Map<Integer, Direction> LOOKUP_MAP;
-    private static final Map<Double, Direction> DEGREES_LOOKUP_MAP;
-
+    /**
+     * The ID of this direction.
+     *
+     */
     private final int id;
+    /**
+     * The degrees of this direction.
+     *
+     */
     private final double degrees;
 
-    public static void main(final String[] args) {
-        for (final Direction d : Direction.values()) {
-            System.out.println(d + " (" + d.getId() + "): " + d.getDegrees() + "°");
-        }
-    }
-
-    static {
-        final Map<Integer, Direction> lookupMap = new HashMap<Integer, Direction>();
-        final Map<Double, Direction> degreesLookupMap = new HashMap<Double, Direction>();
-
-        for (final Direction direction : Direction.values()) {
-            lookupMap.put(direction.getId(), direction);
-            degreesLookupMap.put(direction.getDegrees(), direction);
-        }
-
-        LOOKUP_MAP = Collections.unmodifiableMap(lookupMap);
-        DEGREES_LOOKUP_MAP = Collections.unmodifiableMap(degreesLookupMap);
-    }
-
+    /**
+     * Constructor of Direction.
+     *
+     * <p>
+     * NOTE: The degrees will be calculated with <code>360 / 16.0 * id</code>.
+     * </p>
+     *
+     * @param id
+     *            The ID of this direction.
+     */
     private Direction(final int id) {
         this.id = id;
         this.degrees = 360 / 16.0 * id;
     }
 
+    /**
+     * Searchs for a {@link Direction} with the given ID.
+     *
+     * @param id
+     *            The ID to search for.
+     * @return The {@link Direction} with the given ID, if found. Otherwise
+     *         <code>null</code>.
+     */
     public static Direction getById(final int id) {
-        return Direction.LOOKUP_MAP.get(id);
+        for (final Direction direction : Direction.values()) {
+            if (direction.getId() == id) {
+                return direction;
+            }
+        }
+        return null;
     }
 
+    /**
+     * Searchs for a {@link Direction} with the given degrees.
+     *
+     * @param degrees
+     *            The degrees to search for.
+     * @return The {@link Direction} with the given degrees, if found. Otherwise
+     *         <code>null</code>.
+     */
     public static Direction getByDegrees(final double degrees) {
-        return Direction.DEGREES_LOOKUP_MAP.get(degrees);
+        for (final Direction direction : Direction.values()) {
+            if (direction.getDegrees() == degrees) {
+                return direction;
+            }
+        }
+        return null;
     }
 
+    /**
+     *
+     * @return {@link Direction#id}
+     */
     public int getId() {
         return this.id;
     }
 
+    /**
+     *
+     * @return {@link Direction#degrees}
+     */
     public double getDegrees() {
         return this.degrees;
     }

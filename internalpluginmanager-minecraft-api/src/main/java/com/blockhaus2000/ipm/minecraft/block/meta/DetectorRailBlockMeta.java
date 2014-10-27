@@ -17,6 +17,14 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
+/**
+ * The {@link BlockMeta} of a detector rail.
+ *
+ */
 public interface DetectorRailBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return Whether this detector rail is active or not.
+     */
     boolean isActive();
 }

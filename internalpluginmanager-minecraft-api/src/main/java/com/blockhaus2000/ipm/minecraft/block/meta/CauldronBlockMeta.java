@@ -17,8 +17,16 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
-import com.blockhaus2000.ipm.minecraft.CauldronFillState;
+import com.blockhaus2000.ipm.minecraft.state.CauldronFillState;
 
+/**
+ * The {@link BlockMeta} of a cauldron.
+ *
+ */
 public interface CauldronBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return The fill state of this cauldron.
+     */
     CauldronFillState getFillState();
 }

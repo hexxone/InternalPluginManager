@@ -17,9 +17,9 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
-import com.blockhaus2000.ipm.minecraft.RedstoneComparatorState;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.RedstoneComparatorBlockMeta;
+import com.blockhaus2000.ipm.minecraft.state.RedstoneComparatorState;
 
 public class ConcreteRedstoneComparatorBlockMeta extends ConcreteBlockMeta implements RedstoneComparatorBlockMeta {
     private final boolean powered;

@@ -17,6 +17,10 @@
  */
 package com.blockhaus2000.ipm.minecraft.entity;
 
+/**
+ * The base of every entity.
+ *
+ */
 public interface Entity {
     // TODO Auto-generated interface body.
 }

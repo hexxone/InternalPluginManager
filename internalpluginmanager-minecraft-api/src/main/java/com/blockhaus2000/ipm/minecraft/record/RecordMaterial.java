@@ -19,27 +19,37 @@ package com.blockhaus2000.ipm.minecraft.record;
 
 import com.blockhaus2000.ipm.minecraft.material.Material;
 
+/**
+ * All records that can be played within a jukebox.
+ *
+ */
 public enum RecordMaterial implements Material {
     // TODO: Add records.
     ;
 
+    /**
+     * The material name of this record.
+     *
+     */
     private final String materialName;
 
+    /**
+     * The material ID of this record.
+     *
+     */
     private final int materialId;
-    private final byte materialData;
 
-    private RecordMaterial(final String materialName, final int materialId, final byte materialData) {
+    /**
+     * Constructor of RecordMaterial.
+     *
+     * @param materialName
+     *            The record name.
+     * @param materialId
+     *            The record ID.
+     */
+    private RecordMaterial(final String materialName, final int materialId) {
         this.materialName = materialName;
         this.materialId = materialId;
-        this.materialData = materialData;
-    }
-
-    private RecordMaterial(final String materialName, final int materialId, final int materialData) {
-        this(materialName, materialId, (byte) materialData);
-    }
-
-    private RecordMaterial(final String materialName, final int materialId) {
-        this(materialName, materialId, -1);
     }
 
     /**
@@ -49,8 +59,7 @@ public enum RecordMaterial implements Material {
      */
     @Override
     public String getMaterialName() {
-        // TODO Auto-generated method body.
-        return null;
+        return this.materialName;
     }
 
     /**
@@ -61,8 +70,7 @@ public enum RecordMaterial implements Material {
     @Deprecated
     @Override
     public int getMaterialId() {
-        // TODO Auto-generated method body.
-        return 0;
+        return this.materialId;
     }
 
     /**
@@ -73,7 +81,6 @@ public enum RecordMaterial implements Material {
     @Deprecated
     @Override
     public byte getMaterialData() {
-        // TODO Auto-generated method body.
-        return 0;
+        return -1;
     }
 }

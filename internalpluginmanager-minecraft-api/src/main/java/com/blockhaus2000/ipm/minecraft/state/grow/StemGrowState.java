@@ -15,24 +15,36 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft;
+package com.blockhaus2000.ipm.minecraft.state.grow;
 
-public enum NetherWartGrowState implements GrowState {
-    SEED(0),
-    STATE_ONE(1),
-    STATE_TWO(2),
-    RIPE(3);
+/**
+ * The grow states of a melon/pumpkin stem.
+ *
+ */
+public enum StemGrowState implements GrowState {
+    // TODO: Define (stem) grow states.
+    ;
 
+    /**
+     * The grow state ID.
+     *
+     */
     private final int stateId;
 
-    private NetherWartGrowState(final int stateId) {
+    /**
+     * Constructor of StemGrowState.
+     *
+     * @param stateId
+     *            The grow state ID.
+     */
+    private StemGrowState(final int stateId) {
         this.stateId = stateId;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.minecraft.GrowState#getStateId()
+     * @see com.blockhaus2000.ipm.minecraft.state.grow.GrowState#getStateId()
      */
     @Override
     public int getStateId() {

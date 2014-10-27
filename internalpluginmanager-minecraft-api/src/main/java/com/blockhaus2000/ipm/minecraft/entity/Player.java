@@ -21,15 +21,41 @@ import com.blockhaus2000.ipm.minecraft.OfflinePlayer;
 import com.blockhaus2000.ipm.minecraft.command.PlayerCommandSender;
 import com.blockhaus2000.ipm.minecraft.util.WorldLocation;
 
+/**
+ * Represents a {@link Player}.
+ *
+ */
 public interface Player extends OfflinePlayer, PlayerCommandSender {
+    /**
+     *
+     * @return The {@link WorldLocation} this player.
+     */
     WorldLocation getLocation();
 
+    /**
+     *
+     * @return The IP of this player.
+     */
     String getIp();
 
     // IP-ban stuff.
+    /**
+     *
+     * @return Whether the IP of this server is banned.
+     */
     boolean isIpBanned();
 
+    /**
+     * Bans the IP of this player for the given reason.
+     *
+     * @param reason
+     *            The reason why the IP of this player should be banned.
+     */
     void banIp(final String reason);
 
+    /**
+     * Unbans the IP of this player.
+     *
+     */
     void unbanIp();
 }

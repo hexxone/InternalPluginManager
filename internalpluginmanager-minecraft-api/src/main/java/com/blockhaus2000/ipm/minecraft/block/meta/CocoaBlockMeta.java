@@ -17,8 +17,12 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
-import com.blockhaus2000.ipm.minecraft.CocaoBeanGrowState;
+import com.blockhaus2000.ipm.minecraft.state.grow.CocaoBeanGrowState;
 
+/**
+ * The {@link BlockMeta} of a cocoa bean.
+ *
+ */
 public interface CocoaBlockMeta extends BlockMeta, Growing {
     /**
      * {@inheritDoc}

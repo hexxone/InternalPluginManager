@@ -17,30 +17,40 @@
  */
 package com.blockhaus2000.ipm.minecraft.util;
 
+/**
+ * An enum to locate a field in a 3x3 matrix.
+ *
+ */
 public enum Slot3x3 {
     /**
      * <code>
-     * X - -
-     * - - -
-     * - - -
+     * ######### <br />
+     * # X - - # <br />
+     * # - - - # <br />
+     * # - - - # <br />
+     * ######### <br />
      * </code>
      *
      */
     TOP_LEFT(0),
     /**
      * <code>
-     * - X -
-     * - - -
-     * - - -
+     * ######### <br />
+     * # - X - # <br />
+     * # - - - # <br />
+     * # - - - # <br />
+     * ######### <br />
      * </code>
      *
      */
     TOP_MIDDLE(1),
     /**
      * <code>
-     * - - X
-     * - - -
-     * - - -
+     * ######### <br />
+     * # - - X # <br />
+     * # - - - # <br />
+     * # - - - # <br />
+     * ######### <br />
      * </code>
      *
      */
@@ -48,27 +58,33 @@ public enum Slot3x3 {
 
     /**
      * <code>
-     * - - -
-     * X - -
-     * - - -
+     * ######### <br />
+     * # - - - # <br />
+     * # X - - # <br />
+     * # - - - # <br />
+     * ######### <br />
      * </code>
      *
      */
     MIDDLE_LEFT(3),
     /**
      * <code>
-     * - - -
-     * - X -
-     * - - -
+     * ######### <br />
+     * # - - - # <br />
+     * # - X - # <br />
+     * # - - - # <br />
+     * ######### <br />
      * </code>
      *
      */
     MIDDLE_MIDDLE(4),
     /**
      * <code>
-     * - - -
-     * - - X
-     * - - -
+     * ######### <br />
+     * # - - - # <br />
+     * # - - X # <br />
+     * # - - - # <br />
+     * ######### <br />
      * </code>
      *
      */
@@ -76,38 +92,62 @@ public enum Slot3x3 {
 
     /**
      * <code>
-     * - - -
-     * - - -
-     * X - -
+     * ######### <br />
+     * # - - - # <br />
+     * # - - - # <br />
+     * # X - - # <br />
+     * ######### <br />
      * </code>
      *
      */
     BOTTOM_LEFT(6),
     /**
      * <code>
-     * - - -
-     * - - -
-     * - X -
+     * ######### <br />
+     * # - - - # <br />
+     * # - - - # <br />
+     * # - X - # <br />
+     * ######### <br />
      * </code>
      *
      */
     BOTTOM_MIDDLE(7),
     /**
      * <code>
-     * - - -
-     * - - -
-     * - - X
+     * ######### <br />
+     * # - - - # <br />
+     * # - - - # <br />
+     * # - - X # <br />
+     * ######### <br />
      * </code>
      *
      */
     BOTTOM_RIGHT(8);
 
+    /**
+     * The ID of this slot.
+     *
+     */
     private final int id;
 
+    /**
+     * Constructor of Slot3x3.
+     *
+     * @param id
+     *            The ID of this slot.
+     */
     private Slot3x3(final int id) {
         this.id = id;
     }
 
+    /**
+     * Searchs for the {@link Slot3x3} with the given ID.
+     *
+     * @param id
+     *            The ID to search for.
+     * @return The {@link Slot3x3} that is associated with the given ID. If
+     *         nothing was found, this returns <code>null</code>.
+     */
     public static Slot3x3 getById(final int id) {
         for (final Slot3x3 slot : Slot3x3.values()) {
             if (slot.getId() == id) {
@@ -117,6 +157,10 @@ public enum Slot3x3 {
         return null;
     }
 
+    /**
+     *
+     * @return {@link Slot3x3#id}
+     */
     public int getId() {
         return this.id;
     }

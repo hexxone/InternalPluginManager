@@ -15,31 +15,52 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft;
+package com.blockhaus2000.ipm.minecraft.state.grow;
 
 /**
- * All available difficulties.
+ * The grow states of a cocao bean.
  *
  */
-public enum Difficulty {
+public enum CocaoBeanGrowState implements GrowState {
     /**
-     * Peaceful.
+     * The cocao been is just seeded.
      *
      */
-    PEACEFUL,
+    SEED(0),
     /**
-     * Easy.
+     * The cocao bean is in the medium state.
      *
      */
-    EASY,
+    MEDIUM(1),
     /**
-     * Normal.
+     * The cocao bean is ripe.
      *
      */
-    NORMAL,
+    RIPE(2);
+
     /**
-     * Hard.
+     * The grow state ID.
      *
      */
-    HARD;
+    private final int stateId;
+
+    /**
+     * Constructor of CocaoBeanGrowState.
+     *
+     * @param stateId
+     *            The grow state ID.
+     */
+    private CocaoBeanGrowState(final int stateId) {
+        this.stateId = stateId;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.minecraft.state.grow.GrowState#getStateId()
+     */
+    @Override
+    public int getStateId() {
+        return this.stateId;
+    }
 }

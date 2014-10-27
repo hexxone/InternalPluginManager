@@ -17,8 +17,16 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
-import com.blockhaus2000.ipm.minecraft.AnvilDamageState;
+import com.blockhaus2000.ipm.minecraft.state.AnvilDamageState;
 
+/**
+ * The {@link BlockMeta} of an anvil.
+ *
+ */
 public interface AnvilBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return The damage state of this anvil.
+     */
     AnvilDamageState getDamageState();
 }

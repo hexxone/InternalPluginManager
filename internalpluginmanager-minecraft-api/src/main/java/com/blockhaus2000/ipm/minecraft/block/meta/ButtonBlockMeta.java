@@ -17,6 +17,14 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
+/**
+ * The {@link BlockMeta} of a button.
+ *
+ */
 public interface ButtonBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return Whether this button is pressed.
+     */
     boolean isPressed();
 }

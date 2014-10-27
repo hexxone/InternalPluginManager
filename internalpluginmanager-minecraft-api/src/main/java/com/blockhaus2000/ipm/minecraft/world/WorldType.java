@@ -17,29 +17,75 @@
  */
 package com.blockhaus2000.ipm.minecraft.world;
 
+/**
+ * All available world types.
+ *
+ */
 public enum WorldType {
+    /**
+     * The default world type.
+     *
+     */
     NORMAL("DEFAULT"),
+    /**
+     * The type that represents a flat world.
+     *
+     */
     FLAT("FLAT"),
+    /**
+     * The large biomes world type.
+     *
+     */
     LARGE_BIOMES("LARGEBIOMES"),
+    /**
+     * The amplified biomes world type.
+     *
+     */
     AMPLIFIED("AMPLIFIED"),
+    /**
+     * Represents a customized world.
+     *
+     */
     CUSTOMIZED("CUSTOMIZED");
 
+    /**
+     * The name of this world type.
+     *
+     */
     private final String name;
 
+    /**
+     * Constructor of WorldType.
+     *
+     * @param name
+     *            The name of this world type.
+     */
     private WorldType(final String name) {
         this.name = name;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-    public WorldType getByName(final String name) {
+    /**
+     * Searchs for the {@link WorldType} that is associated with the given name.
+     *
+     * @param name
+     *            The name to search for.
+     * @return The {@link WorldType} that is associated with the given name. If
+     *         nothing was found, this returns <code>null</code>.
+     */
+    public static WorldType getByName(final String name) {
         for (final WorldType worldType : WorldType.values()) {
             if (worldType.getName().equalsIgnoreCase(name)) {
                 return worldType;
             }
         }
         return null;
+    }
+
+    /**
+     *
+     * @return {@link WorldType#name}
+     */
+    public String getName() {
+        return this.name;
     }
 }

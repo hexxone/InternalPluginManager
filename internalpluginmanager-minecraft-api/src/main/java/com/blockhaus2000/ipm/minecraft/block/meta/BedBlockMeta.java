@@ -19,6 +19,15 @@ package com.blockhaus2000.ipm.minecraft.block.meta;
 
 import com.blockhaus2000.ipm.minecraft.entity.Player;
 
+/**
+ * The {@link BlockMeta} of a bed.
+ *
+ */
 public interface BedBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return The player that lies in this bed. Or, if no player lies in this
+     *         bed, <code>null</code>.
+     */
     Player getPlayer();
 }

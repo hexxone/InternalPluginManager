@@ -19,10 +19,28 @@ package com.blockhaus2000.ipm.minecraft.world;
 
 import java.util.UUID;
 
+/**
+ * The {@link WorldManager} for this server.
+ *
+ */
 public interface WorldManager {
-    // TODO Auto-generated interface body.
-
+    /**
+     * Searchs for the {@link World} with the given {@link UUID}.
+     *
+     * @param uuid
+     *            The {@link UUID} to search for.
+     * @return The {@link World} that has the given {@link UUID}. Or, if no
+     *         {@link World} was found, <code>null</code>.
+     */
     World getWorld(final UUID uuid);
 
+    /**
+     * Searchs for the {@link World} with the given name.
+     *
+     * @param name
+     *            The name to search for.
+     * @return The {@link World} that has the given name. Or, if no
+     *         {@link World} was found, <code>null</code>.
+     */
     World getWorld(final String name);
 }

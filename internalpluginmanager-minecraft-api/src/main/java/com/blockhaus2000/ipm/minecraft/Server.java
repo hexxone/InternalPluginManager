@@ -29,42 +29,128 @@ import com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager;
 import com.blockhaus2000.ipm.technical.plugin.event.PluginEventManager;
 import com.blockhaus2000.technical.scheduler.Scheduler;
 
+/**
+ * The main access point to the underlying implementation. This is THE server.
+ *
+ */
 public interface Server {
+    /**
+     *
+     * @return The {@link Logger} for this server.
+     */
     Logger getLogger();
 
+    /**
+     *
+     * @return The version of this server implementation.
+     */
     String getServerVersion();
 
+    /**
+     *
+     * @return The {@link PluginManager} for this server.
+     */
     PluginManager getPluginManager();
 
+    /**
+     *
+     * @return The {@link PluginCommandManager} for this server.
+     */
     PluginCommandManager getCommandManager();
 
+    /**
+     *
+     * @return The {@link PluginEventManager} for this server.
+     */
     PluginEventManager getEventManager();
 
+    /**
+     *
+     * @return The {@link Scheduler} for this server.
+     */
     Scheduler getScheduler();
 
+    /**
+     *
+     * @return The {@link ScoreboardManager} for this server.
+     */
     ScoreboardManager getScoreboardManager();
 
+    /**
+     *
+     * @return The {@link PlayerManager} for this server.
+     */
     PlayerManager getPlayerManager();
 
+    /**
+     *
+     * @return The {@link WorldManager} for this server.
+     */
     WorldManager getWorldManager();
 
+    /**
+     *
+     * @return The {@link MessageManager} for this server.
+     */
     MessageManager getMessageManager();
 
+    /**
+     *
+     * @return The {@link RecipeManager} for this server.
+     */
     RecipeManager getRecipeManager();
 
+    /**
+     *
+     * @return The {@link ServerProperties} from this server.
+     */
     ServerProperties getServerProperties();
 
+    /**
+     *
+     * @return The {@link Whitelist} from this server.
+     */
     Whitelist getWhitelist();
 
+    /**
+     *
+     * @return The {@link Banlist} from this server.
+     */
     Banlist getBanlist();
 
+    /**
+     *
+     * @return The {@link IpBanlist} from this server.
+     */
     IpBanlist getIpBanlist();
 
+    /**
+     *
+     * @return The {@link ConsoleCommandSender} from this server.
+     */
     ConsoleCommandSender getConsoleCommandSender();
 
+    /**
+     * Executes/dispatchs the given command string (containing the command and
+     * the arguments) as the given {@link CommandSender}.
+     *
+     * @param command
+     *            The command string to execute (containing command and
+     *            arguments).
+     * @param sender
+     *            The {@link CommandSender} to execute the command as.
+     */
     void dispatchCommand(final String command, final CommandSender sender);
 
+    /**
+     * Stops this server.
+     *
+     */
     void shutdown();
 
+    /**
+     * Reloads the server.
+     *
+     */
     void reload();
 }

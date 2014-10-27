@@ -17,9 +17,9 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
-import com.blockhaus2000.ipm.minecraft.AnvilDamageState;
 import com.blockhaus2000.ipm.minecraft.block.meta.AnvilBlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
+import com.blockhaus2000.ipm.minecraft.state.AnvilDamageState;
 
 public class ConcreteAnvilBlockMeta extends ConcreteBlockMeta implements AnvilBlockMeta {
     private final AnvilDamageState damageState;

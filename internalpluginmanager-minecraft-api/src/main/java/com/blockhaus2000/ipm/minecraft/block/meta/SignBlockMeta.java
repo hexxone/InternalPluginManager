@@ -17,12 +17,32 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
+/**
+ * The {@link BlockMeta} of a sign.
+ *
+ */
 public interface SignBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return The first line present of this sign.
+     */
     String getFirstLine();
 
+    /**
+     *
+     * @return The second line present of this sign.
+     */
     String getSecondLine();
 
+    /**
+     *
+     * @return The third line present of this sign.
+     */
     String getThirdLine();
 
+    /**
+     *
+     * @return The fourth line present of this sign.
+     */
     String getFourthLine();
 }

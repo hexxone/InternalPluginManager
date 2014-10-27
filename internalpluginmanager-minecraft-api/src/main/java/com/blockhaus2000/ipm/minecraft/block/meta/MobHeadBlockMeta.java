@@ -19,8 +19,22 @@ package com.blockhaus2000.ipm.minecraft.block.meta;
 
 import com.blockhaus2000.ipm.minecraft.SkullType;
 
+/**
+ * The {@link BlockMeta} of a mob head.
+ *
+ */
 public interface MobHeadBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return The {@link SkullType} of this mob head.
+     */
     SkullType getSkullType();
 
+    /**
+     *
+     * @return The player name, if this is from type {@link SkullType#PLAYER}
+     *         and is set to another player. If not, this returns
+     *         <code>null</code>.
+     */
     String getPlayerName();
 }

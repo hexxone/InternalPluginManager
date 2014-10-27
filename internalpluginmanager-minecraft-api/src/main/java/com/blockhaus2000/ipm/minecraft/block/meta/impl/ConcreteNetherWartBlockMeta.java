@@ -17,9 +17,9 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
-import com.blockhaus2000.ipm.minecraft.NetherWartGrowState;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.NetherWartBlockMeta;
+import com.blockhaus2000.ipm.minecraft.state.grow.NetherWartGrowState;
 
 public class ConcreteNetherWartBlockMeta extends ConcreteBlockMeta implements NetherWartBlockMeta {
     private final NetherWartGrowState growState;

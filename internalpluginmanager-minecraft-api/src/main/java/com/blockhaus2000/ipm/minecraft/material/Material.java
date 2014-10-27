@@ -17,12 +17,30 @@
  */
 package com.blockhaus2000.ipm.minecraft.material;
 
+/**
+ * Represents a material (a material is a block, an item, etc.).
+ *
+ */
 public interface Material {
+    /**
+     *
+     * @return The name of this material.
+     */
     String getMaterialName();
 
+    /**
+     *
+     * @deprecated Data values should not be used longer.
+     * @return The ID of this material.
+     */
     @Deprecated
     int getMaterialId();
 
+    /**
+     *
+     * @deprecated Data values should not be used longer.
+     * @return The data value of this material.
+     */
     @Deprecated
     byte getMaterialData();
 }

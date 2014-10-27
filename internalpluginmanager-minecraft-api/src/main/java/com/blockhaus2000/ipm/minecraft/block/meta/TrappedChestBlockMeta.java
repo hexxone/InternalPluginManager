@@ -17,6 +17,14 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
+/**
+ * The {@link BlockMeta} of a trapped chest.
+ *
+ */
 public interface TrappedChestBlockMeta extends ChestBlockMeta {
+    /**
+     *
+     * @return The output strength of this trapped chest.
+     */
     int getOutputStrength();
 }

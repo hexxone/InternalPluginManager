@@ -19,12 +19,46 @@ package com.blockhaus2000.ipm.minecraft;
 
 import java.util.Set;
 
+/**
+ * The ban list for this server.
+ *
+ */
 public interface Banlist {
+    /**
+     * Bans the given player with the given reason.
+     *
+     * @param player
+     *            The player to ban.
+     * @param reason
+     *            The reason why the player should be banned.
+     */
     void ban(final OfflinePlayer player, final String reason);
 
+    /**
+     * Unbans the given player.
+     *
+     * @param player
+     *            The player to unban.
+     * @return Whether the unban was successful (not, if the player was not
+     *         banned yet).
+     */
     boolean unban(final OfflinePlayer player);
 
+    /**
+     * Reloads the bans from disk.
+     *
+     */
     void reload();
 
+    /**
+     * Saves the bans to disk.
+     *
+     */
+    void save();
+
+    /**
+     *
+     * @return A set of all banned players.
+     */
     Set<OfflinePlayer> getBannedPlayers();
 }

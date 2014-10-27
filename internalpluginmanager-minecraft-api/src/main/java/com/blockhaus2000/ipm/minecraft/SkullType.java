@@ -17,10 +17,35 @@
  */
 package com.blockhaus2000.ipm.minecraft;
 
+/**
+ * The types that a skull/head block can take.
+ *
+ */
 public enum SkullType {
+    /**
+     * A player head. by default, Steve.
+     *
+     */
     PLAYER,
+    /**
+     * A zombie head.
+     *
+     */
     ZOMBIE,
+    /**
+     * A creeper head.
+     *
+     */
     CREEPER,
+    /**
+     * A skeleton head.
+     *
+     */
     SKELETON,
+    /**
+     * A wither skeleton head. This is the only skull type that can be get in
+     * the survival mode.
+     *
+     */
     WITHER_SKELETON;
 }

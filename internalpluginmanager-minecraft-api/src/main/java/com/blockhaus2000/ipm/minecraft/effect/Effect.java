@@ -17,6 +17,10 @@
  */
 package com.blockhaus2000.ipm.minecraft.effect;
 
+/**
+ * Represents an effect that can be assigned to entities.
+ *
+ */
 public interface Effect {
     // TODO Auto-generated interface body.
 }

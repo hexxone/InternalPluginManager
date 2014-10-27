@@ -15,31 +15,63 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft;
+package com.blockhaus2000.ipm.minecraft.state;
 
 /**
- * All available difficulties.
+ * The fill states of a cauldron.
  *
  */
-public enum Difficulty {
+public enum CauldronFillState {
     /**
-     * Peaceful.
+     * The couldron is empty.
      *
+     * <p>
+     * <code>
+     * | - | <br />
+     * | - | <br />
+     * | - | <br />
+     * |===| <br />
+     * </code>
+     * </p>
      */
-    PEACEFUL,
+    EMPTY,
     /**
-     * Easy.
+     * The cauldron is third-full.
      *
+     * <p>
+     * <code>
+     * | - | <br />
+     * | - | <br />
+     * |ZZZ| <br />
+     * |===| <br />
+     * </code>
+     * </p>
      */
-    EASY,
+    THIRD_FULL,
     /**
-     * Normal.
+     * The cauldron is three-thrid full.
      *
+     * <p>
+     * <code>
+     * | - | <br />
+     * |ZZZ| <br />
+     * |ZZZ| <br />
+     * |===| <br />
+     * </code>
+     * </p>
      */
-    NORMAL,
+    TWO_THIRD_FULL,
     /**
-     * Hard.
+     * The cauldron is full.
      *
+     * <p>
+     * <code>
+     * |ZZZ| <br />
+     * |ZZZ| <br />
+     * |ZZZ| <br />
+     * |===| <br />
+     * </code>
+     * </p>
      */
-    HARD;
+    FULL;
 }

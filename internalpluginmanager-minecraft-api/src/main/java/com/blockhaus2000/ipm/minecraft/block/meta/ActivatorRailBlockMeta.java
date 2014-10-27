@@ -17,6 +17,14 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
+/**
+ * The {@link BlockMeta} of an activator rail.
+ *
+ */
 public interface ActivatorRailBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return Whether this activator rail is active or not.
+     */
     boolean isActive();
 }

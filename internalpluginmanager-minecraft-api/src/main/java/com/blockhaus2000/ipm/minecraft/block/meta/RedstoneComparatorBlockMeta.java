@@ -17,12 +17,28 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
-import com.blockhaus2000.ipm.minecraft.RedstoneComparatorState;
+import com.blockhaus2000.ipm.minecraft.state.RedstoneComparatorState;
 
+/**
+ * The {@link BlockMeta} of a redstone comparator.
+ *
+ */
 public interface RedstoneComparatorBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return Whether this comparator is powered or not.
+     */
     boolean isPowered();
 
+    /**
+     *
+     * @return The output strength of this comparator.
+     */
     int getOutputStrength();
 
+    /**
+     *
+     * @return The comparator state.
+     */
     RedstoneComparatorState getComparatorState();
 }

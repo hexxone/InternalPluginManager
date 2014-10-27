@@ -17,6 +17,14 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
+/**
+ * The {@link BlockMeta} of and end portal fram.
+ *
+ */
 public interface EndPortalFrameBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return Whether this end portal frame contains an ender perl or not.
+     */
     boolean containsEnderPerl();
 }

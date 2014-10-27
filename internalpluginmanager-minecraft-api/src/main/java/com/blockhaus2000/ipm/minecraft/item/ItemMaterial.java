@@ -13,170 +13,109 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>. 
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.blockhaus2000.ipm.minecraft.item;
 
-public enum ItemMaterial {
-    IRON_SPADE,
-    IRON_PICKAXE,
-    IRON_AXE,
-    FLINT_AND_STEEL,
-    APPLE,
-    BOW,
-    ARROW,
-    COAL,
-    DIAMOND,
-    IRON_INGOT,
-    GOLD_INGOT,
-    IRON_SWORD,
-    WOOD_SWORD,
-    WOOD_SPADE,
-    WOOD_PICKAXE,
-    WOOD_AXE,
-    STONE_SWORD,
-    STONE_SPADE,
-    STONE_PICKAXE,
-    STONE_AXE,
-    DIAMOND_SWORD,
-    DIAMOND_SPADE,
-    DIAMOND_PICKAXE,
-    DIAMOND_AXE,
-    STICK,
-    BOWL,
-    MUSHROOM_SOUP,
-    GOLD_SWORD,
-    GOLD_SPADE,
-    GOLD_PICKAXE,
-    GOLD_AXE,
-    STRING,
-    FEATHER,
-    SULPHUR,
-    WOOD_HOE,
-    STONE_HOE,
-    IRON_HOE,
-    DIAMOND_HOE,
-    GOLD_HOE,
-    SEEDS,
-    WHEAT,
-    BREAD,
-    LEATHER_HELMET,
-    LEATHER_CHESTPLATE,
-    LEATHER_LEGGINGS,
-    LEATHER_BOOTS,
-    CHAINMAIL_HELMET,
-    CHAINMAIL_CHESTPLATE,
-    CHAINMAIL_LEGGINGS,
-    CHAINMAIL_BOOTS,
-    IRON_HELMET,
-    IRON_CHESTPLATE,
-    IRON_LEGGINGS,
-    IRON_BOOTS,
-    DIAMOND_HELMET,
-    DIAMOND_CHESTPLATE,
-    DIAMOND_LEGGINGS,
-    DIAMOND_BOOTS,
-    GOLD_HELMET,
-    GOLD_CHESTPLATE,
-    GOLD_LEGGINGS,
-    GOLD_BOOTS,
-    FLINT,
-    PORK,
-    GRILLED_PORK,
-    PAINTING,
-    GOLDEN_APPLE,
-    SIGN,
-    WOOD_DOOR,
-    BUCKET,
-    WATER_BUCKET,
-    LAVA_BUCKET,
-    MINECART,
-    SADDLE,
-    IRON_DOOR,
-    REDSTONE,
-    SNOW_BALL,
-    BOAT,
-    LEATHER,
-    MILK_BUCKET,
-    CLAY_BRICK,
-    CLAY_BALL,
-    SUGAR_CANE,
-    PAPER,
-    BOOK,
-    SLIME_BALL,
-    STORAGE_MINECART,
-    POWERED_MINECART,
-    EGG,
-    COMPASS,
-    FISHING_ROD,
-    WATCH,
-    GLOWSTONE_DUST,
-    RAW_FISH,
-    COOKED_FISH,
-    INK_SACK,
-    BONE,
-    SUGAR,
-    CAKE,
-    BED,
-    DIODE,
-    COOKIE,
-    MAP,
-    SHEARS,
-    MELON,
-    PUMPKIN_SEEDS,
-    MELON_SEEDS,
-    RAW_BEEF,
-    COOKED_BEEF,
-    RAW_CHICKEN,
-    COOKED_CHICKEN,
-    ROTTEN_FLESH,
-    ENDER_PEARL,
-    BLAZE_ROD,
-    GHAST_TEAR,
-    GOLD_NUGGET,
-    NETHER_STALK,
-    POTION,
-    GLASS_BOTTLE,
-    SPIDER_EYE,
-    FERMENTED_SPIDER_EYE,
-    BLAZE_POWDER,
-    MAGMA_CREAM,
-    BREWING_STAND_ITEM,
-    CAULDRON_ITEM,
-    EYE_OF_ENDER,
-    SPECKLED_MELON,
-    MONSTER_EGG,
-    EXP_BOTTLE,
-    FIREBALL,
-    BOOK_AND_QUILL,
-    WRITTEN_BOOK,
-    EMERALD,
-    ITEM_FRAME,
-    FLOWER_POT_ITEM,
-    CARROT_ITEM,
-    POTATO_ITEM,
-    BAKED_POTATO,
-    POISONOUS_POTATO,
-    EMPTY_MAP,
-    GOLDEN_CARROT,
-    SKULL_ITEM,
-    CARROT_STICK,
-    NETHER_STAR,
-    PUMPKIN_PIE,
-    FIREWORK,
-    FIREWORK_CHARGE,
-    ENCHANTED_BOOK,
-    REDSTONE_COMPARATOR,
-    NETHER_BRICK_ITEM,
-    QUARTZ,
-    EXPLOSIVE_MINECART,
-    HOPPER_MINECART,
-    IRON_BARDING,
-    GOLD_BARDING,
-    DIAMOND_BARDING,
-    LEASH,
-    NAME_TAG,
-    COMMAND_MINECART,
-    GOLD_RECORD,
-    GREEN_RECORD;
+import com.blockhaus2000.ipm.minecraft.material.Material;
+
+/**
+ * All materials that are items.
+ *
+ */
+public enum ItemMaterial implements Material {
+    // TODO: Add items.
+    ;
+
+    /**
+     * The name of this item.
+     *
+     */
+    private final String materialName;
+
+    /**
+     * The ID of this item.
+     *
+     */
+    private final int materialId;
+    /**
+     * The data value of this item.
+     *
+     */
+    private final byte materialData;
+
+    /**
+     * Constructor of ItemMaterial.
+     *
+     * @param materialName
+     *            The name of this item.
+     * @param materialId
+     *            The ID of this item.
+     * @param materialData
+     *            The data value of this item.
+     */
+    private ItemMaterial(final String materialName, final int materialId, final byte materialData) {
+        this.materialName = materialName;
+        this.materialId = materialId;
+        this.materialData = materialData;
+    }
+
+    /**
+     * Constructor of ItemMaterial.
+     *
+     * @param materialName
+     *            The name of this item.
+     * @param materialId
+     *            The ID of this item.
+     * @param materialData
+     *            The data value of this item (will be casted to a
+     *            <code>byte</code>).
+     */
+    private ItemMaterial(final String materialName, final int materialId, final int materialData) {
+        this(materialName, materialId, (byte) materialData);
+    }
+
+    /**
+     * Constructor of ItemMaterial.
+     *
+     * @param materialName
+     *            The name of this item.
+     * @param materialId
+     *            The ID of this item.
+     */
+    private ItemMaterial(final String materialName, final int materialId) {
+        this(materialName, materialId, -1);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.minecraft.material.Material#getMaterialName()
+     */
+    @Override
+    public String getMaterialName() {
+        return this.materialName;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.minecraft.material.Material#getMaterialId()
+     */
+    @Deprecated
+    @Override
+    public int getMaterialId() {
+        return this.materialId;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.minecraft.material.Material#getMaterialData()
+     */
+    @Deprecated
+    @Override
+    public byte getMaterialData() {
+        return this.materialData;
+    }
 }

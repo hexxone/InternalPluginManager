@@ -15,11 +15,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft;
+package com.blockhaus2000.ipm.minecraft.state;
 
-public enum CauldronFillState {
-    EMPTY,
-    QUATER_FULL,
-    THREE_QUATERS_FULL,
-    FULL;
+/**
+ * The states of a redstone comparator.
+ *
+ */
+public enum RedstoneComparatorState {
+    /**
+     * The redstone comparator is in the compare mode.
+     *
+     */
+    COMPARE,
+    /**
+     * The redstone comparator is in the subtract mode.
+     *
+     */
+    SUBTRACT;
 }

@@ -17,8 +17,20 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
+/**
+ * The {@link BlockMeta} of a weighted pressure plate.
+ *
+ */
 public interface WeightedPressurePlateBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return Whether this pressure plate is pressed or not.
+     */
     boolean isPressed();
 
+    /**
+     *
+     * @return The output strength of this pressure plate.
+     */
     int getOutputStrength();
 }

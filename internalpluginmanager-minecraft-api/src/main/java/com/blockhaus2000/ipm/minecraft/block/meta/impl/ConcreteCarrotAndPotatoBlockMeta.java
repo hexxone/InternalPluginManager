@@ -17,9 +17,9 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
-import com.blockhaus2000.ipm.minecraft.CarrotAndPotatoGrowState;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.CarrotAndPotatoBlockMeta;
+import com.blockhaus2000.ipm.minecraft.state.grow.CarrotAndPotatoGrowState;
 
 public class ConcreteCarrotAndPotatoBlockMeta extends ConcreteBlockMeta implements CarrotAndPotatoBlockMeta {
     private final CarrotAndPotatoGrowState growState;

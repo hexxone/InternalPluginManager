@@ -17,6 +17,10 @@
  */
 package com.blockhaus2000.ipm.minecraft.scoreboard;
 
+/**
+ * The {@link ScoreboardManager} that handles scoreboards of the server.
+ *
+ */
 public interface ScoreboardManager {
     // TODO Auto-generated interface body.
 }

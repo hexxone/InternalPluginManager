@@ -19,6 +19,14 @@ package com.blockhaus2000.ipm.minecraft.block.meta;
 
 import com.blockhaus2000.ipm.minecraft.inventory.Inventory;
 
+/**
+ * If a block is a holder of an {@link Inventory}, it extent this interface.
+ *
+ */
 public interface Container {
+    /**
+     *
+     * @return The {@link Inventory} holded by this block meta.
+     */
     Inventory getInventory();
 }

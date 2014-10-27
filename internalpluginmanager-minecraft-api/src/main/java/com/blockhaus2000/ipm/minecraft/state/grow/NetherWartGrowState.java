@@ -15,23 +15,54 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft;
+package com.blockhaus2000.ipm.minecraft.state.grow;
 
-public enum CocaoBeanGrowState implements GrowState {
+/**
+ * The grow states of nether warts.
+ *
+ */
+public enum NetherWartGrowState implements GrowState {
+    /**
+     * The nether wart is just seeded.
+     *
+     */
     SEED(0),
-    MEDIUM(1),
-    RIPE(2);
+    /**
+     * The nether wart is in stage 1.
+     *
+     */
+    STATE_ONE(1),
+    /**
+     * The nether wart is in stage 2.
+     *
+     */
+    STATE_TWO(2),
+    /**
+     * The nether wart is ripe.
+     *
+     */
+    RIPE(3);
 
+    /**
+     * The grow state ID.
+     *
+     */
     private final int stateId;
 
-    private CocaoBeanGrowState(final int stateId) {
+    /**
+     * Constructor of NetherWartGrowState.
+     *
+     * @param stateId
+     *            The grow state ID.
+     */
+    private NetherWartGrowState(final int stateId) {
         this.stateId = stateId;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.minecraft.GrowState#getStateId()
+     * @see com.blockhaus2000.ipm.minecraft.state.grow.GrowState#getStateId()
      */
     @Override
     public int getStateId() {

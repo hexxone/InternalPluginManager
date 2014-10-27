@@ -17,8 +17,12 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
-import com.blockhaus2000.ipm.minecraft.NetherWartGrowState;
+import com.blockhaus2000.ipm.minecraft.state.grow.NetherWartGrowState;
 
+/**
+ * The {@link BlockMeta} of a nether wart.
+ *
+ */
 public interface NetherWartBlockMeta extends BlockMeta, Growing {
     /**
      * {@inheritDoc}

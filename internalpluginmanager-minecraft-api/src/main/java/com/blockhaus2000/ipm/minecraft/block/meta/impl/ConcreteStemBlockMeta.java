@@ -17,9 +17,9 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
-import com.blockhaus2000.ipm.minecraft.StemGrowState;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.StemBlockMeta;
+import com.blockhaus2000.ipm.minecraft.state.grow.StemGrowState;
 
 public class ConcreteStemBlockMeta extends ConcreteBlockMeta implements StemBlockMeta {
     private final StemGrowState growState;

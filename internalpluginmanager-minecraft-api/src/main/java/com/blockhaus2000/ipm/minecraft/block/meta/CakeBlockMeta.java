@@ -17,6 +17,14 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
+/**
+ * The {@link BlockMeta} of a cake.
+ *
+ */
 public interface CakeBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return The current size of this cake.
+     */
     int getSize();
 }

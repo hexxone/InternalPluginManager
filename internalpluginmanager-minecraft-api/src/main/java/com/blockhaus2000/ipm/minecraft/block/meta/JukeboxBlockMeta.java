@@ -19,8 +19,21 @@ package com.blockhaus2000.ipm.minecraft.block.meta;
 
 import com.blockhaus2000.ipm.minecraft.record.RecordMaterial;
 
+/**
+ * The {@link BlockMeta} of a jukebox.
+ *
+ */
 public interface JukeboxBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return Whether this jukebox is playing or not.
+     */
     boolean isPlaying();
 
+    /**
+     *
+     * @return The record that is within this jukebox. If no record is in the
+     *         jukebox, this returns <code>null</code>.
+     */
     RecordMaterial getRecord();
 }

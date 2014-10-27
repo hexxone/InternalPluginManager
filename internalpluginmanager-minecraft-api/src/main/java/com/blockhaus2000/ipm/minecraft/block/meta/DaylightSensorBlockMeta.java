@@ -17,6 +17,14 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
+/**
+ * The {@link BlockMeta} of a daylight sensor.
+ *
+ */
 public interface DaylightSensorBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return The output strength of this daylight sensor.
+     */
     int getOutputStrength();
 }

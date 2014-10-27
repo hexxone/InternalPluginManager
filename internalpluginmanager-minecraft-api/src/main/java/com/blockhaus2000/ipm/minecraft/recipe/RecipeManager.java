@@ -17,6 +17,10 @@
  */
 package com.blockhaus2000.ipm.minecraft.recipe;
 
+/**
+ * Manages the recipes for the server.
+ *
+ */
 public interface RecipeManager {
     // TODO Auto-generated interface body.
 }

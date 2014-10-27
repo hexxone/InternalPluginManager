@@ -20,7 +20,16 @@ package com.blockhaus2000.ipm.minecraft;
 import com.blockhaus2000.ipm.base.injection.Inject;
 import com.blockhaus2000.ipm.base.injection.InjectionManager;
 
+/**
+ * This is the main access point to use everything that is going on in the
+ * underlying implementation.
+ *
+ */
 public class InternalPluginManager {
+    /**
+     * THE server. Will be injected via the {@link InjectionManager}.
+     *
+     */
     @Inject
     private static Server server;
 
@@ -28,6 +37,10 @@ public class InternalPluginManager {
         InjectionManager.init(InternalPluginManager.class);
     }
 
+    /**
+     * Constructor of InternalPluginManager.
+     *
+     */
     private InternalPluginManager() {
         // Utility classes should not have a visible constructor.
     }

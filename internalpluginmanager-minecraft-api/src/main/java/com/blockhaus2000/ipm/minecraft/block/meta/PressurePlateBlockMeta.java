@@ -17,6 +17,14 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
+/**
+ * The {@link BlockMeta} of a pressure plate.
+ *
+ */
 public interface PressurePlateBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return Whether this pressure plate is pressed or not.
+     */
     boolean isPressed();
 }

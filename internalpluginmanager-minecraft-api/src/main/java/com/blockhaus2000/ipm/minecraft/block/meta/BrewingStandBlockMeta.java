@@ -17,8 +17,21 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
+/**
+ * The {@link BlockMeta} of a breqing stand.
+ *
+ */
 public interface BrewingStandBlockMeta extends BlockMeta, Container {
+    /**
+     *
+     * @return The remaining breqing time. Or, if nothing is brewing,
+     *         <code>-1</code>.
+     */
     long getRemainingBrewingTime();
 
+    /**
+     *
+     * @return Whether this breqing stand is within a breqing process.
+     */
     boolean isBrewing();
 }

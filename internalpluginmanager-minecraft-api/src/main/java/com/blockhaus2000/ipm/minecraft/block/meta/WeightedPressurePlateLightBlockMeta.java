@@ -17,6 +17,10 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
+/**
+ * The {@link BlockMeta} of a light weighted pressure plate.
+ *
+ */
 public interface WeightedPressurePlateLightBlockMeta extends WeightedPressurePlateBlockMeta {
     // Nothing to do.
 }

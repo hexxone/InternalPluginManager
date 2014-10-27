@@ -17,6 +17,14 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
+/**
+ * The {@link BlockMeta} of a chest.
+ *
+ */
 public interface ChestBlockMeta extends BlockMeta, Container {
+    /**
+     *
+     * @return Whether this chest is open or not.
+     */
     boolean isOpen();
 }

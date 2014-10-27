@@ -17,6 +17,14 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
+/**
+ * The {@link BlockMeta} of a door.
+ *
+ */
 public interface DoorBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return Whether this door is open or not.
+     */
     boolean isOpen();
 }

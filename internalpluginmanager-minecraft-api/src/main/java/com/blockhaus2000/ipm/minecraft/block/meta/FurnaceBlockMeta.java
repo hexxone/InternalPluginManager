@@ -17,6 +17,14 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
+/**
+ * The {@link BlockMeta} of a furnace.
+ *
+ */
 public interface FurnaceBlockMeta extends BlockMeta, Container {
+    /**
+     *
+     * @return Whether this furnace is burning.
+     */
     boolean isBurning();
 }

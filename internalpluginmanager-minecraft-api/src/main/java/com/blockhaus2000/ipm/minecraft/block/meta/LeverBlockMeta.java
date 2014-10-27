@@ -17,6 +17,14 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
+/**
+ * The {@link BlockMeta} of a lever.
+ *
+ */
 public interface LeverBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return Whether this lever is active.
+     */
     boolean isActive();
 }

@@ -17,6 +17,10 @@
  */
 package com.blockhaus2000.ipm.minecraft.enity;
 
+/**
+ * All enity types.
+ *
+ */
 public enum EntityType {
     // TODO Auto-generated enum body.
 }

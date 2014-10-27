@@ -17,6 +17,14 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
+/**
+ * The {@link BlockMeta} of a redstone wire block.
+ *
+ */
 public interface RedstoneWireBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return The strength of this redstone wire.
+     */
     int getRedstoneStrength();
 }

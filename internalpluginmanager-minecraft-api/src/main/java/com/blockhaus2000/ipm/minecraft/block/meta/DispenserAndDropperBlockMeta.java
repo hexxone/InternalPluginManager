@@ -17,6 +17,10 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
+/**
+ * The {@link BlockMeta} of a dispenser/dropper.
+ *
+ */
 public interface DispenserAndDropperBlockMeta extends BlockMeta, Container {
     // Nothing to do.
 }

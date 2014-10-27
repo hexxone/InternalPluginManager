@@ -17,16 +17,34 @@
  */
 package com.blockhaus2000.ipm.minecraft;
 
+/**
+ * A list of notes that can be played by a note block.
+ *
+ */
 public enum Note {
     // TODO: Add notes.
     ;
 
+    /**
+     * The note ID.
+     *
+     */
     private final int id;
 
+    /**
+     * Constructor of Note.
+     *
+     * @param id
+     *            The note ID.
+     */
     private Note(final int id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return {@link Note#id}
+     */
     public int getId() {
         return this.id;
     }

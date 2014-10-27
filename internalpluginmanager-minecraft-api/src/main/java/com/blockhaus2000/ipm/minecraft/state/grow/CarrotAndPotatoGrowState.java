@@ -15,22 +15,36 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft;
+package com.blockhaus2000.ipm.minecraft.state.grow;
 
-public enum StemGrowState implements GrowState {
-    // TODO: Define (stem) grow states.
+/**
+ * The grow states of potatos/carrots.
+ *
+ */
+public enum CarrotAndPotatoGrowState implements GrowState {
+    // TODO: Add carrot/potato grow states.
     ;
 
+    /**
+     * The grow state ID.
+     *
+     */
     private final int stateId;
 
-    private StemGrowState(final int stateId) {
+    /**
+     * Constructor of CarrotAndPotatoGrowState.
+     *
+     * @param stateId
+     *            The grow state ID.
+     */
+    private CarrotAndPotatoGrowState(final int stateId) {
         this.stateId = stateId;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.minecraft.GrowState#getStateId()
+     * @see com.blockhaus2000.ipm.minecraft.state.grow.GrowState#getStateId()
      */
     @Override
     public int getStateId() {

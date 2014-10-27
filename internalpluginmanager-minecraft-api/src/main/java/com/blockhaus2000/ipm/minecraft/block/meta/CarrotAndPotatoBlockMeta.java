@@ -17,8 +17,12 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
-import com.blockhaus2000.ipm.minecraft.CarrotAndPotatoGrowState;
+import com.blockhaus2000.ipm.minecraft.state.grow.CarrotAndPotatoGrowState;
 
+/**
+ * The {@link BlockMeta} of a carrot/potato.
+ *
+ */
 public interface CarrotAndPotatoBlockMeta extends BlockMeta, Growing {
     /**
      * {@inheritDoc}

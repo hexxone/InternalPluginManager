@@ -17,17 +17,50 @@
  */
 package com.blockhaus2000.ipm.minecraft.util;
 
+/**
+ * A Vector in a 3D room.
+ *
+ */
 public class Vector {
+    /**
+     * The <code>x</code> value.
+     *
+     */
     private final int x;
+    /**
+     * The <code>y</code> value.
+     *
+     */
     private final int y;
+    /**
+     * The <code>z</code> value.
+     *
+     */
     private final int z;
 
+    /**
+     * Constructor of Vector.
+     *
+     * @param x
+     *            The <code>x</code> value.
+     * @param y
+     *            The <code>y</code> value.
+     * @param z
+     *            The <code>z</code> value.
+     */
     public Vector(final int x, final int y, final int z) {
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
+    /**
+     * Adds this {@link Vector} and the given {@link Vector}.
+     *
+     * @param vec
+     *            The {@link Vector} to add to this {@link Vector},
+     * @return The calculated {@link Vector}.
+     */
     public Vector add(final Vector vec) {
         return new Vector(this.x + vec.getX(), this.y + vec.getY(), this.z + vec.getZ());
     }

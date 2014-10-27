@@ -19,6 +19,14 @@ package com.blockhaus2000.ipm.minecraft.block.meta;
 
 import com.blockhaus2000.ipm.minecraft.enity.EntityType;
 
+/**
+ * The {@link BlockMeta} of a monster spawner.
+ *
+ */
 public interface MonsterSpawnerBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return The {@link EntityType} that is spaned by this spawner.
+     */
     EntityType getEntity();
 }

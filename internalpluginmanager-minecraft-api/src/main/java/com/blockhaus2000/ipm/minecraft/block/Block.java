@@ -19,14 +19,31 @@ package com.blockhaus2000.ipm.minecraft.block;
 
 import com.blockhaus2000.ipm.minecraft.Direction;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
-import com.blockhaus2000.ipm.minecraft.util.WorldLocation;
+import com.blockhaus2000.ipm.minecraft.world.World;
 
+/**
+ * A block in a {@link World}.
+ *
+ */
 public interface Block {
+    /**
+     *
+     * @return The {@link BlockMeta} of this block. This {@link BlockMeta} is an
+     *         object of the class that is returned by
+     *         {@link Block#getMaterial()}
+     *         {@link BlockMaterial#getBlockMetaClass()}.
+     */
     BlockMeta getMeta();
 
+    /**
+     *
+     * @return The direction this block points to.
+     */
     Direction getFaceDirection();
 
-    WorldLocation getLocation();
-
+    /**
+     *
+     * @return The {@link BlockMaterial} of this block.
+     */
     BlockMaterial getMaterial();
 }

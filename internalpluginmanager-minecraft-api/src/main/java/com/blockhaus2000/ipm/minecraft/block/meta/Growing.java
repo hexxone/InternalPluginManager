@@ -17,8 +17,16 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
-import com.blockhaus2000.ipm.minecraft.GrowState;
+import com.blockhaus2000.ipm.minecraft.state.grow.GrowState;
 
+/**
+ * If a block can grow (e.g. a potato), this should be implemented/extended.
+ *
+ */
 public interface Growing {
+    /**
+     *
+     * @return The grow state of this block meta.
+     */
     GrowState getGrowState();
 }

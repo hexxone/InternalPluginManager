@@ -19,6 +19,14 @@ package com.blockhaus2000.ipm.minecraft.block.meta;
 
 import com.blockhaus2000.ipm.minecraft.Direction;
 
+/**
+ * The {@link BlockMeta} of a hopper.
+ *
+ */
 public interface HopperBlockMeta extends BlockMeta, Container {
+    /**
+     *
+     * @return The output face of this hopper.
+     */
     Direction getOutputFace();
 }

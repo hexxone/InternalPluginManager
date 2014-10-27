@@ -19,6 +19,14 @@ package com.blockhaus2000.ipm.minecraft.block.meta;
 
 import com.blockhaus2000.ipm.minecraft.enchantment.Enchantment;
 
+/**
+ * The {@link BlockMeta} of an enchantment table.
+ *
+ */
 public interface EnchantmentTableBlockMeta extends BlockMeta, Container {
+    /**
+     *
+     * @return The enchantments that are currently displayed to the user.
+     */
     Enchantment[] getCurrentEnchantments();
 }

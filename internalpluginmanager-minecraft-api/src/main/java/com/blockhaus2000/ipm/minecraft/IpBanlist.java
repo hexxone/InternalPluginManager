@@ -19,12 +19,46 @@ package com.blockhaus2000.ipm.minecraft;
 
 import java.util.Set;
 
+/**
+ * The IP ban list for this server.
+ *
+ */
 public interface IpBanlist {
+    /**
+     * Bans the given IP with the given reason.
+     *
+     * @param ip
+     *            The IP to ban.
+     * @param reason
+     *            The reason why the IP should be banned.
+     */
     void ban(final String ip, final String reason);
 
+    /**
+     * Unbans the given IP.
+     *
+     * @param ip
+     *            The IP to unban.
+     * @return Whether the unban was successful (not, if the IP was not banned
+     *         yet).
+     */
     boolean unban(final String ip);
 
+    /**
+     * Reloads the bans from disk.
+     *
+     */
     void reload();
 
+    /**
+     * Saves the bans to disk.
+     *
+     */
+    void save();
+
+    /**
+     *
+     * @return A set of all banned IPs.
+     */
     Set<String> getBannedIps();
 }

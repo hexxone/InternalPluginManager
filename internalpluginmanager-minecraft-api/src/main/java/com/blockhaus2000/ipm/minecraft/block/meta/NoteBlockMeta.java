@@ -19,6 +19,14 @@ package com.blockhaus2000.ipm.minecraft.block.meta;
 
 import com.blockhaus2000.ipm.minecraft.Note;
 
+/**
+ * The {@link BlockMeta} of a note block.
+ *
+ */
 public interface NoteBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return The note that is set.
+     */
     Note getNote();
 }

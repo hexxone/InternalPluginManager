@@ -17,6 +17,10 @@
  */
 package com.blockhaus2000.ipm.minecraft.inventory;
 
+/**
+ * Represents an {@link Inventory} that can be opened by a player.
+ *
+ */
 public interface Inventory {
     // TODO Auto-generated interface body.
 }

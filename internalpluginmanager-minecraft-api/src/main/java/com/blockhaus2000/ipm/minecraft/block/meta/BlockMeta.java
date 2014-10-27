@@ -18,11 +18,28 @@
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
 import com.blockhaus2000.ipm.minecraft.Direction;
+import com.blockhaus2000.ipm.minecraft.block.Block;
 
+/**
+ * The {@link BlockMeta} is used to represent changin states of a {@link Block}.
+ *
+ */
 public interface BlockMeta extends RawBlockMeta {
+    /**
+     *
+     * @return Whether this block is powered by redstone.
+     */
     boolean isRedstonePowered();
 
+    /**
+     *
+     * @return Whether this block is indirectly powered by redstone.
+     */
     boolean isIndirectRedstonePowered();
 
+    /**
+     *
+     * @return The direction of the block facing.
+     */
     Direction getDirection();
 }

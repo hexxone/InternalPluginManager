@@ -17,8 +17,12 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
-import com.blockhaus2000.ipm.minecraft.StemGrowState;
+import com.blockhaus2000.ipm.minecraft.state.grow.StemGrowState;
 
+/**
+ * The {@link BlockMeta} of a melon/pumpkin stem.
+ *
+ */
 public interface StemBlockMeta extends BlockMeta, Growing {
     /**
      * {@inheritDoc}

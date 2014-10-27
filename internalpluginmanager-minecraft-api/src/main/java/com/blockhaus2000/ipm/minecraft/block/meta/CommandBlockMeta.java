@@ -17,6 +17,14 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
+/**
+ * The {@link BlockMeta} of a command block.
+ *
+ */
 public interface CommandBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return The command of this command block.
+     */
     String getCommand();
 }

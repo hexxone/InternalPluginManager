@@ -17,16 +17,45 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
+/**
+ * The {@link RawBlockMeta} contains basic information about a block that does
+ * not depent on a "real" block.
+ *
+ */
 public interface RawBlockMeta {
+    /**
+     *
+     * @return The lightlevel of the light that is sent by this block.
+     */
     int getLightLevel();
 
+    /**
+     *
+     * @return The explosion resistance of this block.
+     */
     double getExplosionResistance();
 
+    /**
+     *
+     * @return The severity of this block.
+     */
     double getSeverity();
 
+    /**
+     *
+     * @return Whether this block has gravity or not.
+     */
     boolean hasGravity();
 
+    /**
+     *
+     * @return Whether this block is solid or not.
+     */
     boolean isSolid();
 
+    /**
+     *
+     * @return Whether this block is transparent or not.
+     */
     boolean isTransparent();
 }

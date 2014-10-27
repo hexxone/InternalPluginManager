@@ -17,6 +17,10 @@
  */
 package com.blockhaus2000.ipm.minecraft.enchantment;
 
+/**
+ * Represents an enchantment.
+ *
+ */
 public interface Enchantment {
     // TODO Auto-generated interface body.
 }

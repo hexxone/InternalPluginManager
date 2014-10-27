@@ -17,6 +17,14 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
+/**
+ * The {@link BlockMeta} of a (sticky) piston.
+ *
+ */
 public interface PistonBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return Whether this piston is extended or not.
+     */
     boolean isExtended();
 }

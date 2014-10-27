@@ -17,6 +17,14 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
+/**
+ * The {@link BlockMeta} of a tripwire.
+ *
+ */
 public interface TripwireBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return Whether this tripwire is active (pressed) or not.
+     */
     boolean isActive();
 }

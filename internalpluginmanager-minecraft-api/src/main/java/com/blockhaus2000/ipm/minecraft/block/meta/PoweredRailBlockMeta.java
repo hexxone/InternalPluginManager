@@ -17,6 +17,14 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
+/**
+ * The {@link BlockMeta} of a powered rail.
+ *
+ */
 public interface PoweredRailBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return Whether this rail is powered or not.
+     */
     boolean isPowered();
 }
