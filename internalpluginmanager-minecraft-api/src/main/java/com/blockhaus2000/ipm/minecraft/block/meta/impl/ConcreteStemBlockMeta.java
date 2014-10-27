@@ -21,9 +21,26 @@ import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.StemBlockMeta;
 import com.blockhaus2000.ipm.minecraft.state.grow.StemGrowState;
 
+/**
+ * Concrete {@link StemBlockMeta} implementation.
+ *
+ */
 public class ConcreteStemBlockMeta extends ConcreteBlockMeta implements StemBlockMeta {
+    /**
+     * <code>growState</code>
+     *
+     */
     private final StemGrowState growState;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param growState
+     *            <code>growState</code>
+     */
     public ConcreteStemBlockMeta(final BlockMeta blockMeta, final StemGrowState growState) {
         super(blockMeta);
 

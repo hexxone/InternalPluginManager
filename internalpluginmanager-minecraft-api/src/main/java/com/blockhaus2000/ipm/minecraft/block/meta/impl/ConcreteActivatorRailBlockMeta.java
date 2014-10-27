@@ -20,9 +20,26 @@ package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 import com.blockhaus2000.ipm.minecraft.block.meta.ActivatorRailBlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 
+/**
+ * Concrete {@link ActivatorRailBlockMeta} implementation.
+ *
+ */
 public class ConcreteActivatorRailBlockMeta extends ConcreteBlockMeta implements ActivatorRailBlockMeta {
+    /**
+     * <code>active</code>
+     *
+     */
     private final boolean active;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param active
+     *            <code>active</code>
+     */
     public ConcreteActivatorRailBlockMeta(final BlockMeta blockMeta, final boolean active) {
         super(blockMeta);
 

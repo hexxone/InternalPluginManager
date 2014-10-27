@@ -20,9 +20,26 @@ package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.CommandBlockMeta;
 
+/**
+ * Concrete {@link CommandBlockMeta} implementation.
+ *
+ */
 public class ConcreteCauldronBlockMeta extends ConcreteBlockMeta implements CommandBlockMeta {
+    /**
+     * <code>command</code>
+     *
+     */
     private final String command;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param command
+     *            <code>command</code>
+     */
     public ConcreteCauldronBlockMeta(final BlockMeta blockMeta, final String command) {
         super(blockMeta);
 

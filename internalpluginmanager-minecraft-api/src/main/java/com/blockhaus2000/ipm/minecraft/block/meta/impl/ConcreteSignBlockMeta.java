@@ -20,12 +20,47 @@ package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.SignBlockMeta;
 
+/**
+ * Concrete {@link SignBlockMeta} implementation.
+ *
+ */
 public class ConcreteSignBlockMeta extends ConcreteBlockMeta implements SignBlockMeta {
+    /**
+     * <code>firstLine</code>
+     *
+     */
     private final String firstLine;
+    /**
+     * <code>secondLine</code>
+     *
+     */
     private final String secondLine;
+    /**
+     * <code>thrirdLine</code>
+     *
+     */
     private final String thirdLine;
+    /**
+     * <code>fourthLine</code>
+     *
+     */
     private final String fourthLine;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param firstLine
+     *            <code>firstLine</code>
+     * @param secondLine
+     *            <code>secondLine</code>
+     * @param thirdLine
+     *            <code>thirdLine</code>
+     * @param fourthLine
+     *            <code>fourthLine</code>
+     */
     public ConcreteSignBlockMeta(final BlockMeta blockMeta, final String firstLine, final String secondLine,
             final String thirdLine, final String fourthLine) {
         super(blockMeta);

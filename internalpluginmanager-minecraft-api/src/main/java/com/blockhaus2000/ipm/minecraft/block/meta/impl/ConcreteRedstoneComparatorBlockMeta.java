@@ -21,11 +21,40 @@ import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.RedstoneComparatorBlockMeta;
 import com.blockhaus2000.ipm.minecraft.state.RedstoneComparatorState;
 
+/**
+ * Concrete {@link RedstoneComparatorBlockMeta} implementation.
+ *
+ */
 public class ConcreteRedstoneComparatorBlockMeta extends ConcreteBlockMeta implements RedstoneComparatorBlockMeta {
+    /**
+     * <code>powered</code>
+     *
+     */
     private final boolean powered;
+    /**
+     * <code>outputStrength</code>
+     *
+     */
     private final int outputStrength;
+    /**
+     * <code>comparatorState</code>
+     *
+     */
     private final RedstoneComparatorState comparatorState;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param powered
+     *            <code>powered</code>
+     * @param outputStrength
+     *            <code>outputStrength</code>
+     * @param comparatorState
+     *            <code>comparatorState</code>
+     */
     public ConcreteRedstoneComparatorBlockMeta(final BlockMeta blockMeta, final boolean powered, final int outputStrength,
             final RedstoneComparatorState comparatorState) {
         super(blockMeta);

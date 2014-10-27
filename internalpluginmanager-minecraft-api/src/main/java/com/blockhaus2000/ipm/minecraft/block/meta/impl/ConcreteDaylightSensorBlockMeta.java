@@ -20,9 +20,26 @@ package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.DaylightSensorBlockMeta;
 
+/**
+ * Concrete {@link DaylightSensorBlockMeta}.
+ *
+ */
 public class ConcreteDaylightSensorBlockMeta extends ConcreteBlockMeta implements DaylightSensorBlockMeta {
+    /**
+     * <code>outputStrength</code>
+     *
+     */
     private final int outputStrength;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param outputStrength
+     *            <code>outputStrength</code>
+     */
     public ConcreteDaylightSensorBlockMeta(final BlockMeta blockMeta, final int outputStrength) {
         super(blockMeta);
 

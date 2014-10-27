@@ -20,9 +20,26 @@ package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.DetectorRailBlockMeta;
 
+/**
+ * Concrete {@link DetectorRailBlockMeta} implementation.
+ *
+ */
 public class ConcreteDetectorRailBlockMeta extends ConcreteBlockMeta implements DetectorRailBlockMeta {
+    /**
+     * <code>active</code>
+     *
+     */
     private final boolean active;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param active
+     *            <code>active</code>
+     */
     public ConcreteDetectorRailBlockMeta(final BlockMeta blockMeta, final boolean active) {
         super(blockMeta);
 

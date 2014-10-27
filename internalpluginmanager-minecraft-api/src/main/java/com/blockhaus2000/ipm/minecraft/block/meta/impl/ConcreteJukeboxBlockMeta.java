@@ -21,10 +21,33 @@ import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.JukeboxBlockMeta;
 import com.blockhaus2000.ipm.minecraft.record.RecordMaterial;
 
+/**
+ * Concrete {@link JukeboxBlockMeta} implementation.
+ *
+ */
 public class ConcreteJukeboxBlockMeta extends ConcreteBlockMeta implements JukeboxBlockMeta {
+    /**
+     * <code>playing</code>
+     *
+     */
     private final boolean playing;
+    /**
+     * <code>record</code>
+     *
+     */
     private final RecordMaterial record;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param playing
+     *            <code>playing</code>
+     * @param record
+     *            <code>record</code>
+     */
     public ConcreteJukeboxBlockMeta(final BlockMeta blockMeta, final boolean playing, final RecordMaterial record) {
         super(blockMeta);
 

@@ -20,9 +20,26 @@ package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.CakeBlockMeta;
 
+/**
+ * Concrete {@link CakeBlockMeta} implementation.
+ *
+ */
 public class ConcreteCakeBlockMeta extends ConcreteBlockMeta implements CakeBlockMeta {
+    /**
+     * <code>size</code>
+     *
+     */
     private final int size;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param size
+     *            <code>size</code>
+     */
     public ConcreteCakeBlockMeta(final BlockMeta blockMeta, final int size) {
         super(blockMeta);
 

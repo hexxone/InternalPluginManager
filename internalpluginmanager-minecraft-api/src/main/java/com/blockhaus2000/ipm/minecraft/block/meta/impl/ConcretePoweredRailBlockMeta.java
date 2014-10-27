@@ -20,9 +20,26 @@ package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.PoweredRailBlockMeta;
 
+/**
+ * Concrete {@link PoweredRailBlockMeta} implementation.
+ *
+ */
 public class ConcretePoweredRailBlockMeta extends ConcreteBlockMeta implements PoweredRailBlockMeta {
+    /**
+     * <code>powered</code>
+     *
+     */
     private final boolean powered;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param powered
+     *            <code>powered</code>
+     */
     public ConcretePoweredRailBlockMeta(final BlockMeta blockMeta, final boolean powered) {
         super(blockMeta);
 

@@ -21,9 +21,26 @@ import com.blockhaus2000.ipm.minecraft.block.meta.AnvilBlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.state.AnvilDamageState;
 
+/**
+ * Concrete {@link AnvilBlockMeta} implementation.
+ *
+ */
 public class ConcreteAnvilBlockMeta extends ConcreteBlockMeta implements AnvilBlockMeta {
+    /**
+     * <code>damageState</code>
+     *
+     */
     private final AnvilDamageState damageState;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param damageState
+     *            <code>damageState</code>
+     */
     public ConcreteAnvilBlockMeta(final BlockMeta blockMeta, final AnvilDamageState damageState) {
         super(blockMeta);
 

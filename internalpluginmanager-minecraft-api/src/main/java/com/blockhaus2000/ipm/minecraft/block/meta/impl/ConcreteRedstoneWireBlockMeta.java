@@ -20,9 +20,26 @@ package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.RedstoneWireBlockMeta;
 
+/**
+ * Concrete {@link RedstoneWireBlockMeta} implementation.
+ *
+ */
 public class ConcreteRedstoneWireBlockMeta extends ConcreteBlockMeta implements RedstoneWireBlockMeta {
+    /**
+     * <code>redstoneStrength</code>
+     *
+     */
     private final int redstoneStrength;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param redstoneStrength
+     *            <code>redstoneStrength</code>
+     */
     public ConcreteRedstoneWireBlockMeta(final BlockMeta blockMeta, final int redstoneStrength) {
         super(blockMeta);
 

@@ -20,10 +20,33 @@ package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.RedstoneRepeaterBlockMeta;
 
+/**
+ * Concrete {@link RedstoneRepeaterBlockMeta} implementation.
+ *
+ */
 public class ConcreteRedstoneRepeaterBlockMeta extends ConcreteBlockMeta implements RedstoneRepeaterBlockMeta {
+    /**
+     * <code>powered</code>
+     *
+     */
     private final boolean powered;
+    /**
+     * <code>state</code>
+     *
+     */
     private final int state;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param powered
+     *            <code>powered</code>
+     * @param state
+     *            <code>state</code>
+     */
     public ConcreteRedstoneRepeaterBlockMeta(final BlockMeta blockMeta, final boolean powered, final int state) {
         super(blockMeta);
 

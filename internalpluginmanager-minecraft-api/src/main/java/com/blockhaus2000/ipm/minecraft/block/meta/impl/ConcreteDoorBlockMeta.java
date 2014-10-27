@@ -20,9 +20,26 @@ package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.DoorBlockMeta;
 
+/**
+ * Concrete {@link DoorBlockMeta} implementation.
+ *
+ */
 public class ConcreteDoorBlockMeta extends ConcreteBlockMeta implements DoorBlockMeta {
+    /**
+     * <code>open</code>
+     *
+     */
     private final boolean open;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param open
+     *            <code>open</code>
+     */
     public ConcreteDoorBlockMeta(final BlockMeta blockMeta, final boolean open) {
         super(blockMeta);
 

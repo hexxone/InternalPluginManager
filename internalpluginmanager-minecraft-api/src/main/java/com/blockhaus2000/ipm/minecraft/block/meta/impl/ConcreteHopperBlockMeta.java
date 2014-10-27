@@ -22,10 +22,33 @@ import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.HopperBlockMeta;
 import com.blockhaus2000.ipm.minecraft.inventory.Inventory;
 
+/**
+ * Concrete {@link HopperBlockMeta} implementation.
+ *
+ */
 public class ConcreteHopperBlockMeta extends ConcreteBlockMeta implements HopperBlockMeta {
+    /**
+     * <code>inventory</code>
+     *
+     */
     private final Inventory inventory;
+    /**
+     * <code>outputFace</code>
+     *
+     */
     private final Direction outputFace;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param inventory
+     *            <code>inventory</code>
+     * @param outputFace
+     *            <code>outputFace</code>
+     */
     public ConcreteHopperBlockMeta(final BlockMeta blockMeta, final Inventory inventory, final Direction outputFace) {
         super(blockMeta);
 

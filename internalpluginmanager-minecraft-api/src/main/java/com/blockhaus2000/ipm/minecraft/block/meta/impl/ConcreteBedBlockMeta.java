@@ -17,17 +17,37 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
+import java.util.UUID;
+
+import com.blockhaus2000.ipm.minecraft.InternalPluginManager;
 import com.blockhaus2000.ipm.minecraft.block.meta.BedBlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.entity.Player;
 
+/**
+ * Concrete {@link BedBlockMeta} implementation.
+ *
+ */
 public class ConcreteBedBlockMeta extends ConcreteBlockMeta implements BedBlockMeta {
-    private final Player player;
+    /**
+     * <code>player</code>
+     *
+     */
+    private final UUID player;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param player
+     *            <code>player</code>
+     */
     public ConcreteBedBlockMeta(final BlockMeta blockMeta, final Player player) {
         super(blockMeta);
 
-        this.player = player;
+        this.player = player.getUUID();
     }
 
     /**
@@ -37,6 +57,6 @@ public class ConcreteBedBlockMeta extends ConcreteBlockMeta implements BedBlockM
      */
     @Override
     public Player getPlayer() {
-        return this.player;
+        return InternalPluginManager.getServer().getPlayerManager().getPlayer(this.player);
     }
 }

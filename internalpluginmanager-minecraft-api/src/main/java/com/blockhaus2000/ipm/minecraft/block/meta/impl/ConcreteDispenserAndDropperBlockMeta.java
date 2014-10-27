@@ -21,9 +21,26 @@ import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.DispenserAndDropperBlockMeta;
 import com.blockhaus2000.ipm.minecraft.inventory.Inventory;
 
+/**
+ * Concrete {@link DispenserAndDropperBlockMeta} implementation.
+ *
+ */
 public class ConcreteDispenserAndDropperBlockMeta extends ConcreteBlockMeta implements DispenserAndDropperBlockMeta {
+    /**
+     * <code>inventory</code>
+     *
+     */
     private final Inventory inventory;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param inventory
+     *            <code>inventory</code>
+     */
     public ConcreteDispenserAndDropperBlockMeta(final BlockMeta blockMeta, final Inventory inventory) {
         super(blockMeta);
 

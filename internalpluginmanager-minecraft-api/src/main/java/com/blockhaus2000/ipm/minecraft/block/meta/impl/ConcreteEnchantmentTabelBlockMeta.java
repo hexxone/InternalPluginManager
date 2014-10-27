@@ -22,10 +22,33 @@ import com.blockhaus2000.ipm.minecraft.block.meta.EnchantmentTableBlockMeta;
 import com.blockhaus2000.ipm.minecraft.enchantment.Enchantment;
 import com.blockhaus2000.ipm.minecraft.inventory.Inventory;
 
+/**
+ * Concrete {@link EnchantmentTableBlockMeta} implementation.
+ *
+ */
 public class ConcreteEnchantmentTabelBlockMeta extends ConcreteBlockMeta implements EnchantmentTableBlockMeta {
+    /**
+     * <code>inventory</code>
+     *
+     */
     private final Inventory inventory;
+    /**
+     * <code>currentEnchantments</code>
+     *
+     */
     private final Enchantment[] currentEnchantments;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param inventory
+     *            <code>inventory</code>
+     * @param currentEnchantments
+     *            <code>currentEnchantments</code>
+     */
     public ConcreteEnchantmentTabelBlockMeta(final BlockMeta blockMeta, final Inventory inventory,
             final Enchantment[] currentEnchantments) {
         super(blockMeta);

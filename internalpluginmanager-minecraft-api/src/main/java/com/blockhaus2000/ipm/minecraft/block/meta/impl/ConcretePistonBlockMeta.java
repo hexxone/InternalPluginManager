@@ -20,9 +20,26 @@ package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.PistonBlockMeta;
 
+/**
+ * Concrete {@link PistonBlockMeta} implementation.
+ *
+ */
 public class ConcretePistonBlockMeta extends ConcreteBlockMeta implements PistonBlockMeta {
+    /**
+     * <code>extended</code>
+     *
+     */
     private final boolean extended;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param extended
+     *            <code>extended</code>
+     */
     public ConcretePistonBlockMeta(final BlockMeta blockMeta, final boolean extended) {
         super(blockMeta);
 

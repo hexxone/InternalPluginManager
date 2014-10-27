@@ -21,9 +21,26 @@ import com.blockhaus2000.ipm.minecraft.Note;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.NoteBlockMeta;
 
+/**
+ * Concrete {@link NoteBlockMeta} implementation.
+ *
+ */
 public class ConcreteNoteBlockMeta extends ConcreteBlockMeta implements NoteBlockMeta {
+    /**
+     * <code>note</code>
+     *
+     */
     private final Note note;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param note
+     *            <code>note</code>
+     */
     public ConcreteNoteBlockMeta(final BlockMeta blockMeta, final Note note) {
         super(blockMeta);
 

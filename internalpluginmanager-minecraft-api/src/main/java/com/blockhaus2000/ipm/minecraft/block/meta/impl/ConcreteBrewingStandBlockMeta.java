@@ -21,11 +21,40 @@ import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.BrewingStandBlockMeta;
 import com.blockhaus2000.ipm.minecraft.inventory.Inventory;
 
+/**
+ * Concrete {@link BrewingStandBlockMeta} implementation.
+ *
+ */
 public class ConcreteBrewingStandBlockMeta extends ConcreteBlockMeta implements BrewingStandBlockMeta {
+    /**
+     * <code>inventory</code>
+     *
+     */
     private final Inventory inventory;
+    /**
+     * <code>remainingBrewingTime</code>
+     *
+     */
     private final int remainingBrewingTime;
+    /**
+     * <code>brewing</code>
+     *
+     */
     private final boolean brewing;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param inventory
+     *            <code>inventory</code>
+     * @param remainingBrewingTime
+     *            <code>remainingBrewingTime</code>
+     * @param brewing
+     *            <code>brewing</code>
+     */
     public ConcreteBrewingStandBlockMeta(final BlockMeta blockMeta, final Inventory inventory, final int remainingBrewingTime,
             final boolean brewing) {
         super(blockMeta);

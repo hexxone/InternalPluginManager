@@ -21,10 +21,33 @@ import com.blockhaus2000.ipm.minecraft.SkullType;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.MobHeadBlockMeta;
 
+/**
+ * Concrete {@link MobHeadBlockMeta} implementation.
+ *
+ */
 public class ConcreteMobHeadBlockMeta extends ConcreteBlockMeta implements MobHeadBlockMeta {
+    /**
+     * <code>skullType</code>
+     *
+     */
     private final SkullType skullType;
+    /**
+     * <code>playerName</code>
+     *
+     */
     private final String playerName;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param skullType
+     *            <code>skullType</code>
+     * @param playerName
+     *            <code>playerName</code>
+     */
     public ConcreteMobHeadBlockMeta(final BlockMeta blockMeta, final SkullType skullType, final String playerName) {
         super(blockMeta);
 

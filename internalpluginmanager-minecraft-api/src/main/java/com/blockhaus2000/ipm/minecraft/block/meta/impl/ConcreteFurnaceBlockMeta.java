@@ -21,10 +21,33 @@ import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.FurnaceBlockMeta;
 import com.blockhaus2000.ipm.minecraft.inventory.Inventory;
 
+/**
+ * Concrete {@link FurnaceBlockMeta} implementation.
+ *
+ */
 public class ConcreteFurnaceBlockMeta extends ConcreteBlockMeta implements FurnaceBlockMeta {
+    /**
+     * <code>inventory</code>
+     *
+     */
     private final Inventory inventory;
+    /**
+     * <code>burning</code>
+     *
+     */
     private final boolean burning;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param inventory
+     *            <code>inventory</code>
+     * @param burning
+     *            <code>burning</code>
+     */
     public ConcreteFurnaceBlockMeta(final BlockMeta blockMeta, final Inventory inventory, final boolean burning) {
         super(blockMeta);
 

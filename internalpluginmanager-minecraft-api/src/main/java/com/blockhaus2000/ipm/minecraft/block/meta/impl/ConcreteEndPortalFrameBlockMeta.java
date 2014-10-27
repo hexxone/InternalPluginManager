@@ -20,9 +20,26 @@ package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.EndPortalFrameBlockMeta;
 
+/**
+ * Concrete {@link EndPortalFrameBlockMeta} implementation.
+ *
+ */
 public class ConcreteEndPortalFrameBlockMeta extends ConcreteBlockMeta implements EndPortalFrameBlockMeta {
+    /**
+     * <code>enderPerl</code>
+     *
+     */
     private final boolean enderPerl;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param enderPerl
+     *            <code>enderPerl</code>
+     */
     public ConcreteEndPortalFrameBlockMeta(final BlockMeta blockMeta, final boolean enderPerl) {
         super(blockMeta);
 

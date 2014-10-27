@@ -21,9 +21,26 @@ import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.FlowerPotBlockMeta;
 import com.blockhaus2000.ipm.minecraft.item.ItemMaterial;
 
+/**
+ * Concrete {@link FlowerPotBlockMeta} implementation.
+ *
+ */
 public class ConcreteFlowerPotBlockMeta extends ConcreteBlockMeta implements FlowerPotBlockMeta {
+    /**
+     * <code>itemType</code>
+     *
+     */
     private final ItemMaterial itemType;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param itemType
+     *            <code>itemType</code>
+     */
     public ConcreteFlowerPotBlockMeta(final BlockMeta blockMeta, final ItemMaterial itemType) {
         super(blockMeta);
 

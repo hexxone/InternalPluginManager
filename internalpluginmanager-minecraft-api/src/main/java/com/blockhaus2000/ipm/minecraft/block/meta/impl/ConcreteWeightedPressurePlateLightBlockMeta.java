@@ -20,8 +20,23 @@ package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.WeightedPressurePlateLightBlockMeta;
 
+/**
+ * Concrete {@link WeightedPressurePlateLightBlockMeta} implementation.
+ *
+ */
 public class ConcreteWeightedPressurePlateLightBlockMeta extends AbstractWeightedPressurePlateBlockMeta implements
-        WeightedPressurePlateLightBlockMeta {
+WeightedPressurePlateLightBlockMeta {
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param pressed
+     *            <code>pressed</code>
+     * @param outputStrength
+     *            <code>outputStrength</code>
+     */
     public ConcreteWeightedPressurePlateLightBlockMeta(final BlockMeta blockMeta, final boolean pressed, final int outputStrength) {
         super(blockMeta, pressed, outputStrength);
     }

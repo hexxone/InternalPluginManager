@@ -21,11 +21,40 @@ import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.TrappedChestBlockMeta;
 import com.blockhaus2000.ipm.minecraft.inventory.Inventory;
 
+/**
+ * Concrete {@link TrappedChestBlockMeta} implementation.
+ *
+ */
 public class ConcreteTrappedChestBlockMeta extends ConcreteBlockMeta implements TrappedChestBlockMeta {
+    /**
+     * <code>open</code>
+     *
+     */
     private final boolean open;
+    /**
+     * <code>inventory</code>
+     *
+     */
     private final Inventory inventory;
+    /**
+     * <code>outputStrength</code>
+     *
+     */
     private final int outputStrength;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param open
+     *            <code>open</code>
+     * @param inventory
+     *            <code>inventory</code>
+     * @param outputStrength
+     *            <code>outputStrength</code>
+     */
     public ConcreteTrappedChestBlockMeta(final BlockMeta blockMeta, final boolean open, final Inventory inventory,
             final int outputStrength) {
         super(blockMeta);

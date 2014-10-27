@@ -21,11 +21,40 @@ import com.blockhaus2000.ipm.minecraft.Direction;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.RawBlockMeta;
 
+/**
+ * Concrete {@link BlockMeta} implementation.
+ *
+ */
 public class ConcreteBlockMeta extends ConcreteRawBlockMeta implements BlockMeta {
+    /**
+     * <code>redstonepowered</code>
+     *
+     */
     private final boolean redstonePowered;
+    /**
+     * <code>indirectRedstonePowered</code>
+     *
+     */
     private final boolean indirectRedstonePowered;
+    /**
+     * <code>direction</code>
+     *
+     */
     private final Direction direction;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param rawBlockMeta
+     *            The {@link RawBlockMeta} that contains common information
+     *            about this block (meta).
+     * @param redstonePowered
+     *            <code>redstonePowered</code>
+     * @param indirectRedstonePowered
+     *            <code>indirectRedstonePowered</code>
+     * @param direction
+     *            <code>direction</code>
+     */
     public ConcreteBlockMeta(final RawBlockMeta rawBlockMeta, final boolean redstonePowered,
             final boolean indirectRedstonePowered, final Direction direction) {
         super(rawBlockMeta);
@@ -35,6 +64,12 @@ public class ConcreteBlockMeta extends ConcreteRawBlockMeta implements BlockMeta
         this.direction = direction;
     }
 
+    /**
+     * This is a copy constructor block {@link BlockMeta}s.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} to copy the required values from.
+     */
     public ConcreteBlockMeta(final BlockMeta blockMeta) {
         this(blockMeta, blockMeta.isRedstonePowered(), blockMeta.isIndirectRedstonePowered(), blockMeta.getDirection());
     }

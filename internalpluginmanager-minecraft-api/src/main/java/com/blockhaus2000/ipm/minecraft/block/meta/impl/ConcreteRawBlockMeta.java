@@ -19,14 +19,58 @@ package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
 import com.blockhaus2000.ipm.minecraft.block.meta.RawBlockMeta;
 
+/**
+ * Concrete {@link RawBlockMeta} implementation.
+ *
+ */
 public class ConcreteRawBlockMeta implements RawBlockMeta {
+    /**
+     * <code>lightLevel</code>
+     *
+     */
     private final int lightLevel;
+    /**
+     * <code>explosionResistance</code>
+     *
+     */
     private final double explosionResistance;
+    /**
+     * <code>severity</code>
+     *
+     */
     private final double severity;
+    /**
+     * <code>gravity</code>
+     *
+     */
     private final boolean gravity;
+    /**
+     * <code>solid</code>
+     *
+     */
     private final boolean solid;
+    /**
+     * <code>transparent</code>
+     *
+     */
     private final boolean transparent;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param lightLevel
+     *            <code>lightLevel</code>
+     * @param explosionResistance
+     *            <code>explosionResistance</code>
+     * @param severity
+     *            <code>severity</code>
+     * @param gravity
+     *            <code>gravity</code>
+     * @param solid
+     *            <code>solid</code>
+     * @param transparent
+     *            <code>transparent</code>
+     */
     public ConcreteRawBlockMeta(final int lightLevel, final double explosionResistance, final double severity,
             final boolean gravity, final boolean solid, final boolean transparent) {
         this.lightLevel = lightLevel;
@@ -37,6 +81,12 @@ public class ConcreteRawBlockMeta implements RawBlockMeta {
         this.transparent = transparent;
     }
 
+    /**
+     * This is copy constructor.
+     *
+     * @param rawBlockMeta
+     *            The {@link RawBlockMeta} to copy the required values from.
+     */
     public ConcreteRawBlockMeta(final RawBlockMeta rawBlockMeta) {
         this(rawBlockMeta.getLightLevel(), rawBlockMeta.getExplosionResistance(), rawBlockMeta.getSeverity(), rawBlockMeta
                 .hasGravity(), rawBlockMeta.isSolid(), rawBlockMeta.isTransparent());

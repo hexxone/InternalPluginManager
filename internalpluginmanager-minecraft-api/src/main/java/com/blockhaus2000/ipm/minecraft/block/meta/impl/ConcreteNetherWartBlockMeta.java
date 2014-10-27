@@ -21,9 +21,26 @@ import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.NetherWartBlockMeta;
 import com.blockhaus2000.ipm.minecraft.state.grow.NetherWartGrowState;
 
+/**
+ * Concrete {@link NetherWartBlockMeta} implementation.
+ *
+ */
 public class ConcreteNetherWartBlockMeta extends ConcreteBlockMeta implements NetherWartBlockMeta {
+    /**
+     * <code>growState</code>
+     *
+     */
     private final NetherWartGrowState growState;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param growState
+     *            <code>growState</code>
+     */
     public ConcreteNetherWartBlockMeta(final BlockMeta blockMeta, final NetherWartGrowState growState) {
         super(blockMeta);
 

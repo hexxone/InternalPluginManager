@@ -21,9 +21,26 @@ import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.CarrotAndPotatoBlockMeta;
 import com.blockhaus2000.ipm.minecraft.state.grow.CarrotAndPotatoGrowState;
 
+/**
+ * Concrete {@link CarrotAndPotatoBlockMeta} implementation.
+ *
+ */
 public class ConcreteCarrotAndPotatoBlockMeta extends ConcreteBlockMeta implements CarrotAndPotatoBlockMeta {
+    /**
+     * <code>growState</code>
+     *
+     */
     private final CarrotAndPotatoGrowState growState;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param growState
+     *            <code>growState</code>
+     */
     public ConcreteCarrotAndPotatoBlockMeta(final BlockMeta blockMeta, final CarrotAndPotatoGrowState growState) {
         super(blockMeta);
 

@@ -21,9 +21,26 @@ import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.MonsterSpawnerBlockMeta;
 import com.blockhaus2000.ipm.minecraft.enity.EntityType;
 
+/**
+ * Concrete {@link MonsterSpawnerBlockMeta} implementation.
+ *
+ */
 public class ConcreteMonsterSpawnerBlockMeta extends ConcreteBlockMeta implements MonsterSpawnerBlockMeta {
+    /**
+     * <code>entity</code>
+     *
+     */
     private final EntityType entity;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param entity
+     *            <code>entity</code>
+     */
     public ConcreteMonsterSpawnerBlockMeta(final BlockMeta blockMeta, final EntityType entity) {
         super(blockMeta);
 

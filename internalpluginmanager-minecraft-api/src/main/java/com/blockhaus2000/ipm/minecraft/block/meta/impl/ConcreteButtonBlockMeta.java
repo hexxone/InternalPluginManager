@@ -20,9 +20,26 @@ package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.ButtonBlockMeta;
 
+/**
+ * Concrete {@link ButtonBlockMeta} implementation.
+ *
+ */
 public class ConcreteButtonBlockMeta extends ConcreteBlockMeta implements ButtonBlockMeta {
+    /**
+     * <code>pressed</code>
+     *
+     */
     private final boolean pressed;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param pressed
+     *            <code>pressed</code>
+     */
     public ConcreteButtonBlockMeta(final BlockMeta blockMeta, final boolean pressed) {
         super(blockMeta);
 

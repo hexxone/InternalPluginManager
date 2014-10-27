@@ -22,11 +22,40 @@ import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.effect.Effect;
 import com.blockhaus2000.ipm.minecraft.inventory.Inventory;
 
+/**
+ * Concrete {@link BeaconBlockMeta} implementation.
+ *
+ */
 public class ConcreteBeaconBlockMeta extends ConcreteBlockMeta implements BeaconBlockMeta {
+    /**
+     * <code>inventory</code>
+     *
+     */
     private final Inventory inventory;
+    /**
+     * <code>radius</code>
+     *
+     */
     private final int radius;
+    /**
+     * <code>effects</code>
+     *
+     */
     private final Effect[] effects;
 
+    /**
+     * Constructor of AbstractWeightedPressurePlateBlockMeta.
+     *
+     * @param blockMeta
+     *            The {@link BlockMeta} that contains common information about
+     *            this block (meta).
+     * @param inventory
+     *            <code>inventory</code>
+     * @param radius
+     *            <code>radius</code>
+     * @param effects
+     *            <code>effects</code>
+     */
     public ConcreteBeaconBlockMeta(final BlockMeta blockMeta, final Inventory inventory, final int radius, final Effect[] effects) {
         super(blockMeta);
 
