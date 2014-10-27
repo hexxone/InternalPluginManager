@@ -15,15 +15,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.block.meta;
+package com.blockhaus2000.ipm.minecraft;
 
-import com.blockhaus2000.ipm.minecraft.entity.InventoryHolder;
-import com.blockhaus2000.ipm.minecraft.inventory.Inventory;
+import com.blockhaus2000.ipm.minecraft.material.Material;
 
 /**
- * If a block is a holder of an {@link Inventory}, it extent this interface.
+ * Rpresents a stack of items.
  *
  */
-public interface Container extends InventoryHolder {
-    // Nothing to do.
+public interface ItemStack {
+    /**
+     *
+     * @return The {@link Material} of this stack.
+     */
+    Material getMaterial();
+
+    /**
+     *
+     * @return The size of this stack.
+     */
+    int getStackSize();
 }

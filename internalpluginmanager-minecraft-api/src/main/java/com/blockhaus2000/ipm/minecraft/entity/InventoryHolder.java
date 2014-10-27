@@ -15,15 +15,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.block.meta;
+package com.blockhaus2000.ipm.minecraft.entity;
 
-import com.blockhaus2000.ipm.minecraft.entity.InventoryHolder;
 import com.blockhaus2000.ipm.minecraft.inventory.Inventory;
 
 /**
- * If a block is a holder of an {@link Inventory}, it extent this interface.
+ * Represents an inventory holder. Everything that extends this interface can
+ * hold an interface.
  *
  */
-public interface Container extends InventoryHolder {
-    // Nothing to do.
+public interface InventoryHolder {
+    /**
+     *
+     * @return The holded {@link Inventory}.
+     */
+    Inventory getInventory();
 }

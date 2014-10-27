@@ -25,10 +25,10 @@ import com.blockhaus2000.ipm.minecraft.util.WorldLocation;
  * Represents a {@link Player}.
  *
  */
-public interface Player extends OfflinePlayer, PlayerCommandSender {
+public interface Player extends HumanEntity, OfflinePlayer, PlayerCommandSender {
     /**
      *
-     * @return The {@link WorldLocation} this player.
+     * @return The {@link WorldLocation} of this player.
      */
     WorldLocation getLocation();
 
@@ -41,7 +41,7 @@ public interface Player extends OfflinePlayer, PlayerCommandSender {
     // IP-ban stuff.
     /**
      *
-     * @return Whether the IP of this server is banned.
+     * @return Whether the IP of this player is banned.
      */
     boolean isIpBanned();
 

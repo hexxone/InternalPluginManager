@@ -15,15 +15,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.block.meta;
-
-import com.blockhaus2000.ipm.minecraft.entity.InventoryHolder;
-import com.blockhaus2000.ipm.minecraft.inventory.Inventory;
+package com.blockhaus2000.ipm.minecraft.entity;
 
 /**
- * If a block is a holder of an {@link Inventory}, it extent this interface.
+ * An enity that lives.
  *
  */
-public interface Container extends InventoryHolder {
-    // Nothing to do.
+public interface LivingEntity {
+    /**
+     *
+     * @return The total lives of this entity. One life is a half heart.
+     */
+    int getTotalLife();
+
+    /**
+     *
+     * @return All lifes that this entity have. One life is a half heart.
+     */
+    int getLifes();
+
+    /**
+     * Damages this enity.
+     *
+     * @param damage
+     *            The lifes to subtract from their lifes.
+     */
+    void hit(final int damage);
 }
