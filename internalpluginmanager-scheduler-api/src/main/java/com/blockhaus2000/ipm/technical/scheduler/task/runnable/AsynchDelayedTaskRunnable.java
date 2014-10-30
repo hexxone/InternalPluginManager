@@ -15,32 +15,40 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.technical.scheduler.task.runnable;
+package com.blockhaus2000.ipm.technical.scheduler.task.runnable;
 
-import com.blockhaus2000.technical.scheduler.task.DelayedTask;
+import java.util.logging.Level;
+
+import com.blockhaus2000.ipm.technical.scheduler.task.DelayedTask;
 
 /**
- * The synchronized version of {@link AsynchDelayedTaskRunnable}.
+ * An asynch delayed task runnable.
  *
  */
-public class DelayedTaskRunnable extends AsynchDelayedTaskRunnable {
+public class AsynchDelayedTaskRunnable extends TaskRunnable<DelayedTask> {
     /**
-     * Constructor of DelayedTaskRunnable.
+     * Constructor of AsynchDelayedTaskRunnable.
      *
      * @param task
      *            Is passed into <code>super</code>-call.
      */
-    public DelayedTaskRunnable(final DelayedTask task) {
+    public AsynchDelayedTaskRunnable(final DelayedTask task) {
         super(task);
     }
 
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.technical.scheduler.task.runnable.AsynchDelayedTaskRunnable#run()
+     * @see java.lang.Runnable#run()
      */
     @Override
-    public synchronized void run() {
-        super.run();
+    public void run() {
+        try {
+            Thread.sleep(this.getTask().getDelay());
+            this.getTask().run();
+        } catch (final Exception cause) {
+            TaskRunnable.LOGGER.log(Level.SEVERE, "An error occurred whilest executing task with id=" + this.getTask().getUUID()
+                    + "!", cause);
+        }
     }
 }

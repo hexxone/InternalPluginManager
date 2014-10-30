@@ -27,7 +27,7 @@ import com.blockhaus2000.ipm.minecraft.world.WorldManager;
 import com.blockhaus2000.ipm.technical.plugin.PluginManager;
 import com.blockhaus2000.ipm.technical.plugin.command.PluginCommandManager;
 import com.blockhaus2000.ipm.technical.plugin.event.PluginEventManager;
-import com.blockhaus2000.technical.scheduler.Scheduler;
+import com.blockhaus2000.ipm.technical.scheduler.Scheduler;
 
 /**
  * The main access point to the underlying implementation. This is THE server.

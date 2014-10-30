@@ -1990,109 +1990,28 @@ public enum BlockMaterial implements Material {
         this.materialData = materialData;
     }
 
-    /**
-     * Constructor of BlockMaterial.
-     *
-     * @param materialName
-     *            The name of this material.
-     * @param rawBlockMeta
-     *            The {@link RawBlockMeta} of this material.
-     * @param blockMetaClass
-     *            The class of the specific {@link BlockMeta} to use.
-     * @param materialId
-     *            The ID of this material.
-     * @param materialData
-     *            The data of this material.
-     */
     private BlockMaterial(final String materialName, final RawBlockMeta rawBlockMeta,
             final Class<? extends BlockMeta> blockMetaClass, final int materialId, final int materialData) {
         this(materialName, rawBlockMeta, blockMetaClass, materialId, (byte) materialData);
     }
 
-    /**
-     * Constructor of BlockMaterial.
-     *
-     * @param materialName
-     *            The name of this material.
-     * @param rawBlockMeta
-     *            The {@link RawBlockMeta} of this material.
-     * @param blockMetaClass
-     *            The class of the specific {@link BlockMeta} to use.
-     * @param materialId
-     *            The ID of this material.
-     */
     private BlockMaterial(final String materialName, final RawBlockMeta rawBlockMeta,
             final Class<? extends BlockMeta> blockMetaClass, final int materialId) {
         this(materialName, rawBlockMeta, blockMetaClass, materialId, -1);
     }
 
-    /**
-     * Constructor of BlockMaterial.
-     *
-     * @param materialName
-     *            The name of this material.
-     * @param rawBlockMetaSource
-     *            The {@link BlockMaterial} to get the {@link RawBlockMeta}
-     *            from.
-     * @param blockMetaClass
-     *            The class of the specific {@link BlockMeta} to use.
-     * @param materialId
-     *            The ID of this material.
-     * @param materialData
-     *            The data of this material.
-     */
-    private BlockMaterial(final String materialName, final BlockMaterial rawBlockMetaSource,
-            final Class<? extends BlockMeta> blockMetaClass, final int materialId, final byte materialData) {
-        this(materialName, rawBlockMetaSource.getRawBlockMeta(), blockMetaClass, materialId, materialData);
-    }
-
-    /**
-     * Constructor of BlockMaterial.
-     *
-     * @param materialName
-     *            The name of this material.
-     * @param rawBlockMeta
-     *            The {@link RawBlockMeta} of this material.
-     * @param materialId
-     *            The ID of this material.
-     */
     private BlockMaterial(final String materialName, final RawBlockMeta rawBlockMeta, final int materialId) {
-        this(materialName, rawBlockMeta, BlockMeta.class, materialId);
+        this(materialName, rawBlockMeta, BlockMeta.class, materialId, -1);
     }
 
-    /**
-     * Constructor of BlockMaterial.
-     *
-     * @param materialName
-     *            The name of this material.
-     * @param rawBlockMetaSource
-     *            The {@link BlockMaterial} to get the {@link RawBlockMeta}
-     *            from.
-     * @param materialId
-     *            The ID of this material.
-     * @param materialData
-     *            The data of this material.
-     */
-    private BlockMaterial(final String materialName, final BlockMaterial rawBlockMetaSource, final int materialId,
-            final int materialData) {
-        this(materialName, rawBlockMetaSource, BlockMeta.class, materialId, (byte) materialData);
-    }
-
-    /**
-     * Constructor of BlockMaterial.
-     *
-     * @param materialName
-     *            The name of this material.
-     * @param rawBlockMetaSource
-     *            The {@link BlockMaterial} to get the {@link RawBlockMeta}
-     * @param materialId
-     *            The ID of this material.
-     * @param materialData
-     *            The data of this material.
-     */
     private BlockMaterial(final String materialName, final BlockMaterial rawBlockMetaSource, final int materialId,
             final byte materialData) {
-        this(materialName, rawBlockMetaSource, BlockMeta.class, materialId, materialData);
+        this(materialName, rawBlockMetaSource.getRawBlockMeta(), rawBlockMetaSource.getBlockMetaClass(), materialId, materialData);
+    }
+
+    private BlockMaterial(final String materialName, final BlockMaterial rawBlockMetaSource, final int materialId,
+            final int materialData) {
+        this(materialName, rawBlockMetaSource, materialId, (byte) materialData);
     }
 
     /**
@@ -2168,6 +2087,10 @@ public enum BlockMaterial implements Material {
             }
         }
         return null;
+    }
+
+    public boolean hasCustomBlockMetaClass() {
+        return this.blockMetaClass != BlockMeta.class;
     }
 
     /**

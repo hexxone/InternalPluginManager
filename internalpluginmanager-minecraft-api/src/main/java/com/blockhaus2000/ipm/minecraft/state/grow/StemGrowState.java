@@ -41,6 +41,15 @@ public enum StemGrowState implements GrowState {
         this.stateId = stateId;
     }
 
+    public static StemGrowState getbyId(final int stateId) {
+        for (final StemGrowState growState : StemGrowState.values()) {
+            if (growState.getStateId() == stateId) {
+                return growState;
+            }
+        }
+        return null;
+    }
+
     /**
      * {@inheritDoc}
      *

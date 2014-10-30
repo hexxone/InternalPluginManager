@@ -18,18 +18,19 @@
 package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
-import com.blockhaus2000.ipm.minecraft.block.meta.CommandBlockMeta;
+import com.blockhaus2000.ipm.minecraft.block.meta.CauldronBlockMeta;
+import com.blockhaus2000.ipm.minecraft.state.CauldronFillState;
 
 /**
- * Concrete {@link CommandBlockMeta} implementation.
+ * Concrete {@link CauldronBlockMeta} implementation.
  *
  */
-public class ConcreteCauldronBlockMeta extends ConcreteBlockMeta implements CommandBlockMeta {
+public class ConcreteCauldronBlockMeta extends ConcreteBlockMeta implements CauldronBlockMeta {
     /**
-     * <code>command</code>
+     * <code>fillState</code>
      *
      */
-    private final String command;
+    private final CauldronFillState fillState;
 
     /**
      * Constructor of AbstractWeightedPressurePlateBlockMeta.
@@ -37,22 +38,22 @@ public class ConcreteCauldronBlockMeta extends ConcreteBlockMeta implements Comm
      * @param blockMeta
      *            The {@link BlockMeta} that contains common information about
      *            this block (meta).
-     * @param command
-     *            <code>command</code>
+     * @param fillState
+     *            <code>fillState</code>
      */
-    public ConcreteCauldronBlockMeta(final BlockMeta blockMeta, final String command) {
+    public ConcreteCauldronBlockMeta(final BlockMeta blockMeta, final CauldronFillState fillState) {
         super(blockMeta);
 
-        this.command = command;
+        this.fillState = fillState;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.minecraft.block.meta.CommandBlockMeta#getCommand()
+     * @see com.blockhaus2000.ipm.minecraft.block.meta.CauldronBlockMeta#getFillState()
      */
     @Override
-    public String getCommand() {
-        return this.command;
+    public CauldronFillState getFillState() {
+        return this.fillState;
     }
 }

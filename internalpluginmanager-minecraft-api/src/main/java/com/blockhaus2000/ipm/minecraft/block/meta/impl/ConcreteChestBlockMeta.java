@@ -18,19 +18,24 @@
 package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
-import com.blockhaus2000.ipm.minecraft.block.meta.MonsterSpawnerBlockMeta;
-import com.blockhaus2000.ipm.minecraft.entity.EntityType;
+import com.blockhaus2000.ipm.minecraft.block.meta.ChestBlockMeta;
+import com.blockhaus2000.ipm.minecraft.inventory.Inventory;
 
 /**
- * Concrete {@link MonsterSpawnerBlockMeta} implementation.
+ * Concrete {@link ChestBlockMeta} implementation.
  *
  */
-public class ConcreteMonsterSpawnerBlockMeta extends ConcreteBlockMeta implements MonsterSpawnerBlockMeta {
+public class ConcreteChestBlockMeta extends ConcreteBlockMeta implements ChestBlockMeta {
     /**
-     * <code>entity</code>
+     * <code>inventory</code>
      *
      */
-    private final EntityType entity;
+    private final Inventory inventory;
+    /**
+     * <code>open</code>
+     *
+     */
+    private final boolean open;
 
     /**
      * Constructor of AbstractWeightedPressurePlateBlockMeta.
@@ -38,22 +43,35 @@ public class ConcreteMonsterSpawnerBlockMeta extends ConcreteBlockMeta implement
      * @param blockMeta
      *            The {@link BlockMeta} that contains common information about
      *            this block (meta).
-     * @param entity
-     *            <code>entity</code>
+     * @param inventory
+     *            <code>inventory</code>
+     * @param open
+     *            <code>open</code>
      */
-    public ConcreteMonsterSpawnerBlockMeta(final BlockMeta blockMeta, final EntityType entity) {
+    public ConcreteChestBlockMeta(final BlockMeta blockMeta, final Inventory inventory, final boolean open) {
         super(blockMeta);
 
-        this.entity = entity;
+        this.inventory = inventory;
+        this.open = open;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.minecraft.block.meta.MonsterSpawnerBlockMeta#getEntity()
+     * @see com.blockhaus2000.ipm.minecraft.entity.InventoryHolder#getInventory()
      */
     @Override
-    public EntityType getEntity() {
-        return this.entity;
+    public Inventory getInventory() {
+        return this.inventory;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.minecraft.block.meta.ChestBlockMeta#isOpen()
+     */
+    @Override
+    public boolean isOpen() {
+        return this.open;
     }
 }

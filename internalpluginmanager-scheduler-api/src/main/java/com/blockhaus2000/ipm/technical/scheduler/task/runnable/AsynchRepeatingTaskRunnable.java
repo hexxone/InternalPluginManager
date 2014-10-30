@@ -15,11 +15,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.technical.scheduler.task.runnable;
+package com.blockhaus2000.ipm.technical.scheduler.task.runnable;
 
 import java.util.logging.Level;
 
-import com.blockhaus2000.technical.scheduler.task.RepeatingTask;
+import com.blockhaus2000.ipm.technical.scheduler.task.RepeatingTask;
 
 /**
  * An asynch repeating task runnable.

@@ -45,6 +45,15 @@ public interface IpBanlist {
     boolean unban(final String ip);
 
     /**
+     * Checks whether the given IP is banned.
+     *
+     * @param ip
+     *            The IP to check for.
+     * @return Whether the given IP is banned or not.
+     */
+    boolean isBanned(final String ip);
+
+    /**
      * Reloads the bans from disk.
      *
      */

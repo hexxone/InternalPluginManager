@@ -18,26 +18,41 @@
 package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
-import com.blockhaus2000.ipm.minecraft.block.meta.WeightedPressurePlateLightBlockMeta;
+import com.blockhaus2000.ipm.minecraft.block.meta.CommandBlockMeta;
 
 /**
- * Concrete {@link WeightedPressurePlateLightBlockMeta} implementation.
+ * Concrete {@link CommandBlockMeta} implementation.
  *
  */
-public class ConcreteWeightedPressurePlateLightBlockMeta extends AbstractWeightedPressurePlateBlockMeta implements
-        WeightedPressurePlateLightBlockMeta {
+public class ConcreteCommandBlockMeta extends ConcreteBlockMeta implements CommandBlockMeta {
+    /**
+     * <code>command</code>
+     *
+     */
+    private final String command;
+
     /**
      * Constructor of AbstractWeightedPressurePlateBlockMeta.
      *
      * @param blockMeta
      *            The {@link BlockMeta} that contains common information about
      *            this block (meta).
-     * @param pressed
-     *            <code>pressed</code>
-     * @param outputStrength
-     *            <code>outputStrength</code>
+     * @param command
+     *            <code>command</code>
      */
-    public ConcreteWeightedPressurePlateLightBlockMeta(final BlockMeta blockMeta, final boolean pressed, final int outputStrength) {
-        super(blockMeta, pressed, outputStrength);
+    public ConcreteCommandBlockMeta(final BlockMeta blockMeta, final String command) {
+        super(blockMeta);
+
+        this.command = command;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.minecraft.block.meta.CommandBlockMeta#getCommand()
+     */
+    @Override
+    public String getCommand() {
+        return this.command;
     }
 }

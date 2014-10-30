@@ -17,7 +17,7 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
-import com.blockhaus2000.ipm.minecraft.enity.EntityType;
+import com.blockhaus2000.ipm.minecraft.entity.EntityType;
 
 /**
  * The {@link BlockMeta} of a monster spawner.

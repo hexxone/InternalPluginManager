@@ -18,26 +18,42 @@
 package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
-import com.blockhaus2000.ipm.minecraft.block.meta.WeightedPressurePlateLightBlockMeta;
+import com.blockhaus2000.ipm.minecraft.block.meta.CocoaBlockMeta;
+import com.blockhaus2000.ipm.minecraft.state.grow.CocaoBeanGrowState;
 
 /**
- * Concrete {@link WeightedPressurePlateLightBlockMeta} implementation.
+ * Concrete {@link CocoaBlockMeta} implementation.
  *
  */
-public class ConcreteWeightedPressurePlateLightBlockMeta extends AbstractWeightedPressurePlateBlockMeta implements
-        WeightedPressurePlateLightBlockMeta {
+public class ConcreteCocoaBlockMeta extends ConcreteBlockMeta implements CocoaBlockMeta {
+    /**
+     * <code>growState</code>
+     *
+     */
+    private final CocaoBeanGrowState growState;
+
     /**
      * Constructor of AbstractWeightedPressurePlateBlockMeta.
      *
      * @param blockMeta
      *            The {@link BlockMeta} that contains common information about
      *            this block (meta).
-     * @param pressed
-     *            <code>pressed</code>
-     * @param outputStrength
-     *            <code>outputStrength</code>
+     * @param growState
+     *            <code>growState</code>
      */
-    public ConcreteWeightedPressurePlateLightBlockMeta(final BlockMeta blockMeta, final boolean pressed, final int outputStrength) {
-        super(blockMeta, pressed, outputStrength);
+    public ConcreteCocoaBlockMeta(final BlockMeta blockMeta, final CocaoBeanGrowState growState) {
+        super(blockMeta);
+
+        this.growState = growState;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.minecraft.block.meta.CocoaBlockMeta#getGrowState()
+     */
+    @Override
+    public CocaoBeanGrowState getGrowState() {
+        return this.growState;
     }
 }

@@ -15,12 +15,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.enity;
+package com.blockhaus2000.ipm.technical.scheduler.task;
+
+import com.blockhaus2000.ipm.technical.scheduler.Scheduler;
 
 /**
- * All enity types.
+ * Marks this task as a delayed task. Delayed tasks will execute
+ * {@link Task#run()} after the delay time is over.
+ *
+ * <p>
+ * <b> NOTE: Raw subclasses of this can NOT be scheduled by the
+ * {@link Scheduler}. </b>
+ * </p>
  *
  */
-public enum EntityType {
-    // TODO Auto-generated enum body.
+public interface DelayedTask extends Task {
+    // Nothing to do.
 }

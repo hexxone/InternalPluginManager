@@ -15,11 +15,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.technical.scheduler.task;
+package com.blockhaus2000.ipm.technical.scheduler.task;
 
 import java.util.UUID;
 
-import com.blockhaus2000.technical.scheduler.Scheduler;
+import com.blockhaus2000.ipm.technical.scheduler.Scheduler;
 
 /**
  * The main interface of a task that can be scheduled by the {@link Scheduler}.

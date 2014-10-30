@@ -40,5 +40,11 @@
 			<outputDirectory>/InternalPluginManager/Extensions/</outputDirectory>
 			<destName>InternalPluginManager-Network-Extension_v${project.version}.jar</destName>
 		</file>
+		<!-- Update Checker extension -->
+		<file>
+			<source>${project.build.directory}/jars/extensions/internalpluginmanager-update-checker-extension_v${project.version}.jar</source>
+			<outputDirectory>/InternalPluginManager/Extensions/</outputDirectory>
+			<destName>InternalPluginManager-Update-Checker-Extension_v${project.version}.jar</destName>
+		</file>
 	</files>
 </assembly>

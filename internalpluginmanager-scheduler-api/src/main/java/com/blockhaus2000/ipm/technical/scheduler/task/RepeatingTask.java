@@ -15,32 +15,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.technical.scheduler.task.runnable;
-
-import com.blockhaus2000.technical.scheduler.task.RepeatingTask;
+package com.blockhaus2000.ipm.technical.scheduler.task;
 
 /**
- * The synchronized version of {@link AsynchRepeatingTaskRunnable}.
+ * Marks this task as a repeating task. A repeating task calls the
+ * {@link Task#run()} method multiple times until this task is stopped.
  *
  */
-public class RepeatingTaskRunnable extends AsynchRepeatingTaskRunnable {
+public interface RepeatingTask extends Task {
     /**
-     * Constructor of RepeatingTaskRunnable.
      *
-     * @param task
-     *            Is passed into <code>super</code>-call.
+     * @return The delay (in milliseconds) until starting {@link Task#run()}
+     *         next time.
      */
-    public RepeatingTaskRunnable(final RepeatingTask task) {
-        super(task);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see com.blockhaus2000.technical.scheduler.task.runnable.AsynchRepeatingTaskRunnable#run()
-     */
-    @Override
-    public synchronized void run() {
-        super.run();
-    }
+    long getPeriod();
 }

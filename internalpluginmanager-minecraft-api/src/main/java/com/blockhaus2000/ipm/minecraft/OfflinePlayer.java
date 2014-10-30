@@ -73,6 +73,7 @@ public interface OfflinePlayer {
     /**
      * Unbans this player.
      *
+     * @return Whether this player was unbanned successfully.
      */
-    void unban();
+    boolean unban();
 }

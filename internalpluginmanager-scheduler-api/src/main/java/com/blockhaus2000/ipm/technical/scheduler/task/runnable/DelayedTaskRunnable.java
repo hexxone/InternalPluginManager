@@ -15,12 +15,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.technical.scheduler.task;
+package com.blockhaus2000.ipm.technical.scheduler.task.runnable;
+
+import com.blockhaus2000.ipm.technical.scheduler.task.DelayedTask;
 
 /**
- * Marks this task as an asynch delayed task.
+ * The synchronized version of {@link AsynchDelayedTaskRunnable}.
  *
  */
-public interface AsynchDelayedTask extends DelayedTask, AsynchTask {
-    // Nothign to do.
+public class DelayedTaskRunnable extends AsynchDelayedTaskRunnable {
+    /**
+     * Constructor of DelayedTaskRunnable.
+     *
+     * @param task
+     *            Is passed into <code>super</code>-call.
+     */
+    public DelayedTaskRunnable(final DelayedTask task) {
+        super(task);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.technical.scheduler.task.runnable.AsynchDelayedTaskRunnable#run()
+     */
+    @Override
+    public synchronized void run() {
+        super.run();
+    }
 }

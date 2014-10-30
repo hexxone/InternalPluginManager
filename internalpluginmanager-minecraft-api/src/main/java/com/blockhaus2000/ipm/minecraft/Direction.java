@@ -24,6 +24,25 @@ package com.blockhaus2000.ipm.minecraft;
 public enum Direction {
     /**
      * <code>
+     * - / \ <br />
+     * -- |  <br />
+     * -- |  <br />
+     * </code>
+     *
+     */
+    UP(-4),
+    /**
+     * <code>
+     * -- |  <br />
+     * -- |  <br />
+     * - \ / <br />
+     * </code>
+     *
+     */
+    DOWN(-12),
+
+    /**
+     * <code>
      * ################# <br />
      * # - - - - - - - # <br />
      * # - - - | - - - # <br />

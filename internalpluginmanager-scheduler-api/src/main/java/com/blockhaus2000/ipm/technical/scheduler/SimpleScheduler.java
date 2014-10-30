@@ -15,21 +15,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.technical.scheduler;
+package com.blockhaus2000.ipm.technical.scheduler;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import com.blockhaus2000.technical.scheduler.task.AsynchTask;
-import com.blockhaus2000.technical.scheduler.task.DelayedTask;
-import com.blockhaus2000.technical.scheduler.task.RepeatingTask;
-import com.blockhaus2000.technical.scheduler.task.Task;
-import com.blockhaus2000.technical.scheduler.task.runnable.AsynchDelayedTaskRunnable;
-import com.blockhaus2000.technical.scheduler.task.runnable.AsynchRepeatingTaskRunnable;
-import com.blockhaus2000.technical.scheduler.task.runnable.DelayedTaskRunnable;
-import com.blockhaus2000.technical.scheduler.task.runnable.RepeatingTaskRunnable;
-import com.blockhaus2000.technical.scheduler.task.runnable.TaskRunnable;
+import com.blockhaus2000.ipm.technical.scheduler.task.AsynchTask;
+import com.blockhaus2000.ipm.technical.scheduler.task.DelayedTask;
+import com.blockhaus2000.ipm.technical.scheduler.task.RepeatingTask;
+import com.blockhaus2000.ipm.technical.scheduler.task.Task;
+import com.blockhaus2000.ipm.technical.scheduler.task.runnable.AsynchDelayedTaskRunnable;
+import com.blockhaus2000.ipm.technical.scheduler.task.runnable.AsynchRepeatingTaskRunnable;
+import com.blockhaus2000.ipm.technical.scheduler.task.runnable.DelayedTaskRunnable;
+import com.blockhaus2000.ipm.technical.scheduler.task.runnable.RepeatingTaskRunnable;
+import com.blockhaus2000.ipm.technical.scheduler.task.runnable.TaskRunnable;
 
 /**
  * The default implementation of {@link Scheduler}.
@@ -51,7 +51,7 @@ public class SimpleScheduler implements Scheduler {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.technical.scheduler.Scheduler#start()
+     * @see com.blockhaus2000.ipm.technical.scheduler.Scheduler#start()
      */
     @Override
     public void start() {
@@ -65,7 +65,7 @@ public class SimpleScheduler implements Scheduler {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.technical.scheduler.Scheduler#stop()
+     * @see com.blockhaus2000.ipm.technical.scheduler.Scheduler#stop()
      */
     @Override
     public void stop() {
@@ -79,7 +79,7 @@ public class SimpleScheduler implements Scheduler {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.technical.scheduler.Scheduler#stop(java.util.UUID)
+     * @see com.blockhaus2000.ipm.technical.scheduler.Scheduler#stop(java.util.UUID)
      */
     @Override
     public void stop(final UUID uuid) {
@@ -94,7 +94,7 @@ public class SimpleScheduler implements Scheduler {
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.technical.scheduler.Scheduler#run(com.blockhaus2000.technical.scheduler.task.Task)
+     * @see com.blockhaus2000.ipm.technical.scheduler.Scheduler#run(com.blockhaus2000.ipm.technical.scheduler.task.Task)
      */
     @Override
     public UUID run(final Task task) {

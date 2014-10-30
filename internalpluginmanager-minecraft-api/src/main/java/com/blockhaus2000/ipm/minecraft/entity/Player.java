@@ -56,6 +56,7 @@ public interface Player extends HumanEntity, OfflinePlayer, PlayerCommandSender 
     /**
      * Unbans the IP of this player.
      *
+     * @return Whether the IP was unbanned successfully.
      */
-    void unbanIp();
+    boolean unbanIp();
 }

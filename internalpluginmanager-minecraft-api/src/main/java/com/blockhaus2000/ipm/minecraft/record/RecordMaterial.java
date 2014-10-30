@@ -52,6 +52,25 @@ public enum RecordMaterial implements Material {
         this.materialId = materialId;
     }
 
+    public static RecordMaterial getByName(final String name) {
+        for (final RecordMaterial recordMaterial : RecordMaterial.values()) {
+            if (recordMaterial.getMaterialName().equalsIgnoreCase(name)) {
+                return recordMaterial;
+            }
+        }
+        return null;
+    }
+
+    @Deprecated
+    public static RecordMaterial getById(final int id) {
+        for (final RecordMaterial recordMaterial : RecordMaterial.values()) {
+            if (recordMaterial.getMaterialId() == id) {
+                return recordMaterial;
+            }
+        }
+        return null;
+    }
+
     /**
      * {@inheritDoc}
      *

@@ -43,6 +43,15 @@ public interface Whitelist {
     boolean remove(final OfflinePlayer player);
 
     /**
+     * Checks whether the given player is whitelisted.
+     *
+     * @param player
+     *            The player to check for.
+     * @return Whethet the given player is whitelisted or not.
+     */
+    boolean isWhitelisted(final OfflinePlayer player);
+
+    /**
      * Reloads the whitelist from disk.
      *
      */

@@ -15,18 +15,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.technical.scheduler.task;
+package com.blockhaus2000.ipm.technical.scheduler.task;
 
 /**
- * Marks this task as a repeating task. A repeating task calls the
- * {@link Task#run()} method multiple times until this task is stopped.
+ * Marks this task as an asynch delayed task.
  *
  */
-public interface RepeatingTask extends Task {
-    /**
-     *
-     * @return The delay (in milliseconds) until starting {@link Task#run()}
-     *         next time.
-     */
-    long getPeriod();
+public interface AsynchDelayedTask extends DelayedTask, AsynchTask {
+    // Nothign to do.
 }

@@ -45,6 +45,15 @@ public interface Banlist {
     boolean unban(final OfflinePlayer player);
 
     /**
+     * Checks whether the given player is banned.
+     *
+     * @param player
+     *            The player to check for.
+     * @return Whether the given player is banned or not.
+     */
+    boolean isBanned(final OfflinePlayer player);
+
+    /**
      * Reloads the bans from disk.
      *
      */

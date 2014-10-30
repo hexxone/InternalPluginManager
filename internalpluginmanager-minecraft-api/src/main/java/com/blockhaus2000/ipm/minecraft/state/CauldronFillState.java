@@ -34,7 +34,7 @@ public enum CauldronFillState {
      * </code>
      * </p>
      */
-    EMPTY,
+    EMPTY(0),
     /**
      * The cauldron is third-full.
      *
@@ -47,7 +47,7 @@ public enum CauldronFillState {
      * </code>
      * </p>
      */
-    THIRD_FULL,
+    THIRD_FULL(1),
     /**
      * The cauldron is three-thrid full.
      *
@@ -60,7 +60,7 @@ public enum CauldronFillState {
      * </code>
      * </p>
      */
-    TWO_THIRD_FULL,
+    TWO_THIRD_FULL(2),
     /**
      * The cauldron is full.
      *
@@ -73,5 +73,24 @@ public enum CauldronFillState {
      * </code>
      * </p>
      */
-    FULL;
+    FULL(3);
+
+    private final int id;
+
+    private CauldronFillState(final int id) {
+        this.id = id;
+    }
+
+    public static CauldronFillState getById(final int id) {
+        for (final CauldronFillState fillState : CauldronFillState.values()) {
+            if (fillState.getId() == id) {
+                return fillState;
+            }
+        }
+        return null;
+    }
+
+    public int getId() {
+        return this.id;
+    }
 }

@@ -23,9 +23,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.blockhaus2000.technical.scheduler.task.AsynchDelayedTask;
-import com.blockhaus2000.technical.scheduler.task.AsynchRepeatingTask;
-import com.blockhaus2000.technical.scheduler.task.Task;
+import com.blockhaus2000.ipm.technical.scheduler.Scheduler;
+import com.blockhaus2000.ipm.technical.scheduler.SimpleScheduler;
+import com.blockhaus2000.ipm.technical.scheduler.task.AsynchDelayedTask;
+import com.blockhaus2000.ipm.technical.scheduler.task.AsynchRepeatingTask;
+import com.blockhaus2000.ipm.technical.scheduler.task.Task;
 
 /**
  * Tests {@link SimpleScheduler}.

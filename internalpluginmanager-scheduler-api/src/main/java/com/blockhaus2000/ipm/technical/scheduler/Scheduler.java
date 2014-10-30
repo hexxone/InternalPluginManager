@@ -15,11 +15,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.technical.scheduler;
+package com.blockhaus2000.ipm.technical.scheduler;
 
 import java.util.UUID;
 
-import com.blockhaus2000.technical.scheduler.task.Task;
+import com.blockhaus2000.ipm.technical.scheduler.task.Task;
 
 /**
  * The scheduler is used to schedule tasks easily with start delay, repeating,

@@ -15,12 +15,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.technical.scheduler.task;
+package com.blockhaus2000.ipm.technical.scheduler.task.runnable;
+
+import com.blockhaus2000.ipm.technical.scheduler.task.RepeatingTask;
 
 /**
- * Marks this task as an asynch repeating task.
+ * The synchronized version of {@link AsynchRepeatingTaskRunnable}.
  *
  */
-public interface AsynchRepeatingTask extends RepeatingTask, AsynchTask {
-    // Nothing to do.
+public class RepeatingTaskRunnable extends AsynchRepeatingTaskRunnable {
+    /**
+     * Constructor of RepeatingTaskRunnable.
+     *
+     * @param task
+     *            Is passed into <code>super</code>-call.
+     */
+    public RepeatingTaskRunnable(final RepeatingTask task) {
+        super(task);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.technical.scheduler.task.runnable.AsynchRepeatingTaskRunnable#run()
+     */
+    @Override
+    public synchronized void run() {
+        super.run();
+    }
 }

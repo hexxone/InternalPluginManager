@@ -15,20 +15,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.technical.scheduler.task;
-
-import com.blockhaus2000.technical.scheduler.Scheduler;
+package com.blockhaus2000.ipm.technical.scheduler.task;
 
 /**
- * Marks this task as a delayed task. Delayed tasks will execute
- * {@link Task#run()} after the delay time is over.
- *
- * <p>
- * <b> NOTE: Raw subclasses of this can NOT be scheduled by the
- * {@link Scheduler}. </b>
- * </p>
+ * Marks this task as an asynch repeating task.
  *
  */
-public interface DelayedTask extends Task {
+public interface AsynchRepeatingTask extends RepeatingTask, AsynchTask {
     // Nothing to do.
 }
