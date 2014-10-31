@@ -103,6 +103,8 @@ public final class CollectionUtil {
      * Converts the given array to a set with the given type. Works like
      * {@link Arrays#asList(Object...)}.
      *
+     * @param <T>
+     *            The type of the set values.
      * @param setType
      *            The set type to return.
      * @param arr
@@ -135,6 +137,8 @@ public final class CollectionUtil {
 
     /**
      *
+     * @param <T>
+     *            The type of the set values.
      * @param s0
      *            Set <code>a</code>.
      * @param s1

@@ -65,8 +65,7 @@ public class Main extends JavaPlugin {
      */
     private void addInjectionResources() {
         // For safety reasons, BukkitServer registers itself.
-        // TODO: Uncomment.
-        // BukkitServer.getInstance();
+        BukkitServer.getInstance();
     }
 
     /**

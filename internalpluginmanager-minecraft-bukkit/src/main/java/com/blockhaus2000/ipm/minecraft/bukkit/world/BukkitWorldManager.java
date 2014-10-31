@@ -15,32 +15,45 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.technical.plugin.dependency;
+package com.blockhaus2000.ipm.minecraft.bukkit.world;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.UUID;
+
+import org.bukkit.Bukkit;
+
+import com.blockhaus2000.ipm.minecraft.world.World;
+import com.blockhaus2000.ipm.minecraft.world.WorldManager;
 
 /**
- * An implementation of {@link Dependency} that does not provide any dependency
- * names. This is used as the start "parent" dependency.
+ * The Bukkit implementation of {@link WorldManager}.
  *
  */
-public class PlainDependency implements Dependency {
+public class BukkitWorldManager implements WorldManager {
     /**
-     * Constructor of PlainDependency.
+     * Constructor of BukkitWorldManager.
      *
      */
-    public PlainDependency() {
+    public BukkitWorldManager() {
         // Nothing to do.
     }
 
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.technical.plugin.dependency.Dependency#getDependencyNames()
+     * @see com.blockhaus2000.ipm.minecraft.world.WorldManager#getWorld(java.util.UUID)
      */
     @Override
-    public Set<String> getDependencyNames() {
-        return new HashSet<String>();
+    public World getWorld(final UUID uuid) {
+        return BukkitWorld.Factory.create(uuid);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.minecraft.world.WorldManager#getWorld(java.lang.String)
+     */
+    @Override
+    public World getWorld(final String name) {
+        return this.getWorld(Bukkit.getServer().getWorld(name).getUID());
     }
 }

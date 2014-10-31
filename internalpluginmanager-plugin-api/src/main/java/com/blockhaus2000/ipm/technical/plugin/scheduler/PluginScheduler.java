@@ -23,8 +23,24 @@ import com.blockhaus2000.ipm.technical.plugin.Plugin;
 import com.blockhaus2000.ipm.technical.scheduler.Scheduler;
 import com.blockhaus2000.ipm.technical.scheduler.task.Task;
 
+/**
+ * This is an extension for the {@link Scheduler} that can auto-disable tasks if
+ * the holder plugin is disabled.
+ *
+ */
 public interface PluginScheduler extends Scheduler {
-    public UUID run(final Plugin plugin, final Task task);
+    /**
+     * Works such like {@link Scheduler#run(Task)}, but registers the given task
+     * to auto-disable it when the plugin will be disabled.
+     *
+     * @param plugin
+     *            The plugin that hold the given {@link Task}.
+     * @param task
+     *            The {@link Task} to run.
+     * @return The {@link UUID} of the {@link Task} that was started with this
+     *         method.
+     */
+    UUID run(final Plugin plugin, final Task task);
 
     /**
      * {@inheritDoc}
@@ -37,5 +53,5 @@ public interface PluginScheduler extends Scheduler {
      */
     @Deprecated
     @Override
-    public UUID run(Task task);
+    UUID run(Task task);
 }

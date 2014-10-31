@@ -35,6 +35,11 @@ public class IpmxNetworkMain extends SimplePlugin {
      *
      */
     private static final List<String> DEFAULT_WHITELIST = new ArrayList<String>(Arrays.asList("127.0.0.1"));
+    /**
+     * The default port for the IPMNE server.
+     *
+     */
+    private static final int DEFAULT_PORT = 50023;
 
     /**
      * The instance of this class.
@@ -89,7 +94,7 @@ public class IpmxNetworkMain extends SimplePlugin {
         this.getConfig().load();
 
         // Add default configuration values.
-        this.getConfig().add(ConfigPath.CONNECTION_PORT.getPath(), 50023);
+        this.getConfig().add(ConfigPath.CONNECTION_PORT.getPath(), IpmxNetworkMain.DEFAULT_PORT);
         this.getConfig().add(ConfigPath.WHITELIST_ENABLED.getPath(), true);
         this.getConfig().add(ConfigPath.WHITELIST_WHITELIST.getPath(), IpmxNetworkMain.DEFAULT_WHITELIST);
 

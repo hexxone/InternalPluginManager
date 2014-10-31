@@ -39,6 +39,8 @@ public interface EventManager {
      * <code>obj = null</code>). </b>
      * </p>
      *
+     * @param <T>
+     *            The object type.
      * @param clazz
      *            The class that contains the methods/listeners to register.
      * @param obj
@@ -56,6 +58,8 @@ public interface EventManager {
      * present in the given class. </b>
      * </p>
      *
+     * @param <T>
+     *            The object type.
      * @param clazz
      *            Is passed into {@link EventManager#register(Class, Object)}.
      *
@@ -68,6 +72,8 @@ public interface EventManager {
      * Delegates to {@link EventManager#register(Class, Object)} with
      * <code>clazz = obj.getClass()</code> and <code>obj = obj</code>.
      *
+     * @param <T>
+     *            The object type.
      * @param obj
      *            Is passed into {@link EventManager#register(Class, Object)}.
      *

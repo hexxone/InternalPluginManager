@@ -25,7 +25,7 @@ import com.blockhaus2000.ipm.technical.scheduler.task.DelayedTask;
  * An asynch delayed task runnable.
  *
  */
-public class AsynchDelayedTaskRunnable extends TaskRunnable<DelayedTask> {
+public class AsynchDelayedTaskRunnable extends AbstractTaskRunnable<DelayedTask> {
     /**
      * Constructor of AsynchDelayedTaskRunnable.
      *
@@ -47,7 +47,7 @@ public class AsynchDelayedTaskRunnable extends TaskRunnable<DelayedTask> {
             Thread.sleep(this.getTask().getDelay());
             this.getTask().run();
         } catch (final Exception cause) {
-            TaskRunnable.LOGGER.log(Level.SEVERE, "An error occurred whilest executing task with id=" + this.getTask().getUUID()
+            AbstractTaskRunnable.LOGGER.log(Level.SEVERE, "An error occurred whilest executing task with id=" + this.getTask().getUUID()
                     + "!", cause);
         }
     }

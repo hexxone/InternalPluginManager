@@ -28,4 +28,13 @@ public interface CommandSender extends com.blockhaus2000.ipm.technical.command.C
      * @return The type of the command sender (command block, console, etc.).
      */
     CommandSenderType getType();
+
+    /**
+     * Sends the given message to this {@link CommandSender} <b>wihout</b>
+     * formatting it.
+     *
+     * @param message
+     *            The message to sent.
+     */
+    void sendRawMessage(final String message);
 }

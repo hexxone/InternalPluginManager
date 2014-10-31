@@ -22,8 +22,46 @@ package com.blockhaus2000.ipm.minecraft.state.grow;
  *
  */
 public enum StemGrowState implements GrowState {
-    // TODO: Define (stem) grow states.
-    ;
+    /**
+     * The stem was just seeded.
+     *
+     */
+    SEED(0),
+    /**
+     * The stem is in stage 1.
+     *
+     */
+    STAGE_1(1),
+    /**
+     * The stem is in stage 2.
+     *
+     */
+    STAGE_2(2),
+    /**
+     * The stem is in stage 3.
+     *
+     */
+    STAGE_3(3),
+    /**
+     * The stem is in stage 4.
+     *
+     */
+    STAGE_4(4),
+    /**
+     * The stem is in stage 5.
+     *
+     */
+    STAGE_5(5),
+    /**
+     * The stem is in stage 6.
+     *
+     */
+    STAGE_6(6),
+    /**
+     * The stem is ripe (pumpinks/melons start spreading).
+     *
+     */
+    RIPE(7);
 
     /**
      * The grow state ID.
@@ -41,7 +79,14 @@ public enum StemGrowState implements GrowState {
         this.stateId = stateId;
     }
 
-    public static StemGrowState getbyId(final int stateId) {
+    /**
+     * Searchs for the grow state with the give state ID.
+     *
+     * @param stateId
+     *            The state ID to search for.
+     * @return The grow state associated with the given ID.
+     */
+    public static StemGrowState getById(final int stateId) {
         for (final StemGrowState growState : StemGrowState.values()) {
             if (growState.getStateId() == stateId) {
                 return growState;

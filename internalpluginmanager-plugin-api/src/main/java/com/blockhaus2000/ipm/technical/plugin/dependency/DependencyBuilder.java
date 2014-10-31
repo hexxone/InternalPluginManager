@@ -75,7 +75,7 @@ public class DependencyBuilder {
      * </p>
      *
      */
-    private int depth = 0;
+    private int depth;
 
     /**
      * Constructor of DependencyBuilder.

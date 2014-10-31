@@ -30,12 +30,11 @@ import com.blockhaus2000.ipm.minecraft.block.meta.CauldronBlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.ChestBlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.CocoaBlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.CommandBlockMeta;
-import com.blockhaus2000.ipm.minecraft.block.meta.DaylightSensorBlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.DetectorRailBlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.DispenserAndDropperBlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.DoorBlockMeta;
-import com.blockhaus2000.ipm.minecraft.block.meta.EnchantmentTableBlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.EndPortalFrameBlockMeta;
+import com.blockhaus2000.ipm.minecraft.block.meta.FarmlandBlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.FlowerPotBlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.FurnaceBlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.HopperBlockMeta;
@@ -56,8 +55,7 @@ import com.blockhaus2000.ipm.minecraft.block.meta.SignBlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.StemBlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.TrappedChestBlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.TripwireBlockMeta;
-import com.blockhaus2000.ipm.minecraft.block.meta.WeightedPressurePlateHeavyBlockMeta;
-import com.blockhaus2000.ipm.minecraft.block.meta.WeightedPressurePlateLightBlockMeta;
+import com.blockhaus2000.ipm.minecraft.block.meta.TripwireHookBlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.impl.ConcreteRawBlockMeta;
 import com.blockhaus2000.ipm.minecraft.material.Material;
 
@@ -725,7 +723,7 @@ public enum BlockMaterial implements Material {
      * Farmland.
      *
      */
-    FARMLAND("minecraft:farmland", new ConcreteRawBlockMeta(0, 3, 0.6, false, true, true), 60),
+    FARMLAND("minecraft:farmland", new ConcreteRawBlockMeta(0, 3, 0.6, false, true, true), FarmlandBlockMeta.class, 60),
     /**
      * Furnace.
      *
@@ -1140,11 +1138,9 @@ public enum BlockMaterial implements Material {
      * Enchantment table.
      *
      */
-    ENCHANTMENT_TABLE(
-            "minecraft:enchanting_table",
-            new ConcreteRawBlockMeta(0, 6000, 5, false, true, true),
-            EnchantmentTableBlockMeta.class,
-            116),
+    ENCHANTMENT_TABLE("minecraft:enchanting_table", new ConcreteRawBlockMeta(0, 6000, 5, false, true, true),
+
+    116),
     /**
      * Brewing stand.
      *
@@ -1277,7 +1273,11 @@ public enum BlockMaterial implements Material {
      * Tripwire hook.
      *
      */
-    TRIPWIRE_HOOK("minecraft:tripwire_hook", new ConcreteRawBlockMeta(0, 0, 0, false, false, true), TripwireBlockMeta.class, 131),
+    TRIPWIRE_HOOK(
+            "minecraft:tripwire_hook",
+            new ConcreteRawBlockMeta(0, 0, 0, false, false, true),
+            TripwireHookBlockMeta.class,
+            131),
     /**
      * Tripwire.
      *
@@ -1375,13 +1375,13 @@ public enum BlockMaterial implements Material {
      *
      */
     WEIGHTED_PRESSURE_PLATE_LIGHT("minecraft:light_weighted_pressure_plate", new ConcreteRawBlockMeta(0, 2.5, 0.5, false, false,
-            true), WeightedPressurePlateLightBlockMeta.class, 147),
+            true), PressurePlateBlockMeta.class, 147),
     /**
      * Weighted pressure plate heavy.
      *
      */
     WEIGHTED_PRESSURE_PLATE_HEAVY("minecraft:heavy_weighted_pressure_plate", new ConcreteRawBlockMeta(0, 2.5, 0.5, false, false,
-            true), WeightedPressurePlateHeavyBlockMeta.class, 148),
+            true), PressurePlateBlockMeta.class, 148),
     /**
      * Redstone comparator inactive.
      *
@@ -1404,11 +1404,7 @@ public enum BlockMaterial implements Material {
      * Daylight sensor.
      *
      */
-    DAYLIGHT_SENSOR(
-            "minecraft:daylight_detector",
-            new ConcreteRawBlockMeta(0, 1, 0.2, false, true, true),
-            DaylightSensorBlockMeta.class,
-            151),
+    DAYLIGHT_SENSOR("minecraft:daylight_detector", new ConcreteRawBlockMeta(0, 1, 0.2, false, true, true), 151),
     /**
      * Redstone block.
      *
@@ -1990,25 +1986,85 @@ public enum BlockMaterial implements Material {
         this.materialData = materialData;
     }
 
+    /**
+     * Constructor of BlockMaterial.
+     *
+     * @param materialName
+     *            The name of this material.
+     * @param rawBlockMeta
+     *            The {@link RawBlockMeta} of this material.
+     * @param blockMetaClass
+     *            The class of the specific {@link BlockMeta} to use.
+     * @param materialId
+     *            The ID of this material.
+     * @param materialData
+     *            The data of this material.
+     */
     private BlockMaterial(final String materialName, final RawBlockMeta rawBlockMeta,
             final Class<? extends BlockMeta> blockMetaClass, final int materialId, final int materialData) {
         this(materialName, rawBlockMeta, blockMetaClass, materialId, (byte) materialData);
     }
 
+    /**
+     * Constructor of BlockMaterial.
+     *
+     * @param materialName
+     *            The name of this material.
+     * @param rawBlockMeta
+     *            The {@link RawBlockMeta} of this material.
+     * @param blockMetaClass
+     *            The class of the specific {@link BlockMeta} to use.
+     * @param materialId
+     *            The ID of this material.
+     */
     private BlockMaterial(final String materialName, final RawBlockMeta rawBlockMeta,
             final Class<? extends BlockMeta> blockMetaClass, final int materialId) {
-        this(materialName, rawBlockMeta, blockMetaClass, materialId, -1);
+        this(materialName, rawBlockMeta, blockMetaClass, materialId, 0);
     }
 
+    /**
+     * Constructor of BlockMaterial.
+     *
+     * @param materialName
+     *            The name of this material.
+     * @param rawBlockMeta
+     *            The {@link RawBlockMeta} of this material.
+     * @param materialId
+     *            The ID of this material.
+     */
     private BlockMaterial(final String materialName, final RawBlockMeta rawBlockMeta, final int materialId) {
-        this(materialName, rawBlockMeta, BlockMeta.class, materialId, -1);
+        this(materialName, rawBlockMeta, BlockMeta.class, materialId, 0);
     }
 
+    /**
+     * Constructor of BlockMaterial.
+     *
+     * @param materialName
+     *            The name of this material.
+     * @param rawBlockMetaSource
+     *            The {@link BlockMeta} to obtain the {@link RawBlockMeta} from.
+     * @param materialId
+     *            The ID of this material.
+     * @param materialData
+     *            The data of this material.
+     */
     private BlockMaterial(final String materialName, final BlockMaterial rawBlockMetaSource, final int materialId,
             final byte materialData) {
         this(materialName, rawBlockMetaSource.getRawBlockMeta(), rawBlockMetaSource.getBlockMetaClass(), materialId, materialData);
     }
 
+    /**
+     * Constructor of BlockMaterial.
+     *
+     * @param materialName
+     *            The name of this material.
+     * @param rawBlockMetaSource
+     *            The {@link BlockMeta} to obtain the {@link RawBlockMeta} from.
+     * @param materialId
+     *            The ID of this material.
+     * @param materialData
+     *            The data of this material.
+     */
     private BlockMaterial(final String materialName, final BlockMaterial rawBlockMetaSource, final int materialId,
             final int materialData) {
         this(materialName, rawBlockMetaSource, materialId, (byte) materialData);
@@ -2017,6 +2073,7 @@ public enum BlockMaterial implements Material {
     /**
      * Searchs for the {@link BlockMaterial} with the given ID and data.
      *
+     * @deprecated Data values should not be used longer.
      * @param id
      *            The ID to search for.
      * @param data
@@ -2043,6 +2100,7 @@ public enum BlockMaterial implements Material {
      * casted to <code>byte</code>. </b>
      * </p>
      *
+     * @deprecated Data values should not be used longer.
      * @param id
      *            The ID to search for.
      * @param data
@@ -2062,6 +2120,7 @@ public enum BlockMaterial implements Material {
      * <b> NOTE: This ignors the material data. </b>
      * </p>
      *
+     * @deprecated Data values should not be used longer.
      * @param id
      *            The ID to search for.
      * @return The {@link BlockMaterial} that is associated with the given ID.
@@ -2089,6 +2148,12 @@ public enum BlockMaterial implements Material {
         return null;
     }
 
+    /**
+     *
+     * @return Whether this block has a custon block meta class (the block meta
+     *         class {@link BlockMaterial#blockMetaClass} is not equal to the
+     *         class object of {@link BlockMeta}).
+     */
     public boolean hasCustomBlockMetaClass() {
         return this.blockMetaClass != BlockMeta.class;
     }
@@ -2106,6 +2171,7 @@ public enum BlockMaterial implements Material {
     /**
      * {@inheritDoc}
      *
+     * @deprecated Data values should not be used longer.
      * @see com.blockhaus2000.ipm.minecraft.material.Material#getMaterialId()
      */
     @Deprecated
@@ -2117,6 +2183,7 @@ public enum BlockMaterial implements Material {
     /**
      * {@inheritDoc}
      *
+     * @deprecated Data values should not be used longer.
      * @see com.blockhaus2000.ipm.minecraft.material.Material#getMaterialData()
      */
     @Deprecated

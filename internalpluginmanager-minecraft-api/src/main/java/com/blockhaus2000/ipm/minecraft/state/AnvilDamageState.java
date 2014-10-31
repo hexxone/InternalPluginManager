@@ -28,20 +28,15 @@ public enum AnvilDamageState {
      */
     NOT_DAMAGED(0),
     /**
-     * The anvil is slightly damaged.
-     *
-     */
-    SLIGHTLY_DAMAGED(1),
-    /**
      * The anvil is damaged.
      *
      */
-    DAMAGED(2),
+    DAMAGED(1),
     /**
      * The anvil is very damaged.
      *
      */
-    VERY_DAMAGED(3);
+    VERY_DAMAGED(2);
 
     /**
      * The ID of the damage state.

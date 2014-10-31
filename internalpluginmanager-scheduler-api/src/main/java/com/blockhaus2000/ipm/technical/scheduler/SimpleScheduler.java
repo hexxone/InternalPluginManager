@@ -29,7 +29,7 @@ import com.blockhaus2000.ipm.technical.scheduler.task.runnable.AsynchDelayedTask
 import com.blockhaus2000.ipm.technical.scheduler.task.runnable.AsynchRepeatingTaskRunnable;
 import com.blockhaus2000.ipm.technical.scheduler.task.runnable.DelayedTaskRunnable;
 import com.blockhaus2000.ipm.technical.scheduler.task.runnable.RepeatingTaskRunnable;
-import com.blockhaus2000.ipm.technical.scheduler.task.runnable.TaskRunnable;
+import com.blockhaus2000.ipm.technical.scheduler.task.runnable.AbstractTaskRunnable;
 
 /**
  * The default implementation of {@link Scheduler}.
@@ -47,6 +47,14 @@ public class SimpleScheduler implements Scheduler {
      *
      */
     private SimpleScheduler.State state = SimpleScheduler.State.STOPPED;
+
+    /**
+     * Constructor of SimpleScheduler.
+     *
+     */
+    public SimpleScheduler() {
+        // Nothing to do.
+    }
 
     /**
      * {@inheritDoc}
@@ -118,7 +126,7 @@ public class SimpleScheduler implements Scheduler {
      * @return The UUID of the started task.
      */
     private UUID internalRun(final DelayedTask task, final boolean asynch) {
-        final TaskRunnable<DelayedTask> taskRunnable;
+        final AbstractTaskRunnable<DelayedTask> taskRunnable;
         if (asynch) {
             taskRunnable = new AsynchDelayedTaskRunnable(task);
         } else {
@@ -137,7 +145,7 @@ public class SimpleScheduler implements Scheduler {
      * @return The UUID of the started task.
      */
     private UUID internalRun(final RepeatingTask task, final boolean asynch) {
-        final TaskRunnable<RepeatingTask> taskRunnable;
+        final AbstractTaskRunnable<RepeatingTask> taskRunnable;
         if (asynch) {
             taskRunnable = new AsynchRepeatingTaskRunnable(task);
         } else {
@@ -155,7 +163,7 @@ public class SimpleScheduler implements Scheduler {
      *            The task runnable to start.
      * @return The UUID of the given task.
      */
-    private UUID internalRun(final TaskRunnable<? extends Task> taskRunnable) {
+    private UUID internalRun(final AbstractTaskRunnable<? extends Task> taskRunnable) {
         final Task task = taskRunnable.getTask();
         final UUID uuid = task.getUUID();
 

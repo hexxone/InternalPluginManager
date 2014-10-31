@@ -17,9 +17,9 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
+import com.blockhaus2000.ipm.minecraft.block.BlockMaterial;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.FlowerPotBlockMeta;
-import com.blockhaus2000.ipm.minecraft.item.ItemMaterial;
 
 /**
  * Concrete {@link FlowerPotBlockMeta} implementation.
@@ -30,7 +30,7 @@ public class ConcreteFlowerPotBlockMeta extends ConcreteBlockMeta implements Flo
      * <code>itemType</code>
      *
      */
-    private final ItemMaterial itemType;
+    private final BlockMaterial itemType;
 
     /**
      * Constructor of AbstractWeightedPressurePlateBlockMeta.
@@ -41,7 +41,7 @@ public class ConcreteFlowerPotBlockMeta extends ConcreteBlockMeta implements Flo
      * @param itemType
      *            <code>itemType</code>
      */
-    public ConcreteFlowerPotBlockMeta(final BlockMeta blockMeta, final ItemMaterial itemType) {
+    public ConcreteFlowerPotBlockMeta(final BlockMeta blockMeta, final BlockMaterial itemType) {
         super(blockMeta);
 
         this.itemType = itemType;
@@ -53,7 +53,7 @@ public class ConcreteFlowerPotBlockMeta extends ConcreteBlockMeta implements Flo
      * @see com.blockhaus2000.ipm.minecraft.block.meta.FlowerPotBlockMeta#getItemType()
      */
     @Override
-    public ItemMaterial getItemType() {
+    public BlockMaterial getItemType() {
         return this.itemType;
     }
 }

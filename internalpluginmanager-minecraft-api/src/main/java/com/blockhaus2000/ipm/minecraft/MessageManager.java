@@ -55,15 +55,17 @@ public interface MessageManager {
     void broadcast(final String message);
 
     /**
-     * Formats the given message with the {@link StringFormatter} using
-     * {@link ChatColor} as format mapping and sends the formatted string to the
-     * given receiver.
+     * Sends the given message to the given {@link CommandSender}.
+     *
+     * <p>
+     * This will also format the message with the string formatter returned by
+     * {@link MessageManager#getFormatter()}.
+     * </p>
      *
      * @param receiver
-     *            The {@link CommandSender} that has to receive the given
-     *            message.
+     *            The {@link CommandSender} that should receive the message.
      * @param message
-     *            The message to format and send to the given receiver.
+     *            The message to send.
      */
     void sendMessage(final CommandSender receiver, final String message);
 

@@ -30,5 +30,5 @@ public interface CocoaBlockMeta extends BlockMeta, Growing {
      * @see com.blockhaus2000.ipm.minecraft.block.meta.Growing#getGrowState()
      */
     @Override
-    public CocaoBeanGrowState getGrowState();
+    CocaoBeanGrowState getGrowState();
 }

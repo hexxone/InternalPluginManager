@@ -17,19 +17,45 @@
  */
 package com.blockhaus2000.ipm.minecraft.entity;
 
+/**
+ * All available entities.
+ *
+ */
 public enum EntityType {
     // TODO: Add entities.
     ;
 
+    /**
+     * The entity name.
+     *
+     */
     private final String entityName;
-
+    /**
+     * The entity class.
+     *
+     */
     private final Class<? extends Entity> entityClass;
 
+    /**
+     * Constructor of EntityType.
+     *
+     * @param entityName
+     *            The entity name.
+     * @param entityClass
+     *            The entity class.
+     */
     private EntityType(final String entityName, final Class<? extends Entity> entityClass) {
         this.entityName = entityName;
         this.entityClass = entityClass;
     }
 
+    /**
+     * Searchs for the entity with the give name.
+     *
+     * @param entityName
+     *            The name to search for.
+     * @return The entityName associated with the given name.
+     */
     public static EntityType getByName(final String entityName) {
         for (final EntityType entityType : EntityType.values()) {
             if (entityType.getEntityName().equals(entityName)) {

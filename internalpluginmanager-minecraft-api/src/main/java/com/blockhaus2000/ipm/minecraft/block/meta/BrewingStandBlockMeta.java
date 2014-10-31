@@ -27,7 +27,7 @@ public interface BrewingStandBlockMeta extends BlockMeta, Container {
      * @return The remaining breqing time. Or, if nothing is brewing,
      *         <code>-1</code>.
      */
-    long getRemainingBrewingTime();
+    int getRemainingBrewingTime();
 
     /**
      *

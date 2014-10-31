@@ -27,16 +27,6 @@ import com.blockhaus2000.ipm.minecraft.state.RedstoneComparatorState;
  */
 public class ConcreteRedstoneComparatorBlockMeta extends ConcreteBlockMeta implements RedstoneComparatorBlockMeta {
     /**
-     * <code>powered</code>
-     *
-     */
-    private final boolean powered;
-    /**
-     * <code>outputStrength</code>
-     *
-     */
-    private final int outputStrength;
-    /**
      * <code>comparatorState</code>
      *
      */
@@ -48,40 +38,13 @@ public class ConcreteRedstoneComparatorBlockMeta extends ConcreteBlockMeta imple
      * @param blockMeta
      *            The {@link BlockMeta} that contains common information about
      *            this block (meta).
-     * @param powered
-     *            <code>powered</code>
-     * @param outputStrength
-     *            <code>outputStrength</code>
      * @param comparatorState
      *            <code>comparatorState</code>
      */
-    public ConcreteRedstoneComparatorBlockMeta(final BlockMeta blockMeta, final boolean powered, final int outputStrength,
-            final RedstoneComparatorState comparatorState) {
+    public ConcreteRedstoneComparatorBlockMeta(final BlockMeta blockMeta, final RedstoneComparatorState comparatorState) {
         super(blockMeta);
 
-        this.powered = powered;
-        this.outputStrength = outputStrength;
         this.comparatorState = comparatorState;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see com.blockhaus2000.ipm.minecraft.block.meta.RedstoneComparatorBlockMeta#isPowered()
-     */
-    @Override
-    public boolean isPowered() {
-        return this.powered;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see com.blockhaus2000.ipm.minecraft.block.meta.RedstoneComparatorBlockMeta#getOutputStrength()
-     */
-    @Override
-    public int getOutputStrength() {
-        return this.outputStrength;
     }
 
     /**

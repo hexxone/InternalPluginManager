@@ -25,7 +25,7 @@ import com.blockhaus2000.ipm.base.injection.InjectionManager;
  * underlying implementation.
  *
  */
-public class InternalPluginManager {
+public final class InternalPluginManager {
     /**
      * THE server. Will be injected via the {@link InjectionManager}.
      *

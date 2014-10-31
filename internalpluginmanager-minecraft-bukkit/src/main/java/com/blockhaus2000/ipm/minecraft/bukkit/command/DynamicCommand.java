@@ -19,12 +19,11 @@ package com.blockhaus2000.ipm.minecraft.bukkit.command;
 
 import java.util.Arrays;
 
-import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import com.blockhaus2000.ipm.minecraft.InternalPluginManager;
+import com.blockhaus2000.ipm.minecraft.command.BlockCommandSender;
+import com.blockhaus2000.ipm.minecraft.command.CommandSender;
 
 /**
  * The dynamic command is an extension of the Bukkit {@link Command} to hack
@@ -51,10 +50,11 @@ public class DynamicCommand extends Command {
      *      java.lang.String, java.lang.String[])
      */
     @Override
-    public boolean execute(final CommandSender sender, final String label, final String[] args) {
-        final com.blockhaus2000.ipm.minecraft.command.CommandSender commandSender;
-        if (sender instanceof Player) {
-            commandSender = InternalPluginManager.getServer().getPlayerManager().getPlayer(((Player) sender).getUniqueId());
+    public boolean execute(final org.bukkit.command.CommandSender sender, final String label, final String[] args) {
+        final CommandSender commandSender;
+        if (sender instanceof org.bukkit.entity.Player) {
+            commandSender = InternalPluginManager.getServer().getPlayerManager()
+                    .getPlayer(((org.bukkit.entity.Player) sender).getUniqueId());
         } else if (sender instanceof BlockCommandSender) {
             commandSender = new BukkitBlockCommandSender();
         } else {

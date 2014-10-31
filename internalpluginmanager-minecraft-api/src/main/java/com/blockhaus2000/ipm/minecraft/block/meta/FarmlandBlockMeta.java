@@ -18,9 +18,13 @@
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
 /**
- * The {@link BlockMeta} of a heavy weighted pressure plate.
+ * The {@link BlockMeta} of farmland.
  *
  */
-public interface WeightedPressurePlateHeavyBlockMeta extends WeightedPressurePlateBlockMeta {
-    // Nothing to do.
+public interface FarmlandBlockMeta extends BlockMeta {
+    /**
+     *
+     * @return Whether this farmland is wet or not.
+     */
+    boolean isWet();
 }

@@ -19,7 +19,6 @@ package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
 import com.blockhaus2000.ipm.minecraft.block.meta.BeaconBlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
-import com.blockhaus2000.ipm.minecraft.effect.Effect;
 import com.blockhaus2000.ipm.minecraft.inventory.Inventory;
 
 /**
@@ -32,16 +31,6 @@ public class ConcreteBeaconBlockMeta extends ConcreteBlockMeta implements Beacon
      *
      */
     private final Inventory inventory;
-    /**
-     * <code>radius</code>
-     *
-     */
-    private final int radius;
-    /**
-     * <code>effects</code>
-     *
-     */
-    private final Effect[] effects;
 
     /**
      * Constructor of AbstractWeightedPressurePlateBlockMeta.
@@ -51,17 +40,11 @@ public class ConcreteBeaconBlockMeta extends ConcreteBlockMeta implements Beacon
      *            this block (meta).
      * @param inventory
      *            <code>inventory</code>
-     * @param radius
-     *            <code>radius</code>
-     * @param effects
-     *            <code>effects</code>
      */
-    public ConcreteBeaconBlockMeta(final BlockMeta blockMeta, final Inventory inventory, final int radius, final Effect[] effects) {
+    public ConcreteBeaconBlockMeta(final BlockMeta blockMeta, final Inventory inventory) {
         super(blockMeta);
 
         this.inventory = inventory;
-        this.radius = radius;
-        this.effects = effects;
     }
 
     /**
@@ -72,25 +55,5 @@ public class ConcreteBeaconBlockMeta extends ConcreteBlockMeta implements Beacon
     @Override
     public Inventory getInventory() {
         return this.inventory;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see com.blockhaus2000.ipm.minecraft.block.meta.BeaconBlockMeta#getRadius()
-     */
-    @Override
-    public int getRadius() {
-        return this.radius;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see com.blockhaus2000.ipm.minecraft.block.meta.BeaconBlockMeta#getEffects()
-     */
-    @Override
-    public Effect[] getEffects() {
-        return this.effects;
     }
 }

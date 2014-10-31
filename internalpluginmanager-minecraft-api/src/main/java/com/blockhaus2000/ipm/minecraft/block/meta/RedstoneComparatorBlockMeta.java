@@ -26,18 +26,6 @@ import com.blockhaus2000.ipm.minecraft.state.RedstoneComparatorState;
 public interface RedstoneComparatorBlockMeta extends BlockMeta {
     /**
      *
-     * @return Whether this comparator is powered or not.
-     */
-    boolean isPowered();
-
-    /**
-     *
-     * @return The output strength of this comparator.
-     */
-    int getOutputStrength();
-
-    /**
-     *
      * @return The comparator state.
      */
     RedstoneComparatorState getComparatorState();

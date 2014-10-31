@@ -22,8 +22,46 @@ package com.blockhaus2000.ipm.minecraft.state.grow;
  *
  */
 public enum CarrotAndPotatoGrowState implements GrowState {
-    // TODO: Add carrot/potato grow states.
-    ;
+    /**
+     * The carrot/potato was just seeded.
+     *
+     */
+    SEED(0),
+    /**
+     * The carrot/potato is in stage 1.
+     *
+     */
+    STAGE_1(1),
+    /**
+     * The carrot/potato is in stage 2.
+     *
+     */
+    STAGE_2(2),
+    /**
+     * The carrot/potato is in stage 3.
+     *
+     */
+    STAGE_3(3),
+    /**
+     * The carrot/potato is in stage 4.
+     *
+     */
+    STAGE_4(4),
+    /**
+     * The carrot/potato is in stage 5.
+     *
+     */
+    STAGE_5(5),
+    /**
+     * The carrot/potato is in stage 6.
+     *
+     */
+    STAGE_6(6),
+    /**
+     * The carrot/potato is ripe.
+     *
+     */
+    RIPE(7);
 
     /**
      * The grow state ID.
@@ -39,6 +77,22 @@ public enum CarrotAndPotatoGrowState implements GrowState {
      */
     private CarrotAndPotatoGrowState(final int stateId) {
         this.stateId = stateId;
+    }
+
+    /**
+     * Searchs for the grow state with the give state ID.
+     *
+     * @param stateId
+     *            The state ID to search for.
+     * @return The grow state associated with the given ID.
+     */
+    public static CarrotAndPotatoGrowState getByStateId(final int stateId) {
+        for (final CarrotAndPotatoGrowState growState : CarrotAndPotatoGrowState.values()) {
+            if (growState.getStateId() == stateId) {
+                return growState;
+            }
+        }
+        return null;
     }
 
     /**

@@ -29,8 +29,24 @@ import com.blockhaus2000.ipm.technical.plugin.Plugin;
 import com.blockhaus2000.ipm.technical.scheduler.SimpleScheduler;
 import com.blockhaus2000.ipm.technical.scheduler.task.Task;
 
+/**
+ * The default implementation of the {@link PluginScheduler}.
+ *
+ */
 public class SimplePluginScheduler extends SimpleScheduler implements PluginScheduler, PropertyChangeListener {
+    /**
+     * All registered tasks.
+     *
+     */
     private final Map<String, Set<UUID>> tasks = new NullsafeMap<String, Set<UUID>>(new HashSet<UUID>());
+
+    /**
+     * Constructor of SimplePluginScheduler.
+     *
+     */
+    public SimplePluginScheduler() {
+        // Nothing to do.
+    }
 
     /**
      * {@inheritDoc}

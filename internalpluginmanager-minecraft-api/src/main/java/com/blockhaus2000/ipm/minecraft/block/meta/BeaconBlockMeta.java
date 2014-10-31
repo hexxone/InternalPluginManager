@@ -17,23 +17,10 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
-import com.blockhaus2000.ipm.minecraft.effect.Effect;
-
 /**
  * The {@link BlockMeta} of an beacon.
  *
  */
 public interface BeaconBlockMeta extends BlockMeta, Container {
-    /**
-     *
-     * @return The radius of the beacon effects.
-     */
-    int getRadius();
-
-    /**
-     *
-     * @return An array of all effects that this beacon assignes within the
-     *         effect radius ({@link BeaconBlockMeta#getRadius()}).
-     */
-    Effect[] getEffects();
+    // Nothing to do.
 }

@@ -52,6 +52,13 @@ public enum RecordMaterial implements Material {
         this.materialId = materialId;
     }
 
+    /**
+     * Searchs for the record with the give name.
+     *
+     * @param name
+     *            The name to search for.
+     * @return The record associated with the given name.
+     */
     public static RecordMaterial getByName(final String name) {
         for (final RecordMaterial recordMaterial : RecordMaterial.values()) {
             if (recordMaterial.getMaterialName().equalsIgnoreCase(name)) {
@@ -61,6 +68,14 @@ public enum RecordMaterial implements Material {
         return null;
     }
 
+    /**
+     * Searchs for the record with the give ID.
+     *
+     * @deprecated Data values should not be used longer.
+     * @param id
+     *            The ID to search for.
+     * @return The record associated with the given ID.
+     */
     @Deprecated
     public static RecordMaterial getById(final int id) {
         for (final RecordMaterial recordMaterial : RecordMaterial.values()) {
@@ -84,6 +99,7 @@ public enum RecordMaterial implements Material {
     /**
      * {@inheritDoc}
      *
+     * @deprecated Data values should not be used longer.
      * @see com.blockhaus2000.ipm.minecraft.material.Material#getMaterialId()
      */
     @Deprecated
@@ -95,6 +111,7 @@ public enum RecordMaterial implements Material {
     /**
      * {@inheritDoc}
      *
+     * @deprecated Data values should not be used longer.
      * @see com.blockhaus2000.ipm.minecraft.material.Material#getMaterialData()
      */
     @Deprecated

@@ -17,8 +17,6 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
-import com.blockhaus2000.ipm.minecraft.entity.Player;
-
 /**
  * The {@link BlockMeta} of a bed.
  *
@@ -26,8 +24,13 @@ import com.blockhaus2000.ipm.minecraft.entity.Player;
 public interface BedBlockMeta extends BlockMeta {
     /**
      *
-     * @return The player that lies in this bed. Or, if no player lies in this
-     *         bed, <code>null</code>.
+     * @return Whether a player lies in this bed.
      */
-    Player getPlayer();
+    boolean isPlayerInside();
+
+    /**
+     *
+     * @return Whether this block is the head of this bed.
+     */
+    boolean isHead();
 }

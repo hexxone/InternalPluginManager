@@ -39,6 +39,14 @@ public class SimpleStringFormatter implements StringFormatter {
     private static final StringFormatter INSTANCE = new SimpleStringFormatter();
 
     /**
+     * Constructor of SimpleStringFormatter.
+     *
+     */
+    public SimpleStringFormatter() {
+        // Nothing to do.
+    }
+
+    /**
      *
      * {@inheritDoc}
      *

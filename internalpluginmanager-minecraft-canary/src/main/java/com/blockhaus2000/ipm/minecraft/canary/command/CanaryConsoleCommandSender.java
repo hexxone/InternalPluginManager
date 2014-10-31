@@ -17,6 +17,7 @@
  */
 package com.blockhaus2000.ipm.minecraft.canary.command;
 
+import com.blockhaus2000.ipm.minecraft.InternalPluginManager;
 import com.blockhaus2000.ipm.minecraft.command.CommandSenderType;
 import com.blockhaus2000.ipm.minecraft.command.ConsoleCommandSender;
 
@@ -25,6 +26,14 @@ import com.blockhaus2000.ipm.minecraft.command.ConsoleCommandSender;
  *
  */
 public class CanaryConsoleCommandSender implements ConsoleCommandSender {
+    /**
+     * Constructor of CanaryConsoleCommandSender.
+     *
+     */
+    public CanaryConsoleCommandSender() {
+        // Nothing to do.
+    }
+
     /**
      * {@inheritDoc}
      *
@@ -52,6 +61,16 @@ public class CanaryConsoleCommandSender implements ConsoleCommandSender {
      */
     @Override
     public void sendMessage(final String message) {
+        InternalPluginManager.getServer().getMessageManager().sendMessage(this, message);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.minecraft.command.CommandSender#sendRawMessage(java.lang.String)
+     */
+    @Override
+    public void sendRawMessage(final String message) {
         System.out.println(message);
     }
 }

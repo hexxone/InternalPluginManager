@@ -55,6 +55,12 @@ public class ServerThread extends Thread {
     private static final Logger LOGGER = IpmxNetworkMain.getInstance().getLogger();
 
     /**
+     * The timeout for waiting for connection requests in seconds.
+     *
+     */
+    private static final int SERVER_TIMEOUT = 5;
+
+    /**
      * The server port.
      *
      */
@@ -63,7 +69,7 @@ public class ServerThread extends Thread {
      * The whitelist. If the whitelist is disabled, this is <code>null</code>.
      *
      */
-    final List<String> whitelist;
+    private final List<String> whitelist;
 
     /**
      * Constructor of ServerThread.
@@ -88,6 +94,7 @@ public class ServerThread extends Thread {
      *
      * @see java.lang.Thread#run()
      */
+    @SuppressWarnings("resource")
     @Override
     public void run() {
         final ServerSocket server = this.startServer();
@@ -95,7 +102,6 @@ public class ServerThread extends Thread {
         while (!this.isInterrupted()) {
             String ip = "undefined";
             try {
-                @SuppressWarnings("resource")
                 final Connection con = this.acceptConnection(server);
                 if (con == null) {
                     continue;
@@ -121,26 +127,24 @@ public class ServerThread extends Thread {
     private ServerSocket startServer() {
         ServerThread.LOGGER.log(Level.FINER, "Starting server on port " + this.port);
 
-        final ServerSocket server;
         try {
-            server = new ServerSocket(this.port);
-        } catch (final IOException cause) {
-            ServerThread.LOGGER.log(Level.SEVERE, "An error occurred whilest creating server socket!", cause);
-            return null;
-        }
+            final ServerSocket server = new ServerSocket(this.port);
 
-        ServerThread.LOGGER.log(Level.FINEST, "Waiting for connection requests.");
+            ServerThread.LOGGER.log(Level.FINEST, "Waiting for connection requests.");
 
-        // Break every five seconds to avoid that the thread is running infinite
-        // without a connection.
-        try {
-            server.setSoTimeout((int) TimeUnit.MILLISECONDS.convert(5, TimeUnit.SECONDS));
+            // Break every five seconds to avoid that the thread is running
+            // infinite
+            // without a connection.
+            server.setSoTimeout((int) TimeUnit.MILLISECONDS.convert(ServerThread.SERVER_TIMEOUT, TimeUnit.SECONDS));
+
+            return server;
         } catch (final SocketException cause) {
             ServerThread.LOGGER.log(Level.SEVERE, "An error occurred whilest setting timeout!", cause);
-            return null;
+        } catch (final IOException cause) {
+            ServerThread.LOGGER.log(Level.SEVERE, "An error occurred whilest creating server socket!", cause);
         }
 
-        return server;
+        return null;
     }
 
     /**

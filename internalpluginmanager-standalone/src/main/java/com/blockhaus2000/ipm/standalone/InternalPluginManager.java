@@ -27,7 +27,7 @@ import com.blockhaus2000.ipm.technical.plugin.event.SimplePluginEventManager;
  * InternalPluginManager.
  *
  */
-public class InternalPluginManager {
+public final class InternalPluginManager {
     /**
      * The one and only command manager that should be used.
      *

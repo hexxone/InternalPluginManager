@@ -101,6 +101,14 @@ public class DynamicCommand extends CanaryCommand {
         private static volatile Command commandAnot;
 
         /**
+         * Constructor of DummyCommandAnnotation.
+         *
+         */
+        private DummyCommandAnnotation() {
+            // Nothing to do.
+        }
+
+        /**
          *
          * @return The dummy command annotation.
          */

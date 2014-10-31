@@ -100,6 +100,7 @@ public enum ItemMaterial implements Material {
     /**
      * {@inheritDoc}
      *
+     * @deprecated Data values should not be used longer.
      * @see com.blockhaus2000.ipm.minecraft.material.Material#getMaterialId()
      */
     @Deprecated
@@ -111,6 +112,7 @@ public enum ItemMaterial implements Material {
     /**
      * {@inheritDoc}
      *
+     * @deprecated Data values should not be used longer.
      * @see com.blockhaus2000.ipm.minecraft.material.Material#getMaterialData()
      */
     @Deprecated

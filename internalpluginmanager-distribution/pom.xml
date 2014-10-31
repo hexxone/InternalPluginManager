@@ -75,16 +75,6 @@
 							<outputDirectory>${project.build.directory}/jars/extensions/</outputDirectory>
 							<destFileName>internalpluginmanager-network-extension_v${project.version}.jar</destFileName>
 						</artifactItem>
-						<!-- Update Checker extension -->
-						<artifactItem>
-							<groupId>com.blockhaus2000</groupId>
-							<artifactId>internalpluginmanager-update-checker-extension</artifactId>
-							<version>${project.version}</version>
-							<type>jar</type>
-							<overWrite>false</overWrite>
-							<outputDirectory>${project.build.directory}/jars/extensions/</outputDirectory>
-							<destFileName>internalpluginmanager-update-checker-extension_v${project.version}.jar</destFileName>
-						</artifactItem>
 					</artifactItems>
 				</configuration>
 			</plugin>

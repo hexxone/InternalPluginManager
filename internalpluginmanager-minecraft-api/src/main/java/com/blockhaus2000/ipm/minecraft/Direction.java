@@ -283,6 +283,17 @@ public enum Direction {
     WEST_NORTH_NORTH(15);
 
     /**
+     * 360°
+     *
+     */
+    private static final int CIRLCE_360_DEGREES = 360;
+    /**
+     * Direction count.
+     *
+     */
+    private static final double DIRECTION_COUNT = 16.0;
+
+    /**
      * The ID of this direction.
      *
      */
@@ -305,7 +316,7 @@ public enum Direction {
      */
     private Direction(final int id) {
         this.id = id;
-        this.degrees = 360 / 16.0 * id;
+        this.degrees = Direction.CIRLCE_360_DEGREES / Direction.DIRECTION_COUNT * id;
     }
 
     /**

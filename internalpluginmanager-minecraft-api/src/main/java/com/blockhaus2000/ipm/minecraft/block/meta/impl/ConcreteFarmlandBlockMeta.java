@@ -18,23 +18,18 @@
 package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
-import com.blockhaus2000.ipm.minecraft.block.meta.WeightedPressurePlateBlockMeta;
+import com.blockhaus2000.ipm.minecraft.block.meta.FarmlandBlockMeta;
 
 /**
- * Concrete implementation of {@link WeightedPressurePlateBlockMeta}.
+ * Concrete {@link FarmlandBlockMeta} implementation.
  *
  */
-public abstract class AbstractWeightedPressurePlateBlockMeta extends ConcreteBlockMeta implements WeightedPressurePlateBlockMeta {
+public class ConcreteFarmlandBlockMeta extends ConcreteBlockMeta implements FarmlandBlockMeta {
     /**
-     * <code>pressed</code>
+     * <code>wet</code>
      *
      */
-    private final boolean pressed;
-    /**
-     * <code>outputStrength</code>
-     *
-     */
-    private final int outputStrength;
+    private final boolean wet;
 
     /**
      * Constructor of AbstractWeightedPressurePlateBlockMeta.
@@ -42,35 +37,22 @@ public abstract class AbstractWeightedPressurePlateBlockMeta extends ConcreteBlo
      * @param blockMeta
      *            The {@link BlockMeta} that contains common information about
      *            this block (meta).
-     * @param pressed
-     *            <code>pressed</code>
-     * @param outputStrength
-     *            <code>outputStrength</code>
+     * @param wet
+     *            <code>wet</code>
      */
-    public AbstractWeightedPressurePlateBlockMeta(final BlockMeta blockMeta, final boolean pressed, final int outputStrength) {
+    public ConcreteFarmlandBlockMeta(final BlockMeta blockMeta, final boolean wet) {
         super(blockMeta);
 
-        this.pressed = pressed;
-        this.outputStrength = outputStrength;
+        this.wet = wet;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.minecraft.block.meta.WeightedPressurePlateBlockMeta#isPressed()
+     * @see com.blockhaus2000.ipm.minecraft.block.meta.FarmlandBlockMeta#isWet()
      */
     @Override
-    public boolean isPressed() {
-        return this.pressed;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see com.blockhaus2000.ipm.minecraft.block.meta.WeightedPressurePlateBlockMeta#getOutputStrength()
-     */
-    @Override
-    public int getOutputStrength() {
-        return this.outputStrength;
+    public boolean isWet() {
+        return this.wet;
     }
 }

@@ -25,7 +25,7 @@ import com.blockhaus2000.ipm.technical.scheduler.task.RepeatingTask;
  * An asynch repeating task runnable.
  *
  */
-public class AsynchRepeatingTaskRunnable extends TaskRunnable<RepeatingTask> {
+public class AsynchRepeatingTaskRunnable extends AbstractTaskRunnable<RepeatingTask> {
     /**
      * Constructor of AsynchRepeatingTaskRunnable.
      *
@@ -52,7 +52,7 @@ public class AsynchRepeatingTaskRunnable extends TaskRunnable<RepeatingTask> {
                 Thread.sleep(this.getTask().getPeriod());
             }
         } catch (final Exception cause) {
-            TaskRunnable.LOGGER.log(Level.SEVERE, "An error occurred whilest executing task with id=" + this.getTask().getUUID()
+            AbstractTaskRunnable.LOGGER.log(Level.SEVERE, "An error occurred whilest executing task with id=" + this.getTask().getUUID()
                     + "!", cause);
         }
     }

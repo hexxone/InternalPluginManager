@@ -30,5 +30,5 @@ public interface StemBlockMeta extends BlockMeta, Growing {
      * @see com.blockhaus2000.ipm.minecraft.block.meta.Growing#getGrowState()
      */
     @Override
-    public StemGrowState getGrowState();
+    StemGrowState getGrowState();
 }

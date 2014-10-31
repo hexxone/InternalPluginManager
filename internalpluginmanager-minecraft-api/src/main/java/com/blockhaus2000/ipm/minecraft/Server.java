@@ -19,8 +19,8 @@ package com.blockhaus2000.ipm.minecraft;
 
 import java.util.logging.Logger;
 
-import com.blockhaus2000.ipm.minecraft.command.CommandSender;
 import com.blockhaus2000.ipm.minecraft.command.ConsoleCommandSender;
+import com.blockhaus2000.ipm.minecraft.entity.Player;
 import com.blockhaus2000.ipm.minecraft.recipe.RecipeManager;
 import com.blockhaus2000.ipm.minecraft.scoreboard.ScoreboardManager;
 import com.blockhaus2000.ipm.minecraft.world.WorldManager;
@@ -131,16 +131,22 @@ public interface Server {
     ConsoleCommandSender getConsoleCommandSender();
 
     /**
-     * Executes/dispatchs the given command string (containing the command and
-     * the arguments) as the given {@link CommandSender}.
+     * Dispatches the given command as the console.
      *
      * @param command
-     *            The command string to execute (containing command and
-     *            arguments).
-     * @param sender
-     *            The {@link CommandSender} to execute the command as.
+     *            The command to execute.
      */
-    void dispatchCommand(final String command, final CommandSender sender);
+    void dispatchCommand(final String command);
+
+    /**
+     * Dispatches/Executes the given command as the given player.
+     *
+     * @param command
+     *            The command to execute.
+     * @param player
+     *            The player to execute the command as.
+     */
+    void dispatchCommand(final String command, final Player player);
 
     /**
      * Stops this server.

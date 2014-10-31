@@ -17,10 +17,18 @@
  */
 package com.blockhaus2000.ipm.minecraft.inventory;
 
+import java.util.UUID;
+
 /**
  * Represents an {@link Inventory} that can be opened by a player.
  *
  */
 public interface Inventory {
+    /**
+     *
+     * @return The {@link UUID} of this inventory.
+     */
+    UUID getUUID();
+
     // TODO Auto-generated interface body.
 }

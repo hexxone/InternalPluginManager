@@ -80,7 +80,7 @@ public class ConcreteBrewingStandBlockMeta extends ConcreteBlockMeta implements 
      * @see com.blockhaus2000.ipm.minecraft.block.meta.BrewingStandBlockMeta#getRemainingBrewingTime()
      */
     @Override
-    public long getRemainingBrewingTime() {
+    public int getRemainingBrewingTime() {
         return this.remainingBrewingTime;
     }
 

@@ -86,8 +86,8 @@ public class PluginListResponsePacket implements ResponsePacket {
             final int start = (i == 0 ? PluginListResponsePacket._8 : indexes.get(indexes.size() - 1).get(1)
                     + PluginListResponsePacket._4) + 1;
             final int end = BitUtil.fromBytes(responseData[start - PluginListResponsePacket._4], responseData[start
-                                                                                                              - PluginListResponsePacket._3], responseData[start - 2], responseData[start - 1])
-                                                                                                              + start;
+                    - PluginListResponsePacket._3], responseData[start - 2], responseData[start - 1])
+                    + start;
 
             curIndexes.add(start);
             curIndexes.add(end);

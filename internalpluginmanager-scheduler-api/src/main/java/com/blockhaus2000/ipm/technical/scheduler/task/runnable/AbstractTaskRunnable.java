@@ -28,7 +28,7 @@ import com.blockhaus2000.ipm.technical.scheduler.task.Task;
  * @param <T>
  *            The specific type of task to use.
  */
-public abstract class TaskRunnable<T extends Task> implements Runnable {
+public abstract class AbstractTaskRunnable<T extends Task> implements Runnable {
     /**
      * The InternalPluginManager system logger.
      *
@@ -47,13 +47,13 @@ public abstract class TaskRunnable<T extends Task> implements Runnable {
      * @param task
      *            The task to run.
      */
-    public TaskRunnable(final T task) {
+    public AbstractTaskRunnable(final T task) {
         this.task = task;
     }
 
     /**
      *
-     * @return {@link TaskRunnable#task}
+     * @return {@link AbstractTaskRunnable#task}
      */
     public T getTask() {
         return this.task;

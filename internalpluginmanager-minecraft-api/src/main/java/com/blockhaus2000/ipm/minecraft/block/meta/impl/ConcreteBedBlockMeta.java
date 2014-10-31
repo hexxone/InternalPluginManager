@@ -17,12 +17,8 @@
  */
 package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
-import java.util.UUID;
-
-import com.blockhaus2000.ipm.minecraft.InternalPluginManager;
 import com.blockhaus2000.ipm.minecraft.block.meta.BedBlockMeta;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
-import com.blockhaus2000.ipm.minecraft.entity.Player;
 
 /**
  * Concrete {@link BedBlockMeta} implementation.
@@ -30,10 +26,15 @@ import com.blockhaus2000.ipm.minecraft.entity.Player;
  */
 public class ConcreteBedBlockMeta extends ConcreteBlockMeta implements BedBlockMeta {
     /**
-     * <code>player</code>
+     * <code>playerInside</code>
      *
      */
-    private final UUID player;
+    private final boolean playerInside;
+    /**
+     * <code>head</code>
+     *
+     */
+    private final boolean head;
 
     /**
      * Constructor of AbstractWeightedPressurePlateBlockMeta.
@@ -41,22 +42,35 @@ public class ConcreteBedBlockMeta extends ConcreteBlockMeta implements BedBlockM
      * @param blockMeta
      *            The {@link BlockMeta} that contains common information about
      *            this block (meta).
-     * @param player
-     *            <code>player</code>
+     * @param playerInside
+     *            <code>playerInside</code>
+     * @param head
+     *            <code>head</code>
      */
-    public ConcreteBedBlockMeta(final BlockMeta blockMeta, final Player player) {
+    public ConcreteBedBlockMeta(final BlockMeta blockMeta, final boolean playerInside, final boolean head) {
         super(blockMeta);
 
-        this.player = player.getUUID();
+        this.playerInside = playerInside;
+        this.head = head;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.minecraft.block.meta.BedBlockMeta#getPlayer()
+     * @see com.blockhaus2000.ipm.minecraft.block.meta.BedBlockMeta#isPlayerInside()
      */
     @Override
-    public Player getPlayer() {
-        return InternalPluginManager.getServer().getPlayerManager().getPlayer(this.player);
+    public boolean isPlayerInside() {
+        return this.playerInside;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see com.blockhaus2000.ipm.minecraft.block.meta.BedBlockMeta#isHead()
+     */
+    @Override
+    public boolean isHead() {
+        return this.head;
     }
 }

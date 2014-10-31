@@ -18,25 +18,23 @@
 package com.blockhaus2000.ipm.minecraft.block.meta.impl;
 
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
-import com.blockhaus2000.ipm.minecraft.block.meta.EnchantmentTableBlockMeta;
-import com.blockhaus2000.ipm.minecraft.enchantment.Enchantment;
-import com.blockhaus2000.ipm.minecraft.inventory.Inventory;
+import com.blockhaus2000.ipm.minecraft.block.meta.TripwireHookBlockMeta;
 
 /**
- * Concrete {@link EnchantmentTableBlockMeta} implementation.
+ * Concrete {@link TripwireHookBlockMeta} implementation.
  *
  */
-public class ConcreteEnchantmentTabelBlockMeta extends ConcreteBlockMeta implements EnchantmentTableBlockMeta {
+public class ConcreteTripwireHookBlockMeta extends ConcreteBlockMeta implements TripwireHookBlockMeta {
     /**
-     * <code>inventory</code>
+     * <code>tensioned</code>
      *
      */
-    private final Inventory inventory;
+    private final boolean tensioned;
     /**
-     * <code>currentEnchantments</code>
+     * <code>active</code>
      *
      */
-    private final Enchantment[] currentEnchantments;
+    private final boolean active;
 
     /**
      * Constructor of AbstractWeightedPressurePlateBlockMeta.
@@ -44,36 +42,35 @@ public class ConcreteEnchantmentTabelBlockMeta extends ConcreteBlockMeta impleme
      * @param blockMeta
      *            The {@link BlockMeta} that contains common information about
      *            this block (meta).
-     * @param inventory
-     *            <code>inventory</code>
-     * @param currentEnchantments
-     *            <code>currentEnchantments</code>
+     * @param tensioned
+     *            <code>tensioned</code>
+     * @param active
+     *            <code>active</code>
      */
-    public ConcreteEnchantmentTabelBlockMeta(final BlockMeta blockMeta, final Inventory inventory,
-            final Enchantment[] currentEnchantments) {
+    public ConcreteTripwireHookBlockMeta(final BlockMeta blockMeta, final boolean tensioned, final boolean active) {
         super(blockMeta);
 
-        this.inventory = inventory;
-        this.currentEnchantments = currentEnchantments;
+        this.tensioned = tensioned;
+        this.active = active;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.minecraft.block.meta.Container#getInventory()
+     * @see com.blockhaus2000.ipm.minecraft.block.meta.TripwireHookBlockMeta#isTensioned()
      */
     @Override
-    public Inventory getInventory() {
-        return this.inventory;
+    public boolean isTensioned() {
+        return this.tensioned;
     }
 
     /**
      * {@inheritDoc}
      *
-     * @see com.blockhaus2000.ipm.minecraft.block.meta.EnchantmentTableBlockMeta#getCurrentEnchantments()
+     * @see com.blockhaus2000.ipm.minecraft.block.meta.TripwireHookBlockMeta#isActive()
      */
     @Override
-    public Enchantment[] getCurrentEnchantments() {
-        return this.currentEnchantments;
+    public boolean isActive() {
+        return this.active;
     }
 }

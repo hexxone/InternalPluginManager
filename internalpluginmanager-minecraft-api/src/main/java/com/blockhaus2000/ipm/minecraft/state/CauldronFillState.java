@@ -75,12 +75,29 @@ public enum CauldronFillState {
      */
     FULL(3);
 
+    /**
+     * The ID of this fill state.
+     *
+     */
     private final int id;
 
+    /**
+     * Constructor of CauldronFillState.
+     *
+     * @param id
+     *            The ID of this fill state.
+     */
     private CauldronFillState(final int id) {
         this.id = id;
     }
 
+    /**
+     * Searchs for the fill state with the give ID.
+     *
+     * @param id
+     *            The ID to search for.
+     * @return The fill state associated with the given ID.
+     */
     public static CauldronFillState getById(final int id) {
         for (final CauldronFillState fillState : CauldronFillState.values()) {
             if (fillState.getId() == id) {
@@ -90,6 +107,10 @@ public enum CauldronFillState {
         return null;
     }
 
+    /**
+     *
+     * @return {@link CauldronFillState#id}
+     */
     public int getId() {
         return this.id;
     }

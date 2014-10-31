@@ -18,13 +18,20 @@
 package com.blockhaus2000.ipm.minecraft.block.meta;
 
 /**
- * The {@link BlockMeta} of a daylight sensor.
+ * The {@link BlockMeta} for tripwire hooks.
  *
  */
-public interface DaylightSensorBlockMeta extends BlockMeta {
+public interface TripwireHookBlockMeta extends BlockMeta {
     /**
      *
-     * @return The output strength of this daylight sensor.
+     * @return Whether this tripwire hook is connected with a tensioned tripwire
+     *         or not.
      */
-    int getOutputStrength();
+    boolean isTensioned();
+
+    /**
+     *
+     * @return Whether this hook is active (the tripwire is "pressed").
+     */
+    boolean isActive();
 }

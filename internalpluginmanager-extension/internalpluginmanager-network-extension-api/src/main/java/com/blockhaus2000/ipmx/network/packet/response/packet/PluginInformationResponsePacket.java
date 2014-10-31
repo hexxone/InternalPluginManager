@@ -212,8 +212,8 @@ public class PluginInformationResponsePacket implements ResponsePacket {
 
             final int start = (i == 0 ? index : indexes.get(indexes.size() - 1).get(1) + PluginInformationResponsePacket._4) + 1;
             final int end = BitUtil.fromBytes(responseData[start - PluginInformationResponsePacket._4], responseData[start
-                                                                                                                     - PluginInformationResponsePacket._3], responseData[start - 2], responseData[start - 1])
-                                                                                                                     + start - 1;
+                    - PluginInformationResponsePacket._3], responseData[start - 2], responseData[start - 1])
+                    + start - 1;
 
             curIndexes.add(start);
             curIndexes.add(end);

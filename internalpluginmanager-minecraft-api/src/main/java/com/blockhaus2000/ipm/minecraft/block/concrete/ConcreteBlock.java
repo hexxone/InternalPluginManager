@@ -22,16 +22,42 @@ import com.blockhaus2000.ipm.minecraft.block.Block;
 import com.blockhaus2000.ipm.minecraft.block.BlockMaterial;
 import com.blockhaus2000.ipm.minecraft.block.meta.BlockMeta;
 
+/**
+ * Concrete {@link Block} implementation.
+ *
+ */
 public class ConcreteBlock implements Block {
+    /**
+     * <code>meta</code>
+     *
+     */
     private final BlockMeta meta;
+    /**
+     * <code>faceDirection</code>
+     *
+     */
     private final Direction faceDirection;
+    /**
+     * <code>material</code>
+     *
+     */
     private final BlockMaterial material;
 
+    /**
+     * Constructor of ConcreteBlock.
+     *
+     * @param meta
+     *            <code>meta</code>
+     * @param faceDirection
+     *            <code>faceDirection</code>
+     * @param material
+     *            <code>material</code>
+     */
     public ConcreteBlock(final BlockMeta meta, final Direction faceDirection, final BlockMaterial material) {
         assert meta != null : "Meta cannot be null!";
         assert material != null : "Material cannot be null!";
         assert meta.getClass().equals(material.getBlockMetaClass()) : "The class of meta has to equals the "
-        + "block meta class from material!";
+                + "block meta class from material!";
 
         this.meta = meta;
         this.faceDirection = faceDirection;
