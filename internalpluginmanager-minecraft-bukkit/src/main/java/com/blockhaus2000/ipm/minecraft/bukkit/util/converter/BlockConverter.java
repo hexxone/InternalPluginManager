@@ -176,6 +176,8 @@ public final class BlockConverter {
      */
     @SuppressWarnings("deprecation")
     public static Block convertToIpmBlock(final org.bukkit.block.Block bukkitBlock) {
+        assert bukkitBlock != null : "BukkitBlock cannot be null!";
+
         final BlockMaterial blockMaterial = BlockMaterial.getById(bukkitBlock.getTypeId(), bukkitBlock.getData());
 
         final BlockState bukkitBlockState = bukkitBlock.getState();
@@ -622,6 +624,11 @@ public final class BlockConverter {
      * Converts the given IPM {@link Block} into a Bukkit
      * {@link org.bukkit.block.Block}.
      *
+     * <p>
+     * <b> CAUTION: This modifies the block within the "real" Minecraft world
+     * immediatly! </b>
+     * </p>
+     *
      * @param ipmBlock
      *            The IPM {@link Block} to convert.
      * @param loc
@@ -630,6 +637,9 @@ public final class BlockConverter {
      */
     @SuppressWarnings("deprecation")
     public static org.bukkit.block.Block convertToBukkitBlock(final Block ipmBlock, final WorldLocation loc) {
+        assert ipmBlock != null : "IpmBlock cannot be null!";
+        assert loc != null : "Loc cannot be null!";
+
         final org.bukkit.block.Block block = WorldConverter.convertToBukkitWorld(loc.getWorld()).getBlockAt(
                 LocationConverter.convertToBukkitLocation(loc));
 
@@ -1077,10 +1087,10 @@ public final class BlockConverter {
      */
     private static void illegalSwitchCase() {
         InternalPluginManager
-        .getServer()
-        .getLogger()
-        .log(Level.WARNING,
-                "An error occurred whilest converting a Bukkit block into an InternalPluginManager block or "
-                        + "otherwise. Please check for an implementation update and/or inform a developer.");
+                .getServer()
+                .getLogger()
+                .log(Level.WARNING,
+                        "An error occurred whilest converting a Bukkit block into an InternalPluginManager block or "
+                                + "otherwise. Please check for an implementation update and/or inform a developer.");
     }
 }

@@ -49,6 +49,8 @@ public class BukkitPlayerManager implements PlayerManager {
      */
     @Override
     public Player getPlayer(final UUID uuid) {
+        assert uuid != null : "Uuid cannot be null!";
+
         return BukkitPlayer.Factory.create(uuid);
     }
 
@@ -61,6 +63,8 @@ public class BukkitPlayerManager implements PlayerManager {
     @Deprecated
     @Override
     public Player getPlayer(final String name) {
+        assert name != null : "Name cannot be null!";
+
         return BukkitPlayer.Factory.create(Bukkit.getServer().getPlayer(name));
     }
 
@@ -85,6 +89,8 @@ public class BukkitPlayerManager implements PlayerManager {
      */
     @Override
     public OfflinePlayer getOfflinePlayer(final UUID uuid) {
+        assert uuid != null : "Uuid cannot be null!";
+
         return BukkitOfflinePlayer.Factory.create(uuid);
     }
 
@@ -97,6 +103,8 @@ public class BukkitPlayerManager implements PlayerManager {
     @Deprecated
     @Override
     public OfflinePlayer getOfflinePlayer(final String name) {
+        assert name != null : "Name cannot be null!";
+
         return BukkitOfflinePlayer.Factory.create(Bukkit.getServer().getOfflinePlayer(name));
     }
 

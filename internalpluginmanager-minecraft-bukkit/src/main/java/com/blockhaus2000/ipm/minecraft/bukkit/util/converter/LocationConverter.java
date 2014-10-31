@@ -44,6 +44,8 @@ public final class LocationConverter {
      * @return The converted IPM {@link WorldLocation}.
      */
     public static WorldLocation convertToIpmLocation(final Location bukkitLocation) {
+        assert bukkitLocation != null : "BukkitLocation cannot be null!";
+
         return new WorldLocation(bukkitLocation.getBlockX(), bukkitLocation.getBlockY(), bukkitLocation.getBlockZ(),
                 WorldConverter.convertToIpmWorld(bukkitLocation.getWorld()));
     }
@@ -57,6 +59,8 @@ public final class LocationConverter {
      * @return The converted Bukkit {@link Location}.
      */
     public static Location convertToBukkitLocation(final WorldLocation ipmLocation) {
+        assert ipmLocation != null : "IpmLocation cannot be null!";
+
         return new Location(WorldConverter.convertToBukkitWorld(ipmLocation.getWorld()), ipmLocation.getVector().getX(),
                 ipmLocation.getVector().getY(), ipmLocation.getVector().getZ());
     }

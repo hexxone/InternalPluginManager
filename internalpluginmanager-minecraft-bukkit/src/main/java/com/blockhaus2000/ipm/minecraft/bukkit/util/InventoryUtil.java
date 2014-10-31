@@ -49,6 +49,9 @@ public final class InventoryUtil {
      *            items from.
      */
     public static void copyContent(final Inventory ipmInventory, final org.bukkit.inventory.Inventory bukkitInventory) {
+        assert ipmInventory != null : "IpmInventory cannot be null!";
+        assert bukkitInventory != null : "BukkitInventory cannot be null!";
+
         // TODO: Implement inventory copying.
     }
 }

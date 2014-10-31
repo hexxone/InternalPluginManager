@@ -55,6 +55,8 @@ public class BukkitOfflinePlayer implements OfflinePlayer {
      *            The offline player from Bukkit to wrap.
      */
     protected BukkitOfflinePlayer(final org.bukkit.OfflinePlayer bukkitOfflinePlayer) {
+        assert bukkitOfflinePlayer != null : "BukkitOfflinePlayer cannot be null!";
+
         this.name = bukkitOfflinePlayer.getName().toLowerCase().trim();
         this.uuid = bukkitOfflinePlayer.getUniqueId();
     }
@@ -168,6 +170,8 @@ public class BukkitOfflinePlayer implements OfflinePlayer {
          *         wrapping the given Bukkit offline player.
          */
         public static OfflinePlayer create(final org.bukkit.OfflinePlayer bukkitPlayer) {
+            assert bukkitPlayer != null : "BukkitPlayer cannot be null!";
+
             final UUID bukkitPlayerID = bukkitPlayer.getUniqueId();
 
             OfflinePlayer player = Factory.PLAYER_CACHE.get(bukkitPlayerID);
@@ -197,6 +201,8 @@ public class BukkitOfflinePlayer implements OfflinePlayer {
          * @see com.blockhaus2000.ipm.minecraft.bukkit.BukkitOfflinePlayer.Factory#create(org.bukkit.OfflinePlayer)
          */
         public static OfflinePlayer create(final UUID bukkitPlayer) {
+            assert bukkitPlayer != null : "BukkitPlayer cannot be null!";
+
             return Factory.create(Bukkit.getServer().getPlayer(bukkitPlayer));
         }
     }

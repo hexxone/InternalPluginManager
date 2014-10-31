@@ -44,6 +44,8 @@ public class BukkitWorldManager implements WorldManager {
      */
     @Override
     public World getWorld(final UUID uuid) {
+        assert uuid != null : "Uuid cannot be null!";
+
         return BukkitWorld.Factory.create(uuid);
     }
 
@@ -54,6 +56,8 @@ public class BukkitWorldManager implements WorldManager {
      */
     @Override
     public World getWorld(final String name) {
+        assert name != null : "Name cannot be null!";
+
         return this.getWorld(Bukkit.getServer().getWorld(name).getUID());
     }
 }

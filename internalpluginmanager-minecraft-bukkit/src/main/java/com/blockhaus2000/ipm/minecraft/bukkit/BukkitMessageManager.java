@@ -90,7 +90,7 @@ public class BukkitMessageManager implements MessageManager {
      * @return The processed string.
      */
     private String format(final String message) {
-        return this.formatter.format(message, MessageManager.ChatColor.values());
+        return message == null ? "" : this.formatter.format(message, MessageManager.ChatColor.values());
     }
 
     /**

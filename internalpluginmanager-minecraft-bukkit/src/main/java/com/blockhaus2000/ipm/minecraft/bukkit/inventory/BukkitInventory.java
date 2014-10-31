@@ -48,6 +48,8 @@ public class BukkitInventory implements Inventory {
      *            an existing {@link org.bukkit.inventory.Inventory}.
      */
     public BukkitInventory(final org.bukkit.inventory.Inventory bukkitInventory) {
+        assert bukkitInventory != null : "BukkitInventory cannot be null!";
+
         // TODO: Implement inventory wrapping.
     }
 
@@ -89,6 +91,8 @@ public class BukkitInventory implements Inventory {
          * @return The newly created {@link org.bukkit.inventory.Inventory}.
          */
         public static Inventory create(final org.bukkit.inventory.Inventory bukkitInventory) {
+            assert bukkitInventory != null : "BukkitInventory cannot be null!";
+
             final BukkitInventory inventory = new BukkitInventory(bukkitInventory);
 
             Factory.INVENTORIES.put(inventory.getUUID(), inventory);

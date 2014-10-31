@@ -190,6 +190,8 @@ public final class BukkitPlayer extends BukkitOfflinePlayer implements Player {
          *         given Bukkit player.
          */
         public static Player create(final org.bukkit.entity.Player bukkitPlayer) {
+            assert bukkitPlayer != null : "BukkitPlayer cannot be null!";
+
             final UUID bukkitPlayerID = bukkitPlayer.getUniqueId();
 
             Player player = Factory.PLAYER_CACHE.get(bukkitPlayerID);
@@ -218,6 +220,8 @@ public final class BukkitPlayer extends BukkitOfflinePlayer implements Player {
          * @see com.blockhaus2000.ipm.minecraft.bukkit.enity.BukkitPlayer.Factory#create(org.bukkit.entity.Player)
          */
         public static Player create(final UUID bukkitPlayer) {
+            assert bukkitPlayer != null : "BukkitPlayer cannot be null!";
+
             return Factory.create(Bukkit.getServer().getPlayer(bukkitPlayer));
         }
     }

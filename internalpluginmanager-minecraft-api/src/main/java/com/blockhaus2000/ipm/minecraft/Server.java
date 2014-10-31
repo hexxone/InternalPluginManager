@@ -41,6 +41,18 @@ public interface Server {
     Logger getLogger();
 
     /**
+     * The version of this server implementation and the API specification.
+     *
+     * <p>
+     * The version string is formatted like this: <br />
+     * <code>API-Version: [API_VERSION]; Implementation version: [IMPLEMENTATION_VERSION]; Edition: [EDITION]</code>
+     * <br />
+     * If the API version is <code>1.0.0</code>, the implementation version
+     * <code>1.5.2</code> and the underlying edition is <code>Bukkit</code>, the
+     * version string looks like this:
+     * <code>API-Version: 1.0.0; Implementation-Version: 1.5.2; Edition: Bukkit</code>
+     * .
+     * </p>
      *
      * @return The version of this server implementation.
      */

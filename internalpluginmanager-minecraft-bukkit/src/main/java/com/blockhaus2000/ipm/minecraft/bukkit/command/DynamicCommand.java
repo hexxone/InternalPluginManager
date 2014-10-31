@@ -51,6 +51,10 @@ public class DynamicCommand extends Command {
      */
     @Override
     public boolean execute(final org.bukkit.command.CommandSender sender, final String label, final String[] args) {
+        assert sender != null : "Sender cannot be null!";
+        assert label != null : "Label cannot be null!";
+        assert args != null : "Args cannot be null!";
+
         final CommandSender commandSender;
         if (sender instanceof org.bukkit.entity.Player) {
             commandSender = InternalPluginManager.getServer().getPlayerManager()

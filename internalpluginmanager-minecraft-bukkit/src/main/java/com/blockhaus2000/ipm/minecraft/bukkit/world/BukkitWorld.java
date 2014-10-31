@@ -61,6 +61,8 @@ public final class BukkitWorld implements World {
      *            The Bukkit {@link org.bukkit.World} to wrap.
      */
     private BukkitWorld(final org.bukkit.World bukkitWorld) {
+        assert bukkitWorld != null : "BukkitWorld cannot be null!";
+
         this.uuid = bukkitWorld.getUID();
         this.name = bukkitWorld.getName().toLowerCase().trim();
     }
@@ -93,6 +95,9 @@ public final class BukkitWorld implements World {
      */
     @Override
     public void setBlockAt(final Vector vector, final Block block) {
+        assert vector != null : "Vector cannot be null!";
+        assert block != null : "Block cannot be null!";
+
         BlockConverter.convertToBukkitBlock(block, new WorldLocation(vector, this));
     }
 
@@ -125,6 +130,8 @@ public final class BukkitWorld implements World {
      */
     @Override
     public Block getBlockAt(final Vector vector) {
+        assert vector != null : "Vector cannot be null!";
+
         return this.getBlockAt(vector.getX(), vector.getY(), vector.getZ());
     }
 
@@ -146,6 +153,8 @@ public final class BukkitWorld implements World {
      */
     @Override
     public Block getHighestBlockAt(final Vector vector) {
+        assert vector != null : "Vector cannot be null!";
+
         return this.getHighestBlockAt(vector.getY(), vector.getZ());
     }
 
@@ -156,6 +165,8 @@ public final class BukkitWorld implements World {
      */
     @Override
     public Chunk getChunkContainingLocation(final Vector vector) {
+        assert vector != null : "Vector cannot be null!";
+
         // TODO Auto-generated method body.
         return null;
     }
@@ -167,6 +178,8 @@ public final class BukkitWorld implements World {
      */
     @Override
     public Chunk getChunkAt(final Vector vector) {
+        assert vector != null : "Vector cannot be null!";
+
         // TODO Auto-generated method body.
         return null;
     }
@@ -236,6 +249,8 @@ public final class BukkitWorld implements World {
          *         given Bukkit {@link org.bukkit.World}.
          */
         public static World create(final org.bukkit.World bukkitWorld) {
+            assert bukkitWorld != null : "BukkitWorld cannot be null!";
+
             final UUID bukkitWorldID = bukkitWorld.getUID();
 
             World player = Factory.PLAYER_CACHE.get(bukkitWorldID);
@@ -263,6 +278,8 @@ public final class BukkitWorld implements World {
          * @see com.blockhaus2000.ipm.minecraft.bukkit.world.BukkitWorld.Factory#create(org.bukkit.World)
          */
         public static World create(final UUID bukkitWorld) {
+            assert bukkitWorld != null : "BukkitWorld cannot be null!";
+
             return Factory.create(Bukkit.getServer().getWorld(bukkitWorld));
         }
     }

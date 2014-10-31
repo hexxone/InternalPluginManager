@@ -45,6 +45,8 @@ public final class WorldConverter {
      * @return The converted IPM {@link World}.
      */
     public static World convertToIpmWorld(final org.bukkit.World bukkitWorld) {
+        assert bukkitWorld != null : "BukkitWorld cannot be null!";
+
         return InternalPluginManager.getServer().getWorldManager().getWorld(bukkitWorld.getName());
     }
 
@@ -57,6 +59,8 @@ public final class WorldConverter {
      * @return The converted Bukkit {@link org.bukkit.World}.
      */
     public static org.bukkit.World convertToBukkitWorld(final World ipmWorld) {
+        assert ipmWorld != null : "IpmWorld cannot be null!";
+
         return Bukkit.getServer().getWorld(ipmWorld.getUUID());
     }
 }

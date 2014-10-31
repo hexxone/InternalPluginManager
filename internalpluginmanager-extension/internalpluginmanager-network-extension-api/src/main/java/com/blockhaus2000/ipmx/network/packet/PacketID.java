@@ -374,7 +374,7 @@ public enum PacketID {
      * </tr>
      * <tr>
      * <td>10.x.2</td>
-     * <td>Value of 3.x.1</td>
+     * <td>Value of 10.x.1</td>
      * <td><code></code></td>
      * <td>The dependency String (splitted into bytes).</td>
      * </tr>

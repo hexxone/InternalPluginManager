@@ -153,7 +153,7 @@ public class BukkitServer implements Server {
      */
     @Override
     public String getServerVersion() {
-        // TODO Auto-generated method body.
+        // FIXME: Add server version. Has to be done before EVERY release.
         return null;
     }
 
