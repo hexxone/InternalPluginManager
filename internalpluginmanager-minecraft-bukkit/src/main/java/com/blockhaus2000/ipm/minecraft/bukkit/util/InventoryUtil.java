@@ -30,7 +30,7 @@ public final class InventoryUtil {
      * Constructor of InventoryUtil.
      *
      */
-    public InventoryUtil() {
+    private InventoryUtil() {
         // Nothing to do.
     }
 

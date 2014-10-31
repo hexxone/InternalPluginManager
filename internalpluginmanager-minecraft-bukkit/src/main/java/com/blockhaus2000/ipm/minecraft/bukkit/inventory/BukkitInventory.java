@@ -67,7 +67,7 @@ public class BukkitInventory implements Inventory {
      * The factory for {@link BukkitInventory}s.
      *
      */
-    public static class Factory {
+    public static final class Factory {
         /**
          * A list of all created {@link Inventory}s.
          *

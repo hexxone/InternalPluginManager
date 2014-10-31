@@ -69,9 +69,10 @@
 	<!-- ===== Project Information ===== -->
 
 	<name>InternalPluginManager</name>
-	<inceptionYear>2014</inceptionYear>
-	<url>https://www.github.com/Blockhaus2000/InternalPluginManager/</url>
 	<description>See README.md.</description>
+
+	<inceptionYear>2014</inceptionYear>
+	<url>https://www.blockhaus2000.com/projects/internalpluginmanager/</url>
 
 	<licenses>
 		<license>
@@ -217,6 +218,7 @@
 					</execution>
 				</executions>
 				<configuration>
+					<!-- The JaCoCo run is not so important to fail the build. -->
 					<haltOnFailure>false</haltOnFailure>
 					<dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
 					<propertyName>surefireArgLine</propertyName>
@@ -258,7 +260,8 @@
 					<highPriorityStrings>
 						<highPriorityString>FIXME</highPriorityString> <!-- //TODO-FINDER:IGNORE -->
 					</highPriorityStrings>
-					<failOnHighPriority>true</failOnHighPriority>
+					<!-- Only fail within a release procedure. -->
+					<failOnHighPriority>false</failOnHighPriority>
 					<writeTodoList>false</writeTodoList>
 					<excludeFiles>
 						<excludeFile>.git/</excludeFile>
@@ -308,9 +311,73 @@
 				</executions>
 				<configuration>
 					<effort>Max</effort>
+					<!-- Only fail within a release procedure. -->
 					<failOnError>false</failOnError>
 					<fork>false</fork>
 					<includeTests>true</includeTests>
+				</configuration>
+			</plugin>
+
+			<!-- Generate and package Javadoc. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.1</version>
+				<executions>
+					<execution>
+						<id>package-javadoc</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<author>false</author>
+					<bottom>Copyright &#169;
+						${project.inceptionYear}&#x2013;{currentYear}
+						${project.organization.name} (${project.organization.url}).
+						Licensed under ${project.properties.license.name}
+						(${project.properties.license.url}).</bottom>
+					<charset>${project.properties.encoding}</charset>
+					<encoding>${project.properties.encoding}</encoding>
+					<failOnError>false</failOnError>
+					<linksource>true</linksource>
+					<show>private</show>
+					<source>${project.properties.javaVersion}</source>
+					<sourcetab>4</sourcetab>
+				</configuration>
+			</plugin>
+
+			<!-- Package sources. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>package-source</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<includePom>true</includePom>
+				</configuration>
+			</plugin>
+
+			<!-- Automate Javadoc upload. -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>wagon-maven-plugin</artifactId>
+				<version>1.0-beta-5</version>
+				<configuration>
+					<url>ftp://docs.blockhaus2000.com</url>
+					<fromDir>${project.build.directory}/apidocs/</fromDir>
+					<serverId>blockhaus2000-docs-ftp</serverId>
+					<toDir>ipm/${project.artifactId}/${project.version}</toDir>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -324,4 +391,32 @@
 			</extension>
 		</extensions>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<defaultGoal>clean deploy</defaultGoal>
+
+				<plugins>
+					<plugin>
+						<groupId>com.blockhaus2000</groupId>
+						<artifactId>todo-finder-maven-plugin</artifactId>
+						<version>1.4.4</version>
+						<configuration>
+							<failOnHighPriority>true</failOnHighPriority>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus</groupId>
+						<artifactId>findbugs-maven-plugin</artifactId>
+						<version>3.0.0</version>
+						<configuration>
+							<failOnError>true</failOnError>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

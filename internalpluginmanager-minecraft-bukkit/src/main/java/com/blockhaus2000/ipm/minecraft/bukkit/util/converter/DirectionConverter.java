@@ -31,7 +31,7 @@ public final class DirectionConverter {
      * Constructor of DirectionConverter.
      *
      */
-    public DirectionConverter() {
+    private DirectionConverter() {
         // Nothing to do.
     }
 
