@@ -16,6 +16,9 @@
 
 	<name>InternalPluginManager Standalone</name>
 
+
+	<!-- ===== Dependencies ===== -->
+
 	<dependencies>
 		<dependency>
 			<groupId>com.blockhaus2000</groupId>

@@ -16,6 +16,9 @@
 		<project.properties.mainClass>com.blockhaus2000.ipm.minecraft.bukkit.Main</project.properties.mainClass>
 	</properties>
 
+
+	<!-- ===== Dependencies ===== -->
+
 	<repositories>
 		<repository>
 			<id>bukkit-repo</id>

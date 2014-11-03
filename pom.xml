@@ -132,6 +132,13 @@
 
 	<!-- ===== Dependencies ===== -->
 
+	<repositories>
+		<repository>
+			<id>blockhaus2000-repo</id>
+			<url>http://repo.blockhaus2000.com</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<!-- Used for unit tests. -->
 		<dependency>

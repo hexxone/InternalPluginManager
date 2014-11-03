@@ -19,20 +19,6 @@
 
 	<!-- ===== Dependencies ===== -->
 
-	<pluginRepositories>
-		<pluginRepository>
-			<id>blockhaus2000-repo</id>
-			<url>http://repo.blockhaus2000.com/</url>
-		</pluginRepository>
-	</pluginRepositories>
-
-	<repositories>
-		<repository>
-			<id>blockhaus2000-repo</id>
-			<url>http://repo.blockhaus2000.com/</url>
-		</repository>
-	</repositories>
-
 	<dependencies>
 		<dependency>
 			<groupId>com.blockhaus2000</groupId>
