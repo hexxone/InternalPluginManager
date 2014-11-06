@@ -125,7 +125,11 @@
 	<pluginRepositories>
 		<pluginRepository>
 			<id>blockhaus2000-plugin-repo</id>
-			<url>http://repo.blockhaus2000.com/</url>
+			<url>http://repo.blockhaus2000.com</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>blockhaus2000-plugin-snap-repo</id>
+			<url>http://snap-repo.blockhaus2000.com</url>
 		</pluginRepository>
 	</pluginRepositories>
 
@@ -136,6 +140,10 @@
 		<repository>
 			<id>blockhaus2000-repo</id>
 			<url>http://repo.blockhaus2000.com</url>
+		</repository>
+		<repository>
+			<id>blockhaus2000-snap-repo</id>
+			<url>http://snap-repo.blockhaus2000.com</url>
 		</repository>
 	</repositories>
 
