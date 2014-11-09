@@ -32,6 +32,23 @@
 
 	<build>
 		<plugins>
+			<!-- Check for backward compatibility. -->
+			<plugin>
+				<groupId>com.googlecode.japi-checker</groupId>
+				<artifactId>japi-checker-maven-plugin</artifactId>
+				<version>0.2.0</version>
+				<executions>
+					<!-- Check backward compatibility to IPM version 2.0.0. -->
+					<execution>
+						<id>check-bc-2.0.0</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-plugin-plugin</artifactId>

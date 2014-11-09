@@ -252,6 +252,47 @@
 				</configuration>
 			</plugin>
 
+			<!-- Check for backward compatibility. -->
+			<plugin>
+				<groupId>com.googlecode.japi-checker</groupId>
+				<artifactId>japi-checker-maven-plugin</artifactId>
+				<version>0.2.0</version>
+				<executions>
+					<!-- The lifecycle phase "never" does not exist, so this plugin will 
+						not be executed. This is correct, because this plugin is not executable on 
+						the parent pom because of varios reasons. Thus, not every module has to be 
+						backwards compatible. -->
+					<!-- So the modules that has to execute this will also have an execution 
+						with the same id to override the execution phase and to take over the configuration 
+						for the specific execution. -->
+					<!-- Sadly, a new execution has to be created for every version to check 
+						for backward compatibility, cause the japi-checker-maven-plugin does not 
+						accept more than one reference to check. -->
+
+					<!-- Check backward compatibility to IPM version 2.0.0. -->
+					<execution>
+						<id>check-bc-2.0.0</id>
+						<phase>never</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<configuration>
+							<reference>
+								<groupId>${project.groupId}</groupId>
+								<artifactId>${project.artifactId}</artifactId>
+								<version>2.0.0</version>
+							</reference>
+						</configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<rules>
+						<!-- Check everything. -->
+						<rule>com.googlecode.japi.checker.rules.AllRules</rule>
+					</rules>
+				</configuration>
+			</plugin>
+
 			<!-- Find To-Do's. -->
 			<plugin>
 				<groupId>com.blockhaus2000</groupId>
