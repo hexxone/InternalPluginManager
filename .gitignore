@@ -13,7 +13,7 @@ dependency-reduced-pom.xml
 # Binary files from Visual Paradigm
 *.vpp
 # Binary files from Dia
-project-relation.dia
+*.dia
 # Binary files from Gimp
 *.xcf
 # Testing stuff
