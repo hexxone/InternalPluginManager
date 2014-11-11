@@ -18,5 +18,5 @@ dependency-reduced-pom.xml
 dist/
 
 # This are ignored for now. Will be re-added soon.
-archtitecture.png
-contributing-workflow.png
+architecture2.png
+contributing-workflow2.png
