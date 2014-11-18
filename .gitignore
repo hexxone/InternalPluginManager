@@ -20,7 +20,7 @@ dependency-reduced-pom.xml
 dist/
 
 # Other
-pr/
+private/
 
 # These are old images that should not be used.
 architecture2.png
