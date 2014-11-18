@@ -19,6 +19,9 @@ dependency-reduced-pom.xml
 # Testing stuff
 dist/
 
+# Other
+pr/
+
 # These are old images that should not be used.
 architecture2.png
 contributing-workflow2.png
