@@ -72,15 +72,34 @@ public class NullsafeMap<K, V> extends HashMap<K, V> {
     @Override
     public V get(final Object key) {
         if (super.get(key) == null) {
-            final V defValueClone = this.cloneDefaultValue();
-            if (defValueClone == null) {
-                super.put((K) key, this.defValue);
-            } else {
-                super.put((K) key, defValueClone);
-            }
+            super.put((K) key, this.getDefaultValue());
         }
 
         return super.get(key);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see java.util.HashMap#clone()
+     */
+    @Override
+    public Object clone() {
+        return new NullsafeMap<K, V>(this.getDefaultValue());
+    }
+
+    /**
+     *
+     * @return The default value. If the default value is cloneabled, this
+     *         returns a clone. Otherwise, it will return exactly the same
+     *         reference.
+     */
+    private V getDefaultValue() {
+        final V defValueClone = this.cloneDefaultValue();
+        if (defValueClone == null) {
+            return this.defValue;
+        }
+        return defValueClone;
     }
 
     /**

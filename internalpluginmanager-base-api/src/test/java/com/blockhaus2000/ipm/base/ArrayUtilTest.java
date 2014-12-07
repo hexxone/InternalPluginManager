@@ -20,8 +20,6 @@ package com.blockhaus2000.ipm.base;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.blockhaus2000.ipm.base.ArrayUtil;
-
 /**
  * Tests the {@link ArrayUtil}.
  *
@@ -34,7 +32,7 @@ public class ArrayUtilTest {
      *
      */
     @Test
-    public void joinString() {
+    public void testJoinString() {
         final String[] arr = new String[] { "e0", "e1", "e2", "e3", "e4" };
 
         Assert.assertEquals("e0 e1 e2 e3 e4", ArrayUtil.joinString(arr));

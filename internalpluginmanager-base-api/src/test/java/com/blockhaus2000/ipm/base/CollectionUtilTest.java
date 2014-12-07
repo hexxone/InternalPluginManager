@@ -29,9 +29,6 @@ import java.util.TreeSet;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.blockhaus2000.ipm.base.CollectionUtil;
-import com.blockhaus2000.ipm.base.Tag;
-
 /**
  * Tests the {@link CollectionUtil}.
  *
@@ -42,7 +39,7 @@ public class CollectionUtilTest {
      *
      */
     @Test
-    public void indexOf() {
+    public void testIndexOf() {
         final List<String> target = new ArrayList<String>(Arrays.asList("e0", "e1", "e2", "e3", "e4"));
 
         Assert.assertEquals(1, CollectionUtil.indexOf("e1", target));
@@ -57,7 +54,7 @@ public class CollectionUtilTest {
      */
     @Test
     @SuppressWarnings("unchecked")
-    public void toTagList() {
+    public void testToTagList() {
         final List<Tag<String>> expected = new LinkedList<Tag<String>>(Arrays.asList(new Tag<String>("e1"),
                 new Tag<String>("e2"), new Tag<String>("e3"), new Tag<String>("e4"), new Tag<String>("e5")));
         final List<String> target = new ArrayList<String>(Arrays.asList("e1", "e2", "e3", "e4", "e5"));
@@ -72,7 +69,7 @@ public class CollectionUtilTest {
      *
      */
     @Test
-    public void toSet() {
+    public void testToSet() {
         final Set<String> expected = new TreeSet<String>(Arrays.asList("e1", "e2", "e3", "e4", "e5"));
         final String[] target = new String[] { "e1", "e2", "e3", "e4", "e5" };
 
@@ -84,7 +81,7 @@ public class CollectionUtilTest {
      *
      */
     @Test
-    public void getDifferenceSet() {
+    public void testGetDifferenceSet() {
         final Set<String> s0 = new HashSet<String>(Arrays.asList("e0", "e1", "e2"));
         final Set<String> s1 = new HashSet<String>(Arrays.asList("e0", "e2", "e4"));
 

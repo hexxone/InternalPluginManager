@@ -21,8 +21,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.blockhaus2000.ipm.base.exception.IllegalStaticAccessException;
-import com.blockhaus2000.ipm.base.injection.Inject;
-import com.blockhaus2000.ipm.base.injection.InjectionManager;
 import com.blockhaus2000.ipm.base.injection.exception.NotAddedInjectionException;
 
 /**
@@ -35,7 +33,7 @@ public class InjectionManagerTest {
      *
      */
     @Test(expected = NotAddedInjectionException.class)
-    public void initNotAddedInjectionException() {
+    public void testInitFailureNotAdded() {
         InjectionManager.init(new InjectionManagerTestClass3());
     }
 
@@ -44,7 +42,7 @@ public class InjectionManagerTest {
      *
      */
     @Test(expected = IllegalStaticAccessException.class)
-    public void initIllegalStaticAccessException() {
+    public void testInitFailureIllegalStaticAcces() {
         InjectionManager.init(InjectionManagerTestClass3.class);
     }
 
@@ -53,7 +51,7 @@ public class InjectionManagerTest {
      *
      */
     @Test
-    public void initObjectAccess() {
+    public void testInitObjectAccess() {
         final InjectionManagerTestClass1.InjectionManagerTestInterface obj = new InjectionManagerTestClass1.InjectionManagerTestInterfaceImpl();
 
         Assert.assertTrue(InjectionManager.addResource(obj, InjectionManagerTestClass1.InjectionManagerTestInterface.class));
@@ -69,7 +67,7 @@ public class InjectionManagerTest {
      *
      */
     @Test
-    public void initStaticAccess() {
+    public void testInitStaticAccess() {
         final InjectionManagerTestClass2.InjectionManagerTestInterface obj = new InjectionManagerTestClass2.InjectionManagerTestInterfaceImpl();
 
         Assert.assertTrue(InjectionManager.addResource(obj, InjectionManagerTestClass2.InjectionManagerTestInterface.class));
@@ -89,9 +87,11 @@ public class InjectionManagerTest {
         }
 
         private static interface InjectionManagerTestInterface {
+            // Nothing to do.
         }
 
         private static class InjectionManagerTestInterfaceImpl implements InjectionManagerTestInterface {
+            // Nothing to do.
         }
     }
 
@@ -105,9 +105,11 @@ public class InjectionManagerTest {
         }
 
         private static interface InjectionManagerTestInterface {
+            // Nothing to do.
         }
 
         private static class InjectionManagerTestInterfaceImpl implements InjectionManagerTestInterface {
+            // Nothing to do.
         }
     }
 
@@ -122,10 +124,12 @@ public class InjectionManagerTest {
         }
 
         private static interface InjectionManagerTestInterface {
+            // Nothing to do.
         }
 
         @SuppressWarnings("unused")
         private static class InjectionManagerTestInterfaceImpl implements InjectionManagerTestInterface {
+            // Nothing to do.
         }
     }
 }

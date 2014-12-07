@@ -33,7 +33,7 @@ public class BitUtilTest {
      *
      */
     @Test
-    public void toByteArray() {
+    public void testToByteArray() {
         Assert.assertArrayEquals(new byte[] { 0x01 }, BitUtil.toByteArray((byte) 0x01));
         Assert.assertArrayEquals(new byte[] { 0x01, 0x10 }, BitUtil.toByteArray((byte) 0x01, (byte) 0x10));
 
@@ -59,6 +59,10 @@ public class BitUtilTest {
         Assert.assertArrayEquals(new byte[] { (byte) 0x00 }, BitUtil.toByteArray(false));
 
         Assert.assertArrayEquals(new byte[] { 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38 }, BitUtil.toByteArray("12345678"));
+        Assert.assertArrayEquals(new byte[] { 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36,
+                0x37, 0x38 }, BitUtil.toByteArray("12345678", "12345678"));
+        Assert.assertArrayEquals(new byte[] { 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36,
+                0x37, 0x38 }, BitUtil.toByteArray("12345678", null, "12345678"));
     }
 
     /**
@@ -66,7 +70,7 @@ public class BitUtilTest {
      *
      */
     @Test
-    public void fromByteToBoolean() {
+    public void testFromByteToBoolean() {
         Assert.assertEquals(true, BitUtil.fromBytesToBoolean((byte) 0x01));
         Assert.assertEquals(false, BitUtil.fromBytesToBoolean((byte) 0x00));
     }
@@ -76,7 +80,7 @@ public class BitUtilTest {
      *
      */
     @Test
-    public void fromBytesToString() {
+    public void testFromBytesToString() {
         Assert.assertEquals("12345678", BitUtil.fromBytesToString((byte) 0x31, (byte) 0x32, (byte) 0x33, (byte) 0x34,
                 (byte) 0x35, (byte) 0x36, (byte) 0x37, (byte) 0x38));
     }
@@ -90,7 +94,7 @@ public class BitUtilTest {
      *
      */
     @Test
-    public void fromBytes() {
+    public void testFromBytes() {
         Assert.assertEquals(0x01, BitUtil.fromBytes((byte) 0x01));
 
         Assert.assertEquals(0x0102, BitUtil.fromBytes((byte) 0x01, (byte) 0x02));

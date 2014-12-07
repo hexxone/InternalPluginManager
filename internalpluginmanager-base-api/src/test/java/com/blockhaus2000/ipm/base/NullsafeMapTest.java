@@ -35,23 +35,61 @@ public class NullsafeMapTest {
      *
      */
     @Test
-    public void test() {
+    public void testUncloneable() {
         final Map<Integer, String> map0 = new NullsafeMap<Integer, String>("Hello, World!");
         Assert.assertEquals("Hello, World!", map0.get(4));
+    }
 
-        final Map<Integer, List<String>> map1 = new NullsafeMap<Integer, List<String>>(new ArrayList<String>(Arrays.asList("e0",
+    /**
+     * Tests {@link NullsafeMap}.
+     *
+     */
+    @Test
+    public void testCloneable() {
+        final Map<Integer, StringBuilder> map = new NullsafeMap<Integer, StringBuilder>(new StringBuilder("Hello, World!"));
+        Assert.assertEquals("Hello, World!", map.get(4).toString());
+        Assert.assertEquals("Hello, World!", map.get(10).toString());
+        map.get(4).delete(5, 12);
+        Assert.assertEquals("Hello!", map.get(4).toString());
+        Assert.assertEquals("Hello!", map.get(10).toString());
+    }
+
+    /**
+     * Tests {@link NullsafeMap}.
+     *
+     */
+    @Test
+    public void testNested() {
+        final Map<Integer, List<String>> map = new NullsafeMap<Integer, List<String>>(new ArrayList<String>(Arrays.asList("e0",
                 "e1", "e2", "e3", "e4")));
-        Assert.assertEquals(new ArrayList<String>(Arrays.asList("e0", "e1", "e2", "e3", "e4")), map1.get(4));
-        Assert.assertEquals(new ArrayList<String>(Arrays.asList("e0", "e1", "e2", "e3", "e4")), map1.get(10));
-        map1.get(4).remove(1);
-        Assert.assertEquals(new ArrayList<String>(Arrays.asList("e0", "e2", "e3", "e4")), map1.get(4));
-        Assert.assertEquals(new ArrayList<String>(Arrays.asList("e0", "e1", "e2", "e3", "e4")), map1.get(10));
+        Assert.assertEquals(new ArrayList<String>(Arrays.asList("e0", "e1", "e2", "e3", "e4")), map.get(4));
+        Assert.assertEquals(new ArrayList<String>(Arrays.asList("e0", "e1", "e2", "e3", "e4")), map.get(10));
+        map.get(4).remove(1);
+        Assert.assertEquals(new ArrayList<String>(Arrays.asList("e0", "e2", "e3", "e4")), map.get(4));
+        Assert.assertEquals(new ArrayList<String>(Arrays.asList("e0", "e1", "e2", "e3", "e4")), map.get(10));
+    }
 
-        final Map<Integer, StringBuilder> map2 = new NullsafeMap<Integer, StringBuilder>(new StringBuilder("Hello, World!"));
-        Assert.assertEquals("Hello, World!", map2.get(4).toString());
-        Assert.assertEquals("Hello, World!", map2.get(10).toString());
-        map2.get(4).delete(5, 12);
-        Assert.assertEquals("Hello!", map2.get(4).toString());
-        Assert.assertEquals("Hello!", map2.get(10).toString());
+    /**
+     * Tests {@link NullsafeMap}.
+     *
+     */
+    @Test
+    public void testSelfNested() {
+        final Map<Integer, Map<Integer, List<String>>> map3 = new NullsafeMap<Integer, Map<Integer, List<String>>>(
+                new NullsafeMap<Integer, List<String>>(new ArrayList<String>(Arrays.asList("e0", "e1", "e2", "e3", "e4"))));
+        Assert.assertEquals("e0", map3.get(4).get(6).get(0));
+        Assert.assertEquals("e1", map3.get(10).get(3).get(1));
+        map3.get(4).get(6).set(3, "Hello");
+        map3.get(10).get(3).set(0, "Foo");
+        Assert.assertEquals("Hello", map3.get(4).get(6).get(3));
+        Assert.assertEquals("Foo", map3.get(10).get(3).get(0));
+        Assert.assertEquals("e2", map3.get(11).get(33).get(2));
+        map3.get(5).get(3).set(0, "Hello");
+        map3.get(4).get(3).set(0, "World");
+        Assert.assertEquals("Hello", map3.get(5).get(3).get(0));
+        Assert.assertEquals("World", map3.get(4).get(3).get(0));
+        Assert.assertEquals("Hello", map3.get(4).get(6).get(3));
+        Assert.assertEquals("Foo", map3.get(10).get(3).get(0));
+        Assert.assertEquals("e2", map3.get(11).get(33).get(2));
     }
 }
