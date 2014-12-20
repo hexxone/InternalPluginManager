@@ -437,6 +437,26 @@
 					<toDir>ipm/${project.artifactId}/${project.version}</toDir>
 				</configuration>
 			</plugin>
+
+			<!-- Clear up snapshot repository. -->
+			<plugin>
+				<groupId>com.blockhaus2000</groupId>
+				<artifactId>repo-cleaner-maven-plugin</artifactId>
+				<version>1.0.3</version>
+				<configuration>
+					<repository>
+						<id>blockhaus2000-snap-repo-ftp</id>
+						<url>ftp://snap-repo.blockhaus2000.com/</url>
+					</repository>
+					<artifactSet>
+						<artifact>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>${project.artifactId}</artifactId>
+							<version>${project.version}</version>
+						</artifact>
+					</artifactSet>
+				</configuration>
+			</plugin>
 		</plugins>
 
 		<extensions>
