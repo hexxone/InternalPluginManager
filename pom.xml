@@ -4,7 +4,7 @@
 
 	<groupId>com.blockhaus2000</groupId>
 	<artifactId>internalpluginmanager-parent</artifactId>
-	<version>${project.ipm.version}</version>
+	<version>2.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
@@ -51,9 +51,6 @@
 
 	<!-- Some important project properties -->
 	<properties>
-		<!-- This POM sets the version of the whole InternalPluginManager. -->
-		<project.ipm.version>2.1.0-SNAPSHOT</project.ipm.version>
-
 		<!-- License Stuff -->
 		<project.properties.license.name>GNU General Public License 3.0</project.properties.license.name>
 		<project.properties.license.url>http://www.gnu.org/licenses/</project.properties.license.url>
