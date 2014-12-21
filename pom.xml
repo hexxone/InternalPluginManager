@@ -8,6 +8,8 @@
 	<packaging>pom</packaging>
 
 	<modules>
+		<!-- The Maven plugin does not depent on anything else, so it can be built 
+			at first. -->
 		<module>internalpluginmanager-maven-plugin</module>
 
 		<!-- The base is used by every other module, so build as first. -->
