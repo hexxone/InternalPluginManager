@@ -65,6 +65,10 @@
 
 		<!-- Fix encoding warnings -->
 		<project.build.sourceEncoding>${project.properties.encoding}</project.build.sourceEncoding>
+
+		<!-- The previous version of the InternalPluginManager. This has to be 
+			changed every time a release is executed! -->
+		<project.prevVersion>2.0.0</project.prevVersion>
 	</properties>
 
 
@@ -87,6 +91,24 @@
 		<name>Blockhaus2000</name>
 		<url>http://www.blockhaus2000.com/</url>
 	</organization>
+
+	<developers>
+		<developer>
+			<id>fabian</id>
+			<name>Fabian Damken</name>
+			<email>fabian@blockhaus2000.com</email>
+			<url>http://www.blockhaus2000.com/</url>
+			<organization>${project.organization.name}</organization>
+			<organizationUrl>${project.organization.url}</organizationUrl>
+			<roles>
+				<role>architect</role>
+				<role>product-owner</role>
+				<role>project-manager</role>
+				<role>head-of-developer</role>
+			</roles>
+			<timezone>Europe/Berlin</timezone>
+		</developer>
+	</developers>
 
 	<issueManagement>
 		<system>MantisBT</system>
@@ -119,6 +141,12 @@
 			<id>blockhaus2000-snap-repo-ftp</id>
 			<url>ftp://snap-repo.blockhaus2000.com/</url>
 		</snapshotRepository>
+
+		<!-- Documentation/Site will be deployed here -->
+		<site>
+			<id>blockhaus2000-docs-ftp</id>
+			<url>ftp://docs.blockhaus2000.com/ipm/${project.version}/</url>
+		</site>
 	</distributionManagement>
 
 
@@ -128,10 +156,23 @@
 		<pluginRepository>
 			<id>blockhaus2000-plugin-repo</id>
 			<url>http://repo.blockhaus2000.com</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
 		</pluginRepository>
 		<pluginRepository>
 			<id>blockhaus2000-plugin-snap-repo</id>
 			<url>http://snap-repo.blockhaus2000.com</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
 
@@ -142,10 +183,23 @@
 		<repository>
 			<id>blockhaus2000-repo</id>
 			<url>http://repo.blockhaus2000.com</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
 		</repository>
 		<repository>
 			<id>blockhaus2000-snap-repo</id>
 			<url>http://snap-repo.blockhaus2000.com</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
 		</repository>
 	</repositories>
 
@@ -164,7 +218,6 @@
 
 	<build>
 		<finalName>${project.artifactId}_v${project.version}_${buildNumber}</finalName>
-		<defaultGoal>clean install</defaultGoal>
 
 		<plugins>
 			<!-- Compiler settings. -->
@@ -200,9 +253,6 @@
 					</items>
 				</configuration>
 			</plugin>
-
-
-			<!-- Quality Assurance -->
 
 			<!-- Test runner. -->
 			<plugin>
@@ -294,118 +344,6 @@
 				</configuration>
 			</plugin>
 
-			<!-- Find To-Do's. -->
-			<plugin>
-				<groupId>com.blockhaus2000</groupId>
-				<artifactId>todo-finder-maven-plugin</artifactId>
-				<version>1.4.4</version>
-				<executions>
-					<execution>
-						<phase>verify</phase>
-						<goals>
-							<goal>find</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<lowPriorityStrings>
-						<lowPriorityString>IDEA</lowPriorityString> <!-- //TODO-FINDER:IGNORE -->
-					</lowPriorityStrings>
-					<normalPriorityStrings>
-						<normalPriorityString>TODO</normalPriorityString> <!-- //TODO-FINDER:IGNORE -->
-					</normalPriorityStrings>
-					<highPriorityStrings>
-						<highPriorityString>FIXME</highPriorityString> <!-- //TODO-FINDER:IGNORE -->
-					</highPriorityStrings>
-					<failOnHighPriority>false</failOnHighPriority>
-					<writeTodoList>false</writeTodoList>
-					<excludeFiles>
-						<excludeFile>.git/</excludeFile>
-						<excludeFile>codetemplates.xml</excludeFile>
-						<excludeFile>${project.build.directory}/</excludeFile>
-						<excludeFile>dependency-reduced-pom.xml</excludeFile>
-					</excludeFiles>
-				</configuration>
-			</plugin>
-
-			<!-- Check style -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.12</version>
-				<executions>
-					<execution>
-						<id>check-style</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<configLocation>checkstyle.xml</configLocation>
-					<encoding>${project.properties.encoding}</encoding>
-					<logViolationsToConsole>true</logViolationsToConsole>
-					<violationSeverity>warning</violationSeverity>
-					<failOnViolation>false</failOnViolation>
-					<failsOnError>false</failsOnError>
-				</configuration>
-			</plugin>
-
-			<!-- Find common bugs. -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>3.0.0</version>
-				<executions>
-					<execution>
-						<id>find-common-bugs</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<effort>Max</effort>
-					<failOnError>false</failOnError>
-					<fork>false</fork>
-					<includeTests>true</includeTests>
-					<xmlOutput>true</xmlOutput>
-				</configuration>
-			</plugin>
-
-			<!-- Generate and package Javadoc. -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.1</version>
-				<executions>
-					<execution>
-						<id>package-javadoc</id>
-						<phase>package</phase>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<author>false</author>
-					<bottom>Copyright &#169;
-						${project.inceptionYear}&#x2013;{currentYear}
-						${project.organization.name} (${project.organization.url}).
-						Licensed under ${project.properties.license.name}
-						(${project.properties.license.url}).</bottom>
-					<charset>${project.properties.encoding}</charset>
-					<encoding>${project.properties.encoding}</encoding>
-					<failOnError>false</failOnError>
-					<linksource>true</linksource>
-					<show>private</show>
-					<source>${project.properties.javaVersion}</source>
-					<sourcetab>4</sourcetab>
-				</configuration>
-			</plugin>
-
 			<!-- Package sources. -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -425,20 +363,7 @@
 				</configuration>
 			</plugin>
 
-			<!-- Automate Javadoc upload. -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>wagon-maven-plugin</artifactId>
-				<version>1.0-beta-5</version>
-				<configuration>
-					<url>ftp://docs.blockhaus2000.com</url>
-					<fromDir>${project.build.directory}/apidocs/</fromDir>
-					<serverId>blockhaus2000-docs-ftp</serverId>
-					<toDir>ipm/${project.artifactId}/${project.version}</toDir>
-				</configuration>
-			</plugin>
-
-			<!-- Clear up snapshot repository. -->
+			<!-- Clean up snapshot repository. -->
 			<plugin>
 				<groupId>com.blockhaus2000</groupId>
 				<artifactId>repo-cleaner-maven-plugin</artifactId>
@@ -469,27 +394,171 @@
 		</extensions>
 	</build>
 
+
+	<!-- ===== Reporting ===== -->
+
+	<reporting>
+		<plugins>
+			<!-- The Maven reports plugin. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+					<indentSize>4</indentSize>
+				</configuration>
+			</plugin>
+
+			<!-- The site plugin. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.4</version>
+				<configuration>
+					<locales>en_EN</locales>
+				</configuration>
+			</plugin>
+
+			<!-- Include test results. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>2.18</version>
+				<configuration>
+					<alwaysGenerateSurefireReport>false</alwaysGenerateSurefireReport>
+				</configuration>
+			</plugin>
+
+			<!-- Include test coverage. -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.2.201409121644</version>
+			</plugin>
+
+			<!-- Check style -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.12</version>
+				<configuration>
+					<configLocation>checkstyle.xml</configLocation>
+					<encoding>${project.properties.encoding}</encoding>
+					<logViolationsToConsole>true</logViolationsToConsole>
+					<violationSeverity>warning</violationSeverity>
+					<failOnViolation>false</failOnViolation>
+					<failsOnError>false</failsOnError>
+				</configuration>
+			</plugin>
+
+			<!-- Find common bugs. -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<effort>Max</effort>
+					<failOnError>false</failOnError>
+					<fork>false</fork>
+					<includeTests>true</includeTests>
+					<xmlOutput>true</xmlOutput>
+				</configuration>
+			</plugin>
+
+			<!-- Generate Javadoc. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.1</version>
+				<reportSets>
+					<reportSet>
+						<id>generate-javadoc</id>
+						<reports>
+							<report>javadoc</report>
+							<report>test-javadoc</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+				<configuration>
+					<author>false</author>
+					<bottom>Copyright &#169;
+						${project.inceptionYear}&#x2013;{currentYear}
+						${project.organization.name} (${project.organization.url}).
+						Licensed under ${project.properties.license.name}
+						(${project.properties.license.url}).</bottom>
+					<charset>${project.properties.encoding}</charset>
+					<encoding>${project.properties.encoding}</encoding>
+					<failOnError>false</failOnError>
+					<linksource>true</linksource>
+					<show>private</show>
+					<source>${project.properties.javaVersion}</source>
+					<sourcetab>4</sourcetab>
+				</configuration>
+			</plugin>
+
+			<!-- Generate changelog. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changelog-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<basedir>${project.basedir}</basedir>
+					<issueIDRegexPattern>\d+</issueIDRegexPattern>
+					<issueLinkUrl>http://issues.blockhaus2000.com/view.php?id=%ISSUE%</issueLinkUrl>
+					<displayChangeSetDetailUrl>${project.scm.url}/commit/%REV%</displayChangeSetDetailUrl>
+					<displayFileDetailUrl>${project.scm.url}/blob/master/%FILE%</displayFileDetailUrl>
+					<displayFileRevDetailUrl>${project.scm.url}/blob/%REV%/%FILE%</displayFileRevDetailUrl>
+					<type>range</type>
+					<range>30</range>
+				</configuration>
+			</plugin>
+
+			<!-- Find To-Do's. -->
+			<plugin>
+				<groupId>com.blockhaus2000</groupId>
+				<artifactId>todo-finder-maven-plugin</artifactId>
+				<version>1.4.4</version>
+				<reportSets>
+					<reportSet>
+						<id>find-todos</id>
+						<reports>
+							<report>find</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+				<configuration>
+					<lowPriorityStrings>
+						<lowPriorityString>IDEA</lowPriorityString> <!-- //TODO-FINDER:IGNORE -->
+					</lowPriorityStrings>
+					<normalPriorityStrings>
+						<normalPriorityString>TODO</normalPriorityString> <!-- //TODO-FINDER:IGNORE -->
+					</normalPriorityStrings>
+					<highPriorityStrings>
+						<highPriorityString>FIXME</highPriorityString> <!-- //TODO-FINDER:IGNORE -->
+					</highPriorityStrings>
+					<failOnHighPriority>false</failOnHighPriority>
+					<writeTodoList>false</writeTodoList>
+					<excludeFiles>
+						<excludeFile>.git/</excludeFile>
+						<excludeFile>codetemplates.xml</excludeFile>
+						<excludeFile>${project.build.directory}/</excludeFile>
+						<excludeFile>dependency-reduced-pom.xml</excludeFile>
+					</excludeFiles>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+
 	<profiles>
 		<profile>
 			<id>release</id>
-			<build>
-				<defaultGoal>clean deploy</defaultGoal>
-
+			<reporting>
 				<plugins>
-					<plugin>
-						<groupId>com.blockhaus2000</groupId>
-						<artifactId>todo-finder-maven-plugin</artifactId>
-						<version>1.4.4</version>
-						<configuration>
-							<failOnHighPriority>true</failOnHighPriority>
-						</configuration>
-					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-checkstyle-plugin</artifactId>
 						<version>2.12</version>
 						<configuration>
-							<failOnViolation>true</failOnViolation>
 							<failsOnError>true</failsOnError>
 						</configuration>
 					</plugin>
@@ -502,21 +571,27 @@
 						</configuration>
 					</plugin>
 					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>wagon-maven-plugin</artifactId>
-						<version>1.0-beta-5</version>
-						<executions>
-							<execution>
-								<id>upload-javadoc</id>
-								<phase>deploy</phase>
-								<goals>
-									<goal>upload</goal>
-								</goals>
-							</execution>
-						</executions>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-changelog-plugin</artifactId>
+						<version>2.3</version>
+						<configuration>
+							<type>tag</type>
+							<tags>
+								<tag>${project.version}</tag>
+								<tag>${project.prevVersion}</tag>
+							</tags>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>com.blockhaus2000</groupId>
+						<artifactId>todo-finder-maven-plugin</artifactId>
+						<version>1.4.4</version>
+						<configuration>
+							<failOnHighPriority>true</failOnHighPriority>
+						</configuration>
 					</plugin>
 				</plugins>
-			</build>
+			</reporting>
 		</profile>
 		<profile>
 			<id>reduce-memory</id>
