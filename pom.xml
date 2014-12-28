@@ -75,7 +75,7 @@
 	<!-- ===== Project Information ===== -->
 
 	<name>InternalPluginManager</name>
-	<description>See README.md.</description>
+	<description>Please lookup README file.</description>
 
 	<inceptionYear>2014</inceptionYear>
 	<url>https://www.blockhaus2000.com/projects/internalpluginmanager/</url>
@@ -276,30 +276,9 @@
 							<goal>prepare-agent</goal>
 						</goals>
 					</execution>
-					<execution>
-						<id>post-unit-test</id>
-						<phase>test</phase>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
 				</executions>
 				<configuration>
-					<haltOnFailure>false</haltOnFailure>
-					<dataFile>${project.build.directory}/jacoco.exec</dataFile>
 					<propertyName>surefireArgLine</propertyName>
-					<rules>
-						<rule>
-							<element>METHOD</element>
-							<limits>
-								<limit>
-									<counter>COMPLEXITY</counter>
-									<value>COVEREDRATIO</value>
-									<minimum>0.75</minimum>
-								</limit>
-							</limits>
-						</rule>
-					</rules>
 				</configuration>
 			</plugin>
 
@@ -367,7 +346,7 @@
 			<plugin>
 				<groupId>com.blockhaus2000</groupId>
 				<artifactId>repo-cleaner-maven-plugin</artifactId>
-				<version>1.0.3</version>
+				<version>1.0.4</version>
 				<configuration>
 					<repository>
 						<id>blockhaus2000-snap-repo-ftp</id>
@@ -434,6 +413,21 @@
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.7.2.201409121644</version>
+				<configuration>
+					<haltOnFailure>false</haltOnFailure>
+					<rules>
+						<rule>
+							<element>METHOD</element>
+							<limits>
+								<limit>
+									<counter>COMPLEXITY</counter>
+									<value>COVEREDRATIO</value>
+									<minimum>0.75</minimum>
+								</limit>
+							</limits>
+						</rule>
+					</rules>
+				</configuration>
 			</plugin>
 
 			<!-- Check style -->
