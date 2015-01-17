@@ -18,7 +18,6 @@
 package com.blockhaus2000.ipm.technical.configuration;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -56,8 +55,9 @@ public class HrTssConfigurationTest {
         final AbstractFileConfiguration configWrite;
         try {
             configWrite = new HrTssConfiguration(file);
-        } catch (final IOException cause) {
-            throw new RuntimeException(cause);
+        } catch (final InvalidIOException dummy) {
+            // This can never, ever happen.
+            return;
         }
         configWrite.set(p0, d0);
         configWrite.set(p1, d1);
@@ -70,8 +70,9 @@ public class HrTssConfigurationTest {
         final AbstractFileConfiguration configRead;
         try {
             configRead = new HrTssConfiguration(file);
-        } catch (final IOException cause) {
-            throw new RuntimeException(cause);
+        } catch (final InvalidIOException dummy) {
+            // This can never, ever happen.
+            return;
         }
         configRead.load();
 

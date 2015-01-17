@@ -18,7 +18,6 @@
 package com.blockhaus2000.ipm.technical.configuration;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -52,10 +51,21 @@ public class HrTssConfiguration extends AbstractFileConfiguration {
      *
      * @param file
      *            The configuration file. Do not has to exist.
-     * @throws IOException
-     *             Is thrown if the <code>super</code> call throws it.
+     * @throws InvalidIOException
+     *             This exception is never thrown. Please catch and ignore it.
+     *             <p>
+     *             In the version 2.0.0 of this software, an invalid IOException
+     *             was declared in the throws-clausel. But it was never, ever
+     *             thrown. So, for backward compatibility reasons, on
+     *             IOException has to be in the throws-clauses anyway because
+     *             the Java compiler does not like never-reachable catch-blocks.
+     *             <p>
+     *             See http://issues.blockhaus2000.com/view.php?id=200 for more
+     *             information about that bug in version 2.0.0.
+     *             </p>
+     *             </p>
      */
-    public HrTssConfiguration(final File file) throws IOException {
+    public HrTssConfiguration(final File file) throws InvalidIOException {
         super(file);
 
         this.config = new HRTSS(file);
