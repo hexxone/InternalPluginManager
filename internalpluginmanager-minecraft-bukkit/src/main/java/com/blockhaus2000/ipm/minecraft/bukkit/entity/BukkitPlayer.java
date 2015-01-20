@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.minecraft.bukkit.enity;
+package com.blockhaus2000.ipm.minecraft.bukkit.entity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +23,10 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 
+import com.blockhaus2000.ipm.minecraft.InternalPluginManager;
 import com.blockhaus2000.ipm.minecraft.bukkit.BukkitOfflinePlayer;
+import com.blockhaus2000.ipm.minecraft.bukkit.inventory.BukkitInventory;
+import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.LocationConverter;
 import com.blockhaus2000.ipm.minecraft.command.CommandSenderType;
 import com.blockhaus2000.ipm.minecraft.entity.Player;
 import com.blockhaus2000.ipm.minecraft.inventory.Inventory;
@@ -32,16 +35,7 @@ import com.blockhaus2000.ipm.minecraft.util.WorldLocation;
 /**
  * The Bukkit implementation of {@link Player}
  *
- * @deprecated The name of the package is misspelled. Please use
- *             {@link com.blockhaus2000.ipm.minecraft.bukkit.entity.BukkitPlayer}
- *             instead.
- *             <p>
- *             <b> NOTE: This class redirects its method calls to the new class,
- *             so it may be very, very slow (the factory is used all the time).
- *             </b>
- *             </p>
  */
-@Deprecated
 public final class BukkitPlayer extends BukkitOfflinePlayer implements Player {
     /**
      * Constructor of BukkitPlayer.
@@ -60,7 +54,7 @@ public final class BukkitPlayer extends BukkitOfflinePlayer implements Player {
      */
     @Override
     public Inventory getInventory() {
-        return com.blockhaus2000.ipm.minecraft.bukkit.entity.BukkitPlayer.Factory.create(this.getBukkitPlayer()).getInventory();
+        return BukkitInventory.Factory.create(this.getBukkitPlayer().getInventory());
     }
 
     /**
@@ -70,7 +64,7 @@ public final class BukkitPlayer extends BukkitOfflinePlayer implements Player {
      */
     @Override
     public CommandSenderType getType() {
-        return com.blockhaus2000.ipm.minecraft.bukkit.entity.BukkitPlayer.Factory.create(this.getBukkitPlayer()).getType();
+        return CommandSenderType.PLAYER;
     }
 
     /**
@@ -80,8 +74,7 @@ public final class BukkitPlayer extends BukkitOfflinePlayer implements Player {
      */
     @Override
     public boolean hasPermission(final String permission) {
-        return com.blockhaus2000.ipm.minecraft.bukkit.entity.BukkitPlayer.Factory.create(this.getBukkitPlayer()).hasPermission(
-                permission);
+        return this.getBukkitPlayer().hasPermission(permission);
     }
 
     /**
@@ -91,7 +84,7 @@ public final class BukkitPlayer extends BukkitOfflinePlayer implements Player {
      */
     @Override
     public void sendMessage(final String message) {
-        com.blockhaus2000.ipm.minecraft.bukkit.entity.BukkitPlayer.Factory.create(this.getBukkitPlayer()).sendMessage(message);
+        InternalPluginManager.getServer().getMessageManager().sendMessage(this, message);
     }
 
     /**
@@ -101,7 +94,7 @@ public final class BukkitPlayer extends BukkitOfflinePlayer implements Player {
      */
     @Override
     public void sendRawMessage(final String message) {
-        com.blockhaus2000.ipm.minecraft.bukkit.entity.BukkitPlayer.Factory.create(this.getBukkitPlayer()).sendRawMessage(message);
+        this.getBukkitPlayer().sendMessage(message);
     }
 
     /**
@@ -111,7 +104,7 @@ public final class BukkitPlayer extends BukkitOfflinePlayer implements Player {
      */
     @Override
     public WorldLocation getLocation() {
-        return com.blockhaus2000.ipm.minecraft.bukkit.entity.BukkitPlayer.Factory.create(this.getBukkitPlayer()).getLocation();
+        return LocationConverter.convertToIpmLocation(this.getBukkitPlayer().getLocation());
     }
 
     /**
@@ -121,7 +114,7 @@ public final class BukkitPlayer extends BukkitOfflinePlayer implements Player {
      */
     @Override
     public String getIp() {
-        return com.blockhaus2000.ipm.minecraft.bukkit.entity.BukkitPlayer.Factory.create(this.getBukkitPlayer()).getIp();
+        return this.getBukkitPlayer().getAddress().getAddress().getHostAddress();
     }
 
     /**
@@ -131,7 +124,7 @@ public final class BukkitPlayer extends BukkitOfflinePlayer implements Player {
      */
     @Override
     public boolean isIpBanned() {
-        return com.blockhaus2000.ipm.minecraft.bukkit.entity.BukkitPlayer.Factory.create(this.getBukkitPlayer()).isIpBanned();
+        return InternalPluginManager.getServer().getIpBanlist().isBanned(this.getIp());
     }
 
     /**
@@ -141,7 +134,7 @@ public final class BukkitPlayer extends BukkitOfflinePlayer implements Player {
      */
     @Override
     public void banIp(final String reason) {
-        com.blockhaus2000.ipm.minecraft.bukkit.entity.BukkitPlayer.Factory.create(this.getBukkitPlayer()).banIp(reason);
+        InternalPluginManager.getServer().getIpBanlist().ban(this.getIp(), reason);
     }
 
     /**
@@ -151,7 +144,7 @@ public final class BukkitPlayer extends BukkitOfflinePlayer implements Player {
      */
     @Override
     public boolean unbanIp() {
-        return com.blockhaus2000.ipm.minecraft.bukkit.entity.BukkitPlayer.Factory.create(this.getBukkitPlayer()).unbanIp();
+        return InternalPluginManager.getServer().getIpBanlist().unban(this.getIp());
     }
 
     /**
@@ -224,7 +217,7 @@ public final class BukkitPlayer extends BukkitOfflinePlayer implements Player {
          * @return The return value of
          *         {@link BukkitPlayer.Factory#create(org.bukkit.entity.Player)}
          *         .
-         * @see com.blockhaus2000.ipm.minecraft.bukkit.enity.BukkitPlayer.Factory#create(org.bukkit.entity.Player)
+         * @see com.blockhaus2000.ipm.minecraft.bukkit.entity.BukkitPlayer.Factory#create(org.bukkit.entity.Player)
          */
         public static Player create(final UUID bukkitPlayer) {
             assert bukkitPlayer != null : "BukkitPlayer cannot be null!";

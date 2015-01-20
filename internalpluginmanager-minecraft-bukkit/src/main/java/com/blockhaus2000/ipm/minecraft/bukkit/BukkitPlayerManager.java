@@ -26,7 +26,7 @@ import org.bukkit.Bukkit;
 
 import com.blockhaus2000.ipm.minecraft.OfflinePlayer;
 import com.blockhaus2000.ipm.minecraft.PlayerManager;
-import com.blockhaus2000.ipm.minecraft.bukkit.enity.BukkitPlayer;
+import com.blockhaus2000.ipm.minecraft.bukkit.entity.BukkitPlayer;
 import com.blockhaus2000.ipm.minecraft.entity.Player;
 
 /**
