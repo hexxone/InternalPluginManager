@@ -34,7 +34,8 @@ public class GameModeConverter {
     }
 
     /**
-     * Converts the given Bukkit {@link GameMode} into an IPM {@link GameMode}.
+     * Converts the given Bukkit {@link org.bukkit.GameMode} into an IPM
+     * {@link GameMode}.
      *
      * @param bukkitGameMode
      *            The Bukkit {@link org.bukkit.GameMode} to convert.
@@ -56,7 +57,8 @@ public class GameModeConverter {
     }
 
     /**
-     * Converts the given IPM {@link GameMode} into an Bukkit {@link GameMode}.
+     * Converts the given IPM {@link GameMode} into an Bukkit
+     * {@link org.bukkit.GameMode}.
      *
      * @param ipmGameMode
      *            The converted IPM {@link GameMode}.

@@ -27,6 +27,7 @@ import org.bukkit.Bukkit;
 import com.blockhaus2000.ipm.minecraft.GameRule;
 import com.blockhaus2000.ipm.minecraft.block.Block;
 import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.BlockConverter;
+import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.PlayerConverter;
 import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.WorldConverter;
 import com.blockhaus2000.ipm.minecraft.chunk.Chunk;
 import com.blockhaus2000.ipm.minecraft.util.Vector;
@@ -54,14 +55,14 @@ public final class BukkitWorld implements World {
      * {@link org.bukkit.World}.
      *
      * <p>
-     * <b> NOTE: Do not invoke this constructor directly. Use the
-     * {@link BukkitWorld.Factory} instead. </b>
+     * <b> NOTE: You must not call this constructor! Please use the
+     * {@link PlayerConverter} instead. </b>
      * </p>
      *
      * @param bukkitWorld
      *            The Bukkit {@link org.bukkit.World} to wrap.
      */
-    private BukkitWorld(final org.bukkit.World bukkitWorld) {
+    public BukkitWorld(final org.bukkit.World bukkitWorld) {
         assert bukkitWorld != null : "BukkitWorld cannot be null!";
 
         this.uuid = bukkitWorld.getUID();

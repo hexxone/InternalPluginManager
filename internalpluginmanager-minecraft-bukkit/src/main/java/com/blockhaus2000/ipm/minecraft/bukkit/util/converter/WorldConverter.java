@@ -19,7 +19,7 @@ package com.blockhaus2000.ipm.minecraft.bukkit.util.converter;
 
 import org.bukkit.Bukkit;
 
-import com.blockhaus2000.ipm.minecraft.InternalPluginManager;
+import com.blockhaus2000.ipm.minecraft.bukkit.world.BukkitWorld;
 import com.blockhaus2000.ipm.minecraft.world.World;
 
 /**
@@ -47,7 +47,7 @@ public final class WorldConverter {
     public static World convertToIpmWorld(final org.bukkit.World bukkitWorld) {
         assert bukkitWorld != null : "BukkitWorld cannot be null!";
 
-        return InternalPluginManager.getServer().getWorldManager().getWorld(bukkitWorld.getName());
+        return new BukkitWorld(bukkitWorld);
     }
 
     /**

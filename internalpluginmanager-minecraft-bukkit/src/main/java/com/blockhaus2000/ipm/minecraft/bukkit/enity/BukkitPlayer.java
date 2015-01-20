@@ -47,10 +47,15 @@ public final class BukkitPlayer extends BukkitOfflinePlayer implements Player {
     /**
      * Constructor of BukkitPlayer.
      *
+     * <p>
+     * <b> NOTE: You must not call this constructor! Please use the
+     * {@link PlayerConverter} instead. </b>
+     * </p>
+     *
      * @param bukkitPlayer
      *            The player to receive the information like {@link UUID} from.
      */
-    private BukkitPlayer(final org.bukkit.entity.Player bukkitPlayer) {
+    public BukkitPlayer(final org.bukkit.entity.Player bukkitPlayer) {
         super(bukkitPlayer);
     }
 

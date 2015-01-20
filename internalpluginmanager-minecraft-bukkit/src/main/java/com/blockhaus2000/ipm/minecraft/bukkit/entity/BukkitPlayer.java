@@ -41,10 +41,15 @@ public final class BukkitPlayer extends BukkitOfflinePlayer implements Player {
     /**
      * Constructor of BukkitPlayer.
      *
+     * <p>
+     * <b> NOTE: You must not call this constructor! Please use the
+     * {@link PlayerConverter} instead. </b>
+     * </p>
+     *
      * @param bukkitPlayer
      *            The player to receive the information like {@link UUID} from.
      */
-    private BukkitPlayer(final org.bukkit.entity.Player bukkitPlayer) {
+    public BukkitPlayer(final org.bukkit.entity.Player bukkitPlayer) {
         super(bukkitPlayer);
     }
 
@@ -154,22 +159,6 @@ public final class BukkitPlayer extends BukkitOfflinePlayer implements Player {
      */
     private org.bukkit.entity.Player getBukkitPlayer() {
         return Bukkit.getServer().getPlayer(this.getUUID());
-    }
-
-    /**
-     * Creates a new instance {@link Player}.
-     *
-     * <p>
-     * <b> NOTE: You must not call this method! Please use the
-     * {@link PlayerConverter} instead. </b>
-     * </p>
-     *
-     * @param bukkitPlayer
-     *            The Bukkit player to wrap.
-     * @return The newly created Bukkit player.
-     */
-    public static Player createNew(final org.bukkit.entity.Player bukkitPlayer) {
-        return new BukkitPlayer(bukkitPlayer);
     }
 
     /**

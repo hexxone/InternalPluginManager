@@ -17,10 +17,16 @@
  */
 package com.blockhaus2000.ipm.minecraft.bukkit.chunk;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.blockhaus2000.ipm.minecraft.InternalPluginManager;
 import com.blockhaus2000.ipm.minecraft.block.Block;
+import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.ChunkConverter;
+import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.EntityConverter;
+import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.WorldConverter;
 import com.blockhaus2000.ipm.minecraft.chunk.Chunk;
 import com.blockhaus2000.ipm.minecraft.entity.Entity;
 import com.blockhaus2000.ipm.minecraft.entity.Player;
@@ -32,14 +38,37 @@ import com.blockhaus2000.ipm.minecraft.util.WorldLocation;
  */
 public class BukkitChunk implements Chunk {
     /**
+     * The wrapped Bukkit chunk.
+     *
+     */
+    private final org.bukkit.Chunk bukkitChunk;
+
+    /**
+     * Constructor of BukkitChunk.
+     *
+     * <p>
+     * <b> NOTE: You must not call this method! Please use the
+     * {@link ChunkConverter} instead. </b>
+     * </p>
+     *
+     * @param bukkitChunk
+     *            The Bukkit chunk to use.
+     */
+    public BukkitChunk(final org.bukkit.Chunk bukkitChunk) {
+        assert bukkitChunk != null : "BukkitChunk cannot be null!";
+
+        this.bukkitChunk = bukkitChunk;
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @see com.blockhaus2000.ipm.minecraft.chunk.Chunk#getLocation()
      */
     @Override
     public WorldLocation getLocation() {
-        // TODO Auto-generated method body.
-        return null;
+        return new WorldLocation(this.bukkitChunk.getX(), -1, this.bukkitChunk.getZ(),
+                WorldConverter.convertToIpmWorld(this.bukkitChunk.getWorld()));
     }
 
     /**
@@ -49,8 +78,7 @@ public class BukkitChunk implements Chunk {
      */
     @Override
     public boolean isLoaded() {
-        // TODO Auto-generated method body.
-        return false;
+        return this.bukkitChunk.isLoaded();
     }
 
     /**
@@ -71,8 +99,7 @@ public class BukkitChunk implements Chunk {
      */
     @Override
     public void load(final boolean generate) {
-        // TODO Auto-generated method body.
-
+        this.bukkitChunk.load(generate);
     }
 
     /**
@@ -82,8 +109,7 @@ public class BukkitChunk implements Chunk {
      */
     @Override
     public void load() {
-        // TODO Auto-generated method body.
-
+        this.load(true);
     }
 
     /**
@@ -93,8 +119,7 @@ public class BukkitChunk implements Chunk {
      */
     @Override
     public void unload(final boolean save) {
-        // TODO Auto-generated method body.
-
+        this.bukkitChunk.unload(save);
     }
 
     /**
@@ -104,8 +129,7 @@ public class BukkitChunk implements Chunk {
      */
     @Override
     public void unload() {
-        // TODO Auto-generated method body.
-
+        this.unload(true);
     }
 
     /**
@@ -113,9 +137,21 @@ public class BukkitChunk implements Chunk {
      *
      * @see com.blockhaus2000.ipm.minecraft.chunk.Chunk#containsBlock(com.blockhaus2000.ipm.minecraft.block.Block)
      */
+    @SuppressWarnings("deprecation")
     @Override
     public boolean containsBlock(final Block block) {
-        // TODO Auto-generated method body.
+        final int id = block.getMaterial().getMaterialId();
+        final byte data = block.getMaterial().getMaterialData();
+        for (int x = 0; x <= 15; x++) {
+            for (int y = 0; y <= 127; y++) {
+                for (int z = 0; z <= 15; z++) {
+                    if (this.bukkitChunk.getBlock(x, y, z).getTypeId() == id
+                            && this.bukkitChunk.getBlock(x, y, z).getData() == data) {
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 
@@ -126,8 +162,11 @@ public class BukkitChunk implements Chunk {
      */
     @Override
     public List<Entity> getEnities() {
-        // TODO Auto-generated method body.
-        return null;
+        final List<Entity> result = new ArrayList<Entity>();
+        for (final org.bukkit.entity.Entity entity : this.bukkitChunk.getEntities()) {
+            result.add(EntityConverter.convertToIpmEntity(entity));
+        }
+        return result;
     }
 
     /**
@@ -137,7 +176,11 @@ public class BukkitChunk implements Chunk {
      */
     @Override
     public Set<Player> getPlayers() {
-        // TODO Auto-generated method body.
-        return null;
+        final Set<Player> result = new HashSet<Player>();
+        for (final Player player : InternalPluginManager.getServer().getPlayerManager().getPlayers()) {
+            // TODO: This can only be implemented if the IPM player has the
+            // possibility to get the location of the player.
+        }
+        return result;
     }
 }

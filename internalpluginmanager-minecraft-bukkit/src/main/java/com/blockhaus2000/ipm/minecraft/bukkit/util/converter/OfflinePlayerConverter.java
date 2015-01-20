@@ -61,12 +61,14 @@ public class OfflinePlayerConverter {
      * @return The converted IPM {@link OfflinePlayer}.
      */
     public static OfflinePlayer convertToIpmPlayer(final org.bukkit.OfflinePlayer bukkitPlayer) {
+        assert bukkitPlayer != null : "BukkitPlayer cannot be null!";
+
         OfflinePlayer player = OfflinePlayerConverter.CACHE.get(bukkitPlayer.getUniqueId());
         if (player == null) {
             synchronized (OfflinePlayerConverter.LOCK) {
                 player = OfflinePlayerConverter.CACHE.get(bukkitPlayer.getUniqueId());
                 if (player == null) {
-                    player = BukkitOfflinePlayer.createNew(bukkitPlayer);
+                    player = new BukkitOfflinePlayer(bukkitPlayer);
                     OfflinePlayerConverter.CACHE.put(bukkitPlayer.getUniqueId(), player);
                 }
             }
@@ -83,6 +85,8 @@ public class OfflinePlayerConverter {
      * @return The converted Bukkit {@link org.bukkit.OfflinePlayer}.
      */
     public static org.bukkit.OfflinePlayer convertToBukkitPlayer(final OfflinePlayer ipmPlayer) {
+        assert ipmPlayer != null : "IpmPlayer cannot be null!";
+
         return Bukkit.getOfflinePlayer(ipmPlayer.getUUID());
     }
 }

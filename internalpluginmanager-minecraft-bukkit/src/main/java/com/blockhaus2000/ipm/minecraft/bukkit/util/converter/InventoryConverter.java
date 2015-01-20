@@ -34,7 +34,9 @@ public class InventoryConverter {
      * @return The converted IPM {@link Inventory}.
      */
     public static Inventory convertToIpmInventory(final org.bukkit.inventory.Inventory bukkitInventory) {
-        return null;
+        assert bukkitInventory != null : "BukkitInventory cannot be null!";
+
+        return null; // TODO
     }
 
     /**
@@ -46,6 +48,8 @@ public class InventoryConverter {
      * @return The converted Bukkit {@link org.bukkit.inventory.Inventory}.
      */
     public static org.bukkit.inventory.Inventory convertToBukkitInventory(final Inventory ipmInventory) {
-        return null;
+        assert ipmInventory != null : "IpmInventory cannot be null!";
+
+        return null; // TODO
     }
 }

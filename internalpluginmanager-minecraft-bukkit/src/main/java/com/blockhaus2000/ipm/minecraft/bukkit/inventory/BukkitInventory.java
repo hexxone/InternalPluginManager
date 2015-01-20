@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.InventoryConverter;
+import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.PlayerConverter;
 import com.blockhaus2000.ipm.minecraft.inventory.Inventory;
 
 /**
@@ -39,8 +40,8 @@ public class BukkitInventory implements Inventory {
      * Constructor of BukkitInventory.
      *
      * <p>
-     * <b> NOTE: Do not invoke this constructor directly. Use The
-     * {@link BukkitInventory.Factory} instead. </b>
+     * <b> NOTE: You must not call this constructor! Please use the
+     * {@link PlayerConverter} instead. </b>
      * </p>
      *
      * @param bukkitInventory

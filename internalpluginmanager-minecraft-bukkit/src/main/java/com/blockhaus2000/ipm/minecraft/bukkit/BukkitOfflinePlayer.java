@@ -26,6 +26,7 @@ import org.bukkit.Bukkit;
 import com.blockhaus2000.ipm.minecraft.InternalPluginManager;
 import com.blockhaus2000.ipm.minecraft.OfflinePlayer;
 import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.OfflinePlayerConverter;
+import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.PlayerConverter;
 
 /**
  * The Bukkit implementation of {@link OfflinePlayer}.
@@ -48,14 +49,14 @@ public class BukkitOfflinePlayer implements OfflinePlayer {
      * Bukkit.
      *
      * <p>
-     * <b> NOTE: Do not invoke this constructor directly. Use the
-     * {@link BukkitOfflinePlayer.Factory} methods instead. </b>
+     * <b> NOTE: You must not call this constructor! Please use the
+     * {@link PlayerConverter} instead. </b>
      * </p>
      *
      * @param bukkitOfflinePlayer
      *            The offline player from Bukkit to wrap.
      */
-    protected BukkitOfflinePlayer(final org.bukkit.OfflinePlayer bukkitOfflinePlayer) {
+    public BukkitOfflinePlayer(final org.bukkit.OfflinePlayer bukkitOfflinePlayer) {
         assert bukkitOfflinePlayer != null : "BukkitOfflinePlayer cannot be null!";
 
         this.name = bukkitOfflinePlayer.getName().toLowerCase().trim();
@@ -134,22 +135,6 @@ public class BukkitOfflinePlayer implements OfflinePlayer {
     @Override
     public boolean unban() {
         return InternalPluginManager.getServer().getBanlist().unban(this);
-    }
-
-    /**
-     * Creates a new instance {@link OfflinePlayer}.
-     *
-     * <p>
-     * <b> NOTE: You must not call this method! Please use the
-     * {@link OfflinePlayerConverter} instead. </b>
-     * </p>
-     *
-     * @param bukkitPlayer
-     *            The Bukkit player to wrap.
-     * @return The newly created Bukkit player.
-     */
-    public static OfflinePlayer createNew(final org.bukkit.OfflinePlayer bukkitPlayer) {
-        return new BukkitOfflinePlayer(bukkitPlayer);
     }
 
     /**

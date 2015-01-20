@@ -61,12 +61,14 @@ public class PlayerConverter {
      * @return The converted IPM {@link Player}.
      */
     public static Player convertToIpmPlayer(final org.bukkit.entity.Player bukkitPlayer) {
+        assert bukkitPlayer != null : "BukkitPlayer cannot be null!";
+
         Player player = PlayerConverter.CACHE.get(bukkitPlayer.getUniqueId());
         if (player == null) {
             synchronized (PlayerConverter.LOCK) {
                 player = PlayerConverter.CACHE.get(bukkitPlayer.getUniqueId());
                 if (player == null) {
-                    player = BukkitPlayer.createNew(bukkitPlayer);
+                    player = new BukkitPlayer(bukkitPlayer);
                     PlayerConverter.CACHE.put(bukkitPlayer.getUniqueId(), player);
                 }
             }
@@ -83,6 +85,8 @@ public class PlayerConverter {
      * @return The converted Bukkit {@link org.bukkit.entity.Player}.
      */
     public static org.bukkit.entity.Player convertToBukkitPlayer(final Player ipmPlayer) {
+        assert ipmPlayer != null : "IpmPlayer cannot be null!";
+
         return Bukkit.getPlayer(ipmPlayer.getUUID());
     }
 }
