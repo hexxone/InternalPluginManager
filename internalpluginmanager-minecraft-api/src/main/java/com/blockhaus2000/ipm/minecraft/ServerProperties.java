@@ -107,6 +107,17 @@ public interface ServerProperties {
      *
      * @return <code>generate-structures</code>
      */
+    boolean generateStructures();
+
+    /**
+     * For a full explanation, see <a
+     * href='http://minecraft.gamepedia.com/Server.properties'>here</a>.
+     *
+     * @deprecated The name is misspelled. Please use
+     *             {@link ServerProperties#generateStructures()} instead.
+     * @return <code>generate-structures</code>
+     */
+    @Deprecated
     boolean generateStructutes();
 
     /**
