@@ -24,6 +24,7 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 
 import com.blockhaus2000.ipm.minecraft.bukkit.BukkitOfflinePlayer;
+import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.PlayerConverter;
 import com.blockhaus2000.ipm.minecraft.command.CommandSenderType;
 import com.blockhaus2000.ipm.minecraft.entity.Player;
 import com.blockhaus2000.ipm.minecraft.inventory.Inventory;
@@ -165,7 +166,9 @@ public final class BukkitPlayer extends BukkitOfflinePlayer implements Player {
     /**
      * The factory for players.
      *
+     * @deprecated Please use the {@link PlayerConverter} instead.
      */
+    @Deprecated
     public static final class Factory {
         /**
          * The object to use to create locks.

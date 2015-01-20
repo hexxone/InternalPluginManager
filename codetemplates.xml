@@ -12,7 +12,7 @@
  * ${tags}
  */</template><template autoinsert="false" context="filecomment_context" deleted="false" description="Comment for created Java files" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.filecomment" name="filecomment">/* This file is part of the InternalPluginManager.
  *
- * Copyright (C) 2014 Fabian Damken
+ * Copyright (C) 2014-2015 Fabian Damken
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

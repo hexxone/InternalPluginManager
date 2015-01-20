@@ -32,6 +32,8 @@ import com.blockhaus2000.ipm.minecraft.ServerProperties;
 import com.blockhaus2000.ipm.minecraft.Whitelist;
 import com.blockhaus2000.ipm.minecraft.bukkit.command.BukkitCommandManager;
 import com.blockhaus2000.ipm.minecraft.bukkit.command.BukkitConsoleCommandSender;
+import com.blockhaus2000.ipm.minecraft.bukkit.recipe.BukkitRecipeManager;
+import com.blockhaus2000.ipm.minecraft.bukkit.scoreboard.BukkitScoreboardManager;
 import com.blockhaus2000.ipm.minecraft.bukkit.world.BukkitWorldManager;
 import com.blockhaus2000.ipm.minecraft.command.ConsoleCommandSender;
 import com.blockhaus2000.ipm.minecraft.entity.Player;
@@ -78,10 +80,10 @@ public class BukkitServer implements Server {
      */
     private final Scheduler scheduler = new SimplePluginScheduler();
     /**
-     * TODO: Implement.
+     * The scoreboard manager of this server.
      *
      */
-    private final ScoreboardManager scoreboardManager = null;
+    private final ScoreboardManager scoreboardManager = new BukkitScoreboardManager();
     /**
      * The player manager of this server.
      *
@@ -98,30 +100,30 @@ public class BukkitServer implements Server {
      */
     private final MessageManager messageManager = new BukkitMessageManager();
     /**
-     * TODO: Implement.
+     * The recipe manager of this server.
      *
      */
-    private final RecipeManager recipeManager = null;
+    private final RecipeManager recipeManager = new BukkitRecipeManager();
     /**
-     * TODO: Implement.
+     * The server properties of this server.
      *
      */
-    private final ServerProperties serverProperties = null;
+    private final ServerProperties serverProperties = new BukkitServerProperties();
     /**
-     * TODO: Implement.
+     * The whitelist of this server.
      *
      */
-    private final Whitelist whitelist = null;
+    private final Whitelist whitelist = new BukkitWhitelist();
     /**
-     * TODO: Implement.
+     * The banlist of this server,
      *
      */
-    private final Banlist banlist = null;
+    private final Banlist banlist = new BukkitBanlist();
     /**
-     * TODO: Implement.
+     * The IP banlist.
      *
      */
-    private final IpBanlist ipBanlist = null;
+    private final IpBanlist ipBanlist = new BukkitIpBanlist();
     /**
      * The main {@link ConsoleCommandSender} of this server.
      *

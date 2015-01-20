@@ -27,6 +27,7 @@ import org.bukkit.Bukkit;
 import com.blockhaus2000.ipm.minecraft.GameRule;
 import com.blockhaus2000.ipm.minecraft.block.Block;
 import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.BlockConverter;
+import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.WorldConverter;
 import com.blockhaus2000.ipm.minecraft.chunk.Chunk;
 import com.blockhaus2000.ipm.minecraft.util.Vector;
 import com.blockhaus2000.ipm.minecraft.util.WorldLocation;
@@ -217,7 +218,9 @@ public final class BukkitWorld implements World {
     /**
      * The factory for worlds.
      *
+     * @deprecated Please use the {@link WorldConverter} instead.
      */
+    @Deprecated
     public static final class Factory {
         /**
          * The object to use to create locks.

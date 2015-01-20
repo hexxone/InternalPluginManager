@@ -25,8 +25,9 @@ import org.bukkit.Bukkit;
 
 import com.blockhaus2000.ipm.minecraft.InternalPluginManager;
 import com.blockhaus2000.ipm.minecraft.bukkit.BukkitOfflinePlayer;
-import com.blockhaus2000.ipm.minecraft.bukkit.inventory.BukkitInventory;
+import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.InventoryConverter;
 import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.LocationConverter;
+import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.PlayerConverter;
 import com.blockhaus2000.ipm.minecraft.command.CommandSenderType;
 import com.blockhaus2000.ipm.minecraft.entity.Player;
 import com.blockhaus2000.ipm.minecraft.inventory.Inventory;
@@ -54,7 +55,7 @@ public final class BukkitPlayer extends BukkitOfflinePlayer implements Player {
      */
     @Override
     public Inventory getInventory() {
-        return BukkitInventory.Factory.create(this.getBukkitPlayer().getInventory());
+        return InventoryConverter.convertToIpmInventory(this.getBukkitPlayer().getInventory());
     }
 
     /**
@@ -151,14 +152,32 @@ public final class BukkitPlayer extends BukkitOfflinePlayer implements Player {
      *
      * @return The wrapped Bukkit player.
      */
-    public org.bukkit.entity.Player getBukkitPlayer() {
+    private org.bukkit.entity.Player getBukkitPlayer() {
         return Bukkit.getServer().getPlayer(this.getUUID());
+    }
+
+    /**
+     * Creates a new instance {@link Player}.
+     *
+     * <p>
+     * <b> NOTE: You must not call this method! Please use the
+     * {@link PlayerConverter} instead. </b>
+     * </p>
+     *
+     * @param bukkitPlayer
+     *            The Bukkit player to wrap.
+     * @return The newly created Bukkit player.
+     */
+    public static Player createNew(final org.bukkit.entity.Player bukkitPlayer) {
+        return new BukkitPlayer(bukkitPlayer);
     }
 
     /**
      * The factory for players.
      *
+     * @deprecated Please use the {@link PlayerConverter} instead.
      */
+    @Deprecated
     public static final class Factory {
         /**
          * The object to use to create locks.

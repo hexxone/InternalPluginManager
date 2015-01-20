@@ -27,6 +27,8 @@ import org.bukkit.Bukkit;
 import com.blockhaus2000.ipm.minecraft.OfflinePlayer;
 import com.blockhaus2000.ipm.minecraft.PlayerManager;
 import com.blockhaus2000.ipm.minecraft.bukkit.entity.BukkitPlayer;
+import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.OfflinePlayerConverter;
+import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.PlayerConverter;
 import com.blockhaus2000.ipm.minecraft.entity.Player;
 
 /**
@@ -51,7 +53,7 @@ public class BukkitPlayerManager implements PlayerManager {
     public Player getPlayer(final UUID uuid) {
         assert uuid != null : "Uuid cannot be null!";
 
-        return BukkitPlayer.Factory.create(uuid);
+        return PlayerConverter.convertToIpmPlayer(Bukkit.getServer().getPlayer(uuid));
     }
 
     /**
@@ -77,7 +79,7 @@ public class BukkitPlayerManager implements PlayerManager {
     public Set<Player> getPlayers() {
         final Set<Player> players = new HashSet<Player>();
         for (final org.bukkit.entity.Player player : Bukkit.getServer().getOnlinePlayers()) {
-            players.add(BukkitPlayer.Factory.create(player));
+            players.add(PlayerConverter.convertToIpmPlayer(player));
         }
         return Collections.unmodifiableSet(players);
     }
@@ -91,7 +93,7 @@ public class BukkitPlayerManager implements PlayerManager {
     public OfflinePlayer getOfflinePlayer(final UUID uuid) {
         assert uuid != null : "Uuid cannot be null!";
 
-        return BukkitOfflinePlayer.Factory.create(uuid);
+        return OfflinePlayerConverter.convertToIpmPlayer(Bukkit.getOfflinePlayer(uuid));
     }
 
     /**
@@ -117,7 +119,7 @@ public class BukkitPlayerManager implements PlayerManager {
     public Set<OfflinePlayer> getOfflinePlayers() {
         final Set<OfflinePlayer> offlinePlayers = new HashSet<OfflinePlayer>();
         for (final org.bukkit.OfflinePlayer offlinePlayer : Bukkit.getServer().getOfflinePlayers()) {
-            offlinePlayers.add(BukkitOfflinePlayer.Factory.create(offlinePlayer));
+            offlinePlayers.add(OfflinePlayerConverter.convertToIpmPlayer(offlinePlayer));
         }
         return Collections.unmodifiableSet(offlinePlayers);
     }

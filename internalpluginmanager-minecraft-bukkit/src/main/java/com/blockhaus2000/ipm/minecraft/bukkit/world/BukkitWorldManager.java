@@ -21,6 +21,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 
+import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.WorldConverter;
 import com.blockhaus2000.ipm.minecraft.world.World;
 import com.blockhaus2000.ipm.minecraft.world.WorldManager;
 
@@ -46,7 +47,7 @@ public class BukkitWorldManager implements WorldManager {
     public World getWorld(final UUID uuid) {
         assert uuid != null : "Uuid cannot be null!";
 
-        return BukkitWorld.Factory.create(uuid);
+        return WorldConverter.convertToIpmWorld(Bukkit.getServer().getWorld(uuid));
     }
 
     /**

@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.InventoryConverter;
 import com.blockhaus2000.ipm.minecraft.inventory.Inventory;
 
 /**
@@ -66,7 +67,9 @@ public class BukkitInventory implements Inventory {
     /**
      * The factory for {@link BukkitInventory}s.
      *
+     * @deprecated Please use the {@link InventoryConverter} instead.
      */
+    @Deprecated
     public static final class Factory {
         /**
          * A list of all created {@link Inventory}s.

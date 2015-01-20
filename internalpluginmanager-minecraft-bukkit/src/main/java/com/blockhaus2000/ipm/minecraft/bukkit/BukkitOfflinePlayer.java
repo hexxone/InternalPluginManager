@@ -25,6 +25,7 @@ import org.bukkit.Bukkit;
 
 import com.blockhaus2000.ipm.minecraft.InternalPluginManager;
 import com.blockhaus2000.ipm.minecraft.OfflinePlayer;
+import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.OfflinePlayerConverter;
 
 /**
  * The Bukkit implementation of {@link OfflinePlayer}.
@@ -136,9 +137,27 @@ public class BukkitOfflinePlayer implements OfflinePlayer {
     }
 
     /**
+     * Creates a new instance {@link OfflinePlayer}.
+     *
+     * <p>
+     * <b> NOTE: You must not call this method! Please use the
+     * {@link OfflinePlayerConverter} instead. </b>
+     * </p>
+     *
+     * @param bukkitPlayer
+     *            The Bukkit player to wrap.
+     * @return The newly created Bukkit player.
+     */
+    public static OfflinePlayer createNew(final org.bukkit.OfflinePlayer bukkitPlayer) {
+        return new BukkitOfflinePlayer(bukkitPlayer);
+    }
+
+    /**
      * The factory for offline players.
      *
+     * @deprecated Please use the {@link OfflinePlayerConverter} instead.
      */
+    @Deprecated
     public static final class Factory {
         /**
          * The object to use to create locks.
