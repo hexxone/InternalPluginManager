@@ -373,8 +373,7 @@ public class BukkitServerProperties implements ServerProperties {
      */
     @Override
     public String serverIp() {
-        // TODO Auto-generated method body.
-        return null;
+        return Bukkit.getServer().getIp();
     }
 
     /**
@@ -384,8 +383,7 @@ public class BukkitServerProperties implements ServerProperties {
      */
     @Override
     public int serverPort() {
-        // TODO Auto-generated method body.
-        return 0;
+        return Bukkit.getServer().getPort();
     }
 
     /**
@@ -439,8 +437,7 @@ public class BukkitServerProperties implements ServerProperties {
      */
     @Override
     public int spawnProtection() {
-        // TODO Auto-generated method body.
-        return 0;
+        return Bukkit.getServer().getSpawnRadius();
     }
 
     /**
@@ -450,8 +447,7 @@ public class BukkitServerProperties implements ServerProperties {
      */
     @Override
     public int viewDistance() {
-        // TODO Auto-generated method body.
-        return 0;
+        return Bukkit.getServer().getViewDistance();
     }
 
     /**
@@ -461,7 +457,6 @@ public class BukkitServerProperties implements ServerProperties {
      */
     @Override
     public boolean whiteList() {
-        // TODO Auto-generated method body.
-        return false;
+        return Bukkit.getServer().hasWhitelist();
     }
 }
