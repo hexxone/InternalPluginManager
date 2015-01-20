@@ -22,6 +22,7 @@ import org.bukkit.Bukkit;
 import com.blockhaus2000.ipm.minecraft.Difficulty;
 import com.blockhaus2000.ipm.minecraft.GameMode;
 import com.blockhaus2000.ipm.minecraft.ServerProperties;
+import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.GameModeConverter;
 import com.blockhaus2000.ipm.minecraft.world.WorldType;
 
 /**
