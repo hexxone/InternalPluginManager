@@ -18,11 +18,9 @@
 package com.blockhaus2000.ipm.minecraft.bukkit.chunk;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.blockhaus2000.ipm.minecraft.InternalPluginManager;
 import com.blockhaus2000.ipm.minecraft.block.Block;
 import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.ChunkConverter;
 import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.EntityConverter;
@@ -176,11 +174,15 @@ public class BukkitChunk implements Chunk {
      */
     @Override
     public Set<Player> getPlayers() {
-        final Set<Player> result = new HashSet<Player>();
-        for (final Player player : InternalPluginManager.getServer().getPlayerManager().getPlayers()) {
-            // TODO: This can only be implemented if the IPM player has the
-            // possibility to get the location of the player.
-        }
-        return result;
+        // FIXME: Implement this correctly before any release
+        return null;
+
+        // final Set<Player> result = new HashSet<Player>();
+        // for (final Player player :
+        // InternalPluginManager.getServer().getPlayerManager().getPlayers()) {
+        // // TODO: This can only be implemented if the IPM player has the
+        // // possibility to get the location of the player.
+        // }
+        // return result;
     }
 }

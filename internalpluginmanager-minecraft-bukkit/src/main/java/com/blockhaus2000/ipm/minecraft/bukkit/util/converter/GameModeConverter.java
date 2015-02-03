@@ -61,8 +61,8 @@ public class GameModeConverter {
      * {@link org.bukkit.GameMode}.
      *
      * @param ipmGameMode
-     *            The converted IPM {@link GameMode}.
-     * @return The Bukkit {@link org.bukkit.GameMode} to convert.
+     *            The IPM {@link GameMode} to convert.
+     * @return The converted Bukkit {@link org.bukkit.GameMode}.
      */
     public static org.bukkit.GameMode convertToBukkitGameMode(final GameMode ipmGameMode) {
         assert ipmGameMode != null : "IpmGameMode cannot be null!";

@@ -52,6 +52,7 @@ public final class InventoryUtil {
         assert ipmInventory != null : "IpmInventory cannot be null!";
         assert bukkitInventory != null : "BukkitInventory cannot be null!";
 
-        // TODO: Implement inventory copying.
+        // TODO: Implement inventory copying. This can only be implemented if
+        // the IPM Inventory supports inventory modification.
     }
 }

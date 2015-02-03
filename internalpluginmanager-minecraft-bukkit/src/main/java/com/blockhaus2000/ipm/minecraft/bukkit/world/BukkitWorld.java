@@ -27,6 +27,7 @@ import org.bukkit.Bukkit;
 import com.blockhaus2000.ipm.minecraft.GameRule;
 import com.blockhaus2000.ipm.minecraft.block.Block;
 import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.BlockConverter;
+import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.ChunkConverter;
 import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.PlayerConverter;
 import com.blockhaus2000.ipm.minecraft.bukkit.util.converter.WorldConverter;
 import com.blockhaus2000.ipm.minecraft.chunk.Chunk;
@@ -193,8 +194,7 @@ public final class BukkitWorld implements World {
      */
     @Override
     public Chunk getChunkAt(final int x, final int z) {
-        // TODO Auto-generated method body.
-        return null;
+        return ChunkConverter.convertToIpmChunk(this.getBukkitWorld().getChunkAt(x, z));
     }
 
     /**
@@ -204,7 +204,14 @@ public final class BukkitWorld implements World {
      */
     @Override
     public Set<GameRule<?>> getGameRules() {
-        // TODO Auto-generated method body.
+        final Map<String, String> bukkitGameRules = new HashMap<String, String>();
+
+        final org.bukkit.World bukkitWorld = this.getBukkitWorld();
+        final String[] gameRules = bukkitWorld.getGameRules();
+        for (final String gameRule : gameRules) {
+            bukkitGameRules.put(gameRule, bukkitWorld.getGameRuleValue(gameRule));
+        }
+
         return null;
     }
 
