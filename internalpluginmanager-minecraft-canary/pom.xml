@@ -38,6 +38,13 @@
 			<artifactId>CanaryLib</artifactId>
 			<version>1.0.0</version>
 		</dependency>
+
+		<!-- Used for logging. -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-jdk14</artifactId>
+			<version>1.7.10</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -58,6 +65,7 @@
 					<createDependencyReducedPom>false</createDependencyReducedPom>
 					<artifactSet>
 						<includes>
+							<include>org.slf4j:slf4j-jdk14</include>
 							<include>com.blockhaus2000:internalpluginmanager-minecraft-api</include>
 						</includes>
 					</artifactSet>

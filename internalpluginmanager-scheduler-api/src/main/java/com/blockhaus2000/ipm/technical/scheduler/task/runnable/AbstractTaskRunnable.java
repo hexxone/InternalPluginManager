@@ -17,6 +17,10 @@
  */
 package com.blockhaus2000.ipm.technical.scheduler.task.runnable;
 
+import java.util.logging.Logger;
+
+import org.slf4j.LoggerFactory;
+
 import com.blockhaus2000.ipm.technical.scheduler.task.Task;
 
 /**
@@ -26,6 +30,16 @@ import com.blockhaus2000.ipm.technical.scheduler.task.Task;
  *            The specific type of task to use.
  */
 public abstract class AbstractTaskRunnable<T extends Task> implements Runnable {
+    /**
+     * The Logger for abstract class runnables
+     *
+     * @deprecated The usage of this logger is deprecated. Please create your
+     *             own logger via {@link LoggerFactory#getLogger(Class)}
+     *             instead.
+     */
+    @Deprecated
+    protected static final Logger LOGGER = Logger.getLogger(AbstractTaskRunnable.class.getName() + ".LOGGER");
+
     /**
      * The task to run.
      *

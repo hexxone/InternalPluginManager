@@ -85,7 +85,7 @@
 					<createDependencyReducedPom>false</createDependencyReducedPom>
 					<artifactSet>
 						<includes>
-							<!-- This may create some failures, because both of these are using 
+							<!-- This may create some failures, because all of these are using 
 								the artifact com.blockhaus2000:internalpluginmanager-base-api. Ignore these 
 								erros, they are OK. -->
 							<include>com.blockhaus2000:internalpluginmanager-command-api</include>

@@ -103,10 +103,9 @@ public class ServerThread extends Thread {
         final ServerSocket server = this.startServer();
 
         ServerThread.LOGGER.info("IPMNE server started on port " + this.port);
+        ServerThread.LOGGER.debug("Waiting for connections ...");
 
         while (!this.isInterrupted()) {
-            ServerThread.LOGGER.debug("Waiting for connections ...");
-
             String ip = "undefined";
             try {
                 final Connection con = this.acceptConnection(server);
@@ -117,6 +116,8 @@ public class ServerThread extends Thread {
 
                 final Thread connectionHandlerThread = new ConnectionHandlerThread(con);
                 connectionHandlerThread.start();
+
+                ServerThread.LOGGER.debug("Waiting for connections ...");
             } catch (final IOException cause) {
                 ServerThread.LOGGER.error("An error occurred whilest handling connection of \"" + ip + "\"!", cause);
             }
@@ -217,7 +218,6 @@ public class ServerThread extends Thread {
          *            The connection to handle.
          */
         public ConnectionHandlerThread(final Connection con) {
-
             this.con = con;
         }
 
@@ -233,7 +233,9 @@ public class ServerThread extends Thread {
 
             while (!this.con.socket().isClosed()) {
                 try {
-                    this.internalRun();
+                    if (!this.internalRun()) {
+                        break;
+                    }
                 } catch (final IOException cause) {
                     ServerThread.LOGGER.error("An error occurred whilest handling connection from \"" + this.con + "\"!", cause);
                 }
@@ -243,24 +245,27 @@ public class ServerThread extends Thread {
             } catch (final IOException cause) {
                 ServerThread.LOGGER.error("An error occurred whilest closing connection to \"" + this.con + "\"!", cause);
             }
+
+            ConnectionHandlerThread.LOGGER.debug("Connection handling finished");
         }
 
         /**
          * The handler.
          *
+         * @return Whether the connection is still open or not.
          * @throws IOException
          *             If an I/O error occurres.
          */
         // This method is made to avoid too deep nesting of all the code within
         // this method, cause every IOException has to be handled the same.
-        private void internalRun() throws IOException {
+        private boolean internalRun() throws IOException {
             final byte[] requestData = ServerUtil.readPacket(this.con.socket().getInputStream());
 
             ConnectionHandlerThread.LOGGER.debug("Request data: " + Arrays.toString(requestData));
 
             // If the request data is empty, the connection was closed.
             if (requestData.length == 0) {
-                return;
+                return false;
             }
 
             final byte[] responseData = ResponsePacketFactory.createResponsePacket(this.getResponsePacket(requestData));
@@ -268,6 +273,8 @@ public class ServerThread extends Thread {
             ConnectionHandlerThread.LOGGER.debug("Sending response data " + Arrays.toString(responseData));
 
             this.con.out().write(responseData);
+
+            return true;
         }
 
         /**
@@ -280,7 +287,7 @@ public class ServerThread extends Thread {
         private ResponsePacket getResponsePacket(final byte[] requestData) {
             assert requestData != null : "RequestData cannot be null!";
 
-            ConnectionHandlerThread.LOGGER.debug("Retrieving response packet for request data " + requestData);
+            ConnectionHandlerThread.LOGGER.debug("Retrieving response packet for request data " + Arrays.toString(requestData));
 
             ResponsePacket responsePacket = new IllegalFormatResponsePacket("Unknown error.");
             try {
