@@ -21,21 +21,30 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.blockhaus2000.ipm.technical.scheduler.task.AsynchTask;
 import com.blockhaus2000.ipm.technical.scheduler.task.DelayedTask;
 import com.blockhaus2000.ipm.technical.scheduler.task.RepeatingTask;
 import com.blockhaus2000.ipm.technical.scheduler.task.Task;
+import com.blockhaus2000.ipm.technical.scheduler.task.runnable.AbstractTaskRunnable;
 import com.blockhaus2000.ipm.technical.scheduler.task.runnable.AsynchDelayedTaskRunnable;
 import com.blockhaus2000.ipm.technical.scheduler.task.runnable.AsynchRepeatingTaskRunnable;
 import com.blockhaus2000.ipm.technical.scheduler.task.runnable.DelayedTaskRunnable;
 import com.blockhaus2000.ipm.technical.scheduler.task.runnable.RepeatingTaskRunnable;
-import com.blockhaus2000.ipm.technical.scheduler.task.runnable.AbstractTaskRunnable;
 
 /**
  * The default implementation of {@link Scheduler}.
  *
  */
 public class SimpleScheduler implements Scheduler {
+    /**
+     * The Logger of this class.
+     *
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleScheduler.class);
+
     /**
      * All registered tasks.
      *
@@ -65,6 +74,8 @@ public class SimpleScheduler implements Scheduler {
     public void start() {
         this.state = SimpleScheduler.State.STARTED;
 
+        SimpleScheduler.LOGGER.info("Scheduler started");
+
         for (final Task task : this.tasks.values()) {
             this.run(task);
         }
@@ -79,6 +90,8 @@ public class SimpleScheduler implements Scheduler {
     public void stop() {
         this.state = SimpleScheduler.State.STOPPED;
 
+        SimpleScheduler.LOGGER.info("Scheduler stopped");
+
         for (final Task task : this.tasks.values()) {
             task.disable();
         }
@@ -91,6 +104,8 @@ public class SimpleScheduler implements Scheduler {
      */
     @Override
     public void stop(final UUID uuid) {
+        SimpleScheduler.LOGGER.debug("Stopping task with uuid " + uuid);
+
         final Task task = this.tasks.get(uuid);
         if (task == null) {
             throw new IllegalArgumentException("Cannot find tasks with UUID=" + uuid + "!");
@@ -106,6 +121,8 @@ public class SimpleScheduler implements Scheduler {
      */
     @Override
     public UUID run(final Task task) {
+        SimpleScheduler.LOGGER.debug("Starting task " + task);
+
         if (task instanceof DelayedTask) {
             return this.internalRun((DelayedTask) task, task instanceof AsynchTask);
         } else if (task instanceof RepeatingTask) {
@@ -126,6 +143,8 @@ public class SimpleScheduler implements Scheduler {
      * @return The UUID of the started task.
      */
     private UUID internalRun(final DelayedTask task, final boolean asynch) {
+        SimpleScheduler.LOGGER.debug("Starting delayed task " + task + (asynch ? " asynchronously" : ""));
+
         final AbstractTaskRunnable<DelayedTask> taskRunnable;
         if (asynch) {
             taskRunnable = new AsynchDelayedTaskRunnable(task);
@@ -145,6 +164,8 @@ public class SimpleScheduler implements Scheduler {
      * @return The UUID of the started task.
      */
     private UUID internalRun(final RepeatingTask task, final boolean asynch) {
+        SimpleScheduler.LOGGER.debug("Starting repeating task " + task + (asynch ? " asynchronously" : ""));
+
         final AbstractTaskRunnable<RepeatingTask> taskRunnable;
         if (asynch) {
             taskRunnable = new AsynchRepeatingTaskRunnable(task);
@@ -164,6 +185,8 @@ public class SimpleScheduler implements Scheduler {
      * @return The UUID of the given task.
      */
     private UUID internalRun(final AbstractTaskRunnable<? extends Task> taskRunnable) {
+        SimpleScheduler.LOGGER.debug("Starting runnable task " + taskRunnable);
+
         final Task task = taskRunnable.getTask();
         final UUID uuid = task.getUUID();
 

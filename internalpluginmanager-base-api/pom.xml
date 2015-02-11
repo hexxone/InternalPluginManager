@@ -60,6 +60,7 @@
 					<createDependencyReducedPom>false</createDependencyReducedPom>
 					<artifactSet>
 						<includes>
+							<include>org.slf4j:log4j-api</include>
 							<include>com.blockhaus2000:tag-storage-system</include>
 						</includes>
 					</artifactSet>

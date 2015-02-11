@@ -21,10 +21,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import com.blockhaus2000.ipm.base.CommonConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of the {@link EventManager}.
@@ -32,10 +31,10 @@ import com.blockhaus2000.ipm.base.CommonConstants;
  */
 public class SimpleEventManager implements EventManager {
     /**
-     * The InternalPluginManager system logger.
+     * The Logger of this class.
      *
      */
-    private static final Logger LOGGER = Logger.getLogger(CommonConstants.INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleEventManager.class);
 
     /**
      * Constructor of SimpleEventManager.
@@ -56,9 +55,13 @@ public class SimpleEventManager implements EventManager {
         assert clazz != null : "Clazz cannot be null!";
         assert obj == null || obj.getClass().equals(clazz) : "Obj has to be an instance of clazz!";
 
+        SimpleEventManager.LOGGER.debug("Registering listeners of class " + clazz);
+
         for (final Method method : clazz.getDeclaredMethods()) {
             this.register(new SimpleEventHandler(obj, method));
         }
+
+        SimpleEventManager.LOGGER.debug("Registration finished");
     }
 
     /**
@@ -93,6 +96,8 @@ public class SimpleEventManager implements EventManager {
     public void fire(final AbstractEvent event) {
         assert event != null : "Event cannot be null!";
 
+        SimpleEventManager.LOGGER.debug("Firing event " + event);
+
         if (event instanceof AbstractAsynchEvent) {
             this.internalFire(event);
         } else {
@@ -100,6 +105,8 @@ public class SimpleEventManager implements EventManager {
                 this.internalFire(event);
             }
         }
+
+        SimpleEventManager.LOGGER.debug("Firing finished");
     }
 
     /**
@@ -111,13 +118,19 @@ public class SimpleEventManager implements EventManager {
     protected synchronized void register(final EventHandler handler) {
         assert handler != null : "Handler cannot be null!";
 
+        SimpleEventManager.LOGGER.debug("Registering event handler " + handler);
+
         final Object obj = handler.getListenerObject();
         final Method method = handler.getListenerMethod();
         final Class<?> clazz = method.getDeclaringClass();
 
         if (!method.isAnnotationPresent(EventListener.class)) {
+            SimpleEventManager.LOGGER.debug("Skipping event handler " + handler);
+
             return;
         }
+
+        SimpleEventManager.LOGGER.debug("Processing event handler " + handler);
 
         assert obj != null || Modifier.isStatic(method.getModifiers()) : "Method \"" + method.getName() + "\" in class \""
                 + clazz.getName() + "\" cannot be non-static if obj is null!";
@@ -152,6 +165,8 @@ public class SimpleEventManager implements EventManager {
         }
 
         handlers.add(new SimpleEventHandler(obj, method));
+
+        SimpleEventManager.LOGGER.debug("Registration of event handler finished");
     }
 
     /**
@@ -173,18 +188,18 @@ public class SimpleEventManager implements EventManager {
             try {
                 handler.getListenerMethod().invoke(handler.getListenerObject(), context);
             } catch (final IllegalArgumentException ex) {
-                SimpleEventManager.LOGGER.log(Level.SEVERE, "It seems that the event listener method \""
+                SimpleEventManager.LOGGER.error("It seems that the event listener method \""
                         + handler.getListenerMethod().getName() + "\" in class \""
                         + handler.getListenerMethod().getDeclaringClass().getName()
                         + "\" defines wrong arguments. The one and only argument should be a \"" + EventContext.class.getName()
                         + "\"!", ex);
             } catch (final IllegalAccessException ex) {
-                SimpleEventManager.LOGGER.log(Level.SEVERE, "An error occurred whilest fireing event \"" + event
-                        + "\" for method \"" + handler.getListenerMethod().getName() + "\" in clas \""
+                SimpleEventManager.LOGGER.error("An error occurred whilest fireing event \"" + event + "\" for method \""
+                        + handler.getListenerMethod().getName() + "\" in clas \""
                         + handler.getListenerMethod().getDeclaringClass().getName() + "\"!", ex);
             } catch (final InvocationTargetException ex) {
-                SimpleEventManager.LOGGER.log(Level.SEVERE, "An error occurred whilest fireing event \"" + event
-                        + "\" for method \"" + handler.getListenerMethod().getName() + "\" in clas \""
+                SimpleEventManager.LOGGER.error("An error occurred whilest fireing event \"" + event + "\" for method \""
+                        + handler.getListenerMethod().getName() + "\" in clas \""
                         + handler.getListenerMethod().getDeclaringClass().getName() + "\"!", ex);
             }
         }

@@ -20,10 +20,9 @@ package com.blockhaus2000.ipm.technical.plugin;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import com.blockhaus2000.ipm.base.CommonConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The {@link PluginDeployDaemon} scans the deploy directory for new deployed
@@ -34,10 +33,10 @@ import com.blockhaus2000.ipm.base.CommonConstants;
  */
 public class PluginDeployDaemon extends Thread {
     /**
-     * The InternalPluginManager system logger.
+     * The Logger of this class.
      *
      */
-    private static final Logger LOGGER = Logger.getLogger(CommonConstants.INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PluginDeployDaemon.class);
 
     /**
      * A {@link FileFilter} that only allowes jar files.
@@ -114,15 +113,17 @@ public class PluginDeployDaemon extends Thread {
      */
     @Override
     public void run() {
-        this.loadAlreadyDeployedPlugins();
+        PluginDeployDaemon.LOGGER.info("Plugin deploy daemon started for directory " + this.deployDir.getPath());
 
-        PluginDeployDaemon.LOGGER.fine("Hot deploy daemon started on directory \"" + this.deployDir.getAbsolutePath() + "\".");
+        this.loadAlreadyDeployedPlugins();
 
         // Start undeploy daemon after loading all already deplyoed plugins.
         this.pluginUndeployDaemon.start();
 
         while (!this.isInterrupted()) {
             for (final File rawFile : this.deployDir.listFiles(PluginDeployDaemon.JAR_FILE_FILTER)) {
+                PluginDeployDaemon.LOGGER.debug("Deploying file " + rawFile.getPath());
+
                 this.deploy(rawFile);
             }
 
@@ -133,10 +134,10 @@ public class PluginDeployDaemon extends Thread {
             }
         }
 
-        PluginDeployDaemon.LOGGER.fine("Hot deploy daemon stopped.");
-
         // Also stop undeploy daemon.
         this.pluginUndeployDaemon.interrupt();
+
+        PluginDeployDaemon.LOGGER.info("Plugin deploy daemon stopped");
     }
 
     /**
@@ -144,30 +145,23 @@ public class PluginDeployDaemon extends Thread {
      *
      */
     private void loadAlreadyDeployedPlugins() {
-        PluginDeployDaemon.LOGGER.fine("Loading plugins in directory \"" + this.pluginDir.getAbsolutePath() + "\".");
+        PluginDeployDaemon.LOGGER.debug("Loading already deployed plugins");
 
         for (final File file : this.pluginDir.listFiles(PluginDeployDaemon.JAR_FILE_FILTER)) {
-            PluginDeployDaemon.LOGGER.info("Jar file \"" + file.getAbsolutePath() + "\" detected.");
-
-            PluginDeployDaemon.LOGGER.finer("Starting deployment of \"" + file.getAbsolutePath() + "\".");
-
             try {
                 PluginManager.getInstance().loadPlugin(file, false, false);
             } catch (final Exception cause) {
-                PluginDeployDaemon.LOGGER.log(Level.SEVERE, "An error occurred whilest deploying \"" + file.getAbsolutePath()
-                        + "\"!", cause);
+                PluginDeployDaemon.LOGGER.error("An error occurred whilest deploying \"" + file.getAbsolutePath() + "\"!", cause);
             }
-
-            PluginDeployDaemon.LOGGER.finer("Deployment finished");
         }
 
-        PluginDeployDaemon.LOGGER.finer("Enabling all loaded plugins.");
         try {
             PluginManager.getInstance().enableAll();
         } catch (final Exception cause) {
-            PluginDeployDaemon.LOGGER.log(Level.SEVERE, "An error occurred whilest enabling all (loaded) plugins!", cause);
+            PluginDeployDaemon.LOGGER.error("An error occurred whilest enabling all (loaded) plugins!", cause);
         }
-        PluginDeployDaemon.LOGGER.fine("Loading finished.");
+
+        PluginDeployDaemon.LOGGER.debug("Already deploy plugins loaded");
     }
 
     /**
@@ -181,19 +175,11 @@ public class PluginDeployDaemon extends Thread {
         assert rawFile.exists() : "RawFile has to exist!";
         assert rawFile.isFile() : "RawFile has to be a file!";
 
-        PluginDeployDaemon.LOGGER.info("Jar file \"" + rawFile.getAbsolutePath() + "\" detected.");
+        PluginDeployDaemon.LOGGER.debug("Deploying file " + rawFile.getPath());
 
         final File file = new File(this.pluginDir, rawFile.getName());
-
-        PluginDeployDaemon.LOGGER.finer("Deleting old jar file \"" + file.getAbsolutePath() + "\".");
-
         file.delete();
-
-        PluginDeployDaemon.LOGGER.finer("Moving new jar file \"" + rawFile.getAbsolutePath() + "\" to plugin directory.");
-
         rawFile.renameTo(file);
-
-        PluginDeployDaemon.LOGGER.finer("Starting deployment of file \"" + file.getAbsolutePath() + "\" in a few seconds.");
 
         try {
             TimeUnit.SECONDS.sleep(2);
@@ -201,18 +187,14 @@ public class PluginDeployDaemon extends Thread {
             // Only deploy if no InterruptedException occurred.
             try {
                 PluginManager.getInstance().loadPlugin(file, true, true);
-            } catch (final Exception ex) {
-                ex.printStackTrace();
-                PluginDeployDaemon.LOGGER.severe("An error occurred whilest deploying \"" + file.getAbsolutePath() + "\"!");
-                PluginDeployDaemon.LOGGER.severe("Deleting \"" + file.getAbsolutePath() + "\"!");
+            } catch (final Exception cause) {
+                PluginDeployDaemon.LOGGER.error("An error occurred whilest deploying \"" + file.getAbsolutePath() + "\"!", cause);
+                PluginDeployDaemon.LOGGER.error("Deleting \"" + file.getAbsolutePath() + "\"!");
                 file.delete();
             }
-        } catch (final InterruptedException ex) {
-            PluginDeployDaemon.LOGGER.severe("An Exception occurres while waiting for deployment starting.");
-            ex.printStackTrace();
+        } catch (final InterruptedException cause) {
+            PluginDeployDaemon.LOGGER.error("An Exception occurres while waiting for deployment starting.", cause);
             this.interrupt();
         }
-
-        PluginDeployDaemon.LOGGER.finer("Deployment finished.");
     }
 }

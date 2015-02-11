@@ -23,23 +23,23 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.blockhaus2000.ipm.base.CollectionUtil;
-import com.blockhaus2000.ipm.base.CommonConstants;
 
 /**
- *
- * TODO: Add type description!
+ * This class represents a daemon that scans the plugin directory for changes un
+ * undeploy plugins if there jar files where deleted.
  *
  */
 public class PluginUndeployDaemon extends Thread {
     /**
-     * The InternalPluginManager system logger.
+     * The Logger of this class.
      *
      */
-    private static final Logger LOGGER = Logger.getLogger(CommonConstants.INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PluginUndeployDaemon.class);
 
     /**
      * A {@link FileFilter} that only allowes jar files.
@@ -93,22 +93,20 @@ public class PluginUndeployDaemon extends Thread {
      */
     @Override
     public void run() {
+        PluginUndeployDaemon.LOGGER.info("Starting plugin undeploy daemon for directory " + this.pluginDir.getPath());
+
         this.setLoadedPluginFiles();
 
-        PluginUndeployDaemon.LOGGER.fine("Undeploy listener started for directory \"" + this.pluginDir.getAbsolutePath() + "\".");
-
         while (!this.isInterrupted()) {
-            final Set<File> files = CollectionUtil.toSet(HashSet.class,
-                    this.pluginDir.listFiles(PluginUndeployDaemon.JAR_FILE_FILTER));
-
-            for (final File f : CollectionUtil.getDifferenceSet(this.loadedPluginFiles, files)) {
-                PluginUndeployDaemon.LOGGER.log(Level.FINER, "Undeploying \"" + f.getAbsolutePath() + "\".");
+            for (final File file : CollectionUtil.getDifferenceSet(this.loadedPluginFiles,
+                    CollectionUtil.toSet(HashSet.class, this.pluginDir.listFiles(PluginUndeployDaemon.JAR_FILE_FILTER)))) {
+                PluginUndeployDaemon.LOGGER.debug("Undeploying plugin file " + file.getPath());
 
                 try {
-                    this.undeploy(f);
+                    this.undeploy(file);
                 } catch (final Exception cause) {
-                    PluginUndeployDaemon.LOGGER.log(Level.SEVERE,
-                            "An error occurred whilest undeploying file \"" + f.getAbsolutePath() + "\"!", cause);
+                    PluginUndeployDaemon.LOGGER.trace("An error occurred whilest undeploying file \"" + file.getAbsolutePath()
+                            + "\"!", cause);
                 }
             }
 
@@ -120,6 +118,8 @@ public class PluginUndeployDaemon extends Thread {
                 this.interrupt();
             }
         }
+
+        PluginUndeployDaemon.LOGGER.info("Stopped plugin undeploy daemon");
     }
 
     /**
@@ -142,6 +142,8 @@ public class PluginUndeployDaemon extends Thread {
      *             If an I/O error occurres.
      */
     private void undeploy(final File file) throws IOException {
+        PluginUndeployDaemon.LOGGER.debug("Undeploying file " + file.getPath());
+
         final PluginMeta pluginMeta = PluginLoader.getInstance().getMeta(file, false);
         final Plugin plugin = PluginManager.getInstance().getPlugin(pluginMeta.getName());
         PluginManager.getInstance().delete(plugin);

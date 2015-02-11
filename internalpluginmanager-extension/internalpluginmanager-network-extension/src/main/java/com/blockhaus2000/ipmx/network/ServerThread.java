@@ -25,8 +25,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.blockhaus2000.ipm.technical.plugin.Plugin;
 import com.blockhaus2000.ipm.technical.plugin.PluginManager;
@@ -49,10 +50,10 @@ import com.blockhaus2000.ipmx.network.packet.response.packet.PluginListResponseP
  */
 public class ServerThread extends Thread {
     /**
-     * The logger.
+     * The Logger of this class.
      *
      */
-    private static final Logger LOGGER = IpmxNetworkMain.getInstance().getLogger();
+    private static final Logger LOGGER = LoggerFactory.getLogger(ServerThread.class);
 
     /**
      * The timeout for waiting for connection requests in seconds.
@@ -97,26 +98,31 @@ public class ServerThread extends Thread {
     @SuppressWarnings("resource")
     @Override
     public void run() {
+        ServerThread.LOGGER.info("Starting IPMNE server on port " + this.port);
+
         final ServerSocket server = this.startServer();
 
+        ServerThread.LOGGER.info("IPMNE server started on port " + this.port);
+
         while (!this.isInterrupted()) {
+            ServerThread.LOGGER.debug("Waiting for connections ...");
+
             String ip = "undefined";
             try {
                 final Connection con = this.acceptConnection(server);
                 if (con == null) {
                     continue;
                 }
-
                 ip = con.socket().getInetAddress().getHostAddress();
 
                 final Thread connectionHandlerThread = new ConnectionHandlerThread(con);
                 connectionHandlerThread.start();
             } catch (final IOException cause) {
-                ServerThread.LOGGER.log(Level.SEVERE, "An error occurred whilest handling connection of \"" + ip + "\"!", cause);
+                ServerThread.LOGGER.error("An error occurred whilest handling connection of \"" + ip + "\"!", cause);
             }
         }
 
-        ServerThread.LOGGER.log(Level.FINER, "Server stopped.");
+        ServerThread.LOGGER.info("Stopped IPMNE server!");
     }
 
     /**
@@ -125,12 +131,8 @@ public class ServerThread extends Thread {
      * @return The server socket.
      */
     private ServerSocket startServer() {
-        ServerThread.LOGGER.log(Level.FINER, "Starting server on port " + this.port);
-
         try {
             final ServerSocket server = new ServerSocket(this.port);
-
-            ServerThread.LOGGER.log(Level.FINEST, "Waiting for connection requests.");
 
             // Break every five seconds to avoid that the thread is running
             // infinite
@@ -139,9 +141,9 @@ public class ServerThread extends Thread {
 
             return server;
         } catch (final SocketException cause) {
-            ServerThread.LOGGER.log(Level.SEVERE, "An error occurred whilest setting timeout!", cause);
+            ServerThread.LOGGER.error("An error occurred whilest setting timeout!", cause);
         } catch (final IOException cause) {
-            ServerThread.LOGGER.log(Level.SEVERE, "An error occurred whilest creating server socket!", cause);
+            ServerThread.LOGGER.error("An error occurred whilest creating server socket!", cause);
         }
 
         return null;
@@ -170,14 +172,14 @@ public class ServerThread extends Thread {
 
         final String socketIp = con.socket().getInetAddress().getHostAddress();
 
-        ServerThread.LOGGER.log(Level.FINER, "Access requested from IP " + socketIp + ".");
+        ServerThread.LOGGER.debug("Accepted connection from " + socketIp);
 
         if (this.whitelist == null) {
-            ServerThread.LOGGER.log(Level.FINER, "Whitelist disabled. Access granted!");
+            ServerThread.LOGGER.debug("Whitelist disabled. Access granted!");
         } else if (this.whitelist.contains(socketIp)) {
-            ServerThread.LOGGER.log(Level.FINER, "Whitelist contains IP. Access granted!");
+            ServerThread.LOGGER.debug("IP is on whitelist. Access granted!");
         } else {
-            ServerThread.LOGGER.log(Level.FINER, "Whitelist does not contain IP. Access denied!");
+            ServerThread.LOGGER.debug("IP is not on whitelist. Access denied!");
 
             con.out().write(ResponsePacketFactory.createResponsePacket(new AccessDeniedResponsePacket()));
 
@@ -195,7 +197,13 @@ public class ServerThread extends Thread {
      * requests per connection and parallel requests.
      *
      */
-    public class ConnectionHandlerThread extends Thread {
+    public static class ConnectionHandlerThread extends Thread {
+        /**
+         * The Logger of this class.
+         *
+         */
+        private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionHandlerThread.class);
+
         /**
          * The connection to handle.
          *
@@ -209,6 +217,7 @@ public class ServerThread extends Thread {
          *            The connection to handle.
          */
         public ConnectionHandlerThread(final Connection con) {
+
             this.con = con;
         }
 
@@ -219,19 +228,20 @@ public class ServerThread extends Thread {
          */
         @Override
         public void run() {
+            ConnectionHandlerThread.LOGGER.debug("Handling connection from "
+                    + this.con.socket().getInetAddress().getHostAddress());
+
             while (!this.con.socket().isClosed()) {
                 try {
                     this.internalRun();
                 } catch (final IOException cause) {
-                    ServerThread.LOGGER.log(Level.SEVERE, "An error occurred whilest handling connection from \"" + this.con
-                            + "\"!", cause);
+                    ServerThread.LOGGER.error("An error occurred whilest handling connection from \"" + this.con + "\"!", cause);
                 }
             }
             try {
                 this.con.close();
             } catch (final IOException cause) {
-                ServerThread.LOGGER.log(Level.SEVERE, "An error occurred whilest closing connection to \"" + this.con + "\"!",
-                        cause);
+                ServerThread.LOGGER.error("An error occurred whilest closing connection to \"" + this.con + "\"!", cause);
             }
         }
 
@@ -241,23 +251,21 @@ public class ServerThread extends Thread {
          * @throws IOException
          *             If an I/O error occurres.
          */
-        // This method is made to avoid too deep netsing of all the code within
-        // this method, cause ever IOException has to be handled the same.
+        // This method is made to avoid too deep nesting of all the code within
+        // this method, cause every IOException has to be handled the same.
         private void internalRun() throws IOException {
             final byte[] requestData = ServerUtil.readPacket(this.con.socket().getInputStream());
 
-            // The request data is empty only, and only if the connection was
-            // closed whilest waiting for input.
+            ConnectionHandlerThread.LOGGER.debug("Request data: " + Arrays.toString(requestData));
+
+            // If the request data is empty, the connection was closed.
             if (requestData.length == 0) {
                 return;
             }
 
-            ServerThread.LOGGER.log(Level.FINEST, "Raw data from " + this.con.socket().getInetAddress().getHostAddress() + ": "
-                    + Arrays.toString(requestData));
-
             final byte[] responseData = ResponsePacketFactory.createResponsePacket(this.getResponsePacket(requestData));
 
-            ServerThread.LOGGER.log(Level.FINEST, "Sending response data (" + Arrays.toString(responseData) + ").");
+            ConnectionHandlerThread.LOGGER.debug("Sending response data " + Arrays.toString(responseData));
 
             this.con.out().write(responseData);
         }
@@ -272,12 +280,17 @@ public class ServerThread extends Thread {
         private ResponsePacket getResponsePacket(final byte[] requestData) {
             assert requestData != null : "RequestData cannot be null!";
 
+            ConnectionHandlerThread.LOGGER.debug("Retrieving response packet for request data " + requestData);
+
             ResponsePacket responsePacket = new IllegalFormatResponsePacket("Unknown error.");
             try {
                 responsePacket = this.getReponsePacket(requestData, RequestPacketFactory.createRequestPacket(requestData));
             } catch (final PacketFormatException ex) {
                 responsePacket = new IllegalFormatResponsePacket(ex.getLocalizedMessage());
             }
+
+            ConnectionHandlerThread.LOGGER.debug("Response packet retrieved: " + responsePacket);
+
             return responsePacket;
         }
 
@@ -297,6 +310,8 @@ public class ServerThread extends Thread {
                 throws PacketFormatException {
             assert requestData != null : "RequestData cannot be null!";
             assert requestPacket != null : "RequestPacket cannot be null!";
+
+            ConnectionHandlerThread.LOGGER.debug("Processing request packet " + requestPacket);
 
             final ResponsePacket responsePacket;
             switch (requestPacket.getPacketID()) {

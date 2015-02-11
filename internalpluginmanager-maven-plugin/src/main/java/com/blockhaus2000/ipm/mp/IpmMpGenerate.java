@@ -110,6 +110,10 @@ public class IpmMpGenerate extends AbstractMojo {
         // Delete file to clear it. The PrintWriter creates a new one.
         this.file.delete();
 
+        this.getLog().debug(
+                "Writing plugin meta (name: " + this.name + ", version: " + this.version + ", main: " + this.main + ", depends: "
+                        + this.depends + ") to disk (file: " + this.file.getPath() + ").");
+
         final PrintWriter writer;
         try {
             writer = new PrintWriter(
@@ -131,5 +135,7 @@ public class IpmMpGenerate extends AbstractMojo {
         }
 
         writer.close();
+
+        this.getLog().debug("Finished writing plugin meta to disk");
     }
 }

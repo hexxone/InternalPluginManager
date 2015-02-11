@@ -26,6 +26,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.blockhaus2000.ipm.technical.plugin.dependency.Dependency;
 import com.blockhaus2000.ipm.technical.plugin.dependency.DependencyBuilder;
 import com.blockhaus2000.ipm.technical.plugin.dependency.exception.UnresolveableDependencyException;
@@ -37,6 +40,12 @@ import com.blockhaus2000.ipm.technical.plugin.util.exception.MissingDependencyPl
  *
  */
 public final class PluginManager {
+    /**
+     * The Logger of this class.
+     *
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(PluginManager.class);
+
     /**
      * THE instance of the {@link PluginManager}.
      *
@@ -104,6 +113,8 @@ public final class PluginManager {
         assert directory != null : "Directory cannot be null!";
         assert !directory.exists() || directory.isDirectory() : "Directory has to be a directory!";
 
+        PluginManager.LOGGER.info("Starting plugin management for directory " + directory.getPath());
+
         if (this.started) {
             throw new IllegalStateException("Already started!");
         }
@@ -114,22 +125,24 @@ public final class PluginManager {
 
         this.deployDir = new File(directory, "deploy");
         assert !this.deployDir.exists() || this.deployDir.isDirectory() : "\"" + this.deployDir.getAbsolutePath()
-        + "\" has to be a directory!";
+                + "\" has to be a directory!";
         this.deployDir.mkdirs();
 
         this.pluginDir = new File(directory, "plugins" + File.separator + "plugin");
         assert !this.pluginDir.exists() || this.pluginDir.isDirectory() : "\"" + this.pluginDir.getAbsolutePath()
-        + "\" has to be a directory!";
+                + "\" has to be a directory!";
         this.pluginDir.mkdirs();
 
         this.configDir = new File(directory, "plugins" + File.separator + "config");
         assert !this.configDir.exists() || this.configDir.isDirectory() : "\"" + this.configDir.getAbsolutePath()
-        + "\" has to be a directory!";
+                + "\" has to be a directory!";
         this.configDir.mkdirs();
 
         // The plugin deploy daemon also starts the undeploy daemon.
         this.deployDaemon = new PluginDeployDaemon(this.deployDir, this.pluginDir);
         this.deployDaemon.start();
+
+        PluginManager.LOGGER.info("Plugin management started");
     }
 
     /**
@@ -167,6 +180,8 @@ public final class PluginManager {
 
         this.checkAccess();
 
+        PluginManager.LOGGER.debug("Disabling plugin " + plugin);
+
         if (!plugin.isEnabled()) {
             return;
         }
@@ -194,6 +209,8 @@ public final class PluginManager {
     public synchronized void disableAll() {
         this.checkAccess();
 
+        PluginManager.LOGGER.debug("Disabling all plugins");
+
         for (final Plugin plugin : this.plugins.values()) {
             this.disable(plugin);
         }
@@ -209,6 +226,8 @@ public final class PluginManager {
         assert plugin != null : "Plugin cannot be null!";
 
         this.checkAccess();
+
+        PluginManager.LOGGER.debug("Enabling plugin " + plugin);
 
         if (plugin.isEnabled()) {
             return;
@@ -236,6 +255,8 @@ public final class PluginManager {
      */
     public synchronized void enableAll() throws UnresolveableDependencyException {
         this.checkAccess();
+
+        PluginManager.LOGGER.debug("Enabling all plugins");
 
         final Map<String, Dependency> dependencies = new HashMap<String, Dependency>();
         for (final String pluginName : this.plugins.keySet()) {
@@ -296,13 +317,19 @@ public final class PluginManager {
 
         this.checkAccess();
 
+        PluginManager.LOGGER.info("Loading plugin " + file.getPath() + " (enable=" + enable + ",updateMeta=" + updateMeta + ")");
+
         assert file != null : "File cannot be null!";
         assert file.isFile() : "\"" + file.getAbsolutePath() + "\" has to be a file!";
 
         final PluginMeta meta = PluginLoader.getInstance().getMeta(file, updateMeta);
 
+        PluginManager.LOGGER.debug("Retrieved plugin meta " + meta);
+
         final Plugin oldPlugin = this.getPlugin(meta.getName().toLowerCase());
         if (oldPlugin != null) {
+            PluginManager.LOGGER.debug("Remove old plugin " + oldPlugin);
+
             if (meta.getFile().equals(oldPlugin.getPluginMeta().getFile())) {
                 this.remove(oldPlugin);
             } else {
@@ -311,6 +338,8 @@ public final class PluginManager {
         }
 
         final Plugin plugin = PluginLoader.getInstance().load(meta);
+
+        PluginManager.LOGGER.debug("Finalizing plugin " + plugin);
 
         this.plugins.put(plugin.getName().toLowerCase(), plugin);
         plugin.onLoad();
@@ -351,6 +380,8 @@ public final class PluginManager {
         assert plugin != null : "Plugin cannot be null!";
 
         this.checkAccess();
+
+        PluginManager.LOGGER.debug("Removing plugin " + plugin + "(delete=" + delete + ")");
 
         this.disable(plugin);
         if (delete) {

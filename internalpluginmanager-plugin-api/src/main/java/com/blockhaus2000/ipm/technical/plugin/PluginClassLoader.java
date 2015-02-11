@@ -24,6 +24,9 @@ import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * An {@link URLClassLoader} to load plugins.
  *
@@ -33,6 +36,12 @@ import java.util.Map;
  *
  */
 public final class PluginClassLoader extends URLClassLoader {
+    /**
+     * The Logger of this class.
+     *
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(PluginClassLoader.class);
+
     /**
      * A cache for the already loaded classes. Speeds everything up.
      *
@@ -56,6 +65,8 @@ public final class PluginClassLoader extends URLClassLoader {
      */
     PluginClassLoader(final File file) throws MalformedURLException {
         super(new URL[] { file.toURI().toURL() }, Thread.currentThread().getContextClassLoader());
+
+        PluginClassLoader.LOGGER.debug("Initilized plugin class loader for file " + file.getPath());
     }
 
     /**
@@ -72,6 +83,8 @@ public final class PluginClassLoader extends URLClassLoader {
      */
     Class<?> findClass(final String name, final boolean global) {
         assert name != null : "Name cannot be null!";
+
+        PluginClassLoader.LOGGER.debug("Searching " + (global ? "globally " : "") + "for class " + name);
 
         // First try to get the class.
         Class<?> clazz = this.classes.get(name);
@@ -109,6 +122,12 @@ public final class PluginClassLoader extends URLClassLoader {
         // Add class, if found, to class cache.
         if (clazz != null) {
             this.classes.put(name, clazz);
+        }
+
+        if (clazz == null) {
+            PluginClassLoader.LOGGER.warn("Could not find class " + name);
+        } else {
+            PluginClassLoader.LOGGER.debug("Found class: " + clazz);
         }
 
         // Return found class or, if not found, null.

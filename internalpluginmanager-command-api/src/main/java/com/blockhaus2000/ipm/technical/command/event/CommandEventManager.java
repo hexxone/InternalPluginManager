@@ -22,6 +22,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * The {@link CommandEventManager} manages the fireing of {@link CommandEvent}.
  * See there of explenetation of {@link CommandEvent}s.
@@ -29,6 +32,12 @@ import java.util.Set;
  * @see com.blockhaus2000.ipm.technical.command.event.CommandEvent
  */
 public final class CommandEventManager {
+    /**
+     * The Logger for this class.
+     *
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(CommandEventManager.class);
+
     /**
      * The singleton instance of the {@link CommandEventManager}.
      *
@@ -60,9 +69,15 @@ public final class CommandEventManager {
     public void fire(final CommandEvent event) {
         assert event != null : "Event cannot be null!";
 
+        CommandEventManager.LOGGER.debug("Firing command event " + event);
+
         for (final CommandEventListener listener : this.listeners.values()) {
+            CommandEventManager.LOGGER.debug("Fired for " + listener);
+
             listener.onCommandEvent(event);
         }
+
+        CommandEventManager.LOGGER.debug("Finished command event firing");
     }
 
     /**
@@ -74,6 +89,8 @@ public final class CommandEventManager {
      */
     public synchronized void register(final CommandEventListener listener) {
         assert listener != null : "Listener cannot be null!";
+
+        CommandEventManager.LOGGER.debug("Registering command event listener " + listener);
 
         this.listeners.put(listener.getClass().getName(), listener);
     }
@@ -90,6 +107,8 @@ public final class CommandEventManager {
     public synchronized boolean unregister(final Class<? extends CommandEventListener> listenerClass) {
         assert listenerClass != null : "ListenerClass cannot be null!";
 
+        CommandEventManager.LOGGER.debug("Unregistering command event listener class " + listenerClass);
+
         return this.listeners.remove(listenerClass.getName()) != null;
     }
 
@@ -103,6 +122,8 @@ public final class CommandEventManager {
      */
     public synchronized boolean unregister(final CommandEventListener listener) {
         assert listener != null : "Listener cannot be null!";
+
+        CommandEventManager.LOGGER.debug("Unregistering command event listener " + listener);
 
         return this.unregister(listener.getClass());
     }

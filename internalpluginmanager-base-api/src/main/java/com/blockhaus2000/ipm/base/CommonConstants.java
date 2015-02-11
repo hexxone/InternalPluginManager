@@ -17,6 +17,8 @@
  */
 package com.blockhaus2000.ipm.base;
 
+import org.slf4j.LoggerFactory;
+
 /**
  * This class contains some common constants.
  *
@@ -29,7 +31,14 @@ public final class CommonConstants {
      * <b> NOTE: Do NOT use this logger within plugins. Use the plugin logger
      * instead. </b>
      * </p>
+     *
+     * @deprecated The usage of this logger name is not recommended. Please use
+     *             a single logger for each class.
+     *             <p>
+     *             You can get one with {@link LoggerFactory#getLogger(Class)}.
+     *             </p>
      */
+    @Deprecated
     public static final String INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME = CommonConstants.class.getPackage().getName()
             + ".LOGGER";
 

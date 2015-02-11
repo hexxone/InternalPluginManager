@@ -23,7 +23,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-import com.blockhaus2000.ipm.base.CommonConstants;
 import com.blockhaus2000.ipm.technical.configuration.AbstractFileConfiguration;
 import com.blockhaus2000.ipm.technical.configuration.HrTssConfiguration;
 import com.blockhaus2000.ipm.technical.plugin.util.exception.PluginException;
@@ -229,7 +228,7 @@ public class SimplePlugin implements Plugin {
         }
 
         this.pluginMeta = initPluginMeta;
-        this.logger = Logger.getLogger(CommonConstants.INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME + "." + initPluginMeta.getName());
+        this.logger = Logger.getLogger(initPluginMeta.getMain() + ".LOGGER");
         this.dataFolder = new File(PluginManager.getInstance().getConfigDirectory(), initPluginMeta.getName().toLowerCase());
         this.dataFolder.mkdir();
         try {

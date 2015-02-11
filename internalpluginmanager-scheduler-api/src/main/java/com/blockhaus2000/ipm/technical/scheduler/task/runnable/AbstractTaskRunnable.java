@@ -17,9 +17,6 @@
  */
 package com.blockhaus2000.ipm.technical.scheduler.task.runnable;
 
-import java.util.logging.Logger;
-
-import com.blockhaus2000.ipm.base.CommonConstants;
 import com.blockhaus2000.ipm.technical.scheduler.task.Task;
 
 /**
@@ -29,12 +26,6 @@ import com.blockhaus2000.ipm.technical.scheduler.task.Task;
  *            The specific type of task to use.
  */
 public abstract class AbstractTaskRunnable<T extends Task> implements Runnable {
-    /**
-     * The InternalPluginManager system logger.
-     *
-     */
-    protected static final Logger LOGGER = Logger.getLogger(CommonConstants.INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME);
-
     /**
      * The task to run.
      *

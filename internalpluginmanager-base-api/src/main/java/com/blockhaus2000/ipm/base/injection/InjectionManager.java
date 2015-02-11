@@ -21,9 +21,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
-import com.blockhaus2000.ipm.base.CommonConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.blockhaus2000.ipm.base.exception.IllegalStaticAccessException;
 import com.blockhaus2000.ipm.base.injection.exception.InjectionException;
 import com.blockhaus2000.ipm.base.injection.exception.NotAddedInjectionException;
@@ -39,10 +40,10 @@ import com.blockhaus2000.ipm.base.injection.exception.NotAddedInjectionException
  */
 public final class InjectionManager {
     /**
-     * The InternalPluginManager system logger.
+     * The Logger for this class.
      *
      */
-    private static final Logger LOGGER = Logger.getLogger(CommonConstants.INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(InjectionManager.class);
 
     /**
      * This {@link Map} stores the instances of all registered resources that
@@ -95,14 +96,17 @@ public final class InjectionManager {
         assert clazz != null : "Clazz cannot be null!";
         assert obj == null || clazz.equals(obj.getClass()) : "Obj has to be null or an object of clazz!";
 
-        InjectionManager.LOGGER.fine("Initilizing class \"" + clazz.getName() + "\".");
+        InjectionManager.LOGGER.info("Initilizing class " + clazz);
 
         for (final Field field : clazz.getDeclaredFields()) {
             if (!field.isAnnotationPresent(Inject.class)) {
-                InjectionManager.LOGGER.finer("Skipping field \"" + field.getName() + "\".");
+                InjectionManager.LOGGER.debug("Skipping field " + field);
 
                 continue;
             }
+
+            InjectionManager.LOGGER.debug("Processing field " + field);
+
             if (!Modifier.isStatic(field.getModifiers()) && obj == null) {
                 throw new IllegalStaticAccessException("The field <" + field + "> is non-static and the given object (<" + obj
                         + ">) is null!");
@@ -115,11 +119,11 @@ public final class InjectionManager {
 
             final boolean oldAccessible = field.isAccessible();
 
-            InjectionManager.LOGGER.finest("Setting accessible to true.");
-
             field.setAccessible(true);
             try {
-                InjectionManager.LOGGER.finest("Setting value.");
+                final Object object = InjectionManager.INSTANCES.get(type.getName());
+
+                InjectionManager.LOGGER.debug("Injecting field " + field + "with value value " + object);
 
                 field.set(obj, InjectionManager.INSTANCES.get(type.getName()));
             } catch (final IllegalArgumentException cause) {
@@ -128,12 +132,10 @@ public final class InjectionManager {
                 throw new InjectionException("You do not have enough rights to set the field value!", cause);
             }
 
-            InjectionManager.LOGGER.finest("Resetting accessible to " + oldAccessible + ".");
-
             field.setAccessible(oldAccessible);
         }
 
-        InjectionManager.LOGGER.fine("Initilization finished.");
+        InjectionManager.LOGGER.info("Finished initilization");
     }
 
     /**
@@ -187,16 +189,13 @@ public final class InjectionManager {
         assert obj != null : "Obj cannot be null!";
         assert clazz != null : "Clazz cannot be null!";
 
-        InjectionManager.LOGGER.fine("Adding resource \"" + obj + "\" (\"" + clazz.getName() + "\").");
+        InjectionManager.LOGGER.info("Adding resource " + obj + " to type " + clazz);
 
         if (InjectionManager.INSTANCES.containsKey(clazz.getName())) {
-            InjectionManager.LOGGER.fine("Resource already added.");
-
+            InjectionManager.LOGGER.warn("Skipping resource" + obj + " because a value for type " + clazz + " is already added");
             return false;
         }
         InjectionManager.INSTANCES.put(clazz.getName(), obj);
-
-        InjectionManager.LOGGER.fine("Resource added.");
 
         return true;
     }

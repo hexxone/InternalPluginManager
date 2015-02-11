@@ -34,11 +34,12 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.blockhaus2000.ipm.base.ArrayUtil;
 import com.blockhaus2000.ipm.base.CollectionUtil;
-import com.blockhaus2000.ipm.base.CommonConstants;
 import com.blockhaus2000.ipm.base.CommonStringConstants;
 import com.blockhaus2000.ipm.base.Tag;
 import com.blockhaus2000.ipm.base.exception.IllegalMethodSignatureException;
@@ -62,23 +63,17 @@ import com.blockhaus2000.ipm.technical.command.util.exception.CommandException;
  *
  */
 public class SimpleCommandManager implements CommandManager {
-    // Improves performance, suppresses checkstyle warning.
     /**
-     * <code>'".'</code>
+     * The Logger for this class.
+     *
      */
-    private static final String QUOTE_DOT = "\".";
+    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleCommandManager.class);
 
     /**
      * The maximum amount of aliases per command.
      *
      */
     private static final int MAX_ALIAS_PER_COMMAND = 25;
-
-    /**
-     * The InternalPluginManager system logger.
-     *
-     */
-    private static final Logger LOGGER = Logger.getLogger(CommonConstants.INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME);
 
     /**
      * The {@link CommandInfo} comparator.
@@ -134,18 +129,20 @@ public class SimpleCommandManager implements CommandManager {
         assert clazz != null : "Clazz cannot be null!";
         assert obj == null || clazz.equals(obj.getClass()) : "Obj has to be null or an object of clazz!";
 
-        SimpleCommandManager.LOGGER.fine("Registering class \"" + clazz.getName() + "\" with object \"" + obj
-                + SimpleCommandManager.QUOTE_DOT);
+        SimpleCommandManager.LOGGER.info("Registering command of class " + clazz);
 
         // Contains all successful registered commands.
         final Set<CommandInfo> registered = new HashSet<CommandInfo>();
 
         for (final Method method : clazz.getDeclaredMethods()) {
             if (!method.isAnnotationPresent(Command.class)) {
-                SimpleCommandManager.LOGGER.finer("Skipping method \"" + method.getName() + "\" (annotation not present).");
+                SimpleCommandManager.LOGGER.debug("Skipping method " + method);
 
                 continue;
             }
+
+            SimpleCommandManager.LOGGER.debug("Processing method " + method);
+
             if (!Modifier.isStatic(method.getModifiers()) && obj == null) {
                 throw new IllegalStaticAccessException("The method <" + method + "> is non-static and the given object (\"" + obj
                         + "\") is null!");
@@ -161,8 +158,7 @@ public class SimpleCommandManager implements CommandManager {
 
             final Command commandAnot = method.getAnnotation(Command.class);
 
-            SimpleCommandManager.LOGGER.fine("Parsing method \"" + method.getName() + "\" with annotation data \"" + commandAnot
-                    + SimpleCommandManager.QUOTE_DOT);
+            SimpleCommandManager.LOGGER.debug("Found command annotation: " + commandAnot);
 
             if (commandAnot.aliases().length > SimpleCommandManager.MAX_ALIAS_PER_COMMAND) {
                 throw new CommandException("Method \"" + method.getName() + "\" with annotation data \"" + commandAnot
@@ -177,7 +173,7 @@ public class SimpleCommandManager implements CommandManager {
             }
         }
 
-        SimpleCommandManager.LOGGER.fine("Registered " + registered.size() + " commands (\"" + registered + "\").");
+        SimpleCommandManager.LOGGER.info("Registration finished");
 
         return registered;
     }
@@ -214,17 +210,24 @@ public class SimpleCommandManager implements CommandManager {
     public synchronized Set<CommandInfo> unregister(final Class<?> clazz) {
         assert clazz != null : "Clazz cannot be null!";
 
+        SimpleCommandManager.LOGGER.info("Unregistering command of class " + clazz);
+
         final Set<CommandInfo> unregistered = new HashSet<CommandInfo>();
 
         for (final Method method : clazz.getDeclaredMethods()) {
             if (!method.isAnnotationPresent(Command.class)) {
+                SimpleCommandManager.LOGGER.debug("Skipping method " + method);
+
                 continue;
             }
+
+            SimpleCommandManager.LOGGER.debug("Processing method " + method);
 
             final List<CommandInfo> commandInfos = new ArrayList<CommandInfo>();
             for (final List<CommandInfo> currentCommandInfos : this.commands.values()) {
                 commandInfos.addAll(currentCommandInfos);
             }
+
             for (final Iterator<CommandInfo> iterator = commandInfos.iterator(); iterator.hasNext();) {
                 final CommandInfo commandInfo = iterator.next();
                 if (commandInfo.getMethod().getDeclaringClass().getName().equals(clazz.getName())) {
@@ -233,6 +236,8 @@ public class SimpleCommandManager implements CommandManager {
                 }
             }
         }
+
+        SimpleCommandManager.LOGGER.debug("Unregistration finished");
 
         return unregistered;
     }
@@ -265,13 +270,12 @@ public class SimpleCommandManager implements CommandManager {
 
         final String label = rawLabel.toLowerCase().trim();
 
-        SimpleCommandManager.LOGGER.fine("\"" + sender + "\" executed \"" + label + "\" with arguments \""
-                + Arrays.asList(rawArgs) + "\"");
+        SimpleCommandManager.LOGGER.info("Executing command " + label);
 
         // If no registered commands could be found, it is impossible to execute
         // them.
         if (this.commands.get(label) == null) {
-            SimpleCommandManager.LOGGER.fine("Command label not found.");
+            SimpleCommandManager.LOGGER.warn("Skipping execution of " + label + " (no commands found)");
 
             return false;
         }
@@ -283,13 +287,9 @@ public class SimpleCommandManager implements CommandManager {
         // This boolean is returned at the end.
         boolean executed = false;
         for (final CommandInfo commandInfo : this.commands.get(label)) {
-            // if (commandInfo.getClazz() == null) {
-            // continue;
-            // }
+            SimpleCommandManager.LOGGER.debug("Executing " + commandInfo);
 
             final Command commandAnot = commandInfo.getCommandAnot();
-
-            SimpleCommandManager.LOGGER.finer("Executing \"" + commandInfo + SimpleCommandManager.QUOTE_DOT);
 
             // Create raw command context.
             final RawCommandContext rawCommandContext = this.createRawCommandContext(commandInfo, label, sender, rawArgs,
@@ -311,8 +311,6 @@ public class SimpleCommandManager implements CommandManager {
                 continue;
             }
 
-            SimpleCommandManager.LOGGER.finest("Command parsed to \"" + commandContext + SimpleCommandManager.QUOTE_DOT);
-
             // Now, invoke/execute the method that is associated with the
             // current command (alias).
             this.invoke(commandContext);
@@ -321,8 +319,7 @@ public class SimpleCommandManager implements CommandManager {
             executed = true;
         }
 
-        SimpleCommandManager.LOGGER.finer("Created events: \"" + commandEventData + SimpleCommandManager.QUOTE_DOT);
-        SimpleCommandManager.LOGGER.fine("Executed: " + executed);
+        SimpleCommandManager.LOGGER.debug("Execution finished with events: " + commandEventData);
 
         // If no command was executed, fire the CommandEvent.
         if (!executed && !commandEventData.isEmpty()) {
@@ -343,7 +340,7 @@ public class SimpleCommandManager implements CommandManager {
     private Map<Character, SyntaxType> parseFlagData(final Command commandAnot) {
         assert commandAnot != null : "CommandAnot cannot be null!";
 
-        SimpleCommandManager.LOGGER.finer("Parsing flags.");
+        SimpleCommandManager.LOGGER.debug("Parsing flag data for command " + commandAnot);
 
         // The flag data is parsed here to improve the performance.
         // If the flag is a toggle flag, the SyntaxType is null.
@@ -362,8 +359,6 @@ public class SimpleCommandManager implements CommandManager {
                         + "\"");
             }
 
-            SimpleCommandManager.LOGGER.finest("Parsing flag \"" + flagDataPart + SimpleCommandManager.QUOTE_DOT);
-
             // The first char is ALWAYS the flag name, the regex checks
             // that. If the flag a value flag, the flag string contains
             // a colon (:), and directly after the colon stands the
@@ -374,6 +369,8 @@ public class SimpleCommandManager implements CommandManager {
                     flagDataPart.contains(CommonStringConstants.COLON) ? SyntaxType.getFromName(flagDataPart
                             .split(CommonStringConstants.COLON)[1].toLowerCase()) : null);
         }
+
+        SimpleCommandManager.LOGGER.debug("Finished parsing: " + flagData);
 
         return flagData;
     }
@@ -388,7 +385,7 @@ public class SimpleCommandManager implements CommandManager {
     private List<SyntaxType> parseSyntaxData(final Command commandAnot) {
         assert commandAnot != null : "CommandAnot cannot be null!";
 
-        SimpleCommandManager.LOGGER.finer("Parsing syntax.");
+        SimpleCommandManager.LOGGER.debug("Parsing syntax for command " + commandAnot);
 
         // The syntax string should be trimmed.
         final String rawSyntax = commandAnot.syntax().trim();
@@ -405,13 +402,13 @@ public class SimpleCommandManager implements CommandManager {
                         + "\"!");
             }
             for (final String syntaxName : syntax.split(", *")) {
-                SimpleCommandManager.LOGGER.finest("Parsing syntax element \"" + syntaxName + SimpleCommandManager.QUOTE_DOT);
-
                 // This cannot return null. The regex checks the name
                 // before.
                 syntaxData.add(SyntaxType.getFromName(syntaxName));
             }
         }
+
+        SimpleCommandManager.LOGGER.debug("Finished syntax parsing: " + syntaxData);
 
         return syntaxData;
     }
@@ -427,9 +424,10 @@ public class SimpleCommandManager implements CommandManager {
     private synchronized boolean registerCommandInfo(final CommandInfo commandInfo) {
         assert commandInfo != null : "CommandInfo cannot be null!";
 
+        SimpleCommandManager.LOGGER.debug("Registering command " + commandInfo);
+
         boolean registered = false;
 
-        SimpleCommandManager.LOGGER.finer("Registering command information (\"" + commandInfo + "\").");
         for (final String rawAlias : commandInfo.getCommandAnot().aliases()) {
             // Aliases should be lowercase and trimmed.
             final String alias = rawAlias.toLowerCase().trim();
@@ -443,13 +441,9 @@ public class SimpleCommandManager implements CommandManager {
                 continue;
             }
 
-            SimpleCommandManager.LOGGER.finest("Registering for alias \"" + alias + "\"");
-
             // If the command map does not contain a list of command infos
             // for the current flag, an ArrayList is created.
             if (!this.commands.containsKey(alias)) {
-                SimpleCommandManager.LOGGER.finest("Adding new list.");
-
                 this.commands.put(alias, new ArrayList<CommandInfo>());
             }
 
@@ -465,6 +459,8 @@ public class SimpleCommandManager implements CommandManager {
                 registered = true;
             }
         }
+
+        SimpleCommandManager.LOGGER.debug("Finished registration");
 
         return registered;
     }
@@ -487,8 +483,6 @@ public class SimpleCommandManager implements CommandManager {
 
         CommandContext result = null;
 
-        SimpleCommandManager.LOGGER.fine("Parsing arguments for \"" + rawCommandContext + SimpleCommandManager.QUOTE_DOT);
-
         // A LinkedList has to be used, because later, some entries will be
         // removed. An ArrayList does not support this feature.
         final List<String> rawArgs = new LinkedList<String>(Arrays.asList(rawCommandContext.getRawArgs()));
@@ -497,8 +491,6 @@ public class SimpleCommandManager implements CommandManager {
         // null.
         final Map<Character, Tag<?>> flags = this.parseFlags(rawCommandContext, rawArgs, commandEventData);
         if (flags != null) {
-            SimpleCommandManager.LOGGER.finer("Parsed arguments removed.");
-
             final List<Tag<?>> args;
             if (this.isMinMaxCorrect(rawCommandContext, rawArgs, commandEventData)) {
                 args = this.parseArguments(rawCommandContext, rawCommandContext.getSyntaxData(), rawArgs, commandEventData);
@@ -533,7 +525,7 @@ public class SimpleCommandManager implements CommandManager {
         assert rawArgs != null : "RawArgs cannot be null!";
         assert commandEventData != null : "CommandEventData cannot be null!";
 
-        SimpleCommandManager.LOGGER.finer("Calculating/checking min/max arguments.");
+        SimpleCommandManager.LOGGER.debug("Checking min/max argument length for " + rawCommandContext);
 
         // Set min/max arguments.
         final Command commandAnot = rawCommandContext.getCommandAnot();
@@ -541,9 +533,6 @@ public class SimpleCommandManager implements CommandManager {
         final int min = syntaxData == null ? commandAnot.min() : syntaxData.size();
         final int max = syntaxData == null ? commandAnot.max() : !commandAnot.autoSetMaxOnSyntax()
                 || syntaxData.get(syntaxData.size() - 1) == SyntaxType.STRING_VARARG ? -1 : syntaxData.size();
-
-        SimpleCommandManager.LOGGER.finest("Minimal arguments set to " + min + ".");
-        SimpleCommandManager.LOGGER.finest("Maximal arguments set to " + max + ".");
 
         // Check min/max arguments.
         final boolean isMinMaxCorrect;
@@ -556,6 +545,9 @@ public class SimpleCommandManager implements CommandManager {
         } else {
             isMinMaxCorrect = true;
         }
+
+        SimpleCommandManager.LOGGER.debug("Min/Max argument length checking finished: " + isMinMaxCorrect);
+
         return isMinMaxCorrect;
     }
 
@@ -615,8 +607,6 @@ public class SimpleCommandManager implements CommandManager {
             }
         }
 
-        SimpleCommandManager.LOGGER.finest("Second level command is set to \"" + secondLevelCommand + "\"");
-
         if (args == null) {
             return null;
         }
@@ -642,7 +632,7 @@ public class SimpleCommandManager implements CommandManager {
         assert rawArgs != null : "RawArgs cannot be null!";
         assert commandEventData != null : "CommandEventData cannot be null!";
 
-        SimpleCommandManager.LOGGER.finer("Parsing flags.");
+        SimpleCommandManager.LOGGER.debug("Parsing flags for command context " + rawCommandContext);
 
         Map<Character, Tag<?>> flags = new HashMap<Character, Tag<?>>();
 
@@ -657,8 +647,6 @@ public class SimpleCommandManager implements CommandManager {
         for (final Entry<Character, SyntaxType> entry : rawCommandContext.getFlagData().entrySet()) {
             final Character key = entry.getKey();
             final SyntaxType flagType = entry.getValue();
-
-            SimpleCommandManager.LOGGER.finest("Parsing flag \"" + key + SimpleCommandManager.QUOTE_DOT);
 
             // In the flag data, flags are stored with signle characters, but a
             // dash in front is needed to set them whilest executing the
@@ -697,9 +685,6 @@ public class SimpleCommandManager implements CommandManager {
         }
 
         if (flags != null) {
-            SimpleCommandManager.LOGGER.finer("Flags parsed to \"" + flags + SimpleCommandManager.QUOTE_DOT);
-            SimpleCommandManager.LOGGER.finer("Removing parsed arguments.");
-
             // Remove all added indexes to remove. The set is sorted reversed,
             // so
             // iterate about the set and remove every value is possible without
@@ -709,6 +694,8 @@ public class SimpleCommandManager implements CommandManager {
                 rawArgs.remove(index.intValue());
             }
         }
+
+        SimpleCommandManager.LOGGER.debug("Flag parsing finished: " + flags);
 
         return flags;
     }
@@ -741,6 +728,8 @@ public class SimpleCommandManager implements CommandManager {
         assert rawArgs != null : "RawArgs cannot be null!";
         assert toRemove != null : "ToRemove cannot be null!";
         assert commandEventData != null : "CommandEventData cannot be null!";
+
+        SimpleCommandManager.LOGGER.debug("Parsinf flag value for command context " + rawCommandContext);
 
         Tag<?> result = null;
         try {
@@ -776,6 +765,9 @@ public class SimpleCommandManager implements CommandManager {
             // Add an event instead of throwing the exception.
             commandEventData.add(new CommandEventData(rawCommandContext, CommandEventType.INCONSTISTENT_FLAG_VALUE));
         }
+
+        SimpleCommandManager.LOGGER.debug("Finished parsing: " + result);
+
         return result;
     }
 
@@ -800,16 +792,12 @@ public class SimpleCommandManager implements CommandManager {
         assert rawArgs != null : "RawArgs cannot be null!";
         assert commandEventData != null : "CommandEventData cannot be null!";
 
-        SimpleCommandManager.LOGGER.finer("Parsing arguments.");
+        SimpleCommandManager.LOGGER.debug("Parsing arguments for command context " + rawCommandContext);
 
         List<Tag<?>> result = null;
         if (syntaxData == null) {
-            SimpleCommandManager.LOGGER.finest("No syntax available, nothing to parse.");
-
             result = new ArrayList<Tag<?>>(CollectionUtil.toTagCollection(rawArgs, ArrayList.class));
         } else {
-            SimpleCommandManager.LOGGER.finest("Parsing syntax.");
-
             result = new ArrayList<Tag<?>>();
             try {
                 for (int i = 0; i < syntaxData.size(); i++) {
@@ -841,7 +829,7 @@ public class SimpleCommandManager implements CommandManager {
             }
         }
 
-        SimpleCommandManager.LOGGER.finer("Arguments parsed to \"" + result + SimpleCommandManager.QUOTE_DOT);
+        SimpleCommandManager.LOGGER.debug("Finished argument parsing: " + result);
 
         return result;
     }
@@ -891,20 +879,15 @@ public class SimpleCommandManager implements CommandManager {
     private void invoke(final CommandContext context) {
         assert context != null : "Context cannot be null!";
 
-        final Method method = context.getMethod();
+        SimpleCommandManager.LOGGER.debug("Invoking execution method for command context " + context);
 
-        SimpleCommandManager.LOGGER.fine("Invoking method \"" + method.getName() + "\"");
+        final Method method = context.getMethod();
 
         // The accessible status should be resetted to the old state.
         final boolean oldAccessible = method.isAccessible();
 
-        SimpleCommandManager.LOGGER.finest("Setting accessible to true.");
-
         method.setAccessible(true);
         try {
-            SimpleCommandManager.LOGGER.finest("Invoking method \"" + method.getName() + "\" on object \"" + context.getObject()
-                    + "\" with the argument \"" + context + SimpleCommandManager.QUOTE_DOT);
-
             method.invoke(context.getObject(), context);
         } catch (final IllegalArgumentException cause) {
             throw new CommandException("Maybe there is a wrong method signatur at method <" + method
@@ -915,10 +898,10 @@ public class SimpleCommandManager implements CommandManager {
             throw new CommandException("An exception occurres in the command execution method!", cause);
         }
 
-        SimpleCommandManager.LOGGER.finest("Resetting accessible to " + oldAccessible + ".");
-
         // Reset accessible status.
         method.setAccessible(oldAccessible);
+
+        SimpleCommandManager.LOGGER.debug("Invoking finished");
     }
 
     /**

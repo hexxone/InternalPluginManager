@@ -24,10 +24,11 @@ import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.jar.JarFile;
-import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 
-import com.blockhaus2000.ipm.base.CommonConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.blockhaus2000.ipm.technical.plugin.util.exception.PluginException;
 import com.blockhaus2000.ipm.technical.plugin.util.exception.PluginIOException;
 import com.blockhaus2000.tagstoragesystem.TSS;
@@ -42,10 +43,10 @@ import com.blockhaus2000.tagstoragesystem.TSS;
  */
 public final class PluginLoader {
     /**
-     * The InternalPluginManager system logger.
+     * The Logger for this class.
      *
      */
-    private static final Logger LOGGER = Logger.getLogger(CommonConstants.INTERNALPLUGINMANAGER_SYSTEM_LOGGER_NAME);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PluginLoader.class);
 
     /**
      * THE instance of the {@link PluginLoader}.
@@ -109,6 +110,8 @@ public final class PluginLoader {
 
         final String name = rawName.toLowerCase();
 
+        PluginLoader.LOGGER.debug("Removing " + name);
+
         final PluginClassLoader classLoader = this.classLoaders.get(name);
         if (classLoader != null) {
             classLoader.clear();
@@ -170,6 +173,8 @@ public final class PluginLoader {
         assert file.exists() : "File has to exist!";
         assert file.isFile() : "File has to be a file!";
 
+        PluginLoader.LOGGER.debug("Retrieving " + (update ? "new " : "") + "plugin meta for " + file.getPath());
+
         final PluginMeta pluginMeta;
         if (update) {
             final JarFile jarFile = new JarFile(file);
@@ -188,8 +193,8 @@ public final class PluginLoader {
             pluginMeta = this.pluginMetaCache.getData(file.getName());
 
             if (pluginMeta == null) {
-                PluginLoader.LOGGER.warning("Could not find plugin meta for \"" + file.getAbsolutePath()
-                        + "\" in plugin meta cache! Updating plugin meta.");
+                PluginLoader.LOGGER.warn("Plugin meta could not be find in cache! Retrieving new one ...");
+
                 return this.getMeta(file, true);
             }
 
@@ -197,6 +202,9 @@ public final class PluginLoader {
                 pluginMeta.setFile(file);
             }
         }
+
+        PluginLoader.LOGGER.debug("Retrieved plugin meta: " + pluginMeta);
+
         return pluginMeta;
     }
 
@@ -214,10 +222,16 @@ public final class PluginLoader {
     synchronized Plugin load(final PluginMeta meta) {
         assert meta != null : "Meta cannot be null!";
 
+        PluginLoader.LOGGER.debug("Loading plugin meta " + meta);
+
         final String name = meta.getName();
         final String main = meta.getMain();
 
+        PluginLoader.LOGGER.debug("Removing old plugin");
+
         this.remove(name);
+
+        PluginLoader.LOGGER.debug("Initilizing plugin class loader");
 
         PluginClassLoader classLoader;
         try {
@@ -225,6 +239,8 @@ public final class PluginLoader {
         } catch (final MalformedURLException cause) {
             throw new PluginException("This should NEVER happen. How have you made that???", cause);
         }
+
+        PluginLoader.LOGGER.debug("Searching for main class");
 
         final Class<? extends SimplePlugin> pluginClass;
         try {
@@ -237,6 +253,9 @@ public final class PluginLoader {
         }
         this.classLoaders.put(name.toLowerCase(), classLoader);
 
+        PluginLoader.LOGGER.debug("Main class found: " + pluginClass);
+        PluginLoader.LOGGER.debug("Creating plugin instance");
+
         final SimplePlugin plugin;
         try {
             plugin = pluginClass.newInstance();
@@ -246,6 +265,8 @@ public final class PluginLoader {
             throw new PluginException(cause);
         }
         plugin.init(meta);
+
+        PluginLoader.LOGGER.debug("Loaded: " + plugin);
 
         return plugin;
     }
@@ -262,6 +283,8 @@ public final class PluginLoader {
      */
     Class<?> findClass(final String name) throws ClassNotFoundException {
         assert name != null : "Name cannot be null!";
+
+        PluginLoader.LOGGER.debug("Searching for class " + name + " within all stored plugin class loaders.");
 
         for (final PluginClassLoader classLoader : this.classLoaders.values()) {
             final Class<?> clazz = classLoader.findClass(name, false);

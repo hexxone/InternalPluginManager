@@ -17,7 +17,8 @@
  */
 package com.blockhaus2000.ipm.technical.scheduler.task.runnable;
 
-import java.util.logging.Level;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.blockhaus2000.ipm.technical.scheduler.task.RepeatingTask;
 
@@ -26,6 +27,12 @@ import com.blockhaus2000.ipm.technical.scheduler.task.RepeatingTask;
  *
  */
 public class AsynchRepeatingTaskRunnable extends AbstractTaskRunnable<RepeatingTask> {
+    /**
+     * The Logger of this class.
+     *
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(AsynchRepeatingTaskRunnable.class);
+
     /**
      * Constructor of AsynchRepeatingTaskRunnable.
      *
@@ -52,8 +59,8 @@ public class AsynchRepeatingTaskRunnable extends AbstractTaskRunnable<RepeatingT
                 Thread.sleep(this.getTask().getPeriod());
             }
         } catch (final Exception cause) {
-            AbstractTaskRunnable.LOGGER.log(Level.SEVERE, "An error occurred whilest executing task with id=" + this.getTask().getUUID()
-                    + "!", cause);
+            AsynchRepeatingTaskRunnable.LOGGER.error("An error occurred whilest executing task with id="
+                    + this.getTask().getUUID() + "!", cause);
         }
     }
 }

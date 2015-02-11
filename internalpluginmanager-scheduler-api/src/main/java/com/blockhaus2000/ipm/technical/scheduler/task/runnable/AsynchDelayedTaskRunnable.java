@@ -17,7 +17,8 @@
  */
 package com.blockhaus2000.ipm.technical.scheduler.task.runnable;
 
-import java.util.logging.Level;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.blockhaus2000.ipm.technical.scheduler.task.DelayedTask;
 
@@ -26,6 +27,12 @@ import com.blockhaus2000.ipm.technical.scheduler.task.DelayedTask;
  *
  */
 public class AsynchDelayedTaskRunnable extends AbstractTaskRunnable<DelayedTask> {
+    /**
+     * The Logger of this class.
+     *
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(AsynchDelayedTaskRunnable.class);
+
     /**
      * Constructor of AsynchDelayedTaskRunnable.
      *
@@ -47,7 +54,7 @@ public class AsynchDelayedTaskRunnable extends AbstractTaskRunnable<DelayedTask>
             Thread.sleep(this.getTask().getDelay());
             this.getTask().run();
         } catch (final Exception cause) {
-            AbstractTaskRunnable.LOGGER.log(Level.SEVERE, "An error occurred whilest executing task with id=" + this.getTask().getUUID()
+            AsynchDelayedTaskRunnable.LOGGER.error("An error occurred whilest executing task with id=" + this.getTask().getUUID()
                     + "!", cause);
         }
     }

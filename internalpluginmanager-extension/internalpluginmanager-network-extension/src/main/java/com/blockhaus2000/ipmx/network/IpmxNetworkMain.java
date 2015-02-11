@@ -20,7 +20,9 @@ package com.blockhaus2000.ipmx.network;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.blockhaus2000.ipm.technical.plugin.SimplePlugin;
 
@@ -29,6 +31,12 @@ import com.blockhaus2000.ipm.technical.plugin.SimplePlugin;
  *
  */
 public class IpmxNetworkMain extends SimplePlugin {
+    /**
+     * The Logger of this class.
+     *
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(IpmxNetworkMain.class);
+
     /**
      * The whitelist that is used by default, if no whitelist is available and
      * as the default for config creation.
@@ -72,8 +80,8 @@ public class IpmxNetworkMain extends SimplePlugin {
         this.server.interrupt();
         try {
             this.server.join();
-        } catch (final InterruptedException ex) {
-            ex.printStackTrace();
+        } catch (final InterruptedException cause) {
+            IpmxNetworkMain.LOGGER.error("An error occurred whilest waiting for the server thread to die.", cause);
         }
 
         // Save configuration to disk.
@@ -109,7 +117,8 @@ public class IpmxNetworkMain extends SimplePlugin {
             this.server = new ServerThread(port, this.getConfig().getStringList(ConfigPath.WHITELIST_WHITELIST.getPath(),
                     IpmxNetworkMain.DEFAULT_WHITELIST));
         } else {
-            this.getLogger().log(Level.WARNING, "The whitelist is disabled!");
+            IpmxNetworkMain.LOGGER.warn("The whitelist is disabled! Are you sure you want to keep it disabled?");
+
             this.server = new ServerThread(port, null);
         }
 
