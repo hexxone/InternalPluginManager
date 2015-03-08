@@ -138,19 +138,19 @@
 		<!-- Releases will be deployed here -->
 		<repository>
 			<id>blockhaus2000-repo-ftp</id>
-			<url>ftps://repo.ftp.blockhaus2000.com/</url>
+			<url>ftp://repo.ftp.blockhaus2000.com/</url>
 		</repository>
 
 		<!-- Snapshots will be deployed here -->
 		<snapshotRepository>
 			<id>blockhaus2000-snap-repo-ftp</id>
-			<url>ftps://snap-repo.ftp.blockhaus2000.com/</url>
+			<url>ftp://snap-repo.ftp.blockhaus2000.com/</url>
 		</snapshotRepository>
 
 		<!-- Documentation/Site will be deployed here -->
 		<site>
 			<id>blockhaus2000-docs-ftp</id>
-			<url>ftps://docs.ftp.blockhaus2000.com/ipm/${project.version}/</url>
+			<url>ftp://docs.ftp.blockhaus2000.com/ipm/${project.version}/</url>
 		</site>
 	</distributionManagement>
 
