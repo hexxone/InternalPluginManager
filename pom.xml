@@ -115,6 +115,11 @@
 		<url>http://issues.blockhaus2000.com/</url>
 	</issueManagement>
 
+	<ciManagement>
+		<system>Jenkins CI</system>
+		<url>http://ci.blockhaus2000.com/</url>
+	</ciManagement>
+
 	<scm>
 		<connection>scm:git:git@github.com/Blockhaus2000/InternalPluginManager.git</connection>
 		<developerConnection>scm:git:git@github.com:Blockhaus2000/InternalPluginManager.git</developerConnection>
@@ -133,19 +138,19 @@
 		<!-- Releases will be deployed here -->
 		<repository>
 			<id>blockhaus2000-repo-ftp</id>
-			<url>ftp://repo.blockhaus2000.com/</url>
+			<url>ftps://repo.ftp.blockhaus2000.com/</url>
 		</repository>
 
 		<!-- Snapshots will be deployed here -->
 		<snapshotRepository>
 			<id>blockhaus2000-snap-repo-ftp</id>
-			<url>ftp://snap-repo.blockhaus2000.com/</url>
+			<url>ftps://snap-repo.ftp.blockhaus2000.com/</url>
 		</snapshotRepository>
 
 		<!-- Documentation/Site will be deployed here -->
 		<site>
 			<id>blockhaus2000-docs-ftp</id>
-			<url>ftp://docs.blockhaus2000.com/ipm/${project.version}/</url>
+			<url>ftps://docs.ftp.blockhaus2000.com/ipm/${project.version}/</url>
 		</site>
 	</distributionManagement>
 
@@ -606,12 +611,6 @@
 					</plugin>
 				</plugins>
 			</reporting>
-		</profile>
-		<profile>
-			<id>reduce-memory</id>
-			<properties>
-				<findbugs.skip>true</findbugs.skip>
-			</properties>
 		</profile>
 	</profiles>
 </project>
