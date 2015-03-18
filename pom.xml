@@ -374,7 +374,7 @@
 				<configuration>
 					<repository>
 						<id>blockhaus2000-snap-repo-ftp</id>
-						<url>ftp://snap-repo.blockhaus2000.com/</url>
+						<url>ftp://snap-repo.ftp.blockhaus2000.com/</url>
 					</repository>
 					<artifactSet>
 						<artifact>
