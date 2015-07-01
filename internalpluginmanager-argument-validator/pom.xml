@@ -1,0 +1,36 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.blockhaus2000</groupId>
+		<artifactId>internalpluginmanager-parent</artifactId>
+		<version>2.1.0-SNAPSHOT</version>
+		<relativePath>../</relativePath>
+	</parent>
+
+	<artifactId>internalpluginmanager-argument-validator</artifactId>
+
+	<name>InternalPluginManager Argument Validator API</name>
+
+	<build>
+		<plugins>
+			<!-- Check for backward compatibility. -->
+			<plugin>
+				<groupId>com.googlecode.japi-checker</groupId>
+				<artifactId>japi-checker-maven-plugin</artifactId>
+				<version>0.2.0</version>
+				<executions>
+					<!-- Check backward compatibility to IPM version 2.0.0. -->
+					<execution>
+						<id>check-bc-2.0.0</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

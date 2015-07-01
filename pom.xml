@@ -49,6 +49,7 @@
 
 		<!-- The assembly. Packs the runnable version into a ZIP-file. -->
 		<module>internalpluginmanager-distribution</module>
+		<module>internalpluginmanager-argument-validator</module>
 	</modules>
 
 	<!-- Some important project properties -->
