@@ -24,6 +24,11 @@
 		</dependency>
 		<dependency>
 			<groupId>com.blockhaus2000</groupId>
+			<artifactId>internalpluginmanager-interception-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.blockhaus2000</groupId>
 			<artifactId>internalpluginmanager-command-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
@@ -90,6 +95,7 @@
 					<createDependencyReducedPom>false</createDependencyReducedPom>
 					<artifactSet>
 						<includes>
+							<!-- The plugin API includes every other API. -->
 							<include>com.blockhaus2000:internalpluginmanager-plugin-api</include>
 						</includes>
 					</artifactSet>
