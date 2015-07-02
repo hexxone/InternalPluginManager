@@ -11,6 +11,7 @@
 
 	<properties>
 		<project.properties.mainClass>com.blockhaus2000.ipm.standalone.InternalPluginManagerMain</project.properties.mainClass>
+		<project.properties.premainClass>com.blockhaus2000.ipm.technical.interception.PreMain</project.properties.premainClass>
 	</properties>
 
 	<artifactId>internalpluginmanager-standalone</artifactId>
@@ -76,9 +77,10 @@
 				<version>2.4</version>
 				<configuration>
 					<archive>
-						<manifest>
-							<mainClass>${project.properties.mainClass}</mainClass>
-						</manifest>
+						<manifestEntries>
+							<Main-Class>${project.properties.mainClass}</Main-Class>
+							<Premain-Class>${project.properties.premainClass}</Premain-Class>
+						</manifestEntries>
 					</archive>
 				</configuration>
 			</plugin>
