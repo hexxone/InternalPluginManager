@@ -194,12 +194,12 @@ public class SimpleEventManager implements EventManager {
                         + "\" defines wrong arguments. The one and only argument should be a \"" + EventContext.class.getName()
                         + "\"!", ex);
             } catch (final IllegalAccessException ex) {
-                SimpleEventManager.LOGGER.error("An error occurred whilest fireing event \"" + event + "\" for method \""
-                        + handler.getListenerMethod().getName() + "\" in clas \""
+                SimpleEventManager.LOGGER.error("An error occurred whilst firing event \"" + event + "\" for method \""
+                        + handler.getListenerMethod().getName() + "\" in class \""
                         + handler.getListenerMethod().getDeclaringClass().getName() + "\"!", ex);
             } catch (final InvocationTargetException ex) {
-                SimpleEventManager.LOGGER.error("An error occurred whilest fireing event \"" + event + "\" for method \""
-                        + handler.getListenerMethod().getName() + "\" in clas \""
+                SimpleEventManager.LOGGER.error("An error occurred whilst firing event \"" + event + "\" for method \""
+                        + handler.getListenerMethod().getName() + "\" in class \""
                         + handler.getListenerMethod().getDeclaringClass().getName() + "\"!", ex);
             }
         }
