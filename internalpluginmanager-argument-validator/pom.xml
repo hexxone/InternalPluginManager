@@ -11,7 +11,7 @@
 
 	<artifactId>internalpluginmanager-argument-validator</artifactId>
 
-	<name>InternalPluginManager Argument Validator API</name>
+	<name>InternalPluginManager Argument Validator</name>
 
 	<build>
 		<plugins>
@@ -21,14 +21,10 @@
 				<artifactId>japi-checker-maven-plugin</artifactId>
 				<version>0.2.0</version>
 				<executions>
+					<!-- The argument validator does not exist in version 2.0.0 -->
 					<!-- Check backward compatibility to IPM version 2.0.0. -->
-					<execution>
-						<id>check-bc-2.0.0</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
+					<!-- <execution> <id>check-bc-2.0.0</id> <phase>verify</phase> <goals> 
+						<goal>check</goal> </goals> </execution> -->
 				</executions>
 			</plugin>
 		</plugins>

@@ -1,0 +1,78 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.blockhaus2000</groupId>
+		<artifactId>internalpluginmanager-parent</artifactId>
+		<version>2.1.0-SNAPSHOT</version>
+		<relativePath>../</relativePath>
+	</parent>
+
+	<artifactId>internalpluginmanager-interception-api</artifactId>
+
+	<name>InternalPluginManager Interception API</name>
+
+
+	<!-- ===== Dependencies ===== -->
+
+	<dependencies>
+		<dependency>
+			<groupId>org.javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.20.0-GA</version>
+		</dependency>
+		<dependency>
+			<groupId>com.blockhaus2000</groupId>
+			<artifactId>internalpluginmanager-base-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.blockhaus2000</groupId>
+			<artifactId>internalpluginmanager-event-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- Check for backward compatibility. -->
+			<plugin>
+				<groupId>com.googlecode.japi-checker</groupId>
+				<artifactId>japi-checker-maven-plugin</artifactId>
+				<version>0.2.0</version>
+				<executions>
+					<!-- The interception API does not exist in version 2.0.0 -->
+					<!-- Check backward compatibility to IPM version 2.0.0. -->
+					<!-- <execution> <id>check-bc-2.0.0</id> <phase>verify</phase> <goals> 
+						<goal>check</goal> </goals> </execution> -->
+				</executions>
+			</plugin>
+
+			<!-- Shade some dependencies. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<createDependencyReducedPom>false</createDependencyReducedPom>
+					<artifactSet>
+						<includes>
+							<include>org.javassist:javassist</include>
+							<include>com.blockhaus2000:internalpluginmanager-base-api</include>
+							<include>com.blockhaus2000:internalpluginmanager-event-api</include>
+						</includes>
+					</artifactSet>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

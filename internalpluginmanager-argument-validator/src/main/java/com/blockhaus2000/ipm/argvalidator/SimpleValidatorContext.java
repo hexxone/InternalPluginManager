@@ -71,7 +71,7 @@ public class SimpleValidatorContext implements ValidatorContext {
         return this.state;
     }
 
-    private void test() {
+    private void retrieveClassFiles() {
         final ClassLoader loader = SimpleValidatorContext.class.getClassLoader();
         try {
             final Enumeration<URL> resources = loader.getResources(this.resourcePath);

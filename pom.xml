@@ -15,6 +15,12 @@
 		<!-- The base is used by every other module, so build as first. -->
 		<module>internalpluginmanager-base-api</module>
 
+		<!-- The argument validator uses this. -->
+		<module>internalpluginmanager-interception-api</module>
+
+		<!-- The argument validator is used by mostly every other project. -->
+		<module>internalpluginmanager-argument-validator</module>
+
 		<!-- These modules are completly independent from each other, so this order 
 			is not important. -->
 		<module>internalpluginmanager-command-api</module>
@@ -49,7 +55,6 @@
 
 		<!-- The assembly. Packs the runnable version into a ZIP-file. -->
 		<module>internalpluginmanager-distribution</module>
-		<module>internalpluginmanager-argument-validator</module>
 	</modules>
 
 	<!-- Some important project properties -->
