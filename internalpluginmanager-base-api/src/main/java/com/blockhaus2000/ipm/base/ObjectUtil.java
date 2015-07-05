@@ -17,39 +17,114 @@
  */
 package com.blockhaus2000.ipm.base;
 
+/**
+ * The {@link ObjectUtil} is used to convert primitives into objects (what
+ * autoboxing does by default). This used by the interception API because javac
+ * cannot be used there but primitives must be objects on some cases. And
+ * autoboxing is not available.
+ *
+ */
 public class ObjectUtil {
-    public static Object toObject(final Object o) {
-        return o;
+    /**
+     * Converts the given data to an object.
+     *
+     * <p>
+     * <b> NOTE: As the parameter <code>x</code> is already an object, nothing
+     * is done. </b>
+     * </p>
+     *
+     * @param x
+     *            The data to convert into an object.
+     * @return The converted data.
+     */
+    public static Object toObject(final Object x) {
+        return x;
     }
 
+    /**
+     * Converts the given data to an object.
+     *
+     * @param x
+     *            The data to convert into an object.
+     * @return The converted data.
+     */
     public static Object toObject(final byte x) {
         return Byte.valueOf(x);
     }
 
+    /**
+     * Converts the given data to an object.
+     *
+     * @param x
+     *            The data to convert into an object.
+     * @return The converted data.
+     */
     public static Object toObject(final short x) {
         return Short.valueOf(x);
     }
 
+    /**
+     * Converts the given data to an object.
+     *
+     * @param x
+     *            The data to convert into an object.
+     * @return The converted data.
+     */
     public static Object toObject(final int x) {
         return Integer.valueOf(x);
     }
 
+    /**
+     * Converts the given data to an object.
+     *
+     * @param x
+     *            The data to convert into an object.
+     * @return The converted data.
+     */
     public static Object toObject(final long x) {
         return Long.valueOf(x);
     }
 
+    /**
+     * Converts the given data to an object.
+     *
+     * @param x
+     *            The data to convert into an object.
+     * @return The converted data.
+     */
     public static Object toObject(final float x) {
         return Float.valueOf(x);
     }
 
+    /**
+     * Converts the given data to an object.
+     *
+     * @param x
+     *            The data to convert into an object.
+     * @return The converted data.
+     */
     public static Object toObject(final double x) {
         return Double.valueOf(x);
     }
 
+    /**
+     * Converts the given data to an object.
+     *
+     * @param x
+     *            The data to convert into an object.
+     * @return The converted data.
+     */
     public static Object toObject(final boolean x) {
         return Boolean.valueOf(x);
     }
 
+    /**
+     * Converts the given data to an object.
+     *
+     * @param x
+     *            The data to convert into an object.
+     * @return The converted data.
+     */
     public static Object toObject(final char x) {
         return Character.valueOf(x);
     }

@@ -17,15 +17,47 @@
  */
 package com.blockhaus2000.ipm.base;
 
+/**
+ * The {@link OperatingSystem} is used to detect the current OS where this
+ * program is running on.
+ *
+ */
 public enum OperatingSystem {
+    /**
+     * Windows.
+     *
+     */
     WINDOWS,
+    /**
+     * Mac.
+     *
+     */
     MAC,
+    /**
+     * Unix.
+     *
+     */
     UNIX,
+    /**
+     * Solaris.
+     *
+     */
     SOLARIS,
+    /**
+     * Any other, not supported, OS.
+     *
+     */
     OTHER;
 
+    /**
+     * Detects the current OS by using the OS name as returned by
+     * {@link OperatingSystem#get()}.
+     *
+     * @return The current OS or {@link OperatingSystem#OTHER} if the OS cannot
+     *         be detected or is not supported.
+     */
     public static OperatingSystem detect() {
-        final String os = System.getProperty("os.name");
+        final String os = OperatingSystem.get();
         if (os.contains("win")) {
             return WINDOWS;
         } else if (os.contains("mac")) {
@@ -39,6 +71,12 @@ public enum OperatingSystem {
         }
     }
 
+    /**
+     * Retrieves the name of the OS this program is currently running on (the
+     * value of the system property <code>os.name</code>).
+     *
+     * @return The name of the OS this program is currently running on.
+     */
     public static String get() {
         return System.getProperty("os.name");
     }
