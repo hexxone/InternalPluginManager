@@ -79,7 +79,8 @@
 					<archive>
 						<manifestEntries>
 							<Main-Class>${project.properties.mainClass}</Main-Class>
-							<Agent-Class>${project.properties.premainClass}</Agent-Class>
+							<Premain-Class>${project.properties.agentClass}</Premain-Class>
+							<Agent-Class>${project.properties.agentClass}</Agent-Class>
 							<Can-Redefine-Classes>true</Can-Redefine-Classes>
 							<Can-Retransform-Classes>true</Can-Retransform-Classes>
 						</manifestEntries>
