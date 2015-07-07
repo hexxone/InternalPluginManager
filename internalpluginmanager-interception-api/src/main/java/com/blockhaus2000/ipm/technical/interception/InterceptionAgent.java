@@ -20,6 +20,7 @@ package com.blockhaus2000.ipm.technical.interception;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.Instrumentation;
 import java.lang.management.ManagementFactory;
 import java.net.URL;
@@ -43,9 +44,24 @@ import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;
 import com.sun.tools.attach.spi.AttachProvider;
 
+/**
+ * The interception agent attaches to the JVM in order to plug the
+ * {@link ClassFileTransfomerAgent} to the class loading process to enable
+ * interception.
+ *
+ */
 public class InterceptionAgent {
+    /**
+     * The logger for this class.
+     *
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(InterceptionAgent.class);
 
+    /**
+     * The {@link AttachProvider} that is used to attach to
+     * {@link VirtualMachine}s.
+     *
+     */
     private static final AttachProvider ATTACH_PROVIDER = new AttachProvider() {
         @Override
         public String type() {
@@ -68,24 +84,78 @@ public class InterceptionAgent {
         }
     };
 
+    /**
+     * THE instance of this class.
+     *
+     */
     private static final InterceptionAgent INSTANCE = new InterceptionAgent();
 
+    /**
+     * The name of the system property that has to be used to define the path to
+     * the JAR file that contains this class.
+     *
+     */
+    public static String INTERCEPTION_JAR_PATH_SYSPROP = "ipm.interception.file";
+
+    /**
+     * The {@link Instrumentation} to plug {@link ClassFileTransformer}s to.
+     *
+     */
     private Instrumentation instrumentation;
 
+    /**
+     * Represents the state of this agent (i.e.g if it is initialized or not).
+     *
+     */
     private boolean initialized;
 
+    /**
+     * This method is invoked if the JVM is started with the special parameter
+     * <code>-javaagent</code> in order to activate this agent.
+     *
+     * @param args
+     *            The agent arguments.
+     * @param instrumentation
+     *            The {@link Instrumentation} for this JVM.
+     */
     public static void premain(final String args, final Instrumentation instrumentation) {
         InterceptionAgent.getInstance().init(instrumentation);
     }
 
+    /**
+     * This method is invoked if this agent is dynamically attached to the JVM
+     * within the runtime.
+     *
+     * <p>
+     * <b> NOTE: This is the preferred way to attach an agent, because the user
+     * does not have to start the JVM with special parameters. </b>
+     * </p>
+     *
+     * @param args
+     *            The agent arguments.
+     * @param instrumentation
+     *            The {@link Instrumentation} for this JVM.
+     */
     public static void agentmain(final String args, final Instrumentation instrumentation) {
         InterceptionAgent.getInstance().init(instrumentation);
     }
 
+    /**
+     * Attaches this agent to the currently running JVM.
+     *
+     */
     public static void attach() {
         InterceptionAgent.getInstance().internalAttach();
     }
 
+    /**
+     * Initializes this agent, attaches the {@link ClassFileTransfomerAgent} to
+     * the given {@link Instrumentation} and saves it for later usage.
+     *
+     * @param instrumentation
+     *            The {@link Instrumentation} to save and attach the
+     *            {@link ClassFileTransfomerAgent} to.
+     */
     private void init(final Instrumentation instrumentation) {
         if (this.initialized) {
             InterceptionAgent.LOGGER.debug("Already initialized!");
@@ -97,6 +167,10 @@ public class InterceptionAgent {
         this.initialized = true;
     }
 
+    /**
+     * Attaches this agent to the currently running JVM.
+     *
+     */
     private void internalAttach() {
         if (this.initialized) {
             InterceptionAgent.LOGGER.debug("Already attached!");
@@ -136,6 +210,16 @@ public class InterceptionAgent {
         }
     }
 
+    /**
+     * Attaches to the JVM and returns the attaches {@link VirtualMachine}.
+     *
+     * @return The {@link VirtualMachine} that is attached.
+     * @throws AttachNotSupportedException
+     *             If attachments are not supported by the currently running
+     *             JVM.
+     * @throws IOException
+     *             If any I/O error occurs.
+     */
     private VirtualMachine attachToVm() throws AttachNotSupportedException, IOException {
         InterceptionAgent.LOGGER.debug("Attaching to virtual machine.");
 
@@ -158,6 +242,21 @@ public class InterceptionAgent {
         return virtualMachine;
     }
 
+    /**
+     * Retrieves and attaches to the currently running JVM and return the
+     * correct implementation of {@link VirtualMachine} for the current OS.
+     *
+     * <p>
+     * <b> NOTE: Supported operating systems are: Windows, BSD, Linux and
+     * Solaris. </b>
+     * </p>
+     *
+     * @return The attached {@link VirtualMachine}.
+     * @throws AttachNotSupportedException
+     *             If the current JVM does not support attachments.
+     * @throws IOException
+     *             If any I/O error occurs.
+     */
     private VirtualMachine retrieveOsDepentVmImplementation() throws AttachNotSupportedException, IOException {
         switch (OperatingSystem.detect()) {
             case WINDOWS:
@@ -181,22 +280,40 @@ public class InterceptionAgent {
         }
     }
 
+    /**
+     *
+     * @return The name of the currently running JVM.
+     */
     private String retrieveJvmName() {
         return ManagementFactory.getRuntimeMXBean().getName();
     }
 
+    /**
+     *
+     * @return The ID of the currently running JVM.
+     */
     private String retrieveJvmId() {
         final String name = this.retrieveJvmName();
         return name.substring(0, name.indexOf("@"));
     }
 
+    /**
+     * Retrieves the path of the JAR file containing this class from the system
+     * property {@link InterceptionAgent#INTERCEPTION_JAR_PATH_SYSPROP} or the
+     * class path.
+     *
+     * @return The path to the JAR file which contains this class.
+     * @throws IOException
+     *             If any I/O error occurs.
+     */
     private String retrieveJarFilePath() throws IOException {
-        String jarFile = System.getProperty("ipm.interception.file", null);
+        String jarFile = System.getProperty(InterceptionAgent.INTERCEPTION_JAR_PATH_SYSPROP, null);
 
         final boolean fetchFromClassPath;
         if (jarFile == null) {
             InterceptionAgent.LOGGER.warn("Failed to retrieve interception jar file from syetem properties! "
-                    + "(set it via sysprop ipm.interception.file). Trying to fetch file from class path ...");
+                    + "(set it via sysprop " + InterceptionAgent.INTERCEPTION_JAR_PATH_SYSPROP
+                    + "). Trying to fetch file from class path ...");
 
             fetchFromClassPath = true;
         } else if (!new File(jarFile).isFile()) {
@@ -227,7 +344,7 @@ public class InterceptionAgent {
 
                 if (potentialFiles.size() > 1) {
                     InterceptionAgent.LOGGER
-                    .warn("Found multiple potential files! Trying to determine correct file by checking the content.");
+                            .warn("Found multiple potential files! Trying to determine correct file by checking the content.");
 
                     for (final String potentialFileName : potentialFiles) {
                         final File file = new File(potentialFileName);
@@ -271,10 +388,20 @@ public class InterceptionAgent {
         return jarFile;
     }
 
+    /**
+     *
+     * @return {@link InterceptionAgent#INSTANCE}
+     */
     public static InterceptionAgent getInstance() {
         return InterceptionAgent.INSTANCE;
     }
 
+    /**
+     *
+     * @return {@link InterceptionAgent#instrumentation}
+     * @throws IllegalStateException
+     *             If the agent is not initialized yet.
+     */
     public Instrumentation getInstrumentation() {
         if (!this.initialized) {
             throw new IllegalStateException("The interception agent is not initialized yet!");

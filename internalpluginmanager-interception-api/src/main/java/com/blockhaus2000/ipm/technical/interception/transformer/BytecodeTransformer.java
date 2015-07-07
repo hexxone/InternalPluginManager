@@ -39,11 +39,50 @@ import com.blockhaus2000.ipm.technical.interception.annotation.Interceptable;
 import com.blockhaus2000.ipm.technical.interception.exception.TransformException;
 import com.blockhaus2000.ipm.technical.interception.exception.TransformRuntimeException;
 
+/**
+ * The {@link BytecodeTransformer} is used to transform bytecode given in the
+ * constructor in order to enable interceptions at all for the given bytecode.
+ *
+ * <p>
+ * For methods, it places event firing at the start of any method, before any
+ * statement, and after all statements (including the return statements). <br>
+ * </p>
+ * <p>
+ * For constructor, it places event firing at the start of any constructor,
+ * before any statement but the <code>this</code> or <code>super</code>
+ * statement, and after all statements, but before every <code>return</code>
+ * statement.
+ * </p>
+ * <p>
+ * For class initializers (static blocks), it places event firing at the start
+ * of any constructor, before any statement, and after all statements, but
+ * before every <code>return</code> statement.
+ * </p>
+ *
+ */
 public class BytecodeTransformer {
+    /**
+     * The logger for this class.
+     *
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(BytecodeTransformer.class);
 
-    private static final String BODY_TEMPLATE;
+    /**
+     * The name of the resource file containing the template for method bodies.
+     *
+     */
+    private static final String METHOD_BODY_RESOURCE = "method_body.jt";
 
+    /**
+     * The method body template, loaded in the static block.
+     *
+     */
+    private static final String METHOD_BODY_TEMPLATE;
+
+    /**
+     * The bytecode to transform.
+     *
+     */
     private byte[] bytecode;
 
     static {
@@ -51,7 +90,7 @@ public class BytecodeTransformer {
 
         BufferedReader reader = null;
         try {
-            final URL resource = BytecodeTransformer.class.getClassLoader().getResource("interception.jt");
+            final URL resource = BytecodeTransformer.class.getClassLoader().getResource(BytecodeTransformer.METHOD_BODY_RESOURCE);
             reader = new BufferedReader(new InputStreamReader(resource.openStream(), Charset.forName("UTF-8")));
 
             final StringBuilder builder = new StringBuilder();
@@ -60,7 +99,7 @@ public class BytecodeTransformer {
                 builder.append(line);
                 builder.append("\n");
             }
-            BODY_TEMPLATE = builder.toString();
+            METHOD_BODY_TEMPLATE = builder.toString();
         } catch (final IOException cause) {
             throw new TransformRuntimeException("An error occurred whilst reading the interception template!", cause);
         } finally {
@@ -75,12 +114,25 @@ public class BytecodeTransformer {
         }
     }
 
+    /**
+     * Constructor of BytecodeTransformer.
+     *
+     * @param bytecode
+     *            The bytecode to transform.
+     */
     public BytecodeTransformer(final byte[] bytecode) {
         assert bytecode != null : "Bytecode must not be null!";
 
         this.bytecode = bytecode;
     }
 
+    /**
+     * Transforms the bytecode to enable interceptions (i.e. inserts the firing
+     * of the events).
+     *
+     * @throws TransformException
+     *             If any error occurs whilst transforming the bytecode.
+     */
     public void transform() throws TransformException {
         try {
             this.internalTransform();
@@ -91,10 +143,35 @@ public class BytecodeTransformer {
         }
     }
 
+    /**
+     * The internal method for {@link BytecodeTransformer#transform()}.
+     *
+     * @throws IOException
+     *             If any I/O error occurs.
+     * @throws CannotCompileException
+     *             The the generated code is not compilable.
+     * @throws TransformException
+     *             If any general error occurs whilst transforming the bytecode.
+     */
     private void internalTransform() throws IOException, CannotCompileException, TransformException {
         final ClassPool pool = ClassPool.getDefault();
         final CtClass ctClass = pool.makeClass(new ByteArrayInputStream(this.bytecode));
+        this.processClass(ctClass);
+    }
 
+    /**
+     * Processes the given class and transforms it to enable interceptions.
+     *
+     * @param ctClass
+     *            The class to transform.
+     * @throws IOException
+     *             If any I/O error occurs.
+     * @throws CannotCompileException
+     *             If the generated code is not compilable.
+     * @throws TransformException
+     *             If any general error occurs whilst transforming the class.
+     */
+    private void processClass(final CtClass ctClass) throws IOException, CannotCompileException, TransformException {
         BytecodeTransformer.LOGGER.debug("Transforming class {}.", ctClass.getName());
 
         // Only process if the class is interceptable.
@@ -102,29 +179,77 @@ public class BytecodeTransformer {
             BytecodeTransformer.LOGGER.debug("Skipping transformation because the class is not tagged with {}.",
                     Interceptable.class.getName());
         } else {
-            for (final CtMethod implMethod : ctClass.getDeclaredMethods()) {
-                // Wrap each method.
+            for (final CtMethod method : ctClass.getDeclaredMethods()) {
+                BytecodeTransformer.LOGGER.trace("Processing method {}.", method.getName());
 
-                final String methodName = implMethod.getName();
-
-                BytecodeTransformer.LOGGER.trace("Processing method {}.", methodName);
-
-                final String implMethodName = ctClass.makeUniqueName(methodName + "$impl");
-
-                implMethod.setName(implMethodName);
-
-                final CtMethod method = CtNewMethod.copy(implMethod, methodName, ctClass, null);
-                method.setBody(this.buildCode(implMethod, methodName));
-                ctClass.addMethod(method);
+                this.processMethod(method);
             }
 
             this.bytecode = ctClass.toBytecode();
 
             BytecodeTransformer.LOGGER.debug("Transformed!");
         }
+
+        try {
+            for (final CtClass subClass : ctClass.getDeclaredClasses()) {
+                try {
+                    this.processClass(subClass);
+                } catch (final Exception cause) {
+                    BytecodeTransformer.LOGGER.error("An error occurred whilst processing nested class " + subClass.getName()
+                            + "!", cause);
+                }
+            }
+        } catch (final NotFoundException cause) {
+            BytecodeTransformer.LOGGER.warn("Unable to locate nested class in default class pool!", cause);
+        }
     }
 
-    private String buildCode(final CtMethod implMethod, final String methodName) throws TransformException {
+    /**
+     * Processes the given method to enable interceptions.
+     *
+     * <p>
+     * This replaces the original method body with the code located in the file
+     * {@link BytecodeTransformer#METHOD_BODY_RESOURCE} and inserts a call to a
+     * generated method containing the original code.
+     * </p>
+     *
+     * @param implMethod
+     *            The method to transform.
+     * @throws CannotCompileException
+     *             If generated code is not compilable.
+     * @throws TransformException
+     *             If any general error occurs whilst transforming the given
+     *             method.
+     */
+    private void processMethod(final CtMethod implMethod) throws CannotCompileException, TransformException {
+        final CtClass ctClass = implMethod.getDeclaringClass();
+
+        final String methodName = implMethod.getName();
+        final String implMethodName = ctClass.makeUniqueName(methodName + "$impl");
+
+        implMethod.setName(implMethodName);
+
+        final CtMethod method = CtNewMethod.copy(implMethod, methodName, ctClass, null);
+        method.setBody(this.generateMethodBody(implMethod, methodName));
+        ctClass.addMethod(method);
+    }
+
+    /**
+     * Generates the method body for the given method (i.e. the code that is
+     * inserted into the method body later on). The generated code is mainly
+     * placed in the file {@link BytecodeTransformer#METHOD_BODY_RESOURCE}.
+     *
+     * @param implMethod
+     *            The method which implements the original code (i.e. a method
+     *            with a generated name).
+     * @param methodName
+     *            The real method name (i.e. the name of the method which will
+     *            contain the generated code).
+     * @return The generated code.
+     * @throws TransformException
+     *             If any general transformation error occurs.
+     */
+    private String generateMethodBody(final CtMethod implMethod, final String methodName) throws TransformException {
         final boolean isStatic = Modifier.isStatic(implMethod.getModifiers());
         final String returnType;
         final boolean hasReturn;
@@ -137,7 +262,7 @@ public class BytecodeTransformer {
             throw new TransformException("Could not find the return type!", cause);
         }
 
-        String result = BytecodeTransformer.BODY_TEMPLATE;
+        String result = BytecodeTransformer.METHOD_BODY_TEMPLATE;
         result = result.replace("%{CLASS_NAME}", implMethod.getDeclaringClass().getName());
         result = result.replace("%{REAL_METHOD_NAME}", methodName);
         result = result.replace("%{HAS_RETURN}", String.valueOf(hasReturn));
@@ -156,6 +281,17 @@ public class BytecodeTransformer {
         return result;
     }
 
+    /**
+     * Return the stored bytecode.
+     *
+     * <p>
+     * If the bytecode was transformed using the
+     * {@link BytecodeTransformer#transform()} method, this will urn the
+     * transformed bytecode.
+     * </p>
+     *
+     * @return {@link BytecodeTransformer#bytecode}
+     */
     public byte[] getBytecode() {
         return this.bytecode;
     }

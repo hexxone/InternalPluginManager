@@ -17,8 +17,14 @@
  */
 package com.blockhaus2000.ipm.technical.interception;
 
+import com.blockhaus2000.ipm.technical.event.EventManager;
 import com.blockhaus2000.ipm.technical.event.SimpleEventManager;
 
+/**
+ * This {@link EventManager} manages every event relating to the interception
+ * API (e.g. method calls).
+ *
+ */
 public final class InterceptionEventManager extends SimpleEventManager {
     /**
      * THE instance of the {@link InterceptionEventManager}.

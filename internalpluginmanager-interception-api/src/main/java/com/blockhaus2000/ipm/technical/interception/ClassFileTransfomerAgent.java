@@ -26,7 +26,16 @@ import org.slf4j.LoggerFactory;
 
 import com.blockhaus2000.ipm.technical.interception.transformer.BytecodeTransformer;
 
+/**
+ * The {@link ClassFileTransfomerAgent} is used to transform class files (i.e.
+ * bytecode) to enable the interception API.
+ *
+ */
 public class ClassFileTransfomerAgent implements ClassFileTransformer {
+    /**
+     * The logger for this class.
+     *
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(ClassFileTransfomerAgent.class);
 
     /**
