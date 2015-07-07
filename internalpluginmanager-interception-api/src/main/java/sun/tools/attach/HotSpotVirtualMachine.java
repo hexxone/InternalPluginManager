@@ -33,12 +33,13 @@ import com.sun.tools.attach.spi.AttachProvider;
 import java.io.InputStream;
 import java.io.IOException;
 import java.util.Properties;
-import java.util.Map;
+// Commented out by Fabian Damken
+//import java.util.Map;
 
 /*
  * The HotSpot implementation of com.sun.tools.attach.VirtualMachine.
  */
-
+@SuppressWarnings("javadoc") // Added by Fabian Damken
 public abstract class HotSpotVirtualMachine extends VirtualMachine {
 
     HotSpotVirtualMachine(AttachProvider provider, String id) {
@@ -73,6 +74,7 @@ public abstract class HotSpotVirtualMachine extends VirtualMachine {
     /*
      * Load agent library - library name will be expanded in target VM
      */
+    @Override // Added by Fabian Damken
     public void loadAgentLibrary(String agentLibrary, String options)
         throws AgentLoadException, AgentInitializationException, IOException
     {
@@ -82,6 +84,7 @@ public abstract class HotSpotVirtualMachine extends VirtualMachine {
     /*
      * Load agent - absolute path of library provided to target VM
      */
+    @Override // Added by Fabian Damken
     public void loadAgentPath(String agentLibrary, String options)
         throws AgentLoadException, AgentInitializationException, IOException
     {
@@ -92,6 +95,7 @@ public abstract class HotSpotVirtualMachine extends VirtualMachine {
      * Load JPLIS agent which will load the agent JAR file and invoke
      * the agentmain method.
      */
+    @Override // Added by Fabian Damken
     public void loadAgent(String agent, String options)
         throws AgentLoadException, AgentInitializationException, IOException
     {
@@ -137,6 +141,7 @@ public abstract class HotSpotVirtualMachine extends VirtualMachine {
     /*
      * Send "properties" command to target VM
      */
+    @Override // Added by Fabian Damken
     public Properties getSystemProperties() throws IOException {
         InputStream in = null;
         Properties props = new Properties();
@@ -149,6 +154,7 @@ public abstract class HotSpotVirtualMachine extends VirtualMachine {
         return props;
     }
 
+    @Override // Added by Fabian Damken
     public Properties getAgentProperties() throws IOException {
         InputStream in = null;
         Properties props = new Properties();
@@ -236,11 +242,19 @@ public abstract class HotSpotVirtualMachine extends VirtualMachine {
             n = in.read(buf, 0, 1);
             if (n > 0) {
                 char c = (char)buf[0];
+                // Changed by Fabian Damken from:
+                /*
                 if (c == '\n') {
                     break;                  // EOL found
                 } else {
                     sb.append(c);
                 }
+                */
+                // to:
+                if (c == '\n') {
+                    break;                  // EOL found
+                }
+                sb.append(c);
             }
         } while (n > 0);
 

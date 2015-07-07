@@ -24,18 +24,22 @@
  */
 package sun.tools.attach;
 
-import com.sun.tools.attach.VirtualMachine;
+// Commented out by Fabian Damken
+//import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.AgentLoadException;
 import com.sun.tools.attach.AttachNotSupportedException;
 import com.sun.tools.attach.spi.AttachProvider;
+
 import java.io.InputStream;
 import java.io.IOException;
 import java.io.File;
-import java.util.Properties;
+// Commented out by Fabian Damken
+//import java.util.Properties;
 
 /*
  * Linux implementation of HotSpotVirtualMachine
  */
+@SuppressWarnings("javadoc") // Added by Fabian Damken
 public class LinuxVirtualMachine extends HotSpotVirtualMachine {
     // "/tmp" is used as a global well-known location for the files
     // .java_pid<pid>. and .attach_pid<pid>. It is important that this
@@ -130,6 +134,7 @@ public class LinuxVirtualMachine extends HotSpotVirtualMachine {
     /**
      * Detach from the target VM
      */
+    @Override // Added by Fabian Damken
     public void detach() throws IOException {
         synchronized (this) {
             if (this.path != null) {
@@ -147,6 +152,7 @@ public class LinuxVirtualMachine extends HotSpotVirtualMachine {
     /**
      * Execute the given command in the target VM.
      */
+    @Override // Added by Fabian Damken
     InputStream execute(String cmd, Object ... args) throws AgentLoadException, IOException {
         assert args.length <= 3;                // includes null
 
@@ -199,11 +205,19 @@ public class LinuxVirtualMachine extends HotSpotVirtualMachine {
             completionStatus = readInt(sis);
         } catch (IOException x) {
             sis.close();
+            // Changed by Fabian Damken from:
+            /*
             if (ioe != null) {
                 throw ioe;
             } else {
                 throw x;
             }
+            */
+            // to:
+            if (ioe != null) {
+                throw ioe;
+            }
+            throw x;
         }
 
         if (completionStatus != 0) {
@@ -218,11 +232,19 @@ public class LinuxVirtualMachine extends HotSpotVirtualMachine {
 
             // Special-case the "load" command so that the right exception is
             // thrown.
+            // Changed by Fabian Damken from:
+            /*
             if (cmd.equals("load")) {
                 throw new AgentLoadException("Failed to load agent library");
             } else {
                 throw new IOException("Command failed in target VM");
             }
+            */
+            // to:
+            if (cmd.equals("load")) {
+                throw new AgentLoadException("Failed to load agent library");
+            }
+            throw new IOException("Command failed in target VM");
         }
 
         // Return the input stream so that the command output can be read
@@ -239,16 +261,26 @@ public class LinuxVirtualMachine extends HotSpotVirtualMachine {
             this.s = s;
         }
 
+        @Override // Added by Fabian Damken
         public synchronized int read() throws IOException {
             byte b[] = new byte[1];
             int n = this.read(b, 0, 1);
+            // Changed by Fabian Damken from:
+            /*
             if (n == 1) {
                 return b[0] & 0xff;
             } else {
                 return -1;
             }
+            */
+            // to:
+            if (n == 1) {
+                return b[0] & 0xff;
+            }
+            return -1;
         }
 
+        @Override // Added by Fabian Damken
         public synchronized int read(byte[] bs, int off, int len) throws IOException {
             if ((off < 0) || (off > bs.length) || (len < 0) ||
                 ((off + len) > bs.length) || ((off + len) < 0)) {
@@ -259,6 +291,7 @@ public class LinuxVirtualMachine extends HotSpotVirtualMachine {
             return LinuxVirtualMachine.read(s, bs, off, len);
         }
 
+        @Override // Added by Fabian Damken
         public void close() throws IOException {
             LinuxVirtualMachine.close(s);
         }

@@ -30,10 +30,12 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;
 import com.sun.tools.attach.AttachPermission;
 import com.sun.tools.attach.AttachNotSupportedException;
+
 import java.util.ServiceLoader;
 
 /**
@@ -73,7 +75,7 @@ import java.util.ServiceLoader;
  *
  * @since 1.6
  */
-
+@SuppressWarnings("javadoc") // Added by Fabian Damken
 public abstract class AttachProvider {
 
     private static final Object lock = new Object();

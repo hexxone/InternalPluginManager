@@ -24,19 +24,23 @@
  */
 package sun.tools.attach;
 
-import com.sun.tools.attach.VirtualMachine;
+// Commented out by Fabian Damken
+//import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.AgentLoadException;
 import com.sun.tools.attach.AttachNotSupportedException;
 import com.sun.tools.attach.spi.AttachProvider;
+
 import java.io.InputStream;
 import java.io.IOException;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Properties;
+// Commented out by Fabian Damken
+//import java.util.Properties;
 
 /*
  * Solaris implementation of HotSpotVirtualMachine.
  */
+@SuppressWarnings("javadoc") // Added by Fabian Damken
 public class SolarisVirtualMachine extends HotSpotVirtualMachine {
     // "/tmp" is used as a global well-known location for the files
     // .java_pid<pid>. and .attach_pid<pid>. It is important that this
@@ -103,6 +107,7 @@ public class SolarisVirtualMachine extends HotSpotVirtualMachine {
     /**
      * Detach from the target VM
      */
+    @Override // Added by Fabian Damken
     public void detach() throws IOException {
         synchronized (this) {
             if (fd != -1) {
@@ -115,6 +120,7 @@ public class SolarisVirtualMachine extends HotSpotVirtualMachine {
     /**
      * Execute the given command in the target VM.
      */
+    @Override // Added by Fabian Damken
     InputStream execute(String cmd, Object ... args) throws AgentLoadException, IOException {
         assert args.length <= 3;                // includes null
 
@@ -148,11 +154,19 @@ public class SolarisVirtualMachine extends HotSpotVirtualMachine {
         // "load" command to ensure that the right exception is thrown.
         if (completionStatus != 0) {
             sis.close();
+            // Changed by Fabian Damken from:
+            /*
             if (cmd.equals("load")) {
                 throw new AgentLoadException("Failed to load agent library");
             } else {
                 throw new IOException("Command failed in target VM");
             }
+            */
+            // to:
+            if (cmd.equals("load")) {
+                throw new AgentLoadException("Failed to load agent library");
+            }
+            throw new IOException("Command failed in target VM");
         }
 
         // Return the input stream so that the command output can be read
@@ -167,16 +181,26 @@ public class SolarisVirtualMachine extends HotSpotVirtualMachine {
             this.s = s;
         }
 
+        @Override // Added by Fabian Damken
         public synchronized int read() throws IOException {
             byte b[] = new byte[1];
             int n = this.read(b, 0, 1);
+            // Changed by Fabian Damken from:
+            /*
             if (n == 1) {
                 return b[0] & 0xff;
             } else {
                 return -1;
             }
+            */
+            // to:
+            if (n == 1) {
+                return b[0] & 0xff;
+            }
+            return -1;
         }
 
+        @Override // Added by Fabian Damken
         public synchronized int read(byte[] bs, int off, int len) throws IOException {
             if ((off < 0) || (off > bs.length) || (len < 0) ||
                 ((off + len) > bs.length) || ((off + len) < 0)) {
@@ -187,6 +211,7 @@ public class SolarisVirtualMachine extends HotSpotVirtualMachine {
             return SolarisVirtualMachine.read(s, bs, off, len);
         }
 
+        @Override // Added by Fabian Damken
         public void close() throws IOException {
             SolarisVirtualMachine.close(s);
         }
@@ -194,7 +219,12 @@ public class SolarisVirtualMachine extends HotSpotVirtualMachine {
 
     // The door is attached to .java_pid<pid> in the temporary directory.
     private int openDoor(int pid) throws IOException {
+        // Changed by Fabian Damken from:
+        /*
         String path = tmpdir + "/.java_pid" + pid;;
+        */
+        // to:
+        String path = tmpdir + "/.java_pid" + pid;
         fd = open(path);
 
         // Check that the file owner/permission to avoid attaching to

@@ -26,6 +26,7 @@
 package com.sun.tools.attach;
 
 import com.sun.tools.attach.spi.AttachProvider;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -101,7 +102,7 @@ import java.io.IOException;
  *
  * @since 1.6
  */
-
+@SuppressWarnings("javadoc") // Added by Fabian Damken
 public abstract class VirtualMachine {
     private AttachProvider provider;
     private String id;
@@ -584,6 +585,7 @@ public abstract class VirtualMachine {
      *
      * @return  A hash-code value for this virtual machine
      */
+    @Override // Added by Fabian Damken
     public int hashCode() {
         if (hash != 0) {
             return hash;
@@ -609,6 +611,7 @@ public abstract class VirtualMachine {
      *                a VirtualMachine that is equal to this
      *                VirtualMachine.
      */
+    @Override // Added by Fabian Damken
     public boolean equals(Object ob) {
         if (ob == this)
             return true;
@@ -627,6 +630,7 @@ public abstract class VirtualMachine {
     /**
      * Returns the string representation of the <code>VirtualMachine</code>.
      */
+    @Override // Added by Fabian Damken
     public String toString() {
         return provider.toString() + ": " + id;
     }

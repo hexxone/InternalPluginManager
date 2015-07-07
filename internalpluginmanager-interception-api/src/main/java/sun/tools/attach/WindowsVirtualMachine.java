@@ -24,17 +24,23 @@
  */
 package sun.tools.attach;
 
-import com.sun.tools.attach.VirtualMachine;
+// Commented out by Fabian Damken
+//import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.AgentLoadException;
 import com.sun.tools.attach.AttachNotSupportedException;
 import com.sun.tools.attach.spi.AttachProvider;
+
 import sun.tools.attach.HotSpotVirtualMachine;
+
 import java.io.IOException;
-import java.io.File;
+// Commented out by Fabian Damken
+//import java.io.File;
 import java.io.InputStream;
-import java.util.Properties;
+// Commented out by Fabian Damken
+//import java.util.Properties;
 import java.util.Random;
 
+@SuppressWarnings("javadoc") // Added by Fabian Damken
 public class WindowsVirtualMachine extends HotSpotVirtualMachine {
 
     // the enqueue code stub (copied into each target VM)
@@ -65,6 +71,7 @@ public class WindowsVirtualMachine extends HotSpotVirtualMachine {
         }
     }
 
+    @Override // Added by Fabian Damken
     public void detach() throws IOException {
         synchronized (this) {
             if (hProcess != -1) {
@@ -74,6 +81,7 @@ public class WindowsVirtualMachine extends HotSpotVirtualMachine {
         }
     }
 
+    @Override // Added by Fabian Damken
     InputStream execute(String cmd, Object ... args)
         throws AgentLoadException, IOException
     {
@@ -106,11 +114,19 @@ public class WindowsVirtualMachine extends HotSpotVirtualMachine {
             int status = readInt(is);
             if (status != 0) {
                 // special case the load command so that the right exception is thrown
+                // Changed by Fabian Damken from:
+                /*
                 if (cmd.equals("load")) {
                     throw new AgentLoadException("Failed to load agent library");
                 } else {
                     throw new IOException("Command failed in target VM");
                 }
+                */
+                // to:
+                if (cmd.equals("load")) {
+                    throw new AgentLoadException("Failed to load agent library");
+                }
+                throw new IOException("Command failed in target VM");
             }
 
             // return the input stream
@@ -131,16 +147,26 @@ public class WindowsVirtualMachine extends HotSpotVirtualMachine {
             this.hPipe = hPipe;
         }
 
+        @Override // Added by Fabian Damken
         public synchronized int read() throws IOException {
             byte b[] = new byte[1];
             int n = this.read(b, 0, 1);
+            // Changed by Fabian Damken from:
+            /*
             if (n == 1) {
                 return b[0] & 0xff;
             } else {
                 return -1;
             }
+            */
+            // to:
+            if (n == 1) {
+                return b[0] & 0xff;
+            }
+            return -1;
         }
 
+        @Override // Added by Fabian Damken
         public synchronized int read(byte[] bs, int off, int len) throws IOException {
             if ((off < 0) || (off > bs.length) || (len < 0) ||
                 ((off + len) > bs.length) || ((off + len) < 0)) {
@@ -151,6 +177,7 @@ public class WindowsVirtualMachine extends HotSpotVirtualMachine {
             return WindowsVirtualMachine.readPipe(hPipe, bs, off, len);
         }
 
+        @Override // Added by Fabian Damken
         public void close() throws IOException {
             if (hPipe != -1) {
                 WindowsVirtualMachine.closePipe(hPipe);

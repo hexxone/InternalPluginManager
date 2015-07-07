@@ -55,6 +55,7 @@ import com.sun.tools.attach.spi.AttachProvider;
  *
  * @since 1.6
  */
+@SuppressWarnings("javadoc") // Added by Fabian Damken
 public class VirtualMachineDescriptor {
 
     private AttachProvider provider;
@@ -148,6 +149,7 @@ public class VirtualMachineDescriptor {
      *
      * @return  A hash-code value for this descriptor.
      */
+    @Override // Added by Fabian Damken
     public int hashCode() {
         if (hash != 0) {
             return hash;
@@ -173,6 +175,7 @@ public class VirtualMachineDescriptor {
      *                a VirtualMachineDescriptor that is equal to this
      *                VirtualMachineDescriptor.
      */
+    @Override // Added by Fabian Damken
     public boolean equals(Object ob) {
         if (ob == this)
             return true;
@@ -191,6 +194,7 @@ public class VirtualMachineDescriptor {
     /**
      * Returns the string representation of the <code>VirtualMachineDescriptor</code>.
      */
+    @Override // Added by Fabian Damken
     public String toString() {
         String s = provider.toString() + ": " + id;
         if (displayName != id) {
