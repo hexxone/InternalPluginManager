@@ -22,11 +22,11 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.nio.charset.Charset;
 
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
+import javassist.CtConstructor;
 import javassist.CtMethod;
 import javassist.CtNewMethod;
 import javassist.Modifier;
@@ -73,16 +73,66 @@ public class BytecodeTransformer {
     private static final Logger LOGGER = LoggerFactory.getLogger(BytecodeTransformer.class);
 
     /**
-     * The name of the resource file containing the template for method bodies.
+     * The base path for templates.
      *
      */
-    private static final String METHOD_BODY_RESOURCE = "method_body.jt";
+    private static final String RESOURCES = "templates/interception/";
+    /**
+     * The base path for constructor templates.
+     *
+     */
+    private static final String CONSTRUCTOR_RESOURCES = BytecodeTransformer.RESOURCES + "constructor/";
+    /**
+     * The base path for method templates.
+     *
+     */
+    private static final String METHOD_RESOURCES = BytecodeTransformer.RESOURCES + "method/";
 
     /**
-     * The method body template, loaded in the static block.
+     * The resource of the template used as whilst a method invocation.
      *
      */
-    private static final String METHOD_BODY_TEMPLATE;
+    private static final String METHOD_INVOCATION_RESOURCE = BytecodeTransformer.METHOD_RESOURCES + "invocation.jt";
+    /**
+     * The resource of the template used as whilst a method is exiting.
+     *
+     */
+    private static final String METHOD_EXIT_RESOURCE = BytecodeTransformer.METHOD_RESOURCES + "exit.jt";
+    /**
+     * The resource of the template used as whilst a method with no return (
+     * <code>void</code>) is exiting.
+     *
+     */
+    private static final String METHOD_EXIT_VOID_RESOURCE = BytecodeTransformer.METHOD_RESOURCES + "exit_void.jt";
+
+    /**
+     * The resource of the template used as whilst a constructor invocation.
+     *
+     */
+    private static final String CONSTRUCTOR_INVOCATION_RESOURCE = BytecodeTransformer.CONSTRUCTOR_RESOURCES + "invocation.jt";
+
+    /**
+     * The template used as whilst a method invocation.
+     *
+     */
+    private static final String METHOD_INVOCATION_TEMPLATE;
+    /**
+     * The template used as whilst a method is exiting.
+     *
+     */
+    private static final String METHOD_EXIT_TEMPLATE;
+    /**
+     * The template used as whilst a method with no return (<code>void</code>)
+     * is exiting.
+     *
+     */
+    private static final String METHOD_EXIT_VOID_TEMPLATE;
+
+    /**
+     * The template used as whilst a constructor invocation.
+     *
+     */
+    private static final String CONSTRUCTOR_INVOCATION_TEMPLATE;
 
     /**
      * The bytecode to transform.
@@ -91,31 +141,17 @@ public class BytecodeTransformer {
     private byte[] bytecode;
 
     static {
-        BytecodeTransformer.LOGGER.trace("Loading interception layout.");
+        BytecodeTransformer.LOGGER.trace("Loading interception resources.");
 
-        BufferedReader reader = null;
         try {
-            final URL resource = BytecodeTransformer.class.getClassLoader().getResource(BytecodeTransformer.METHOD_BODY_RESOURCE);
-            reader = new BufferedReader(new InputStreamReader(resource.openStream(), Charset.forName("UTF-8")));
+            METHOD_INVOCATION_TEMPLATE = BytecodeTransformer.loadResource(BytecodeTransformer.METHOD_INVOCATION_RESOURCE);
+            METHOD_EXIT_TEMPLATE = BytecodeTransformer.loadResource(BytecodeTransformer.METHOD_EXIT_RESOURCE);
+            METHOD_EXIT_VOID_TEMPLATE = BytecodeTransformer.loadResource(BytecodeTransformer.METHOD_EXIT_VOID_RESOURCE);
 
-            final StringBuilder builder = new StringBuilder();
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                builder.append(line);
-                builder.append("\n");
-            }
-            METHOD_BODY_TEMPLATE = builder.toString();
+            CONSTRUCTOR_INVOCATION_TEMPLATE = BytecodeTransformer
+                    .loadResource(BytecodeTransformer.CONSTRUCTOR_INVOCATION_RESOURCE);
         } catch (final IOException cause) {
             throw new TransformRuntimeException("An error occurred whilst reading the interception template!", cause);
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (final IOException cause) {
-                    throw new TransformRuntimeException("An error occurred whilst closing the interception template stream!",
-                            cause);
-                }
-            }
         }
     }
 
@@ -169,6 +205,61 @@ public class BytecodeTransformer {
      *
      * @param ctClass
      *            The class to transform.
+     * @param force
+     *            Whether to force the processing (so to not to check whether
+     *            the annotation {@link Interceptable} is present).
+     * @throws IOException
+     *             If any I/O error occurs.
+     * @throws CannotCompileException
+     *             If the generated code is not compilable.
+     * @throws TransformException
+     *             If any general error occurs whilst transforming the class.
+     */
+    private void processClass(final CtClass ctClass, final boolean force) throws IOException, CannotCompileException,
+    TransformException {
+        BytecodeTransformer.LOGGER.debug("Transforming class {}.", ctClass.getName());
+
+        // Only process if the class is interceptable or the processing should
+        // be forced.
+        if (force || ctClass.hasAnnotation(Interceptable.class)) {
+            for (final CtMethod method : ctClass.getDeclaredMethods()) {
+                BytecodeTransformer.LOGGER.trace("Processing method {}.", method.getName());
+
+                this.processMethod(method);
+            }
+            for (final CtConstructor ctor : ctClass.getDeclaredConstructors()) {
+                BytecodeTransformer.LOGGER.trace("Processing constructor {}.", ctor.getName());
+
+                this.processConstructor(ctor);
+            }
+
+            this.bytecode = ctClass.toBytecode();
+
+            BytecodeTransformer.LOGGER.debug("Transformed!");
+
+            try {
+                for (final CtClass subClass : ctClass.getDeclaredClasses()) {
+                    try {
+                        this.processClass(subClass, true);
+                    } catch (final Exception cause) {
+                        BytecodeTransformer.LOGGER.error("An error occurred whilst processing nested class " + subClass.getName()
+                                + "!", cause);
+                    }
+                }
+            } catch (final NotFoundException cause) {
+                BytecodeTransformer.LOGGER.warn("Unable to locate nested class in default class pool!", cause);
+            }
+        } else {
+            BytecodeTransformer.LOGGER.debug("Skipping transformation because the class is not tagged with {}.",
+                    Interceptable.class.getName());
+        }
+    }
+
+    /**
+     * Processes the given class and transforms it to enable interceptions.
+     *
+     * @param ctClass
+     *            The class to transform.
      * @throws IOException
      *             If any I/O error occurs.
      * @throws CannotCompileException
@@ -177,45 +268,18 @@ public class BytecodeTransformer {
      *             If any general error occurs whilst transforming the class.
      */
     private void processClass(final CtClass ctClass) throws IOException, CannotCompileException, TransformException {
-        BytecodeTransformer.LOGGER.debug("Transforming class {}.", ctClass.getName());
-
-        // Only process if the class is interceptable.
-        if (!ctClass.hasAnnotation(Interceptable.class)) {
-            BytecodeTransformer.LOGGER.debug("Skipping transformation because the class is not tagged with {}.",
-                    Interceptable.class.getName());
-        } else {
-            for (final CtMethod method : ctClass.getDeclaredMethods()) {
-                BytecodeTransformer.LOGGER.trace("Processing method {}.", method.getName());
-
-                this.processMethod(method);
-            }
-
-            this.bytecode = ctClass.toBytecode();
-
-            BytecodeTransformer.LOGGER.debug("Transformed!");
-        }
-
-        try {
-            for (final CtClass subClass : ctClass.getDeclaredClasses()) {
-                try {
-                    this.processClass(subClass);
-                } catch (final Exception cause) {
-                    BytecodeTransformer.LOGGER.error("An error occurred whilst processing nested class " + subClass.getName()
-                            + "!", cause);
-                }
-            }
-        } catch (final NotFoundException cause) {
-            BytecodeTransformer.LOGGER.warn("Unable to locate nested class in default class pool!", cause);
-        }
+        this.processClass(ctClass, false);
     }
 
     /**
      * Processes the given method to enable interceptions.
      *
      * <p>
-     * This replaces the original method body with the code located in the file
-     * {@link BytecodeTransformer#METHOD_BODY_RESOURCE} and inserts a call to a
-     * generated method containing the original code.
+     * This replaces the original method body with the code located in the files
+     * {@link BytecodeTransformer#METHOD_INVOCATION_TEMPLATE} and
+     * {@link BytecodeTransformer#METHOD_EXIT_TEMPLATE} and
+     * {@link BytecodeTransformer#METHOD_EXIT_VOID_TEMPLATE}. and inserts a call
+     * to a generated method containing the original code.
      * </p>
      *
      * @param implMethod
@@ -240,9 +304,32 @@ public class BytecodeTransformer {
     }
 
     /**
+     * Processes the given constructor to enable interceptions.
+     *
+     * <p>
+     * This replaces the original constructor body with the code located in the
+     * file {@link BytecodeTransformer#CONSTRUCTOR_INVOCATION_TEMPLATE}.
+     * </p>
+     *
+     * @param ctor
+     *            The constructor to transform.
+     * @throws CannotCompileException
+     *             If generated code is not compilable.
+     * @throws TransformException
+     *             If any general error occurs whilst transforming the given
+     *             method.
+     */
+    private void processConstructor(final CtConstructor ctor) throws CannotCompileException, TransformException {
+        ctor.setBody(this.generateConstructorBody(ctor));
+    }
+
+    /**
      * Generates the method body for the given method (i.e. the code that is
      * inserted into the method body later on). The generated code is mainly
-     * placed in the file {@link BytecodeTransformer#METHOD_BODY_RESOURCE}.
+     * placed in the files
+     * {@link BytecodeTransformer#METHOD_INVOCATION_TEMPLATE} and
+     * {@link BytecodeTransformer#METHOD_EXIT_TEMPLATE} and
+     * {@link BytecodeTransformer#METHOD_EXIT_VOID_TEMPLATE}.
      *
      * @param implMethod
      *            The method which implements the original code (i.e. a method
@@ -255,35 +342,144 @@ public class BytecodeTransformer {
      *             If any general transformation error occurs.
      */
     private String generateMethodBody(final CtMethod implMethod, final String methodName) throws TransformException {
-        final boolean isStatic = Modifier.isStatic(implMethod.getModifiers());
+        final String className = implMethod.getDeclaringClass().getName();
+        final String realMethodName = implMethod.getName();
         final String returnType;
-        final boolean hasReturn;
-        final int paramCount;
+        final String parameters;
         try {
-            returnType = implMethod.getReturnType().getName();
-            hasReturn = !returnType.equals("void");
-            paramCount = implMethod.getParameterTypes().length;
+            final String tmpReturnType = implMethod.getReturnType().getName();
+            returnType = tmpReturnType == null || tmpReturnType.equals("void") ? null : tmpReturnType;
+
+            parameters = this.extractParameters(implMethod.getParameterTypes(), Modifier.isStatic(implMethod.getModifiers()));
         } catch (final NotFoundException cause) {
-            throw new TransformException("Could not find the return type!", cause);
+            throw new TransformException("Could not find the return type nor the parameter types!", cause);
         }
 
-        String result = BytecodeTransformer.METHOD_BODY_TEMPLATE;
-        result = result.replace("%{CLASS_NAME}", implMethod.getDeclaringClass().getName());
-        result = result.replace("%{REAL_METHOD_NAME}", methodName);
-        result = result.replace("%{HAS_RETURN}", String.valueOf(hasReturn));
-        result = result.replace("%{RETURN_TYPE}", returnType);
-        result = result.replace("%{METHOD_NAME}", implMethod.getName());
-        final StringBuilder params = new StringBuilder("null");
+        final String template;
+        if (returnType == null) {
+            template = BytecodeTransformer.METHOD_INVOCATION_TEMPLATE + BytecodeTransformer.METHOD_EXIT_VOID_TEMPLATE;
+        } else {
+            template = BytecodeTransformer.METHOD_INVOCATION_TEMPLATE + BytecodeTransformer.METHOD_EXIT_TEMPLATE;
+        }
+        return this.prepareTemplate(template, className, realMethodName, returnType, methodName, parameters);
+    }
+
+    /**
+     * Generates the constructor body for the given constructor (i.e. the code
+     * that is inserted into the constructor body later on). The generated code
+     * is mainly placed in the file
+     * {@link BytecodeTransformer#CONSTRUCTOR_INVOCATION_TEMPLATE}.
+     *
+     * @param ctor
+     *            The constructor to generate the body for.
+     * @return The generated code.
+     * @throws TransformException
+     *             If any general transformation error occurs.
+     */
+    private String generateConstructorBody(final CtConstructor ctor) throws TransformException {
+        final String className = ctor.getDeclaringClass().getName();
+        final String parameters;
+        try {
+            parameters = this.extractParameters(ctor.getParameterTypes(), false);
+        } catch (final NotFoundException cause) {
+            throw new TransformException("Could not find the parameter types!", cause);
+        }
+
+        return this.prepareTemplate(BytecodeTransformer.CONSTRUCTOR_INVOCATION_TEMPLATE, className, null, null, null, parameters);
+    }
+
+    /**
+     * Prepares the given template for usage in a method or constructor body (it
+     * replaces the placeholder). If any of the given values is
+     * <code>null</code>, it will not be processed.
+     *
+     * @param template
+     *            The template to prepare.
+     * @param className
+     *            The class name. Replaces <code>%{CLASS_NAME}</code>.
+     * @param realMethodName
+     *            The real method name. Replaces
+     *            <code>%{REAL_METHOD_NAME}</code>.
+     * @param returnType
+     *            The return type. Replaces <code>%{RETURN_TYPE}</code>.
+     * @param methodName
+     *            The method name. Replaces <code>%{METHOD_NAME}</code>.
+     * @param parameters
+     *            The parameters. Replaces <code>%{PARAMETERS}</code>.
+     * @return The prepared templates.
+     */
+    private String prepareTemplate(final String template, final String className, final String realMethodName,
+            final String returnType, final String methodName, final String parameters) {
+        String result = template;
+        if (className != null) {
+            result = result.replace("%{CLASS_NAME}", className);
+        }
+        if (realMethodName != null) {
+            result = result.replace("%{REAL_METHOD_NAME}", realMethodName);
+        }
+        if (returnType != null) {
+            result = result.replace("%{RETURN_TYPE}", returnType);
+        }
+        if (methodName != null) {
+            result = result.replace("%{METHOD_NAME}", methodName);
+        }
+        if (parameters != null) {
+            result = result.replace("%{PARAMETERS}", parameters);
+        }
+        return result;
+    }
+
+    /**
+     * Generates code that can be read by Javassist as regular variables. It
+     * includes every parameter as a object in an array-like code.
+     *
+     * @param parameterTypes
+     *            The parameter types to generate the code for.
+     * @param isStatic
+     *            Whether the method (or the constructor) is used in a static
+     *            environment.
+     * @return The generated code.
+     */
+    private String extractParameters(final CtClass[] parameterTypes, final boolean isStatic) {
+        final int paramCount = parameterTypes.length;
+        final StringBuilder paramsBuilder = new StringBuilder("null");
         for (int i = 0; i < paramCount; i++) {
             if (isStatic || i > 0) {
-                params.append(", com.blockhaus2000.ipm.base.ObjectUtil.toObject($");
-                params.append(i);
-                params.append(")");
+                paramsBuilder.append(", com.blockhaus2000.ipm.base.ObjectUtil.toObject($");
+                paramsBuilder.append(i);
+                paramsBuilder.append(")");
             }
         }
-        result = result.replace("%{PARAMETERS}", params.toString());
-        result = result.replace("&{CNR}", hasReturn ? "" : "//");
-        return result;
+        return paramsBuilder.toString();
+    }
+
+    /**
+     * Loads a text file with the given name from the resources of the current
+     * class loader.
+     *
+     * @param resourceName
+     *            The name of the resource to load.
+     * @return The loaded resource.
+     * @throws IOException
+     *             If an I/O error occurs.
+     */
+    private static String loadResource(final String resourceName) throws IOException {
+        BufferedReader reader = null;
+        try {
+            final URL resource = BytecodeTransformer.class.getClassLoader().getResource(resourceName);
+            reader = new BufferedReader(new InputStreamReader(resource.openStream()));
+
+            String data = "";
+            String line;
+            while ((line = reader.readLine()) != null) {
+                data += "\n" + line;
+            }
+            return data;
+        } finally {
+            if (reader != null) {
+                reader.close();
+            }
+        }
     }
 
     /**

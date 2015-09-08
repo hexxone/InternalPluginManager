@@ -1,0 +1,9 @@
+{
+	%{METHOD_NAME}($$);
+
+	final com.blockhaus2000.ipm.technical.interception.event.MethodExitEvent exitEvent = new com.blockhaus2000.ipm.technical.interception.event.MethodExitEvent("%{CLASS_NAME}", "%{REAL_METHOD_NAME}", null, new Object[] { %{PARAMETERS} });
+	eventManager.fire(exitEvent);
+	if (exitEvent.isExecutionStopped()) {
+		throw new com.blockhaus2000.ipm.technical.interception.exception.ExecutionStoppedException(exitEvent.getExecutionStoppingCauses());
+	}
+}
