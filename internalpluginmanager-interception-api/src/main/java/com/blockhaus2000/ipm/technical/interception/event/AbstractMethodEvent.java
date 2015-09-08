@@ -18,55 +18,60 @@
 package com.blockhaus2000.ipm.technical.interception.event;
 
 import java.lang.reflect.Method;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
+import com.blockhaus2000.ipm.base.parameterized.ParameterizedFactory;
+import com.blockhaus2000.ipm.base.parameterized.ParameterizedMethod;
+import com.blockhaus2000.ipm.base.parameterized.ParameterizedUtil;
 import com.blockhaus2000.ipm.technical.interception.exception.InterceptionRuntimeException;
 
+/**
+ * This is the base class for every event that relates on a method event (like
+ * method invocations).
+ *
+ */
 public abstract class AbstractMethodEvent extends AbstractInterceptionEvent {
+    /**
+     * The name of the method that was invoked.
+     *
+     */
     private final String invokedMethodName;
 
+    /**
+     * Constructor of AbstractMethodEvent.
+     *
+     * @param invokedClassName
+     *            The name of the class the invoked method is contained by.
+     * @param invokedMethodName
+     *            The name of the method that was invoked.
+     * @param parameters
+     *            The parameters which where used whilst the method invocation.
+     */
     protected AbstractMethodEvent(final String invokedClassName, final String invokedMethodName, final Object[] parameters) {
         super(invokedClassName, parameters);
 
         this.invokedMethodName = invokedMethodName;
     }
 
+    /**
+     * Fetches the invoked method.
+     *
+     * @return The invoked {@link Method}.
+     */
     public Method getInvokedMethod() {
         final Class<?>[] invokedParameterTypes = this.getParameterTypes();
 
-        final SortedMap<Integer, Method> matchedMethods = new TreeMap<Integer, Method>();
-
-        for (final Method method : this.getInvokedClass().getDeclaredMethods()) {
-            if (!method.getName().equals(this.getInvokedMethodName())) {
-                continue;
-            }
-
-            final Class<?>[] paramTypes = method.getParameterTypes();
-            if (invokedParameterTypes.length <= paramTypes.length) {
-                int correctParamCount = 0;
-                for (int i = 0; i < invokedParameterTypes.length; i++) {
-                    if (invokedParameterTypes[i].isAssignableFrom(paramTypes[i])) {
-                        correctParamCount++;
-                    } else {
-                        break;
-                    }
-                }
-                if (paramTypes.length > 0) {
-                    matchedMethods.put(100 / paramTypes.length * correctParamCount, method);
-                } else {
-                    matchedMethods.put(100, method);
-                }
-            }
-        }
-
-        final Method method = matchedMethods.get(matchedMethods.lastKey());
+        final ParameterizedMethod[] methods = ParameterizedFactory.create(this.getInvokedClass().getDeclaredMethods());
+        final Method method = ParameterizedUtil.calculateMostMatching(methods, invokedParameterTypes).getMethod();
         if (method == null) {
             throw new InterceptionRuntimeException("Could not find any method matching the parameters!");
         }
         return method;
     }
 
+    /**
+     *
+     * @return {@link AbstractMethodEvent#invokedMethodName}
+     */
     public String getInvokedMethodName() {
         return this.invokedMethodName;
     }

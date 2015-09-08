@@ -59,6 +59,11 @@ import com.blockhaus2000.ipm.technical.interception.exception.TransformRuntimeEx
  * before every <code>return</code> statement.
  * </p>
  *
+ * <p>
+ * <b> NOTE: Only classes tagged with {@link Interceptable} are tracked by this
+ * class file transformer. </b>
+ * </p>
+ *
  */
 public class BytecodeTransformer {
     /**

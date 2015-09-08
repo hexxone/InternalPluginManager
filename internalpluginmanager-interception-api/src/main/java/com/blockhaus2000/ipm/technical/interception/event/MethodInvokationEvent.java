@@ -19,9 +19,27 @@ package com.blockhaus2000.ipm.technical.interception.event;
 
 import com.blockhaus2000.ipm.technical.event.HandlerList;
 
+/**
+ * This event is fired if a method is being invoked.
+ *
+ */
 public class MethodInvokationEvent extends AbstractMethodEvent {
+    /**
+     * The event handlers.
+     *
+     */
     private static final HandlerList HANDLERS = new HandlerList();
 
+    /**
+     * Constructor of ConstructorInvokationEvent.
+     *
+     * @param invokedClassName
+     *            The name of the class the invoked method is contained by.
+     * @param invokedMethodName
+     *            The name of the method that was invoked.
+     * @param parameters
+     *            The parameters which where used whilst the method invocation.
+     */
     public MethodInvokationEvent(final String invokedClassName, final String invokedMethodName, final Object[] parameters) {
         super(invokedClassName, invokedMethodName, parameters);
     }

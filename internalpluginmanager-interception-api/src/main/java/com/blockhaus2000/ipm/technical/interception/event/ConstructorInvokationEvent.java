@@ -19,9 +19,25 @@ package com.blockhaus2000.ipm.technical.interception.event;
 
 import com.blockhaus2000.ipm.technical.event.HandlerList;
 
+/**
+ * THis event is fired when a constructor is being invoked.
+ *
+ */
 public class ConstructorInvokationEvent extends AbstractConstructorEvent {
+    /**
+     * The event handlers.
+     *
+     */
     private static final HandlerList HANDLERS = new HandlerList();
 
+    /**
+     * Constructor of ConstructorInvokationEvent.
+     *
+     * @param invokedClassName
+     *            The name of the class the invoked constructor is contained by.
+     * @param parameters
+     *            The parameters which where used whilst the method invocation.
+     */
     public ConstructorInvokationEvent(final String invokedClassName, final Object[] parameters) {
         super(invokedClassName, parameters);
     }

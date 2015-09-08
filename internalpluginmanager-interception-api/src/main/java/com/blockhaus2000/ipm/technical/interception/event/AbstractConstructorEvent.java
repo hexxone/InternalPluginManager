@@ -19,33 +19,42 @@ package com.blockhaus2000.ipm.technical.interception.event;
 
 import java.lang.reflect.Constructor;
 
+import com.blockhaus2000.ipm.base.parameterized.ParameterizedConstructor;
+import com.blockhaus2000.ipm.base.parameterized.ParameterizedFactory;
+import com.blockhaus2000.ipm.base.parameterized.ParameterizedUtil;
 import com.blockhaus2000.ipm.technical.interception.exception.InterceptionRuntimeException;
 
+/**
+ * This is the base class for every event that relates on a constructor event
+ * (like constructor invocations).
+ *
+ */
 public abstract class AbstractConstructorEvent extends AbstractInterceptionEvent {
+    /**
+     * Constructor of AbstractMethodEvent.
+     *
+     * @param invokedClassName
+     *            The name of the class the invoked constructor is contained by.
+     * @param parameters
+     *            The parameters which where used whilst the method invocation.
+     */
     protected AbstractConstructorEvent(final String invokedClassName, final Object[] parameters) {
         super(invokedClassName, parameters);
     }
 
+    /**
+     * Fetches the invoked constructor.
+     *
+     * @return The invoked {@link Constructor}.
+     */
     public Constructor<?> getInvokedConstructor() {
         final Class<?>[] invokedParameterTypes = this.getParameterTypes();
 
-        final Constructor<?>[] ctors = this.getInvokedClass().getDeclaredConstructors();
-        for (final Constructor<?> ctor : ctors) {
-            boolean correct = false;
-
-            final Class<?>[] paramTypes = ctor.getParameterTypes();
-            for (int i = 0; i < paramTypes.length; i++) {
-                if (!invokedParameterTypes[i].isAssignableFrom(paramTypes[i])) {
-                    correct = false;
-                    break;
-                }
-            }
-
-            if (correct) {
-                return ctor;
-            }
+        final ParameterizedConstructor<?>[] ctors = ParameterizedFactory.create(this.getInvokedClass().getDeclaredConstructors());
+        final Constructor<?> ctor = ParameterizedUtil.calculateMostMatching(ctors, invokedParameterTypes).getCtor();
+        if (ctor == null) {
+            throw new InterceptionRuntimeException("Could not find any constructor matching the parameters!");
         }
-
-        throw new InterceptionRuntimeException("Could not find any constructor matching the parameters!");
+        return ctor;
     }
 }

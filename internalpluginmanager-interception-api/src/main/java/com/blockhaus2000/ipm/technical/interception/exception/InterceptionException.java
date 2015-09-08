@@ -17,21 +17,53 @@
  */
 package com.blockhaus2000.ipm.technical.interception.exception;
 
+/**
+ * The root exception for any exception thrown by the interception API.
+ *
+ */
 public class InterceptionException extends Exception {
-    private static final long serialVersionUID = 6928397437521512289L;
+    /**
+     * The serial version UID.
+     *
+     */
+    private static final long serialVersionUID = 2040757325965512096L;
 
+    /**
+     * Constructor of InterceptionException.
+     *
+     */
     public InterceptionException() {
         super();
     }
 
+    /**
+     * Constructor of InterceptionException.
+     *
+     * @param message
+     *            The detailed error message.
+     * @param cause
+     *            The cause of this exception.
+     */
     public InterceptionException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
+    /**
+     * Constructor of InterceptionException.
+     *
+     * @param message
+     *            The detailed error message.
+     */
     public InterceptionException(final String message) {
         super(message);
     }
 
+    /**
+     * Constructor of InterceptionException.
+     *
+     * @param cause
+     *            The cause of this exception.
+     */
     public InterceptionException(final Throwable cause) {
         super(cause);
     }

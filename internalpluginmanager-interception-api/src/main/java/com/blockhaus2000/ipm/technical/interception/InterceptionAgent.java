@@ -228,11 +228,10 @@ public class InterceptionAgent {
             InterceptionAgent.LOGGER.debug("No attachment providers found! Creating one ...");
 
             final String vmName = System.getProperty("java.vm.name");
-            if (vmName.contains("HotSpot")) {
-                virtualMachine = this.retrieveOsDepentVmImplementation();
-            } else {
-                throw new AttachNotSupportedException("Could not attach to non-HotSpot virtual machines!");
+            if (!vmName.contains("HotSpot")) {
+                InterceptionAgent.LOGGER.warn("Running on a non-HotSpot virtual machine! Trying to attach anyway ...");
             }
+            virtualMachine = this.retrieveOsDepentVmImplementation();
         } else {
             virtualMachine = VirtualMachine.attach(this.retrieveJvmId());
         }
@@ -351,6 +350,7 @@ public class InterceptionAgent {
 
                         if (!file.isFile()) {
                             InterceptionAgent.LOGGER.trace("File {} is not a file! Skipping ...", file.getAbsolutePath());
+                            continue;
                         }
 
                         final File tempDir = FileUtil.createTempDir();

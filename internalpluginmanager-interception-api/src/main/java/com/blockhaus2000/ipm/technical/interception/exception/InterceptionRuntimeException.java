@@ -17,21 +17,54 @@
  */
 package com.blockhaus2000.ipm.technical.interception.exception;
 
+/**
+ * The root (runtime) exception for any runtime exception thrown by the
+ * interception API.
+ *
+ */
 public class InterceptionRuntimeException extends RuntimeException {
+    /**
+     * The serial version UID.
+     *
+     */
     private static final long serialVersionUID = -5055332499529506254L;
 
+    /**
+     * Constructor of InterceptionRuntimeException.
+     *
+     */
     public InterceptionRuntimeException() {
         super();
     }
 
+    /**
+     * Constructor of InterceptionRuntimeException.
+     *
+     * @param message
+     *            The detailed error message.
+     * @param cause
+     *            The cause of this exception.
+     */
     public InterceptionRuntimeException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
+    /**
+     * Constructor of InterceptionRuntimeException.
+     *
+     * @param message
+     *            The detailed error message.
+     */
     public InterceptionRuntimeException(final String message) {
         super(message);
     }
 
+    /**
+     * Constructor of InterceptionRuntimeException.
+     *
+     * @param cause
+     *            The cause of this exception.
+     */
     public InterceptionRuntimeException(final Throwable cause) {
         super(cause);
     }

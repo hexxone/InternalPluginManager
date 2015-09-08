@@ -19,11 +19,38 @@ package com.blockhaus2000.ipm.technical.interception.event;
 
 import com.blockhaus2000.ipm.technical.event.HandlerList;
 
+/**
+ * This event is fired if a constructor exists normally (by a
+ * <code>return</code> statement).
+ *
+ */
 public class ConstructorExitEvent extends AbstractConstructorEvent {
+    /**
+     * The event handlers.
+     *
+     */
     private static final HandlerList HANDLERS = new HandlerList();
 
-    public ConstructorExitEvent(final String invokedClassName, final Object[] parameters) {
+    /**
+     * The created object (<code>this</code>).
+     *
+     */
+    private final Object obj;
+
+    /**
+     * Constructor of ConstructorExitEvent.
+     *
+     * @param invokedClassName
+     *            The name of the class the invoked constructor is contained by.
+     * @param obj
+     *            The created object (<code>this</code>).
+     * @param parameters
+     *            The parameters which where used whilst the method invocation.
+     */
+    public ConstructorExitEvent(final String invokedClassName, final Object obj, final Object[] parameters) {
         super(invokedClassName, parameters);
+
+        this.obj = obj;
     }
 
     /**
@@ -34,5 +61,13 @@ public class ConstructorExitEvent extends AbstractConstructorEvent {
     @Override
     public HandlerList getHandlers() {
         return ConstructorExitEvent.HANDLERS;
+    }
+
+    /**
+     *
+     * @return {@link ConstructorExitEvent#obj}.
+     */
+    public Object getObj() {
+        return this.obj;
     }
 }

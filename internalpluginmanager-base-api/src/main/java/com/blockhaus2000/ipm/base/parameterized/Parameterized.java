@@ -15,24 +15,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.technical.interception.exception;
+package com.blockhaus2000.ipm.base.parameterized;
 
-/**
- * This exception must not happen and must not be thrown.
- *
- */
-public class MustNotHappenException extends InterceptionRuntimeException {
-    /**
-     * The serial version UID.
-     *
-     */
-    private static final long serialVersionUID = 7461593678115110529L;
-
-    /**
-     * Constructor of MustNotHappenException.
-     *
-     */
-    public MustNotHappenException() {
-        super("This must not happen!");
-    }
+public interface Parameterized {
+    int calculateMatchPropability(final Class<?>[] testParameterTypes);
 }

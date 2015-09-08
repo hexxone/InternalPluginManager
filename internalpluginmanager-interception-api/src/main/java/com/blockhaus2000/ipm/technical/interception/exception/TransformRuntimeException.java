@@ -17,21 +17,54 @@
  */
 package com.blockhaus2000.ipm.technical.interception.exception;
 
-public class TransformRuntimeException extends RuntimeException {
+/**
+ * The same as {@link TransformException}, except that this one is a
+ * {@link RuntimeException}.
+ *
+ */
+public class TransformRuntimeException extends InterceptionRuntimeException {
+    /**
+     * The serial version UID.
+     *
+     */
     private static final long serialVersionUID = 1863206145933216365L;
 
+    /**
+     * Constructor of TransformRuntimeException.
+     *
+     */
     public TransformRuntimeException() {
         super();
     }
 
+    /**
+     * Constructor of TransformRuntimeException.
+     *
+     * @param message
+     *            The detailed error message.
+     * @param cause
+     *            The cause of this exception.
+     */
     public TransformRuntimeException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
+    /**
+     * Constructor of TransformRuntimeException.
+     *
+     * @param message
+     *            The detailed error message.
+     */
     public TransformRuntimeException(final String message) {
         super(message);
     }
 
+    /**
+     * Constructor of TransformRuntimeException.
+     *
+     * @param cause
+     *            The cause of this exception.
+     */
     public TransformRuntimeException(final Throwable cause) {
         super(cause);
     }

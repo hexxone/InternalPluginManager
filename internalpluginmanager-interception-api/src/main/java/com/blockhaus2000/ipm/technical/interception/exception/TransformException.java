@@ -17,21 +17,54 @@
  */
 package com.blockhaus2000.ipm.technical.interception.exception;
 
-public class TransformException extends Exception {
+/**
+ * A {@link TransformException} is thrown if some error occur whilst
+ * transforming any classes.
+ *
+ */
+public class TransformException extends InterceptionException {
+    /**
+     * The serial version UID.
+     *
+     */
     private static final long serialVersionUID = 5204382266484768325L;
 
+    /**
+     * Constructor of TransformException.
+     *
+     */
     public TransformException() {
         super();
     }
 
+    /**
+     * Constructor of TransformException.
+     *
+     * @param message
+     *            The detailed error message.
+     * @param cause
+     *            The cause of this exception.
+     */
     public TransformException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
+    /**
+     * Constructor of TransformException.
+     *
+     * @param message
+     *            The detailed error message.
+     */
     public TransformException(final String message) {
         super(message);
     }
 
+    /**
+     * Constructor of TransformException.
+     *
+     * @param cause
+     *            The cause of this exception.
+     */
     public TransformException(final Throwable cause) {
         super(cause);
     }
