@@ -320,7 +320,7 @@ public class BytecodeTransformer {
      *             method.
      */
     private void processConstructor(final CtConstructor ctor) throws CannotCompileException, TransformException {
-        ctor.setBody(this.generateConstructorBody(ctor));
+        ctor.insertBeforeBody(this.generateConstructorBody(ctor));
     }
 
     /**
@@ -334,16 +334,16 @@ public class BytecodeTransformer {
      * @param implMethod
      *            The method which implements the original code (i.e. a method
      *            with a generated name).
-     * @param methodName
+     * @param realMethodName
      *            The real method name (i.e. the name of the method which will
      *            contain the generated code).
      * @return The generated code.
      * @throws TransformException
      *             If any general transformation error occurs.
      */
-    private String generateMethodBody(final CtMethod implMethod, final String methodName) throws TransformException {
+    private String generateMethodBody(final CtMethod implMethod, final String realMethodName) throws TransformException {
         final String className = implMethod.getDeclaringClass().getName();
-        final String realMethodName = implMethod.getName();
+        final String methodName = implMethod.getName();
         final String returnType;
         final String parameters;
         try {
@@ -357,9 +357,9 @@ public class BytecodeTransformer {
 
         final String template;
         if (returnType == null) {
-            template = BytecodeTransformer.METHOD_INVOCATION_TEMPLATE + BytecodeTransformer.METHOD_EXIT_VOID_TEMPLATE;
+            template = "{" + BytecodeTransformer.METHOD_INVOCATION_TEMPLATE + BytecodeTransformer.METHOD_EXIT_VOID_TEMPLATE + "}";
         } else {
-            template = BytecodeTransformer.METHOD_INVOCATION_TEMPLATE + BytecodeTransformer.METHOD_EXIT_TEMPLATE;
+            template = "{" + BytecodeTransformer.METHOD_INVOCATION_TEMPLATE + BytecodeTransformer.METHOD_EXIT_TEMPLATE + "}";
         }
         return this.prepareTemplate(template, className, realMethodName, returnType, methodName, parameters);
     }
@@ -385,7 +385,8 @@ public class BytecodeTransformer {
             throw new TransformException("Could not find the parameter types!", cause);
         }
 
-        return this.prepareTemplate(BytecodeTransformer.CONSTRUCTOR_INVOCATION_TEMPLATE, className, null, null, null, parameters);
+        final String template = "{" + BytecodeTransformer.CONSTRUCTOR_INVOCATION_TEMPLATE + "}";
+        return this.prepareTemplate(template, className, null, null, null, parameters);
     }
 
     /**

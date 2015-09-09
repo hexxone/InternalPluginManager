@@ -23,7 +23,7 @@ import com.blockhaus2000.ipm.technical.event.HandlerList;
  * This event is fired if a method is being invoked.
  *
  */
-public class MethodInvokationEvent extends AbstractMethodEvent {
+public class MethodInvocationEvent extends AbstractMethodEvent {
     /**
      * The event handlers.
      *
@@ -40,7 +40,7 @@ public class MethodInvokationEvent extends AbstractMethodEvent {
      * @param parameters
      *            The parameters which where used whilst the method invocation.
      */
-    public MethodInvokationEvent(final String invokedClassName, final String invokedMethodName, final Object[] parameters) {
+    public MethodInvocationEvent(final String invokedClassName, final String invokedMethodName, final Object[] parameters) {
         super(invokedClassName, invokedMethodName, parameters);
     }
 
@@ -51,6 +51,6 @@ public class MethodInvokationEvent extends AbstractMethodEvent {
      */
     @Override
     public HandlerList getHandlers() {
-        return MethodInvokationEvent.HANDLERS;
+        return MethodInvocationEvent.HANDLERS;
     }
 }

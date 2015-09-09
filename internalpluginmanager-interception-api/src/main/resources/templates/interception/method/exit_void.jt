@@ -1,6 +1,7 @@
 {
 	%{METHOD_NAME}($$);
 
+	final com.blockhaus2000.ipm.technical.interception.InterceptionEventManager eventManager = com.blockhaus2000.ipm.technical.interception.InterceptionEventManager.getInstance();
 	final com.blockhaus2000.ipm.technical.interception.event.MethodExitEvent exitEvent = new com.blockhaus2000.ipm.technical.interception.event.MethodExitEvent("%{CLASS_NAME}", "%{REAL_METHOD_NAME}", null, new Object[] { %{PARAMETERS} });
 	eventManager.fire(exitEvent);
 	if (exitEvent.isExecutionStopped()) {

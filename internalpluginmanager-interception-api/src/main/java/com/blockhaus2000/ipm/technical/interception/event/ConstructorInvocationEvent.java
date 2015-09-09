@@ -23,7 +23,7 @@ import com.blockhaus2000.ipm.technical.event.HandlerList;
  * THis event is fired when a constructor is being invoked.
  *
  */
-public class ConstructorInvokationEvent extends AbstractConstructorEvent {
+public class ConstructorInvocationEvent extends AbstractConstructorEvent {
     /**
      * The event handlers.
      *
@@ -38,7 +38,7 @@ public class ConstructorInvokationEvent extends AbstractConstructorEvent {
      * @param parameters
      *            The parameters which where used whilst the method invocation.
      */
-    public ConstructorInvokationEvent(final String invokedClassName, final Object[] parameters) {
+    public ConstructorInvocationEvent(final String invokedClassName, final Object[] parameters) {
         super(invokedClassName, parameters);
     }
 
@@ -49,6 +49,6 @@ public class ConstructorInvokationEvent extends AbstractConstructorEvent {
      */
     @Override
     public HandlerList getHandlers() {
-        return ConstructorInvokationEvent.HANDLERS;
+        return ConstructorInvocationEvent.HANDLERS;
     }
 }
