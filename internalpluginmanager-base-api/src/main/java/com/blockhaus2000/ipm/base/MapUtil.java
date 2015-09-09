@@ -21,13 +21,35 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+/**
+ * This class should simplify the usage of Java's {@link Map}s.
+ *
+ */
 public final class MapUtil {
+    /**
+     * Constructor of MapUtil.
+     *
+     */
     private MapUtil() {
         // Nothing to do.
     }
 
+    /**
+     * Removes every key (and it's element) that does not match the given key.
+     *
+     * @param map
+     *            The map to modify.
+     * @param key
+     *            The key that should be kept.
+     * @throws java.lang.IllegalArgumentException
+     *             If the given key does not exist in the map.
+     */
     public static <K, V> void removeOthers(final Map<K, V> map, final K key) {
         assert map != null : "Map must not be null!";
+
+        if (!map.containsKey(key)) {
+            throw new IllegalArgumentException("The key " + key + " does not exist!");
+        }
 
         for (final Iterator<Entry<K, V>> iterator = map.entrySet().iterator(); iterator.hasNext();) {
             final Map.Entry<K, V> entry = iterator.next();
@@ -36,7 +58,7 @@ public final class MapUtil {
                     iterator.remove();
                 }
             } else {
-                if (!entry.equals(key)) {
+                if (!entry.getKey().equals(key)) {
                     iterator.remove();
                 }
             }
