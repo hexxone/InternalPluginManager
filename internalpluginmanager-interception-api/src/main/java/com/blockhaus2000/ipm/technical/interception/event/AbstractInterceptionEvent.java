@@ -108,7 +108,8 @@ public abstract class AbstractInterceptionEvent extends AbstractEvent {
     public Class<?>[] getParameterTypes() {
         final Class<?>[] result = new Class<?>[this.parameters.length];
         for (int i = 0; i < this.parameters.length; i++) {
-            result[i] = this.parameters[i].getClass();
+            final Object parameter = this.parameters[i];
+            result[i] = parameter == null ? Object.class : parameter.getClass();
         }
         return result;
     }

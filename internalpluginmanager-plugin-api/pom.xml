@@ -29,6 +29,11 @@
 		</dependency>
 		<dependency>
 			<groupId>com.blockhaus2000</groupId>
+			<artifactId>internalpluginmanager-argument-validator</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.blockhaus2000</groupId>
 			<artifactId>internalpluginmanager-command-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
@@ -94,6 +99,7 @@
 								the artifact com.blockhaus2000:internalpluginmanager-base-api. Ignore these 
 								erros, they are OK. Some of the may also use com.blockhaus2000:internalpluginmanager-interception-api. -->
 							<include>com.blockhaus2000:internalpluginmanager-interception-api</include>
+							<include>com.blockhaus2000:internalpluginmanager-argument-validator</include>
 							<include>com.blockhaus2000:internalpluginmanager-command-api</include>
 							<include>com.blockhaus2000:internalpluginmanager-configuration-api</include>
 							<include>com.blockhaus2000:internalpluginmanager-event-api</include>

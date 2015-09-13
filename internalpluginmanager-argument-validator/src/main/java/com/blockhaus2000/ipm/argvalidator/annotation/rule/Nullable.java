@@ -15,19 +15,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.argvalidator.annotation;
+package com.blockhaus2000.ipm.argvalidator.annotation.rule;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER })
-public @interface InRange {
-    long min() default Long.MIN_VALUE;
-
-    long max() default Long.MAX_VALUE;
+public class Nullable {
+    // Nothing to do.
 }

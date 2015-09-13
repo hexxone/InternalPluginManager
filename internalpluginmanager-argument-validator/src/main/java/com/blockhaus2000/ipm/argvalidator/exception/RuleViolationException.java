@@ -15,17 +15,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.argvalidator.annotation;
+package com.blockhaus2000.ipm.argvalidator.exception;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+public class RuleViolationException extends Exception {
+    /**
+     * The serial version UID.
+     *
+     */
+    private static final long serialVersionUID = 4555283518494324825L;
 
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface Validated {
-    // Nothing to do.
+    public RuleViolationException(final String message) {
+        super(message);
+    }
 }

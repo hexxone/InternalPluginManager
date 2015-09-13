@@ -216,7 +216,7 @@ public class BytecodeTransformer {
      *             If any general error occurs whilst transforming the class.
      */
     private void processClass(final CtClass ctClass, final boolean force) throws IOException, CannotCompileException,
-    TransformException {
+            TransformException {
         BytecodeTransformer.LOGGER.debug("Transforming class {}.", ctClass.getName());
 
         // Only process if the class is interceptable or the processing should
@@ -442,13 +442,11 @@ public class BytecodeTransformer {
      * @return The generated code.
      */
     private String extractParameters(final CtClass[] parameterTypes, final boolean isStatic) {
-        final int paramCount = parameterTypes.length;
+        final int paramCount = parameterTypes.length + (isStatic ? 0 : 1);
         final StringBuilder paramsBuilder = new StringBuilder("null");
         for (int i = 0; i < paramCount; i++) {
             if (isStatic || i > 0) {
-                paramsBuilder.append(", com.blockhaus2000.ipm.base.ObjectUtil.toObject($");
-                paramsBuilder.append(i);
-                paramsBuilder.append(")");
+                paramsBuilder.append(", com.blockhaus2000.ipm.base.ObjectUtil.toObject($").append(i).append(")");
             }
         }
         return paramsBuilder.toString();

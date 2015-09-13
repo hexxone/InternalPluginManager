@@ -15,12 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.argvalidator;
+package com.blockhaus2000.ipm.argvalidator.annotation.rule;
 
-public interface ValidatorContext {
-    void start() throws IllegalStateException;
+public @interface FloatRange {
+    double min() default Double.MIN_VALUE;
 
-    void stop() throws IllegalStateException;
-
-    ValidatorContextState getState();
+    double max() default Double.MAX_VALUE;
 }

@@ -15,11 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.blockhaus2000.ipm.argvalidator;
+package com.blockhaus2000.ipm.argvalidator.annotation.rule;
 
-public enum ValidatorContextState {
-    STARTING,
-    STARTED,
-    STOPPING,
-    STOPPED;
+import com.blockhaus2000.ipm.argvalidator.checker.RuleChecker;
+
+public @interface Rule {
+    Class<? extends RuleChecker> value();
 }

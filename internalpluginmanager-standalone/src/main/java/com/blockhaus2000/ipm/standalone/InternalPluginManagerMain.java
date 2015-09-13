@@ -21,6 +21,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import com.blockhaus2000.ipm.argvalidator.ArgValidationManager;
 import com.blockhaus2000.ipm.technical.command.Command;
 import com.blockhaus2000.ipm.technical.command.CommandSender;
 import com.blockhaus2000.ipm.technical.command.event.CommandEvent;
@@ -49,6 +50,7 @@ public final class InternalPluginManagerMain implements CommandEventListener {
 
     static {
         InterceptionAgent.attach();
+        ArgValidationManager.getInstance().init();
     }
 
     /**
@@ -103,12 +105,18 @@ public final class InternalPluginManagerMain implements CommandEventListener {
      *            The {@link CommandContext}.
      */
     @Command(aliases = { InternalPluginManagerMain.MAIN_COMMAND, InternalPluginManagerMain.MAIN_COMMAND_ALIAS },
-             secondLevelCommand = "stop")
+            secondLevelCommand = "stop")
     public static void internalpluginmanagerCommand(final CommandContext context) {
         // Suppress unused-warning, suppresses checkstyle warning on
         // @SuppressWarnings("unused").
         context.getLabel();
         System.exit(0);
+    }
+
+    @Command(aliases = "test")
+    public static void testCommand(final CommandContext context) {
+        final Test test = new Test();
+        test.func(null);
     }
 
     /**
@@ -121,7 +129,7 @@ public final class InternalPluginManagerMain implements CommandEventListener {
     public void onCommandEvent(final CommandEvent commandEvent) {
         final CommandEventData commandEventData = commandEvent.getCommandEventData().get(0);
         if (Arrays.equals(commandEventData.getCommandInfo().getCommandAnot().aliases(), new String[] {
-                InternalPluginManagerMain.MAIN_COMMAND, InternalPluginManagerMain.MAIN_COMMAND_ALIAS })) {
+            InternalPluginManagerMain.MAIN_COMMAND, InternalPluginManagerMain.MAIN_COMMAND_ALIAS })) {
             switch (commandEventData.getEventType()) {
                 case UNAVAILABLE_SECOND_LEVEL_COMMAND:
                 case UNKNOWN_SECOND_LEVEL_COMMAND:
