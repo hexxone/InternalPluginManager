@@ -19,6 +19,16 @@ package com.blockhaus2000.ipm.argvalidator.checker;
 
 import com.blockhaus2000.ipm.argvalidator.exception.RuleViolationException;
 
+/**
+ * A rule checker is used to define custom rules. You must simply implement this
+ * class and reference it in the \@Rule annotation.
+ *
+ * <p>
+ * <b> NOTE: Classes implementing this interface must have a default
+ * constructor! </b>
+ * </p>
+ *
+ */
 public interface RuleChecker {
     /**
      * Executes the check this rule checker is for on the given object.

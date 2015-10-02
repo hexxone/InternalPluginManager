@@ -216,12 +216,36 @@ public class BytecodeTransformer {
      *             If any general error occurs whilst transforming the class.
      */
     private void processClass(final CtClass ctClass, final boolean force) throws IOException, CannotCompileException,
-            TransformException {
+    TransformException {
         BytecodeTransformer.LOGGER.debug("Transforming class {}.", ctClass.getName());
 
-        // Only process if the class is interceptable or the processing should
-        // be forced.
-        if (force || ctClass.hasAnnotation(Interceptable.class)) {
+        // Check whether the class is tagged with the annotation @Interceptable
+        // or is tagged with any annotation that is tagged with @Interceptable.
+        boolean transform;
+        if (force) {
+            transform = true;
+        } else {
+            // Use shortcut to prevent from iterating through all annotations if
+            // the class is tagged with @Interceptable directly.
+            if (ctClass.hasAnnotation(Interceptable.class)) {
+                transform = true;
+            } else {
+                try {
+                    for (final Object annotation : ctClass.getAnnotations()) {
+                        if (annotation.getClass().isAnnotationPresent(Interceptable.class)) {
+                            transform = true;
+                            break;
+                        }
+                    }
+                    transform = false;
+                } catch (final ClassNotFoundException ex) {
+                    BytecodeTransformer.LOGGER.error("Failed to retrieve annotations from " + ctClass.getName()
+                            + "! Skipping class transformation ...", ex);
+                    transform = false;
+                }
+            }
+        }
+        if (transform) {
             for (final CtMethod method : ctClass.getDeclaredMethods()) {
                 BytecodeTransformer.LOGGER.trace("Processing method {}.", method.getName());
 
@@ -250,7 +274,8 @@ public class BytecodeTransformer {
                 BytecodeTransformer.LOGGER.warn("Unable to locate nested class in default class pool!", cause);
             }
         } else {
-            BytecodeTransformer.LOGGER.debug("Skipping transformation because the class is not tagged with {}.",
+            BytecodeTransformer.LOGGER
+            .debug("Skipping transformation because the class is not tagged with {0} or tagged by any annotation that is tagged with {0}.",
                     Interceptable.class.getName());
         }
     }

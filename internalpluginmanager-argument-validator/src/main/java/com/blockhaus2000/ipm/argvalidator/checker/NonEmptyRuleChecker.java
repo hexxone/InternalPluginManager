@@ -20,8 +20,32 @@ package com.blockhaus2000.ipm.argvalidator.checker;
 import java.util.Collection;
 import java.util.Map;
 
+import com.blockhaus2000.ipm.argvalidator.annotation.rule.NonEmpty;
 import com.blockhaus2000.ipm.argvalidator.exception.RuleViolationException;
 
+/**
+ * The {@link RuleChecker} for {@link NonEmpty}.
+ *
+ * <p>
+ * This rule checker checks whether the object to check is empty.
+ * <p>
+ * It works for:
+ * <ul>
+ * <li>{@link Collection}s</li>
+ * <li>{@link Map}s</li>
+ * <li>{@link CharSequence}s</li>
+ * <li>arrays of any type</li>
+ * </ul>
+ * If none of the types above can be applied, an exception is thrown.
+ * </p>
+ * </p>
+ *
+ * <p>
+ * <b> NOTE: The object must not be <code>null</code>! Better tag it with
+ * \@NonNull! </b>
+ * </p>
+ *
+ */
 public class NonEmptyRuleChecker implements RuleChecker {
     /**
      * {@inheritDoc}

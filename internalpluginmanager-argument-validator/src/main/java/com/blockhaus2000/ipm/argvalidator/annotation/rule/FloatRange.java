@@ -17,8 +17,21 @@
  */
 package com.blockhaus2000.ipm.argvalidator.annotation.rule;
 
+/**
+ * A rule to check whether a floating point number (<code>float</code>,
+ * <code>double</code>) is in a given range.
+ *
+ */
 public @interface FloatRange {
+    /**
+     *
+     * @return The minimal value (Default: {@link Double#MIN_VALUE}).
+     */
     double min() default Double.MIN_VALUE;
 
+    /**
+     *
+     * @return The maximum value (Default: {@link Double#MAX_VALUE}).
+     */
     double max() default Double.MAX_VALUE;
 }

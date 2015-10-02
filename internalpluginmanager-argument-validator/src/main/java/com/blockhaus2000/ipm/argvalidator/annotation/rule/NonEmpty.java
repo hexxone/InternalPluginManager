@@ -20,8 +20,20 @@ package com.blockhaus2000.ipm.argvalidator.annotation.rule;
 import com.blockhaus2000.ipm.argvalidator.checker.NonEmptyRuleChecker;
 import com.blockhaus2000.ipm.argvalidator.checker.RuleChecker;
 
+/**
+ * A rule to check whether an object is not empty. Please lookup
+ * {@link NonEmptyRuleChecker} for more information.
+ *
+ * @see com.blockhaus2000.ipm.argvalidator.checker.NonEmptyRuleChecker
+ */
 public @interface NonEmpty {
-    // Nothing to do.
-
+    /**
+     * <p>
+     * <b> NOTE: Do _not_ overwrite this or you will break the whole process!
+     * </b>
+     * </p>
+     *
+     * @return The rule checker.
+     */
     Class<? extends RuleChecker> value() default NonEmptyRuleChecker.class;
 }

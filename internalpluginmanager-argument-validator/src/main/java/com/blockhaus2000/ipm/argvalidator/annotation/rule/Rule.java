@@ -19,6 +19,15 @@ package com.blockhaus2000.ipm.argvalidator.annotation.rule;
 
 import com.blockhaus2000.ipm.argvalidator.checker.RuleChecker;
 
+/**
+ * This represents a custom rule that must be implemented as a
+ * {@link RuleChecker}.
+ *
+ */
 public @interface Rule {
+    /**
+     *
+     * @return The {@link RuleChecker} to use.
+     */
     Class<? extends RuleChecker> value();
 }

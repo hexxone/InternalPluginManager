@@ -17,6 +17,10 @@
  */
 package com.blockhaus2000.ipm.argvalidator.exception;
 
+/**
+ * This exception is thrown if any rule is violated during the rule check.
+ *
+ */
 public class RuleViolationException extends Exception {
     /**
      * The serial version UID.
@@ -24,6 +28,12 @@ public class RuleViolationException extends Exception {
      */
     private static final long serialVersionUID = 4555283518494324825L;
 
+    /**
+     * Constructor of RuleViolationException.
+     *
+     * @param message
+     *            A detailed error message.
+     */
     public RuleViolationException(final String message) {
         super(message);
     }

@@ -17,6 +17,10 @@
  */
 package com.blockhaus2000.ipm.argvalidator.annotation.rule;
 
+/**
+ * Checks whether to object is not <code>null</code>.
+ *
+ */
 public @interface NonNull {
     // Nothing to do.
 }

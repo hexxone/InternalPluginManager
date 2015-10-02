@@ -17,6 +17,10 @@
  */
 package com.blockhaus2000.ipm.argvalidator.annotation.rule;
 
+/**
+ * Allows an object to be <code>null</code>.
+ *
+ */
 public class Nullable {
     // Nothing to do.
 }

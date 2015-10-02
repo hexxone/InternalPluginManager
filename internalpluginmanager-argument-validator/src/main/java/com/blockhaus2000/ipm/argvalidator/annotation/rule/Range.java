@@ -17,8 +17,21 @@
  */
 package com.blockhaus2000.ipm.argvalidator.annotation.rule;
 
+/**
+ * A rule to check whether a integer (<code>byte</code>, <code>short</code>,
+ * <code>int</code>, <code>long</code>) is in a given range.
+ *
+ */
 public @interface Range {
+    /**
+     *
+     * @return The minimal value (Default: {@link Long#MIN_VALUE}).
+     */
     long min() default Long.MIN_VALUE;
 
+    /**
+     *
+     * @return The minimal value (Default: {@link Long#MIN_VALUE}).
+     */
     long max() default Long.MAX_VALUE;
 }

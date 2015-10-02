@@ -38,9 +38,22 @@ import com.blockhaus2000.ipm.technical.interception.event.ConstructorInvocationE
 import com.blockhaus2000.ipm.technical.interception.event.MethodExitEvent;
 import com.blockhaus2000.ipm.technical.interception.event.MethodInvocationEvent;
 
+/**
+ * The argument validation manager manages everything relating to the argument
+ * validation API.
+ *
+ */
 public final class ArgValidationManager {
+    /**
+     * THE one and only instance of this class.
+     *
+     */
     private static final ArgValidationManager INSTANCE = new ArgValidationManager();
 
+    /**
+     * Whether the argument validation manager is initialized.
+     *
+     */
     private boolean initialized;
 
     /**
@@ -51,6 +64,14 @@ public final class ArgValidationManager {
         // Nothing to do.
     }
 
+    /**
+     * Initializes the argument validation manager.
+     *
+     * <p>
+     * <b> NOTE: THis method can only be called once! </b>
+     * </p>
+     *
+     */
     public void init() {
         if (this.initialized) {
             throw new IllegalStateException("Already initialized!");
@@ -59,6 +80,16 @@ public final class ArgValidationManager {
         InterceptionEventManager.getInstance().register(this);
     }
 
+    /**
+     * Internal listener to check rules on a constructor invocation.
+     *
+     * <p>
+     * <b> NOTE: You must not call this method directly! </b>
+     * </p>
+     *
+     * @param context
+     *            The event context.
+     */
     @EventListener(ConstructorInvocationEvent.class)
     public void onConstructorInvocation(final EventContext<ConstructorInvocationEvent> context) {
         final ConstructorInvocationEvent event = context.getEvent();
@@ -71,6 +102,16 @@ public final class ArgValidationManager {
         }
     }
 
+    /**
+     * Internal listener to check rules on a method invocation.
+     *
+     * <p>
+     * <b> NOTE: You must not call this method directly! </b>
+     * </p>
+     *
+     * @param context
+     *            The event context.
+     */
     @EventListener(MethodInvocationEvent.class)
     public void onMethodInvocation(final EventContext<MethodInvocationEvent> context) {
         final MethodInvocationEvent event = context.getEvent();
@@ -83,6 +124,16 @@ public final class ArgValidationManager {
         }
     }
 
+    /**
+     * Internal listener to check rules on a method exit.
+     *
+     * <p>
+     * <b> NOTE: You must not call this method directly! </b>
+     * </p>
+     *
+     * @param context
+     *            The event context.
+     */
     @EventListener(MethodExitEvent.class)
     public void onMethodExit(final EventContext<MethodExitEvent> context) {
         final MethodExitEvent event = context.getEvent();
@@ -95,6 +146,28 @@ public final class ArgValidationManager {
         }
     }
 
+    /**
+     * Checks every rule that is present in the given annotations for the given
+     * object.
+     *
+     * <p>
+     * For example: <code>
+     * <pre>
+     * foo(\@NonNull \@NonEmpty String str)
+     * </pre>
+     * </code> In this case, this method is called with
+     * <code>annotations = { Non-Null.class-Obj, Non-Empty.class-Obj }</code>
+     * and <code>obj = str</code>.
+     * </p>
+     *
+     * @param annotations
+     *            The annotations containing the rule annotations that should be
+     *            checked.
+     * @param obj
+     *            The object to apply the rules on. Can be <code>null</code>.
+     * @throws RuleViolationException
+     *             If any rule is violated.
+     */
     private void checkRules(final Annotation[] annotations, final Object obj) throws RuleViolationException {
         for (final Annotation annotation : annotations) {
             if (annotation instanceof Nullable) {
@@ -169,20 +242,53 @@ public final class ArgValidationManager {
         }
     }
 
+    /**
+     * Checks the rules for multiple object. Invokes
+     * {@link ArgValidationManager#checkRules(Annotation[], Object)}.
+     *
+     * <p>
+     * <b> NOTE: <code>annotations.length</code> must be equal to
+     * <code>obj.length</code>. </b>
+     * </p>
+     *
+     * @param annotations
+     *            The annotations to check.
+     * @param objs
+     *            The objects to check.
+     * @throws RuleViolationException
+     *             If any rule is violated.
+     */
     private void checkRules(final Annotation[][] annotations, final Object[] objs) throws RuleViolationException {
         for (int i = 0; i < objs.length; i++) {
             this.checkRules(annotations[i], objs[i]);
         }
     }
 
+    /**
+     *
+     * @param clazz
+     *            The {@link Class} to check.
+     * @return Whether the given {@link Class} is auto-checked.
+     */
     private boolean isAutoChecked(final Class<?> clazz) {
         return clazz.isAnnotationPresent(AutoCheck.class);
     }
 
+    /**
+     *
+     * @param event
+     *            Contains the {@link Class} to check.
+     * @return Whether the {@link Class} contained by the given event is
+     *         auto-checked.
+     */
     private boolean isAutoChecked(final AbstractInterceptionEvent event) {
         return this.isAutoChecked(event.getInvokedClass());
     }
 
+    /**
+     *
+     * @return {@link ArgValidationManager#INSTANCE}
+     */
     public static ArgValidationManager getInstance() {
         return ArgValidationManager.INSTANCE;
     }
