@@ -24,6 +24,11 @@ import java.lang.annotation.Target;
 
 import com.blockhaus2000.ipm.technical.interception.annotation.Interceptable;
 
+/**
+ * Classes tagged with this annotation are automatically checked by the argument
+ * validator.
+ *
+ */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Interceptable
