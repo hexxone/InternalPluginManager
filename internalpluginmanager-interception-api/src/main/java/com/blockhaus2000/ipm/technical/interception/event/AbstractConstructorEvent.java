@@ -19,9 +19,6 @@ package com.blockhaus2000.ipm.technical.interception.event;
 
 import java.lang.reflect.Constructor;
 
-import com.blockhaus2000.ipm.base.parameterized.ParameterizedConstructor;
-import com.blockhaus2000.ipm.base.parameterized.ParameterizedFactory;
-import com.blockhaus2000.ipm.base.parameterized.ParameterizedUtil;
 import com.blockhaus2000.ipm.technical.interception.exception.InterceptionRuntimeException;
 
 /**
@@ -48,13 +45,10 @@ public abstract class AbstractConstructorEvent extends AbstractInterceptionEvent
      * @return The invoked {@link Constructor}.
      */
     public Constructor<?> getInvokedConstructor() {
-        final Class<?>[] invokedParameterTypes = this.getParameterTypes();
-
-        final ParameterizedConstructor<?>[] ctors = ParameterizedFactory.create(this.getInvokedClass().getDeclaredConstructors());
-        final Constructor<?> ctor = ParameterizedUtil.calculateMostMatching(ctors, invokedParameterTypes).getCtor();
-        if (ctor == null) {
-            throw new InterceptionRuntimeException("Could not find any constructor matching the parameters!");
+        try {
+            return this.getInvokedClass().getDeclaredConstructor(this.getParameterTypes());
+        } catch (final NoSuchMethodException cause) {
+            throw new InterceptionRuntimeException("Could not find invoked ctor!", cause);
         }
-        return ctor;
     }
 }

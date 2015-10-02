@@ -18,14 +18,7 @@
 package com.blockhaus2000.ipm.technical.interception.event;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 
-import com.blockhaus2000.ipm.base.parameterized.ParameterizedFactory;
-import com.blockhaus2000.ipm.base.parameterized.ParameterizedMethod;
-import com.blockhaus2000.ipm.base.parameterized.ParameterizedUtil;
 import com.blockhaus2000.ipm.technical.interception.exception.InterceptionRuntimeException;
 
 /**
@@ -62,22 +55,11 @@ public abstract class AbstractMethodEvent extends AbstractInterceptionEvent {
      * @return The invoked {@link Method}.
      */
     public Method getInvokedMethod() {
-        final Class<?>[] invokedParameterTypes = this.getParameterTypes();
-
-        final List<ParameterizedMethod> methods = new ArrayList<ParameterizedMethod>(Arrays.asList(ParameterizedFactory
-                .create(this.getInvokedClass().getDeclaredMethods())));
-        for (final Iterator<ParameterizedMethod> iterator = methods.iterator(); iterator.hasNext();) {
-            final ParameterizedMethod parameterizedMethod = iterator.next();
-            if (!parameterizedMethod.getMethod().getName().equals(this.invokedMethodName)) {
-                iterator.remove();
-            }
+        try {
+            return this.getInvokedClass().getDeclaredMethod(this.invokedMethodName, this.getParameterTypes());
+        } catch (final NoSuchMethodException cause) {
+            throw new InterceptionRuntimeException("Could not find invoked method!", cause);
         }
-        final Method method = ParameterizedUtil.calculateMostMatching(methods.toArray(new ParameterizedMethod[methods.size()]),
-                invokedParameterTypes).getMethod();
-        if (method == null) {
-            throw new InterceptionRuntimeException("Could not find any method matching the parameters!");
-        }
-        return method;
     }
 
     /**
