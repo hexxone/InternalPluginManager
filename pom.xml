@@ -61,7 +61,7 @@
 	<properties>
 		<!-- License Stuff -->
 		<project.properties.license.name>GNU General Public License 3.0</project.properties.license.name>
-		<project.properties.license.url>http://www.gnu.org/licenses/</project.properties.license.url>
+		<project.properties.license.url>http://www.gnu.org/licenses/gpl-3.0.txt</project.properties.license.url>
 
 		<!-- The encoding to use everywhere -->
 		<project.properties.encoding>UTF-8</project.properties.encoding>
@@ -78,6 +78,20 @@
 
 		<!-- SonarQube URL. -->
 		<sonar.host.url>https://www.blockhaus2000.com/sonar</sonar.host.url>
+		
+		<!-- SCM. -->
+		<scm.repository.owner>Blockhaus2000</scm.repository.owner>
+		<scm.repository.name>InternalPluginManager</scm.repository.name>
+		<scm.repository.repo>${scm.repository.owner}/${scm.repository.name}</scm.repository.repo>
+		<scm.repository.url>https://www.github.com/${scm.repository.repo}</scm.repository.url>
+		
+		<!-- Issue management. -->
+		<issueManagement.system>Mantis BT</issueManagement.system>
+		<issueManagement.url>https://www.blockhaus2000.com/issues</issueManagement.url>
+		
+		<!-- CI. -->
+		<ciManagement.system>Jenkins CI</ciManagement.system>
+		<ciManagement.url>https://www.blockhaus2000.com/ci</ciManagement.url>
 	</properties>
 
 
@@ -120,19 +134,19 @@
 	</developers>
 
 	<issueManagement>
-		<system>MantisBT</system>
-		<url>http://issues.blockhaus2000.com/</url>
+		<system>${issueManagement.system}</system>
+		<url>${issueManagement.url}</url>
 	</issueManagement>
 
 	<ciManagement>
-		<system>Jenkins CI</system>
-		<url>http://ci.blockhaus2000.com/</url>
+		<system>${ciManagement.system}</system>
+		<url>${ciManagement.url}</url>
 	</ciManagement>
 
 	<scm>
-		<connection>scm:git:git@github.com/Blockhaus2000/InternalPluginManager.git</connection>
-		<developerConnection>scm:git:git@github.com:Blockhaus2000/InternalPluginManager.git</developerConnection>
-		<url>https://www.github.com/Blockhaus2000/InternalPluginManager/</url>
+		<connection>scm:git:git@github.com/${scm.repository.repo}.git</connection>
+		<developerConnection>scm:git:git@github.com:${scm.repository.repo}.git</developerConnection>
+		<url>${scm.repository.url}</url>
 		<tag>HEAD</tag>
 	</scm>
 
@@ -469,12 +483,12 @@
 				<artifactId>maven-changelog-plugin</artifactId>
 				<version>2.3</version>
 				<configuration>
-					<basedir>${project.basedir}</basedir>
+					<basedir></basedir>
 					<issueIDRegexPattern>\d+</issueIDRegexPattern>
-					<issueLinkUrl>http://issues.blockhaus2000.com/view.php?id=%ISSUE%</issueLinkUrl>
-					<displayChangeSetDetailUrl>${project.scm.url}/commit/%REV%</displayChangeSetDetailUrl>
-					<displayFileDetailUrl>${project.scm.url}/blob/master/%FILE%</displayFileDetailUrl>
-					<displayFileRevDetailUrl>${project.scm.url}/blob/%REV%/%FILE%</displayFileRevDetailUrl>
+					<issueLinkUrl>${issueManagement.url}/view.php?id=%ISSUE%</issueLinkUrl>
+					<displayChangeSetDetailUrl>${scm.repository.url}/commit/%REV%</displayChangeSetDetailUrl>
+					<displayFileDetailUrl>${scm.repository.url}/blob/master/%FILE%</displayFileDetailUrl>
+					<displayFileRevDetailUrl>${scm.repository.url}/blob/%REV%/%FILE%</displayFileRevDetailUrl>
 					<type>range</type>
 					<range>30</range>
 				</configuration>
