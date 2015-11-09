@@ -63,49 +63,4 @@
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
-
-	<build>
-		<plugins>
-			<!-- Check for backward compatibility. -->
-			<plugin>
-				<groupId>com.googlecode.japi-checker</groupId>
-				<artifactId>japi-checker-maven-plugin</artifactId>
-				<version>0.2.0</version>
-				<executions>
-					<!-- Check backward compatibility to IPM version 2.0.0. -->
-					<execution>
-						<id>check-bc-2.0.0</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<!-- Shade some dependencies. -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>2.3</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<createDependencyReducedPom>false</createDependencyReducedPom>
-					<artifactSet>
-						<includes>
-							<!-- The plugin API includes every other API. -->
-							<include>com.blockhaus2000:internalpluginmanager-plugin-api</include>
-						</includes>
-					</artifactSet>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>

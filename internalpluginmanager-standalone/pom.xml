@@ -45,31 +45,6 @@
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>2.3</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<createDependencyReducedPom>false</createDependencyReducedPom>
-					<artifactSet>
-						<includes>
-							<include>org.apache.logging.log4j:log4j-slf4j-impl</include>
-							<include>org.apache.logging.log4j:log4j-api</include>
-							<include>org.apache.logging.log4j:log4j-core</include>
-							<include>com.blockhaus2000:internalpluginmanager-api</include>
-						</includes>
-					</artifactSet>
-				</configuration>
-			</plugin>
-
 			<!-- This is runnable, so it should contain a main class. -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -86,6 +61,27 @@
 						</manifestEntries>
 					</archive>
 				</configuration>
+			</plugin>
+
+			<!-- Shade dependencies. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<configuration>
+							<artifactSet>
+								<includes>
+									<!-- Include logging. -->
+									<include>org.apache.logging.log4j:log4j-api</include>
+									<include>org.apache.logging.log4j:log4j-core</include>
+									<include>org.apache.logging.log4j:log4j-slf4j-impl</include>
+								</includes>
+							</artifactSet>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

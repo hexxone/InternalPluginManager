@@ -78,17 +78,17 @@
 
 		<!-- SonarQube URL. -->
 		<sonar.host.url>https://www.blockhaus2000.com/sonar</sonar.host.url>
-		
+
 		<!-- SCM. -->
 		<scm.repository.owner>Blockhaus2000</scm.repository.owner>
 		<scm.repository.name>InternalPluginManager</scm.repository.name>
 		<scm.repository.repo>${scm.repository.owner}/${scm.repository.name}</scm.repository.repo>
 		<scm.repository.url>https://www.github.com/${scm.repository.repo}</scm.repository.url>
-		
+
 		<!-- Issue management. -->
 		<issueManagement.system>Mantis BT</issueManagement.system>
 		<issueManagement.url>https://www.blockhaus2000.com/issues</issueManagement.url>
-		
+
 		<!-- CI. -->
 		<ciManagement.system>Jenkins CI</ciManagement.system>
 		<ciManagement.url>https://www.blockhaus2000.com/ci</ciManagement.url>
@@ -262,6 +262,48 @@
 	<build>
 		<finalName>${project.artifactId}_v${project.version}_${buildNumber}</finalName>
 		<defaultGoal>clean install</defaultGoal>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-shade-plugin</artifactId>
+					<version>2.3</version>
+					<executions>
+						<execution>
+							<id>copy-base-dependencies</id>
+							<phase>package</phase>
+							<goals>
+								<goal>shade</goal>
+							</goals>
+							<configuration>
+								<artifactSet>
+									<includes>
+										<include>com.blockhaus2000:*</include>
+										<include>org.slf4j:slf4j-api</include>
+
+										<!-- These are not included when the IPM-API is not included. -->
+										<!-- InternalPluginManager Interception API -->
+										<include>org.javassist:javassist</include>
+									</includes>
+								</artifactSet>
+							</configuration>
+						</execution>
+						<execution>
+							<id>copy-dependencies</id>
+							<phase>package</phase>
+							<goals>
+								<goal>shade</goal>
+							</goals>
+							<!-- This must be configured in the actual modules! -->
+						</execution>
+					</executions>
+					<configuration>
+						<keepDependenciesWithProvidedScope>true</keepDependenciesWithProvidedScope>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 
 		<plugins>
 			<!-- Compiler settings. -->
