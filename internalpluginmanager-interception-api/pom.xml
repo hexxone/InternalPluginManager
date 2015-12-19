@@ -1,0 +1,62 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.blockhaus2000</groupId>
+		<artifactId>internalpluginmanager-parent</artifactId>
+		<version>2.2.0-SNAPSHOT</version>
+		<relativePath>../</relativePath>
+	</parent>
+
+	<properties>
+		<project.properties.mainClass>com.blockhaus2000.ipm.standalone.InternalPluginManagerMain</project.properties.mainClass>
+		<project.properties.agentClass>com.blockhaus2000.ipm.technical.interception.InterceptionAgent</project.properties.agentClass>
+	</properties>
+
+	<artifactId>internalpluginmanager-interception-api</artifactId>
+
+	<name>InternalPluginManager Interception API</name>
+
+
+	<!-- ===== Dependencies ===== -->
+
+	<dependencies>
+		<dependency>
+			<groupId>org.javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.20.0-GA</version>
+		</dependency>
+		<dependency>
+			<groupId>com.blockhaus2000</groupId>
+			<artifactId>internalpluginmanager-base-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.blockhaus2000</groupId>
+			<artifactId>internalpluginmanager-event-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- Include manifest to identify premain and agentmain class. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Premain-Class>${project.properties.agentClass}</Premain-Class>
+							<Agent-Class>${project.properties.agentClass}</Agent-Class>
+							<Can-Redefine-Classes>true</Can-Redefine-Classes>
+							<Can-Retransform-Classes>true</Can-Retransform-Classes>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

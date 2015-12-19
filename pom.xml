@@ -3,106 +3,458 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.blockhaus2000</groupId>
-	<artifactId>InternalPluginManager</artifactId>
-	<version>1.6-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<artifactId>internalpluginmanager-parent</artifactId>
+	<version>2.2.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		<!-- The Maven plugin does not depent on anything else, so it can be built 
+			at first. -->
+		<module>internalpluginmanager-maven-plugin</module>
+
+		<!-- The base is used by every other module, so build as first. -->
+		<module>internalpluginmanager-base-api</module>
+
+		<!-- The argument validator uses this. -->
+		<module>internalpluginmanager-interception-api</module>
+
+		<!-- The argument validator is used by mostly every other project. -->
+		<module>internalpluginmanager-argument-validator</module>
+
+		<!-- These modules are completly independent from each other, so this order 
+			is not important. -->
+		<module>internalpluginmanager-command-api</module>
+		<module>internalpluginmanager-configuration-api</module>
+		<module>internalpluginmanager-event-api</module>
+		<module>internalpluginmanager-format-api</module>
+		<module>internalpluginmanager-scheduler-api</module>
+
+		<!-- The plugin API depends on the command, config, event, format and scheduler 
+			API, so build after them all. -->
+		<module>internalpluginmanager-plugin-api</module>
+
+		<!-- The main API contains all other APIs, so build at last of the (main) 
+			APIs. -->
+		<module>internalpluginmanager-api</module>
+
+		<!-- The extensions should be allowed to use all APIs, so build after them 
+			all (including the main API). -->
+		<module>internalpluginmanager-extension</module>
+
+		<!-- The standalone version of the main API. Is independent from the Minecraft 
+			stuff. -->
+		<module>internalpluginmanager-standalone</module>
+
+		<!-- The Minecraft API depends on the main API. -->
+		<module>internalpluginmanager-minecraft-api</module>
+
+		<!-- The Minecraft API implementations are depending on the Minecraft API, 
+			so build after it. -->
+		<module>internalpluginmanager-minecraft-bukkit</module>
+		<module>internalpluginmanager-minecraft-canary</module>
+
+		<!-- The assembly. Packs the runnable version into a ZIP-file. -->
+		<module>internalpluginmanager-distribution</module>
+	</modules>
+
+	<!-- Some important project properties -->
+	<properties>
+		<!-- License Stuff -->
+		<project.properties.license.name>GNU General Public License 3.0</project.properties.license.name>
+		<project.properties.license.url>http://www.gnu.org/licenses/gpl-3.0.txt</project.properties.license.url>
+
+		<!-- The encoding to use everywhere -->
+		<project.properties.encoding>UTF-8</project.properties.encoding>
+
+		<!-- Java Version -->
+		<project.properties.javaVersion>1.6</project.properties.javaVersion>
+
+		<!-- Fix encoding warnings -->
+		<project.build.sourceEncoding>${project.properties.encoding}</project.build.sourceEncoding>
+
+		<!-- The previous version of the InternalPluginManager. This has to be 
+			changed every time a release is executed! -->
+		<project.prevVersion>2.0.0</project.prevVersion>
+
+		<!-- SonarQube URL. -->
+		<sonar.host.url>https://www.blockhaus2000.com/sonar</sonar.host.url>
+
+		<!-- SCM. -->
+		<scm.repository.owner>Blockhaus2000</scm.repository.owner>
+		<scm.repository.name>InternalPluginManager</scm.repository.name>
+		<scm.repository.repo>${scm.repository.owner}/${scm.repository.name}</scm.repository.repo>
+		<scm.repository.url>https://www.github.com/${scm.repository.repo}</scm.repository.url>
+
+		<!-- Issue management. -->
+		<issueManagement.system>Mantis BT</issueManagement.system>
+		<issueManagement.url>https://www.blockhaus2000.com/issues</issueManagement.url>
+
+		<!-- CI. -->
+		<ciManagement.system>Jenkins CI</ciManagement.system>
+		<ciManagement.url>https://www.blockhaus2000.com/ci</ciManagement.url>
+	</properties>
+
+
+	<!-- ===== Project Information ===== -->
 
 	<name>InternalPluginManager</name>
-	<url>https://www.github.com/Blockhaus2000/InternalPluginManager/</url>
+	<description>Please lookup README file.</description>
+
+	<inceptionYear>2014</inceptionYear>
+	<url>https://www.blockhaus2000.com/projects/internalpluginmanager/</url>
+
+	<licenses>
+		<license>
+			<name>${project.properties.license.name}</name>
+			<url>${project.properties.license.url}</url>
+		</license>
+	</licenses>
 
 	<organization>
 		<name>Blockhaus2000</name>
-		<url>https://github.com/Blockhaus2000</url>
+		<url>http://www.blockhaus2000.com/</url>
 	</organization>
 
+	<developers>
+		<developer>
+			<id>fabian</id>
+			<name>Fabian Damken</name>
+			<email>fabian@blockhaus2000.com</email>
+			<url>http://www.blockhaus2000.com/</url>
+			<organization>${project.organization.name}</organization>
+			<organizationUrl>${project.organization.url}</organizationUrl>
+			<roles>
+				<role>architect</role>
+				<role>product-owner</role>
+				<role>project-manager</role>
+				<role>head-of-developer</role>
+			</roles>
+			<timezone>Europe/Berlin</timezone>
+		</developer>
+	</developers>
+
+	<issueManagement>
+		<system>${issueManagement.system}</system>
+		<url>${issueManagement.url}</url>
+	</issueManagement>
+
+	<ciManagement>
+		<system>${ciManagement.system}</system>
+		<url>${ciManagement.url}</url>
+	</ciManagement>
+
 	<scm>
-		<url>https://github.com/Blockhaus2000/InternalPluginManager</url>
-		<connection>scm:git:git://github.com:Blockhaus2000/InternalPluginManager.git</connection>
-		<developerConnection>scm:git:git@github.com:Blockhaus2000/InternalPluginManager.git</developerConnection>
+		<connection>scm:git:git@github.com/${scm.repository.repo}.git</connection>
+		<developerConnection>scm:git:git@github.com:${scm.repository.repo}.git</developerConnection>
+		<url>${scm.repository.url}</url>
+		<tag>HEAD</tag>
 	</scm>
 
+	<prerequisites>
+		<maven>3.0.5</maven>
+	</prerequisites>
+
+
+	<!-- ===== Distribution Management ===== -->
+
 	<distributionManagement>
+		<!-- Releases will be deployed here -->
 		<repository>
 			<id>blockhaus2000-repo-ftp</id>
-			<url>ftp://repo.blockhaus2000.com/</url>
+			<url>ftp://repo.ftp.blockhaus2000.com/</url>
 		</repository>
+
+		<!-- Snapshots will be deployed here -->
+		<snapshotRepository>
+			<id>blockhaus2000-snap-repo-ftp</id>
+			<url>ftp://snap-repo.ftp.blockhaus2000.com/</url>
+		</snapshotRepository>
+
+		<!-- Documentation/Site will be deployed here -->
+		<site>
+			<id>blockhaus2000-docs-ftp</id>
+			<url>ftp://docs.ftp.blockhaus2000.com/ipm/${project.version}/</url>
+		</site>
 	</distributionManagement>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
+
+	<!-- Plugin Repositories ===== -->
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>blockhaus2000-plugin-repo</id>
+			<url>http://repo.blockhaus2000.com</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+		<pluginRepository>
+			<id>blockhaus2000-plugin-snap-repo</id>
+			<url>http://snap-repo.blockhaus2000.com</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+
+	<!-- ===== Dependencies ===== -->
 
 	<repositories>
 		<repository>
-			<id>bukkit-repo</id>
-			<url>http://repo.bukkit.org/content/groups/public</url>
+			<id>blockhaus2000-repo</id>
+			<url>http://repo.blockhaus2000.com</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>blockhaus2000-snap-repo</id>
+			<url>http://snap-repo.blockhaus2000.com</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
 		</repository>
 	</repositories>
 
 	<dependencies>
+		<!-- Used for logging. -->
 		<dependency>
-			<groupId>org.bukkit</groupId>
-			<artifactId>bukkit</artifactId>
-			<version>1.7.2-R0.4-SNAPSHOT</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.10</version>
 		</dependency>
+
+		<!-- Used for unit tests. -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Logging implementation for testing. -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.0</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
+
+	<!-- ===== Build ===== -->
+
 	<build>
-		<directory>target</directory>
-		<outputDirectory>target/classes</outputDirectory>
-		<finalName>${project.artifactId}_${project.version}</finalName>
-		<testOutputDirectory>target/test-classes</testOutputDirectory>
-		<sourceDirectory>src/main/java</sourceDirectory>
-		<testSourceDirectory>src/test/java</testSourceDirectory>
+		<finalName>${project.artifactId}_v${project.version}_${buildNumber}</finalName>
+		<defaultGoal>clean install</defaultGoal>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-shade-plugin</artifactId>
+					<version>2.3</version>
+					<executions>
+						<execution>
+							<id>copy-base-dependencies</id>
+							<phase>package</phase>
+							<goals>
+								<goal>shade</goal>
+							</goals>
+							<configuration>
+								<artifactSet>
+									<includes>
+										<include>com.blockhaus2000:*</include>
+										<include>org.slf4j:slf4j-api</include>
+
+										<!-- These are not included when the IPM-API is not included. -->
+										<!-- InternalPluginManager Interception API -->
+										<include>org.javassist:javassist</include>
+									</includes>
+								</artifactSet>
+							</configuration>
+						</execution>
+						<execution>
+							<id>copy-dependencies</id>
+							<phase>package</phase>
+							<goals>
+								<goal>shade</goal>
+							</goals>
+							<!-- This must be configured in the actual modules! -->
+						</execution>
+					</executions>
+					<configuration>
+						<keepDependenciesWithProvidedScope>true</keepDependenciesWithProvidedScope>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
 		<plugins>
+			<!-- Compiler settings. -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>${project.properties.javaVersion}</source>
+					<target>${project.properties.javaVersion}</target>
+					<encoding>${project.properties.encoding}</encoding>
 				</configuration>
 			</plugin>
+
+			<!-- Generates build numbers. -->
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>2.5</version>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>1.3</version>
+				<executions>
+					<execution>
+						<id>create-buildnumber</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
-					<filesets>
-						<fileset>
-							<directory>${basedir}</directory>
-							<includes>
-								<include>jars/**</include>
-							</includes>
-						</fileset>
-					</filesets>
+					<format>{0,date,yyyyMMdd-HHmmss}</format>
+					<items>
+						<item>timestamp</item>
+					</items>
 				</configuration>
 			</plugin>
+
+			<!-- Test runner. -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<version>2.8.1</version>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.17</version>
 				<configuration>
-					<deployAtEnd>true</deployAtEnd>
+					<argLine>${surefireArgLine}</argLine>
+					<systemPropertyVariables>
+						<log4j.configuration>file:src/test/resources/log4j.properties</log4j.configuration>
+					</systemPropertyVariables>
+				</configuration>
+			</plugin>
+
+			<!-- Test test coverage. -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.2.201409121644</version>
+				<executions>
+					<execution>
+						<id>pre-unit-test</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<dataFile>${project.build.directory}/jacoco.exec</dataFile>
+					<propertyName>surefireArgLine</propertyName>
+				</configuration>
+			</plugin>
+
+			<!-- Check for backward compatibility. -->
+			<plugin>
+				<groupId>com.googlecode.japi-checker</groupId>
+				<artifactId>japi-checker-maven-plugin</artifactId>
+				<version>0.2.0</version>
+				<executions>
+					<!-- The lifecycle phase "never" does not exist, so this plugin will 
+						not be executed. This is correct, because this plugin is not executable on 
+						the parent pom because of varios reasons. Thus, not every module has to be 
+						backwards compatible. -->
+					<!-- So the modules that has to execute this will also have an execution 
+						with the same id to override the execution phase and to take over the configuration 
+						for the specific execution. -->
+					<!-- Sadly, a new execution has to be created for every version to check 
+						for backward compatibility, cause the japi-checker-maven-plugin does not 
+						accept more than one reference to check. -->
+
+					<!-- Check backward compatibility to IPM version 2.0.0. -->
+					<execution>
+						<id>check-bc-2.0.0</id>
+						<phase>never</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<configuration>
+							<reference>
+								<groupId>${project.groupId}</groupId>
+								<artifactId>${project.artifactId}</artifactId>
+								<version>2.0.0</version>
+							</reference>
+						</configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<rules>
+						<!-- Check everything. -->
+						<rule>com.googlecode.japi.checker.rules.AllRules</rule>
+					</rules>
+				</configuration>
+			</plugin>
+
+			<!-- Package sources. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>package-source</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<includePom>true</includePom>
+				</configuration>
+			</plugin>
+
+			<!-- Clean up snapshot repository. -->
+			<plugin>
+				<groupId>com.blockhaus2000</groupId>
+				<artifactId>repo-cleaner-maven-plugin</artifactId>
+				<version>1.0.4</version>
+				<configuration>
+					<repository>
+						<id>blockhaus2000-snap-repo-ftp</id>
+						<url>ftp://snap-repo.ftp.blockhaus2000.com/</url>
+					</repository>
+					<artifactSet>
+						<artifact>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>${project.artifactId}</artifactId>
+							<version>${project.version}</version>
+						</artifact>
+					</artifactSet>
 				</configuration>
 			</plugin>
 		</plugins>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<includes>
-					<include>plugin.yml</include>
-				</includes>
-			</resource>
-		</resources>
+
 		<extensions>
+			<!-- Used as repository connector. -->
 			<extension>
 				<groupId>org.apache.maven.wagon</groupId>
 				<artifactId>wagon-ftp</artifactId>
@@ -110,4 +462,159 @@
 			</extension>
 		</extensions>
 	</build>
+
+
+	<!-- ===== Reporting ===== -->
+
+	<reporting>
+		<plugins>
+			<!-- The Maven reports plugin. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+					<indentSize>4</indentSize>
+				</configuration>
+			</plugin>
+
+			<!-- The site plugin. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.4</version>
+				<configuration>
+					<locales>en_EN</locales>
+				</configuration>
+			</plugin>
+
+			<!-- Generate Javadoc. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.1</version>
+				<reportSets>
+					<reportSet>
+						<id>generate-javadoc</id>
+						<reports>
+							<report>javadoc</report>
+							<report>test-javadoc</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+				<configuration>
+					<author>false</author>
+					<bottom>Copyright &#169;
+						${project.inceptionYear}&#x2013;{currentYear}
+						${project.organization.name} (${project.organization.url}).
+						Licensed under ${project.properties.license.name}
+						(${project.properties.license.url}).</bottom>
+					<charset>${project.properties.encoding}</charset>
+					<encoding>${project.properties.encoding}</encoding>
+					<failOnError>false</failOnError>
+					<linksource>true</linksource>
+					<show>private</show>
+					<source>${project.properties.javaVersion}</source>
+					<sourcetab>4</sourcetab>
+				</configuration>
+			</plugin>
+
+			<!-- Generate changelog. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-changelog-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<basedir></basedir>
+					<issueIDRegexPattern>\d+</issueIDRegexPattern>
+					<issueLinkUrl>${issueManagement.url}/view.php?id=%ISSUE%</issueLinkUrl>
+					<displayChangeSetDetailUrl>${scm.repository.url}/commit/%REV%</displayChangeSetDetailUrl>
+					<displayFileDetailUrl>${scm.repository.url}/blob/master/%FILE%</displayFileDetailUrl>
+					<displayFileRevDetailUrl>${scm.repository.url}/blob/%REV%/%FILE%</displayFileRevDetailUrl>
+					<type>range</type>
+					<range>30</range>
+				</configuration>
+			</plugin>
+
+			<!-- Include SonarQube link. -->
+			<plugin>
+				<groupId>org.codehaus.sonar-plugins</groupId>
+				<artifactId>maven-report</artifactId>
+				<version>0.1</version>
+			</plugin>
+
+			<!-- Find To-Do's. -->
+			<plugin>
+				<groupId>com.blockhaus2000</groupId>
+				<artifactId>todo-finder-maven-plugin</artifactId>
+				<version>1.4.4</version>
+				<reportSets>
+					<reportSet>
+						<id>find-todos</id>
+						<reports>
+							<report>find</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+				<configuration>
+					<lowPriorityStrings>
+						<lowPriorityString>IDEA</lowPriorityString> <!-- //TODO-FINDER:IGNORE -->
+					</lowPriorityStrings>
+					<normalPriorityStrings>
+						<normalPriorityString>TODO</normalPriorityString> <!-- //TODO-FINDER:IGNORE -->
+					</normalPriorityStrings>
+					<highPriorityStrings>
+						<highPriorityString>FIXME</highPriorityString> <!-- //TODO-FINDER:IGNORE -->
+					</highPriorityStrings>
+					<failOnHighPriority>false</failOnHighPriority>
+					<writeTodoList>false</writeTodoList>
+					<excludeFiles>
+						<excludeFile>.git/</excludeFile>
+						<excludeFile>codetemplates.xml</excludeFile>
+						<excludeFile>${project.build.directory}/</excludeFile>
+						<excludeFile>dependency-reduced-pom.xml</excludeFile>
+					</excludeFiles>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+
+	<profiles>
+		<profile>
+			<id>report</id>
+			<build>
+				<defaultGoal>clean install site</defaultGoal>
+			</build>
+		</profile>
+		<profile>
+			<id>release</id>
+			<build>
+				<defaultGoal>clean deploy site-deploy</defaultGoal>
+			</build>
+			<reporting>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-changelog-plugin</artifactId>
+						<version>2.3</version>
+						<configuration>
+							<type>tag</type>
+							<tags>
+								<tag>${project.version}</tag>
+								<tag>${project.prevVersion}</tag>
+							</tags>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>com.blockhaus2000</groupId>
+						<artifactId>todo-finder-maven-plugin</artifactId>
+						<version>1.4.4</version>
+						<configuration>
+							<failOnHighPriority>true</failOnHighPriority>
+						</configuration>
+					</plugin>
+				</plugins>
+			</reporting>
+		</profile>
+	</profiles>
 </project>

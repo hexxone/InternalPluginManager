@@ -1,0 +1,9 @@
+{
+	final com.blockhaus2000.ipm.technical.interception.InterceptionEventManager eventManager = com.blockhaus2000.ipm.technical.interception.InterceptionEventManager.getInstance();
+
+	final com.blockhaus2000.ipm.technical.interception.event.ConstructorInvocationEvent invocationEvent = new com.blockhaus2000.ipm.technical.interception.event.ConstructorInvocationEvent("%{CLASS_NAME}", new Object[] { %{PARAMETERS} });
+	eventManager.fire(invocationEvent);
+	if (invocationEvent.isExecutionStopped()) {
+		throw new com.blockhaus2000.ipm.technical.interception.exception.ExecutionStoppedException(invocationEvent.getExecutionStoppingCauses());
+	}
+}

@@ -1,0 +1,183 @@
+	========================
+	===== Contributing =====
+	========================
+
+
+General Information
+-------------------
+
+At first, thank you for your interest in contribute to the InternalPluginManager. But please follow a few rules on/before
+contributing. Please read ALL rules defined below and follow them.
+
+
+General Rules
+-------------
+
+With
+	1. creating a fork of this repository
+	2. cloning this repository
+you accept
+	1. the GNU General Public License Version 3.0.
+	2. that your changes will be publish under the GNU General Public License Version 3.0 if you create a pull request.
+
+To get an pull request pulled, please follow these general rules (and the Code, Commit and Pull Request Conventions
+defined below):
+	- Make sure the changes matches the software architecture of the InternalPluginManager (see architecture.png).
+	- Make sure an issue exist you can commit your changes on.
+	- And, of course, make sure your code works.
+For more detailed description, see contributing workflow (contributing-workflow.png).
+
+
+Code Conventions
+----------------
+
+These are the code conventions extracted of the Checkstyle configuration. See checkstyle.xml for technical XML
+description.
+These are the extracted rules:
+	- Always write in english.
+	- Use UTF-8 everywhere.
+	
+	- If possible, do not use explicit array declaration in annotations.
+	- If possible, do not use paratheses at annotations.
+	- Do not write a trailing comma in arrays in annotation array declarations.
+	- Always add both @Deprecated annotation and @deprecated javadoc tag.
+	- Always add @Override if possible.
+	- Write package annotations in "package-info.java".
+	- Do not use @SuppressWarnings with values "all", "unused", "resource" and "null".
+	
+	- Do write empty blocks without comments within them
+	- Place left curly brackets ("{") always in the same line as the statement.
+	- Place right curly brackets ("}") on the same line (e.g. in an if-else construct, place the right curly bracket in the
+			same line as the else) and should start the line.
+	- Always place brackets (always use blocks instead of statements).
+	- Do not use nested blocks (also not in switch...case structures).
+	
+	- Do not assign the default or protected modifier to fields.
+	- Always make classes with only non-visible constructors as final.
+	- Interfaces should always define methods, not only constants.
+	- Utility classes (classes with only static methods) should not have a visible constructor.
+	- Exceptions should only have final fields.
+	- Methods should only define a maximum of two throws-declarations.
+	- Inner classes, interfaces and enums should be defined at last.
+	
+	- Do not create methods that are similar to java.lang.Object#equals(java.lang.Object).
+	- Do not write empty statements.
+	- Always override both equals() and hashCode().
+	- Parameters should be final.
+	- Local variables should not shadow a fields in the class.
+	- Do not use inner assignments.
+	- Do not write magic numbers (numbers except -1, 0, 1 and 2 should be defined in constants).
+	- Switches should define a default case.
+	- Control variables within loops (like "i") should not be modified.
+	- Do not add unchecked Exceptions to throws clausel.
+	- Boolean expressions should be kept simple.
+	- Boolean return statements should be kept easy.
+	- Never check strings with "==", but also with equals().
+	- Only nest for loops once.
+	- Only nest if statements once.
+	- Only nest try statements once.
+	- Do not declare a finalize() method.
+	- If finalize() is overridde, it should call super.finalize().
+	- Do not catch java.lang.RuntimeException, java.lang.Exception, java.lang.Error or java.lang.Throwable.
+	- Do not add java.lang.RuntimeException, java.lang.Exception, java.lang.Error or java.lang.Throwable to throws clausel.
+	- Keep package name and directory structure synchronized.
+	- Do not write the return-statement more than two times.
+	- Order types, fields, constrctors, etc. as specified in the Oracle Code Conventions.
+	- Parameters should not be assigned.
+	- Do not assign fields within classes explicit to their default value (e.g. assign a boolean value to false).
+	- Within switch...case statements, define the default case at last.
+	- Classes should explicit define a constructor.
+	- Mark fall throughs within switch...case statements exclicit with a comment with content "FALL-THROUGH".
+	- Strings defined more than five times in one file should be extracted to a constant.
+	- Do not declare more than one variable within one line.
+	- Always use "this" where possible.
+	- Only write parantheses if they are necessarry.
+	- Only write one statement per line.
+	
+	- Do not use start imports (wildcards).
+	- Do not use static imports.
+	- Do not import the "sun.*" packages.
+	- Avoid redundant imports.
+	- Avoid unused imports.
+	
+	- Do not create too complex boolean expressions (max three &&, ||, &, | and ^ in one expression).
+	- Do not create more than seven instances of other classes within one class (root level).
+	- Do not relie on more than 20 other classes within one class.
+	- Do not use more than 10 if, while, do, for, ?:, catch, switch...case statements and operators (&&, ||, &, | and ^ (counted
+			as one)) in one method.
+	- One method should not have more than 200 possible execution paths.
+	
+	- Only write main-methods ("public static void main(String[])") only in classes that names ends with "Main".
+	- Long constants should be defined with an upper "L" at the end of the number.
+	- Define arrays Java-like (String[] arr), not C-like (String arr[]).
+	- Method/Constructor/Catch-Block parameters should be final.
+	- Do not write comments in the same line as code.
+	- Class names hould match the file name.
+	
+	- Keep modifier order like: public, protected, private, abstract, static, final, transient, volatile, synchronized, native,
+			strictfp.
+	- Do not declare modifiers redundant.
+	
+	- A constructor, method or instance creation should not have more than 30 executeable expressions.
+	- Use a maximum line width of 130.
+	- Use a maximum line length of 150 for methods.
+	- Use a maximum line length of 20 for anonymous inner classes.
+	- A method or constrctor should not have more than seven parameters.
+	- Only create one inner type within one class.
+	- A classes should not define more than 100 methods.
+	
+	- Do not write whitespaces around generic tokens ("<" and ">").
+	- Do not write a space between a method name and the parantheses.
+	- Do not write a whitespace after the dor operator (".") and the not ("!").
+	- Do not write a whitespace before the semicolon (";"), the dot operator ("."), the post-decrement ("--") and the
+			post-increment ("++").
+	- Place a whitespace after a command (","), a semicolon (";") and casts.
+	- Always place whitespaces around assignments operators, math oprations, etc.
+	
+	- Do not write duplicate code.
+	
+	- Always include the header (file HEADER) at the top of each java file.
+	
+	- Always add a new line at the end of each file.
+	- Use UNIX line endings (LF).
+	- Do not duplicate keys in property files.
+	
+	- Files should not have more than 2000 lines.
+	
+	- Do not use tabs! Use four spaces instead!
+	
+	- Always document methods with all tags (@return, @param, etc.).
+	- Document everything, also private field, method, etc.
+
+These are lots of rules, you cannot manage to follow them all "by hand". If you use Eclipse, please import the code
+tenplate settings (codetemplates.yml), the formatter settings (formatter.xml) and the cleanup settings (cleanup.xml). Also,
+configure that Eclipse always formats and clean ups on save.
+Finally, please run the Maven goal "checkstyle:check" after your changes to verify that you have done everything right.
+
+
+Commit Conventions
+------------------
+
+The first line of the commit should look like this:
+	ISSUE #<issue-id>
+if you fixed/resolved the issue, the first commit line should look like this:
+	ISSUE #<issue-id> FIXED
+or (id the issue is a feature):
+	ISSUE #<issue-id> RESOLVED
+	
+The next lines should start with a start ("*") should exactly describe the changes.
+
+
+Pull Request Conventions
+------------------------
+
+The title of the pull requst should be:
+	ISSUE #<issue-id> FIXED
+or:
+	ISSUE #<issue-id> RESOLVED
+if you have multiple issues that are affected:
+	ISSUE #<issue-id> FIXED, ISSUE #<issue-id> RESOLVED, ...
+(you can use FIXED or RESOLVED, whether the issue is a bug or a feature).
+
+The decription should start with a section for a short breakdown of the changes. Please mark that section with a title.
+A link/description of your testing materials. Please mark that section with a title.
