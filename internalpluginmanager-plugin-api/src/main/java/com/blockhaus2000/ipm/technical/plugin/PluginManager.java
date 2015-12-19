@@ -17,6 +17,7 @@
  */
 package com.blockhaus2000.ipm.technical.plugin;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ import com.blockhaus2000.ipm.technical.plugin.util.exception.MissingDependencyPl
  * InternalPluginManager plugins. Also manages dependency management.
  *
  */
-public final class PluginManager {
+public final class PluginManager implements Closeable {
     /**
      * The Logger of this class.
      *
@@ -100,6 +101,26 @@ public final class PluginManager {
      */
     private PluginManager() {
         // Nothing to do (only to provide singleton).
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see java.io.Closeable#close()
+     */
+    @Override
+    public void close() {
+        this.checkAccess();
+
+        this.deployDaemon.interrupt();
+        try {
+            this.deployDaemon.join();
+        } catch (final InterruptedException dummy) {
+            // The thread was stopped before join() was invoked. Simply
+            // ignore it.
+        }
+
+        PluginManager.LOGGER.info("Plugin management closed!");
     }
 
     /**

@@ -67,7 +67,7 @@ public class Main extends Plugin {
      */
     @Override
     public void disable() {
-        // Nothing to do.
+        PluginManager.getInstance().close();
     }
 
     /**

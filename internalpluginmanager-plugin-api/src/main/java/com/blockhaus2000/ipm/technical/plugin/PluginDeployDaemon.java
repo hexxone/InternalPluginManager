@@ -136,6 +136,12 @@ public class PluginDeployDaemon extends Thread {
 
         // Also stop undeploy daemon.
         this.pluginUndeployDaemon.interrupt();
+        try {
+            this.pluginUndeployDaemon.join();
+        } catch (final InterruptedException dummy) {
+            // The thread was shut down before join() was invoked. Ignore as
+            // the thread stopped already.
+        }
 
         PluginDeployDaemon.LOGGER.info("Plugin deploy daemon stopped");
     }

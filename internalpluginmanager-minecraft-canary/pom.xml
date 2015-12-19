@@ -23,7 +23,7 @@
 	<repositories>
 		<repository>
 			<id>canary-repo</id>
-			<url>http://repo.visualillusionsent.net/repository/public</url>
+			<url>http://repo.visualillusionsent.net/repositories/repository/public/</url>
 		</repository>
 	</repositories>
 

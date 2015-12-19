@@ -107,9 +107,7 @@ public final class InternalPluginManagerMain implements CommandEventListener {
     @Command(aliases = { InternalPluginManagerMain.MAIN_COMMAND, InternalPluginManagerMain.MAIN_COMMAND_ALIAS },
              secondLevelCommand = "stop")
     public static void internalpluginmanagerCommand(final CommandContext context) {
-        // Suppress unused-warning, suppresses checkstyle warning on
-        // @SuppressWarnings("unused").
-        context.getLabel();
+        PluginManager.getInstance().close();
         System.exit(0);
     }
 

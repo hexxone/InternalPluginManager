@@ -50,6 +50,16 @@ public class Main extends JavaPlugin {
     /**
      * {@inheritDoc}
      *
+     * @see org.bukkit.plugin.java.JavaPlugin#onDisable()
+     */
+    @Override
+    public void onDisable() {
+        PluginManager.getInstance().close();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @see org.bukkit.plugin.java.JavaPlugin#onEnable()
      */
     @Override
